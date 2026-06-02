@@ -572,12 +572,48 @@ input,select,textarea{font-family:inherit;outline:none}
 .pix-tab.active{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff;box-shadow:0 3px 12px rgba(26,35,126,.25)}
 .pix-pane{display:none}.pix-pane.active{display:block}
 
-.cont-chips{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.cont-chips{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 10px;margin-bottom:16px}
 .cont-chips::-webkit-scrollbar{display:none}
-.cont-chip{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:9px 11px;border-radius:11px;border:1.5px solid var(--border);background:var(--card);transition:all .2s;min-width:68px}
-.cont-chip:hover,.cont-chip.sel{border-color:var(--p3);background:#eff6ff}
-.cont-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff}
-.cont-chip .cn{font-size:11px;font-weight:600;color:var(--txt2);text-align:center}
+.cont-chip{
+  flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:7px;
+  cursor:pointer;padding:14px 12px 12px;border-radius:16px;
+  border:1.5px solid var(--border);background:var(--card);
+  transition:all .22s cubic-bezier(.34,1.56,.64,1);
+  min-width:72px;position:relative;
+}
+.cont-chip:hover{
+  transform:translateY(-3px);
+  border-color:transparent;
+  box-shadow:0 8px 24px rgba(99,102,241,.18);
+  background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+}
+.cont-chip.sel{
+  border-color:var(--p3);
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  box-shadow:0 6px 20px rgba(59,130,246,.2);
+  transform:translateY(-2px);
+}
+.cont-av-wrap{position:relative;width:52px;height:52px}
+.cont-av{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#fff;
+  box-shadow:0 4px 14px rgba(0,0,0,.18);
+  transition:box-shadow .22s;
+  border:3px solid rgba(255,255,255,.9);
+}
+.cont-chip:hover .cont-av,.cont-chip.sel .cont-av{box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.cont-av-bank{
+  position:absolute;bottom:-2px;right:-3px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--card);border:2px solid var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8.5px;font-weight:800;color:var(--p1);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+  letter-spacing:-.2px;
+}
+.cont-chip .cn{font-size:11.5px;font-weight:700;color:var(--txt);text-align:center;line-height:1.2}
+.cont-chip .cn-bank{font-size:9.5px;color:var(--muted);font-weight:500;text-align:center;margin-top:-4px}
 
 .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:280px;margin:14px auto}
 .kbtn{padding:14px;text-align:center;font-size:19px;font-weight:600;color:var(--txt);background:var(--card);border-radius:11px;cursor:pointer;border:1.5px solid var(--border);transition:all .15s}
@@ -1470,7 +1506,10 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="pix-pane active" id="pp-send">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1100px;width:100%">
             <div>
-              <div class="sec-title" style="margin-bottom:10px">Contatos recentes</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <div class="sec-title" style="margin-bottom:0">Contatos recentes</div>
+                <span style="font-size:11.5px;color:var(--muted);font-weight:500">← deslize →</span>
+              </div>
               <div class="cont-chips" id="contChips"></div>
               <div class="card">
                 <div class="sec-title">Dados do pagamento</div>
@@ -4291,11 +4330,13 @@ const TXS = [
 ];
 
 const CONTACTS = [
-  {name:'Maria C.',key:'+5511988776655',color:'#e91e63',abbr:'M'},
-  {name:'Pedro A.',key:'+5511977665544',color:'#3f51b5',abbr:'P'},
-  {name:'Lucas S.',key:'lucas@email.com',color:'#009688',abbr:'L'},
-  {name:'Ana R.',key:'123.456.789-00',color:'#ff5722',abbr:'A'},
-  {name:'Carlos',key:'+5511966554433',color:'#673ab7',abbr:'C'},
+  {name:'Maria C.',  short:'Maria',    key:'+5511988776655', g1:'#f43f5e', g2:'#e11d48', abbr:'M', bank:'Nubank'},
+  {name:'Pedro A.',  short:'Pedro',    key:'+5511977665544', g1:'#6366f1', g2:'#4f46e5', abbr:'P', bank:'Itaú'},
+  {name:'Lucas S.',  short:'Lucas',    key:'lucas@email.com',g1:'#10b981', g2:'#059669', abbr:'L', bank:'Inter'},
+  {name:'Ana R.',    short:'Ana',      key:'123.456.789-00', g1:'#f97316', g2:'#ea580c', abbr:'A', bank:'Bradesco'},
+  {name:'Carlos M.', short:'Carlos',   key:'+5511966554433', g1:'#8b5cf6', g2:'#7c3aed', abbr:'C', bank:'C6'},
+  {name:'Fernanda',  short:'Fer',      key:'fernanda@gmail.com',g1:'#0ea5e9',g2:'#0284c7',abbr:'F', bank:'BB'},
+  {name:'Roberto',   short:'Rob',      key:'rob@empresa.com', g1:'#14b8a6', g2:'#0d9488', abbr:'R', bank:'XP'},
 ];
 
 const PIX_KEYS = [
@@ -4511,8 +4552,11 @@ function buildChart(){
 function buildContChips(){
   document.getElementById('contChips').innerHTML=CONTACTS.map(c=>`
     <div class="cont-chip" onclick="selContact('${c.key}',this)">
-      <div class="cont-av" style="background:${c.color}">${c.abbr}</div>
-      <div class="cn">${c.name}</div>
+      <div class="cont-av-wrap">
+        <div class="cont-av" style="background:linear-gradient(135deg,${c.g1},${c.g2})">${c.abbr}</div>
+        <div class="cont-av-bank">${c.bank.substring(0,3).toUpperCase()}</div>
+      </div>
+      <div class="cn">${c.short||c.name}</div>
     </div>`).join('');
 }
 function selContact(key,el){
