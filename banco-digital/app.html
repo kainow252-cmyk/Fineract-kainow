@@ -125,11 +125,11 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* Headline — fluid, fills entire panel width */
 .lgn-headline{
-  font-size:clamp(28px,3vw,44px);
-  font-weight:900;color:#fff;line-height:1.25;
-  letter-spacing:-1.5px;margin-bottom:14px;
+  font-size:clamp(18px,1.9vw,26px);
+  font-weight:900;color:#fff;line-height:1.3;
+  letter-spacing:-0.5px;margin-bottom:10px;
   position:relative;z-index:1;
-  width:100%;max-width:100%;
+  width:100%;max-width:100%;white-space:nowrap;
 }
 .lgn-headline span.ln{
   display:block;
@@ -1070,12 +1070,12 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* ── LOGIN RESPONSIVE ── */
 @media(max-width:1100px){
-  .lgn-headline{font-size:clamp(26px,2.8vw,38px);letter-spacing:-1.5px}
+  .lgn-headline{font-size:clamp(16px,1.8vw,22px);letter-spacing:-0.5px;white-space:normal}
   .lgn-features{grid-template-columns:1fr 1fr}
 }
 @media(max-width:900px){
   .lgn-left{flex:0.9;padding:32px 32px 28px 32px}
-  .lgn-headline{font-size:24px;letter-spacing:-1px}
+  .lgn-headline{font-size:16px;letter-spacing:-0.3px;white-space:normal}
   .lgn-desc{font-size:14px}
   .lgn-features{grid-template-columns:1fr}
   .lgn-right{width:400px}
