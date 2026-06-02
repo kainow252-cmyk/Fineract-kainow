@@ -3305,6 +3305,126 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
 
         <!-- ════════════════════════════════════
+             ABA: COMISSÕES
+        ════════════════════════════════════ -->
+        <div id="crm-aba-comissoes" class="crm-tab-content" style="display:none">
+        <div style="background:linear-gradient(135deg,#14532d,#15803d,#16a34a);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💎</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Correspondente Bancário · KaiNowPay Consignado</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Suas comissões e repasses</h2>
+          <p style="font-size:13px;opacity:.7">Acompanhe em tempo real os ganhos de todos os produtos vendidos · Repasse automático via PIX</p>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12px" onclick="openRepassePix()">⚡ Solicitar Repasse PIX</button>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12px" onclick="showToast('📄 Nota fiscal gerada!','success')">📄 Gerar NF</button>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12px" onclick="exportarComissoes()">⬇️ Exportar CSV</button>
+          </div>
+        </div>
+        <!-- KPIs -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px">
+          <div class="card" style="text-align:center;border-top:4px solid var(--ok)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Comissões Junho</div><div style="font-size:26px;font-weight:900;color:var(--ok)">R$ 84.200</div><div style="font-size:11px;color:var(--ok)">▲ +22% vs. maio</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--inf)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Aguardando repasse</div><div style="font-size:26px;font-weight:900;color:var(--inf)">R$ 18.400</div><div style="font-size:11px;color:var(--muted)">Pagamento: 10/07</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--pur)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Propostas aprovadas</div><div style="font-size:26px;font-weight:900;color:var(--pur)">18</div><div style="font-size:11px;color:var(--muted)">esse mês</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--teal)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ticket médio</div><div style="font-size:26px;font-weight:900;color:var(--teal)">R$ 4.678</div><div style="font-size:11px;color:var(--muted)">por proposta</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--amber)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total acumulado 2026</div><div style="font-size:26px;font-weight:900;color:var(--amber)">R$ 312.800</div><div style="font-size:11px;color:var(--muted)">Jan–Jun 2026</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:18px">
+          <!-- Comissões por produto/nicho -->
+          <div class="card">
+            <div class="sec-title">📊 Comissões por Nicho — Junho/2026</div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--bg)">
+                <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted)">NICHO / PRODUTO</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">PROPOSTAS</th>
+                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">VOLUME</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">TAXA COM.</th>
+                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">COMISSÃO</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">STATUS</th>
+              </tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">👴 INSS Consignado</div><div style="font-size:11px;color:var(--muted)">Beneficiários + Aposentados</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">24</td><td style="padding:10px 12px;text-align:right">R$ 1.240.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 24.800</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏛️ Servidor Público</div><div style="font-size:11px;color:var(--muted)">Fed. + Estadual + Municipal</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 1.080.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,20%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 23.760</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎖️ Forças Armadas</div><div style="font-size:11px;color:var(--muted)">Exército / Marinha / Aeronáutica</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">9</td><td style="padding:10px 12px;text-align:right">R$ 720.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,50%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 18.000</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏢 CLT Convênio</div><div style="font-size:11px;color:var(--muted)">Empresas conveniadas</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">7</td><td style="padding:10px 12px;text-align:right">R$ 280.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef2f2;color:#dc2626;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">1,80%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 5.040</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">Venda direta</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">42</td><td style="padding:10px 12px;text-align:right">R$ 236.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#ecfdf5;color:#047857;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">8,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 7.600</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">Auto + Vida + Residencial</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 41.600</td><td style="padding:10px 12px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">12,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 4.992</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+              </tbody>
+            </table>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:12px;border:1px solid #bbf7d0">
+              <div style="font-size:14px;font-weight:800">TOTAL JUNHO</div>
+              <div style="font-size:22px;font-weight:900;color:var(--ok)">R$ 84.192</div>
+            </div>
+          </div>
+          <!-- Repasse PIX + Extrato -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card">
+              <div class="sec-title">⚡ Repasse PIX Automático</div>
+              <div style="padding:14px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;margin-bottom:12px;border:1px solid #bbf7d0">
+                <div style="font-size:13px;font-weight:800;margin-bottom:4px">💸 Próximo pagamento automático</div>
+                <div style="font-size:28px;font-weight:900;color:var(--ok);margin-bottom:2px">R$ 18.400,00</div>
+                <div style="font-size:12px;color:var(--muted)">10/07/2026 · Via PIX · CPF: •••.456.789-00</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="padding:11px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">Chave PIX cadastrada</div>
+                  <div style="font-size:12px;color:var(--muted)">CPF: •••.456.789-00 · Carlos Mota</div>
+                  <div style="font-size:12px;color:var(--p3);margin-top:4px;cursor:pointer" onclick="showToast('✅ Chave PIX atualizada!','success')">Alterar chave de recebimento →</div>
+                </div>
+                <div style="padding:11px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">Nota fiscal automática</div>
+                  <div style="font-size:12px;color:var(--muted)">MEI/PJ obrigatório acima de R$ 500</div>
+                  <div style="font-size:12px;color:var(--p3);margin-top:4px;cursor:pointer" onclick="showToast('📄 NF gerada com sucesso!','success')">Gerar NF →</div>
+                </div>
+                <div style="padding:11px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">🔄 Repasse antecipado</div>
+                  <div style="font-size:12px;color:var(--muted)">Disponível para comissões aprovadas</div>
+                  <button class="btn btn-primary" style="width:100%;margin-top:8px;padding:9px;font-size:12px" onclick="openRepassePix()">Solicitar antecipação →</button>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="flex:1">
+              <div class="sec-title">📈 Evolução de Comissões 2026</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Jan</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:42%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 38k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Fev</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:48%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 44k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Mar</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:52%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 47k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Abr</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:60%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 55k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Mai</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:76%;height:7px;background:var(--ok);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 69k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Jun</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:92%;height:7px;background:var(--ok);border-radius:99px"></div></div><div style="font-size:11px;font-weight:800;color:var(--ok);width:52px;text-align:right">R$ 84k</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Extrato de comissões -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div class="sec-title" style="margin:0">📋 Extrato de Comissões — Junho/2026</div>
+            <div style="display:flex;gap:8px">
+              <input placeholder="🔍 Buscar..." style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;width:160px;background:var(--card)">
+              <button class="btn-sm btn-p" onclick="exportarComissoes()">⬇️ CSV</button>
+            </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--bg)">
+              <th style="padding:9px 14px;text-align:left;font-size:11px;color:var(--muted)">DATA</th>
+              <th style="padding:9px 14px;text-align:left;font-size:11px;color:var(--muted)">CLIENTE</th>
+              <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">NICHO</th>
+              <th style="padding:9px 14px;text-align:right;font-size:11px;color:var(--muted)">VALOR EMPRÉSTIMO</th>
+              <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">TAXA</th>
+              <th style="padding:9px 14px;text-align:right;font-size:11px;color:var(--muted)">COMISSÃO</th>
+              <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">STATUS</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">02/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Maria Clara Santos</div><div style="font-size:11px;color:var(--muted)">Correspondente: Lotérica Boa Sorte</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 18.400,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 368,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">05/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">João Paulo Ferreira</div><div style="font-size:11px;color:var(--muted)">Correspondente: Mercado Silva</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 32.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,20%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 704,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">08/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Tenente Ricardo Moura</div><div style="font-size:11px;color:var(--muted)">Correspondente: Papelaria Central</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Forças Arm.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 45.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,50%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 1.125,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">12/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Ana Beatriz Lima</div><div style="font-size:11px;color:var(--muted)">Correspondente: Farmácia Popular</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#ecfdf5;color:#047857;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Aposentado</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 9.800,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 196,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr><td style="padding:10px 14px;font-size:12px;color:var(--muted)">18/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Pedro Henrique Neto</div><div style="font-size:11px;color:var(--muted)">Correspondente: Auto Center Rei</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef2f2;color:#dc2626;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">CLT Conv.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 7.500,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">1,80%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 135,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <!-- ════════════════════════════════════
              MODAIS CRM
         ════════════════════════════════════ -->
 
@@ -3608,125 +3728,6 @@ input,select,textarea{font-family:inherit;outline:none}
               <tr><td style="padding:11px 14px;font-size:13px;font-weight:600">Carlos Mota</td><td style="padding:11px 14px;font-size:12px;color:var(--muted)">10/05/2026</td><td style="padding:11px 14px;text-align:center"><span class="badge bg-err">Expirado ❌</span></td><td style="padding:11px 14px;text-align:right;font-weight:800;color:var(--err)">R$ 0</td></tr>
             </tbody>
           </table>
-        </div>
-        <!-- ════════════════════════════════════
-             ABA: COMISSÕES
-        ════════════════════════════════════ -->
-        <div id="crm-aba-comissoes" class="crm-tab-content" style="display:none">
-        <div style="background:linear-gradient(135deg,#14532d,#15803d,#16a34a);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
-          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💎</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Correspondente Bancário · KaiNowPay Consignado</div>
-          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Suas comissões e repasses</h2>
-          <p style="font-size:13px;opacity:.7">Acompanhe em tempo real os ganhos de todos os produtos vendidos · Repasse automático via PIX</p>
-          <div style="display:flex;gap:10px;margin-top:14px">
-            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12px" onclick="openRepassePix()">⚡ Solicitar Repasse PIX</button>
-            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12px" onclick="showToast('📄 Nota fiscal gerada!','success')">📄 Gerar NF</button>
-            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12px" onclick="exportarComissoes()">⬇️ Exportar CSV</button>
-          </div>
-        </div>
-        <!-- KPIs -->
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px">
-          <div class="card" style="text-align:center;border-top:4px solid var(--ok)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Comissões Junho</div><div style="font-size:26px;font-weight:900;color:var(--ok)">R$ 84.200</div><div style="font-size:11px;color:var(--ok)">▲ +22% vs. maio</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--inf)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Aguardando repasse</div><div style="font-size:26px;font-weight:900;color:var(--inf)">R$ 18.400</div><div style="font-size:11px;color:var(--muted)">Pagamento: 10/07</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--pur)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Propostas aprovadas</div><div style="font-size:26px;font-weight:900;color:var(--pur)">18</div><div style="font-size:11px;color:var(--muted)">esse mês</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--teal)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ticket médio</div><div style="font-size:26px;font-weight:900;color:var(--teal)">R$ 4.678</div><div style="font-size:11px;color:var(--muted)">por proposta</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--amber)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total acumulado 2026</div><div style="font-size:26px;font-weight:900;color:var(--amber)">R$ 312.800</div><div style="font-size:11px;color:var(--muted)">Jan–Jun 2026</div></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:18px">
-          <!-- Comissões por produto/nicho -->
-          <div class="card">
-            <div class="sec-title">📊 Comissões por Nicho — Junho/2026</div>
-            <table style="width:100%;border-collapse:collapse">
-              <thead><tr style="background:var(--bg)">
-                <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted)">NICHO / PRODUTO</th>
-                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">PROPOSTAS</th>
-                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">VOLUME</th>
-                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">TAXA COM.</th>
-                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">COMISSÃO</th>
-                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">STATUS</th>
-              </tr></thead>
-              <tbody>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">👴 INSS Consignado</div><div style="font-size:11px;color:var(--muted)">Beneficiários + Aposentados</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">24</td><td style="padding:10px 12px;text-align:right">R$ 1.240.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 24.800</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏛️ Servidor Público</div><div style="font-size:11px;color:var(--muted)">Fed. + Estadual + Municipal</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 1.080.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,20%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 23.760</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎖️ Forças Armadas</div><div style="font-size:11px;color:var(--muted)">Exército / Marinha / Aeronáutica</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">9</td><td style="padding:10px 12px;text-align:right">R$ 720.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,50%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 18.000</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏢 CLT Convênio</div><div style="font-size:11px;color:var(--muted)">Empresas conveniadas</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">7</td><td style="padding:10px 12px;text-align:right">R$ 280.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef2f2;color:#dc2626;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">1,80%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 5.040</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">Venda direta</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">42</td><td style="padding:10px 12px;text-align:right">R$ 236.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#ecfdf5;color:#047857;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">8,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 7.600</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
-                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">Auto + Vida + Residencial</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 41.600</td><td style="padding:10px 12px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">12,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 4.992</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
-              </tbody>
-            </table>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:12px;border:1px solid #bbf7d0">
-              <div style="font-size:14px;font-weight:800">TOTAL JUNHO</div>
-              <div style="font-size:22px;font-weight:900;color:var(--ok)">R$ 84.192</div>
-            </div>
-          </div>
-          <!-- Repasse PIX + Extrato -->
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div class="card">
-              <div class="sec-title">⚡ Repasse PIX Automático</div>
-              <div style="padding:14px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;margin-bottom:12px;border:1px solid #bbf7d0">
-                <div style="font-size:13px;font-weight:800;margin-bottom:4px">💸 Próximo pagamento automático</div>
-                <div style="font-size:28px;font-weight:900;color:var(--ok);margin-bottom:2px">R$ 18.400,00</div>
-                <div style="font-size:12px;color:var(--muted)">10/07/2026 · Via PIX · CPF: •••.456.789-00</div>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div style="padding:11px;background:var(--bg);border-radius:9px">
-                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">Chave PIX cadastrada</div>
-                  <div style="font-size:12px;color:var(--muted)">CPF: •••.456.789-00 · Carlos Mota</div>
-                  <div style="font-size:12px;color:var(--p3);margin-top:4px;cursor:pointer" onclick="showToast('✅ Chave PIX atualizada!','success')">Alterar chave de recebimento →</div>
-                </div>
-                <div style="padding:11px;background:var(--bg);border-radius:9px">
-                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">Nota fiscal automática</div>
-                  <div style="font-size:12px;color:var(--muted)">MEI/PJ obrigatório acima de R$ 500</div>
-                  <div style="font-size:12px;color:var(--p3);margin-top:4px;cursor:pointer" onclick="showToast('📄 NF gerada com sucesso!','success')">Gerar NF →</div>
-                </div>
-                <div style="padding:11px;background:var(--bg);border-radius:9px">
-                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">🔄 Repasse antecipado</div>
-                  <div style="font-size:12px;color:var(--muted)">Disponível para comissões aprovadas</div>
-                  <button class="btn btn-primary" style="width:100%;margin-top:8px;padding:9px;font-size:12px" onclick="openRepassePix()">Solicitar antecipação →</button>
-                </div>
-              </div>
-            </div>
-            <div class="card" style="flex:1">
-              <div class="sec-title">📈 Evolução de Comissões 2026</div>
-              <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Jan</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:42%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 38k</div></div>
-                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Fev</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:48%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 44k</div></div>
-                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Mar</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:52%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 47k</div></div>
-                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Abr</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:60%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 55k</div></div>
-                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Mai</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:76%;height:7px;background:var(--ok);border-radius:99px"></div></div><div style="font-size:11px;color:var(--muted);width:52px;text-align:right">R$ 69k</div></div>
-                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11px;width:28px;color:var(--muted)">Jun</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:92%;height:7px;background:var(--ok);border-radius:99px"></div></div><div style="font-size:11px;font-weight:800;color:var(--ok);width:52px;text-align:right">R$ 84k</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Extrato de comissões -->
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-            <div class="sec-title" style="margin:0">📋 Extrato de Comissões — Junho/2026</div>
-            <div style="display:flex;gap:8px">
-              <input placeholder="🔍 Buscar..." style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;width:160px;background:var(--card)">
-              <button class="btn-sm btn-p" onclick="exportarComissoes()">⬇️ CSV</button>
-            </div>
-          </div>
-          <table style="width:100%;border-collapse:collapse">
-            <thead><tr style="background:var(--bg)">
-              <th style="padding:9px 14px;text-align:left;font-size:11px;color:var(--muted)">DATA</th>
-              <th style="padding:9px 14px;text-align:left;font-size:11px;color:var(--muted)">CLIENTE</th>
-              <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">NICHO</th>
-              <th style="padding:9px 14px;text-align:right;font-size:11px;color:var(--muted)">VALOR EMPRÉSTIMO</th>
-              <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">TAXA</th>
-              <th style="padding:9px 14px;text-align:right;font-size:11px;color:var(--muted)">COMISSÃO</th>
-              <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">STATUS</th>
-            </tr></thead>
-            <tbody>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">02/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Maria Clara Santos</div><div style="font-size:11px;color:var(--muted)">Correspondente: Lotérica Boa Sorte</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 18.400,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 368,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">05/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">João Paulo Ferreira</div><div style="font-size:11px;color:var(--muted)">Correspondente: Mercado Silva</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 32.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,20%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 704,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">08/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Tenente Ricardo Moura</div><div style="font-size:11px;color:var(--muted)">Correspondente: Papelaria Central</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Forças Arm.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 45.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,50%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 1.125,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">12/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Ana Beatriz Lima</div><div style="font-size:11px;color:var(--muted)">Correspondente: Farmácia Popular</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#ecfdf5;color:#047857;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Aposentado</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 9.800,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 196,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
-              <tr><td style="padding:10px 14px;font-size:12px;color:var(--muted)">18/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Pedro Henrique Neto</div><div style="font-size:11px;color:var(--muted)">Correspondente: Auto Center Rei</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef2f2;color:#dc2626;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">CLT Conv.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 7.500,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">1,80%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 135,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
-            </tbody>
-          </table>
-        </div>
         </div>
       </div>
 
