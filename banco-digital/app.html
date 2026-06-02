@@ -34,12 +34,19 @@ input,select,textarea{font-family:inherit;outline:none}
   position:fixed;inset:0;z-index:9999;
   background:linear-gradient(160deg,#0d0d3b 0%,#1a237e 55%,#00bcd4 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:opacity .5s;
+  transition:opacity .4s;
+  animation:splAutoHide 1.8s ease forwards;
+  cursor:pointer;
 }
-#splash.hide{opacity:0;pointer-events:none}
+#splash.hide{opacity:0;pointer-events:none;display:none!important}
+/* CSS-only fallback: se JS falhar, splash some após 1.8s */
+@keyframes splAutoHide{
+  0%,70%{opacity:1;pointer-events:all}
+  100%{opacity:0;pointer-events:none}
+}
 .spl-logo{width:96px;height:96px;background:rgba(255,255,255,.12);border-radius:26px;border:2px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:22px;animation:splPulse 2s infinite}
 @keyframes splPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,188,212,.5)}50%{transform:scale(1.04);box-shadow:0 0 0 22px rgba(0,188,212,0)}}
-.spl-name{font-size:44px;font-weight:900;color:#fff;letter-spacing:-2px}
+.spl-name{font-size:32px;font-weight:900;color:#fff;letter-spacing:-1px}
 .spl-sub{font-size:14px;color:rgba(255,255,255,.55);margin-top:6px;letter-spacing:.5px}
 .spl-badges{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center}
 .spl-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:5px}
@@ -1036,7 +1043,7 @@ input,select,textarea{font-family:inherit;outline:none}
 <body>
 
 <!-- SPLASH -->
-<div id="splash">
+<div id="splash" onclick="dismissSplash()" title="Clique para continuar">
   <div class="spl-logo">🏦</div>
   <div class="spl-name">KaiNowPay</div>
   <div class="spl-sub">Digital Banking Platform</div>
@@ -4408,17 +4415,25 @@ const FAQ = [
 /* ══════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════ */
+function dismissSplash(){
+  const spl=document.getElementById('splash');
+  const lgn=document.getElementById('page-login');
+  if(spl){spl.classList.add('hide');}
+  if(lgn){lgn.classList.add('active');}
+}
 document.addEventListener('DOMContentLoaded', () => {
-  const d = new Date();
-  document.getElementById('pgDate').textContent = d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  setTimeout(() => {
-    document.getElementById('splash').classList.add('hide');
-    setTimeout(() => {
-      document.getElementById('splash').style.display='none';
-      document.getElementById('page-login').classList.add('active');
-    }, 500);
-  }, 2000);
-  buildAll();
+  // Set date
+  try{
+    const d = new Date();
+    document.getElementById('pgDate').textContent = d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  }catch(e){}
+  // Click splash to skip immediately
+  const spl=document.getElementById('splash');
+  if(spl){ spl.addEventListener('click', dismissSplash); }
+  // Auto-dismiss after 1400ms
+  setTimeout(dismissSplash, 1400);
+  // Build all data (wrapped in try-catch so errors don't block splash)
+  try{ buildAll(); }catch(e){ console.warn('buildAll error:',e); }
 });
 
 function buildAll(){
