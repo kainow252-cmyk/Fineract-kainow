@@ -726,10 +726,30 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="nav-item" onclick="goPage('simulador',this)"><span class="ni">🧮</span>Simulador<span class="nb green">NEW</span></div>
       </div>
       <div class="sb-section">
+        <div class="sb-sec-label">Serviços</div>
+        <div class="nav-item" onclick="goPage('wallet',this)"><span class="ni">👛</span>Wallet<span class="nb green">NEW</span></div>
+        <div class="nav-item" onclick="goPage('seguros',this)"><span class="ni">🛡️</span>Seguros<span class="nb green">NEW</span></div>
+        <div class="nav-item" onclick="goPage('capitalizacao',this)"><span class="ni">🎰</span>Capitalização<span class="nb green">NEW</span></div>
+        <div class="nav-item" onclick="goPage('sorteios',this)"><span class="ni">🏆</span>Sorteios<span class="nb green">NEW</span></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-sec-label">Rede & Parceiros</div>
+        <div class="nav-item" onclick="goPage('correspondente',this)"><span class="ni">🏪</span>Corresp. Bancário<span class="nb blue">NEW</span></div>
+        <div class="nav-item" onclick="goPage('mktfinanceiro',this)"><span class="ni">💹</span>Mkt Financeiro<span class="nb blue">NEW</span></div>
+        <div class="nav-item" onclick="goPage('indicacao',this)"><span class="ni">🎁</span>Indique & Ganhe<span class="nb blue">NEW</span></div>
+        <div class="nav-item" onclick="goPage('comissoes',this)"><span class="ni">💎</span>Comissões<span class="nb blue">NEW</span></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-sec-label">Operadores</div>
+        <div class="nav-item" onclick="goPage('motoboys',this)"><span class="ni">🛵</span>Motoboys<span class="nb blue">NEW</span></div>
+        <div class="nav-item" onclick="goPage('corretores',this)"><span class="ni">🤝</span>Corretores<span class="nb blue">NEW</span></div>
+        <div class="nav-item" onclick="goPage('parceiros',this)"><span class="ni">🌐</span>Parceiros<span class="nb blue">NEW</span></div>
+      </div>
+      <div class="sb-section">
         <div class="sb-sec-label">Ecossistema</div>
-        <div class="nav-item" onclick="goPage('marketplace',this)"><span class="ni">🛍️</span>Marketplace<span class="nb blue">NEW</span></div>
-        <div class="nav-item" onclick="goPage('crm',this)"><span class="ni">👥</span>CRM<span class="nb blue">NEW</span></div>
-        <div class="nav-item" onclick="goPage('documentos',this)"><span class="ni">📝</span>Documentos<span class="nb blue">NEW</span></div>
+        <div class="nav-item" onclick="goPage('marketplace',this)"><span class="ni">🛍️</span>Marketplace</div>
+        <div class="nav-item" onclick="goPage('crm',this)"><span class="ni">👥</span>CRM</div>
+        <div class="nav-item" onclick="goPage('documentos',this)"><span class="ni">📝</span>Documentos</div>
         <div class="nav-item" onclick="goPage('integracoes',this)"><span class="ni">🔗</span>Integrações<span class="nb green">API</span></div>
       </div>
       <div class="sb-section">
@@ -1387,6 +1407,501 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
       </div>
 
+      <!-- ██ WALLET ██ -->
+      <div class="page" id="page-wallet">
+        <div style="background:linear-gradient(135deg,#0f172a,#1e3a5f,#0369a1);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-20px;top:-20px;font-size:120px;opacity:.07">👛</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">👛 Wallet Digital · Open Banking</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Minha Carteira Digital</h2>
+          <p style="font-size:13.5px;opacity:.7">Gerencie todos os seus fundos em um único lugar · Fineract + Celcoin</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          <div class="card" style="border-top:4px solid var(--ac);text-align:center">
+            <div style="font-size:32px;margin-bottom:8px">💰</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Saldo Disponível</div>
+            <div style="font-size:26px;font-weight:900;color:var(--p1)">R$ 8.420,50</div>
+            <div style="font-size:11.5px;color:var(--muted)">Conta Corrente · Ag.0001</div>
+          </div>
+          <div class="card" style="border-top:4px solid var(--ok);text-align:center">
+            <div style="font-size:32px;margin-bottom:8px">🌟</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Poupança</div>
+            <div style="font-size:26px;font-weight:900;color:#047857">R$ 24.850,00</div>
+            <div style="font-size:11.5px;color:var(--muted)">Rendendo 0,5% a.m. + TR</div>
+          </div>
+          <div class="card" style="border-top:4px solid var(--warn);text-align:center">
+            <div style="font-size:32px;margin-bottom:8px">🪙</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px">MeuBanco Coins</div>
+            <div style="font-size:26px;font-weight:900;color:var(--amber)">2.840 pts</div>
+            <div style="font-size:11.5px;color:var(--muted)">≈ R$ 28,40 em cashback</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="sec-title">Ações rápidas</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <button class="btn btn-primary" style="padding:12px;font-size:13px" onclick="goPage('pix',null)">⚡ PIX</button>
+              <button class="btn" style="padding:12px;font-size:13px;background:var(--ok);color:#fff" onclick="showToast('💸 TED iniciado!','info')">🏦 TED/DOC</button>
+              <button class="btn" style="padding:12px;font-size:13px;background:var(--teal);color:#fff" onclick="showToast('📱 Recarga realizada!','success')">📱 Recarga</button>
+              <button class="btn" style="padding:12px;font-size:13px;background:var(--pur);color:#fff" onclick="showToast('💡 Conta paga!','success')">💡 Pagar Conta</button>
+              <button class="btn" style="padding:12px;font-size:13px;background:var(--amber);color:#fff" onclick="showToast('🛒 Voucher gerado!','success')">🎫 Voucher</button>
+              <button class="btn btn-ghost" style="padding:12px;font-size:13px" onclick="showToast('🔄 Câmbio: USD 1 = R$ 5,72','info')">💱 Câmbio</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">Histórico da Wallet</div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Cashback PIX</div><div style="font-size:11px;color:var(--muted)">Hoje · 2% sobre R$ 350</div></div><div style="font-size:14px;font-weight:800;color:var(--ok)">+ 70 pts</div></div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Recarga Vivo</div><div style="font-size:11px;color:var(--muted)">01/06 · R$ 50,00</div></div><div style="font-size:14px;font-weight:800;color:var(--err)">- R$ 50,00</div></div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Conta de Luz</div><div style="font-size:11px;color:var(--muted)">30/05 · Enel SP</div></div><div style="font-size:14px;font-weight:800;color:var(--err)">- R$ 142,80</div></div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Bônus indicação</div><div style="font-size:11px;color:var(--muted)">28/05 · Pedro Alves</div></div><div style="font-size:14px;font-weight:800;color:var(--ok)">+ 500 pts</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ SEGUROS ██ -->
+      <div class="page" id="page-seguros">
+        <div style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🛡️</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🛡️ Seguros Digitais · Celcoin Insurance</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Proteção completa para você</h2>
+          <p style="font-size:13.5px;opacity:.7">Seguros simples, baratos e 100% digitais · Contratação em 2 minutos</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          <div class="card" style="border-left:4px solid var(--ok)">
+            <div style="font-size:30px;margin-bottom:10px">🚗</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">Seguro Auto</div>
+            <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Cobertura completa KASKO. Colisão, roubo, incêndio + assistência 24h.</div>
+            <div style="font-size:20px;font-weight:900;color:var(--p1);margin-bottom:4px">A partir de R$ 89/mês</div>
+            <span class="badge bg-ok">✅ Ativo</span>
+            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="showToast('🚗 Seguro Auto renovado!','success')">Ver apólice →</button>
+          </div>
+          <div class="card" style="border-left:4px solid var(--inf)">
+            <div style="font-size:30px;margin-bottom:10px">🏥</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">Seguro Saúde</div>
+            <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Plano individual com telemedicina ilimitada. Consultas, exames e internação.</div>
+            <div style="font-size:20px;font-weight:900;color:var(--p1);margin-bottom:4px">A partir de R$ 149/mês</div>
+            <span class="badge bg-inf">🔵 Consultar</span>
+            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="showToast('🏥 Simulação de saúde!','info')">Simular →</button>
+          </div>
+          <div class="card" style="border-left:4px solid var(--warn)">
+            <div style="font-size:30px;margin-bottom:10px">🏠</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">Seguro Residencial</div>
+            <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Cobertura incêndio, roubo, vendaval, danos elétricos e responsabilidade civil.</div>
+            <div style="font-size:20px;font-weight:900;color:var(--p1);margin-bottom:4px">A partir de R$ 29/mês</div>
+            <span class="badge bg-warn">⚠️ Renovar</span>
+            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="showToast('🏠 Seguro residencial contratado!','success')">Contratar →</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="sec-title">Outros seguros disponíveis</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('📱 Seguro de celular contratado!','success')"><span style="font-size:22px">📱</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Celular</div><div style="font-size:11.5px;color:var(--muted)">Quebra acidental, roubo · A partir R$ 19/mês</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('✈️ Seguro viagem ativado!','success')"><span style="font-size:22px">✈️</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Viagem</div><div style="font-size:11.5px;color:var(--muted)">Emergência médica, cancelamento · A partir R$ 15/dia</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('💼 Seguro empresarial!','info')"><span style="font-size:22px">💼</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Empresarial</div><div style="font-size:11.5px;color:var(--muted)">Responsabilidade civil, estabelecimento · PJ</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('💳 Seguro cartão ativado!','success')"><span style="font-size:22px">💳</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Cartão</div><div style="font-size:11.5px;color:var(--muted)">Proteção de compras, fraudes · Celcoin</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">Minhas apólices ativas</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="padding:12px;background:#f0fdf4;border-radius:10px;border-left:3px solid var(--ok)"><div style="display:flex;justify-content:space-between"><div style="font-size:13.5px;font-weight:700">🚗 Seguro Auto</div><span class="badge bg-ok">Ativo</span></div><div style="font-size:12px;color:var(--muted);margin-top:4px">Apólice: AP-2024-001 · Venc: 15/08/2026</div><div style="font-size:12px;color:var(--muted)">Prêmio: R$ 89/mês · Cobertura: R$ 45.000</div></div>
+              <div style="padding:12px;background:#fff7ed;border-radius:10px;border-left:3px solid var(--warn)"><div style="display:flex;justify-content:space-between"><div style="font-size:13.5px;font-weight:700">📱 Seguro Celular</div><span class="badge bg-warn">Renovar</span></div><div style="font-size:12px;color:var(--muted);margin-top:4px">Apólice: AP-2024-002 · Venc: 01/07/2026</div><div style="font-size:12px;color:var(--muted)">Prêmio: R$ 19/mês · iPhone 15 Pro</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ CAPITALIZAÇÃO ██ -->
+      <div class="page" id="page-capitalizacao">
+        <div style="background:linear-gradient(135deg,#7c2d12,#9a3412,#c2410c);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🎰</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🎰 Títulos de Capitalização · Brasilcap-style</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Capitalize e concorra a prêmios!</h2>
+          <p style="font-size:13.5px;opacity:.7">Guarde dinheiro, forme uma reserva e ainda concorra a sorteios mensais</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="showToast('🌱 Título Semente contratado!','success')">
+            <div style="font-size:36px;margin-bottom:8px">🌱</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">Cap Semente</div>
+            <div style="font-size:24px;font-weight:900;color:var(--ok);margin-bottom:4px">R$ 50/mês</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px">12 meses · Resgate: R$ 550<br>2 bilhetes/mês no sorteio</div>
+            <button class="btn btn-primary" style="padding:10px">Contratar →</button>
+          </div>
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s;border:2px solid var(--p3)" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:10px;background:var(--p3);color:#fff;padding:3px 10px;border-radius:20px;margin-bottom:8px;display:inline-block">⭐ MAIS POPULAR</div>
+            <div style="font-size:36px;margin-bottom:8px">🌳</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">Cap Árvore</div>
+            <div style="font-size:24px;font-weight:900;color:var(--p1);margin-bottom:4px">R$ 150/mês</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px">24 meses · Resgate: R$ 3.420<br>5 bilhetes/mês + sorteio especial</div>
+            <button class="btn btn-primary" style="padding:10px" onclick="showToast('🌳 Cap Árvore contratado!','success')">Contratar →</button>
+          </div>
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:36px;margin-bottom:8px">💎</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">Cap Premium</div>
+            <div style="font-size:24px;font-weight:900;color:var(--amber);margin-bottom:4px">R$ 500/mês</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px">36 meses · Resgate: R$ 17.280<br>20 bilhetes/mês + sorteio exclusivo</div>
+            <button class="btn btn-primary" style="padding:10px" onclick="showToast('💎 Cap Premium contratado!','success')">Contratar →</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-title">📊 Meu título ativo — Cap Árvore</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+            <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Valor pago</div><div style="font-size:20px;font-weight:900;color:var(--p1)">R$ 2.250</div></div>
+            <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Parcelas</div><div style="font-size:20px;font-weight:900">15/24</div></div>
+            <div style="background:#f0fdf4;border-radius:10px;padding:14px;text-align:center"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Bilhetes totais</div><div style="font-size:20px;font-weight:900;color:var(--ok)">75 🎫</div></div>
+            <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Próx. resgate</div><div style="font-size:20px;font-weight:900">R$ 3.420</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ SORTEIOS ██ -->
+      <div class="page" id="page-sorteios">
+        <div style="background:linear-gradient(135deg,#4c1d95,#6d28d9,#7c3aed);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏆</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏆 Sorteios e Prêmios · MeuBanco Luck</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Você tem bilhetes para sorteios!</h2>
+          <p style="font-size:13.5px;opacity:.7">Seus títulos de capitalização geram bilhetes automaticamente para cada sorteio</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:18px">
+          <div>
+            <div class="sec-title">🎫 Meus bilhetes</div>
+            <div class="card" style="text-align:center;margin-bottom:14px;background:linear-gradient(135deg,#faf5ff,#ede9fe)">
+              <div style="font-size:48px;margin-bottom:8px">🎫</div>
+              <div style="font-size:42px;font-weight:900;color:var(--pur)">75</div>
+              <div style="font-size:13px;color:var(--muted)">bilhetes ativos</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Série: MBD-2026-06</div>
+            </div>
+            <div class="card">
+              <div class="sec-title">Próximo sorteio</div>
+              <div style="background:linear-gradient(135deg,#fdf4ff,#f5f3ff);border-radius:10px;padding:14px;text-align:center">
+                <div style="font-size:22px;margin-bottom:6px">📅</div>
+                <div style="font-size:15px;font-weight:800">30/06/2026 — 19h00</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:4px">Sorteio Mensal · Prêmio: R$ 100.000</div>
+                <div style="font-size:12px;color:var(--pur);font-weight:700;margin-top:8px">Faltam 28 dias</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="sec-title">🏆 Sorteios disponíveis</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="card" style="border-left:4px solid #fbbf24">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+                  <div><div style="font-size:15px;font-weight:800">🥇 Sorteio Mensal</div><div style="font-size:12px;color:var(--muted)">Todos os clientes Cap Árvore e Premium</div></div>
+                  <span class="badge" style="background:#fffbeb;color:#d97706">30/06</span>
+                </div>
+                <div style="font-size:28px;font-weight:900;color:var(--amber);margin-bottom:6px">R$ 100.000</div>
+                <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Seus bilhetes: <strong>75</strong> · Total emitidos: 12.480</div>
+                <div style="background:var(--bg);border-radius:8px;padding:10px;font-size:12px;color:var(--muted)">Chance: 1 em 166 (0,60%) 🍀</div>
+              </div>
+              <div class="card" style="border-left:4px solid var(--ok)">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+                  <div><div style="font-size:15px;font-weight:800">⚡ Sorteio Instantâneo</div><div style="font-size:12px;color:var(--muted)">Raspe e ganhe — disponível agora</div></div>
+                  <span class="badge bg-ok">Disponível</span>
+                </div>
+                <div style="font-size:24px;font-weight:900;color:var(--ok);margin-bottom:6px">Até R$ 1.000</div>
+                <button class="btn btn-primary" style="padding:11px;background:linear-gradient(135deg,var(--ok),#16a34a)" onclick="showToast('🎉 Parabéns! Você ganhou R$ 150 em pontos!','success')">🎲 Raspar agora!</button>
+              </div>
+              <div class="card" style="border-left:4px solid var(--pur)">
+                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+                  <div><div style="font-size:15px;font-weight:800">💎 Sorteio Premium Trimestral</div><div style="font-size:12px;color:var(--muted)">Exclusivo Cap Premium</div></div>
+                  <span class="badge bg-pur">30/09</span>
+                </div>
+                <div style="font-size:28px;font-weight:900;color:var(--pur);margin-bottom:6px">R$ 500.000</div>
+                <div style="font-size:12px;color:var(--muted)">Faltam 90 dias · Cap Premium necessário</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ CORRESPONDENTE BANCÁRIO ██ -->
+      <div class="page" id="page-correspondente">
+        <div style="background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏪</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏪 Correspondente Bancário · Resolução BCB nº 4.935</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Rede de Correspondentes</h2>
+          <p style="font-size:13.5px;opacity:.7">Gerencie operações bancárias através de estabelecimentos parceiros em todo o Brasil</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">🏪</div><div style="font-size:24px;font-weight:900;color:var(--ok)">1.284</div><div style="font-size:12px;color:var(--muted)">Pontos ativos</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">🗺️</div><div style="font-size:24px;font-weight:900;color:var(--p1)">312</div><div style="font-size:12px;color:var(--muted)">Municípios</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">💸</div><div style="font-size:24px;font-weight:900;color:var(--teal)">R$ 2,4M</div><div style="font-size:12px;color:var(--muted)">Processado/dia</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">⭐</div><div style="font-size:24px;font-weight:900;color:var(--amber)">4,8/5</div><div style="font-size:12px;color:var(--muted)">Avaliação</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="sec-title">Serviços disponíveis nos correspondentes</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💵</span><div><div style="font-size:13.5px;font-weight:600">Saque em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Limite: R$ 3.000/dia · Sem taxa</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💰</span><div><div style="font-size:13.5px;font-weight:600">Depósito em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Crédito imediato na conta · 24h/7</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📄</span><div><div style="font-size:13.5px;font-weight:600">Pagamento de boletos</div><div style="font-size:11.5px;color:var(--muted)">Até vencimento D+1 · Fitbank</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">⚡</span><div><div style="font-size:13.5px;font-weight:600">PIX no balcão</div><div style="font-size:11.5px;color:var(--muted)">QR Code físico · Instantâneo</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📝</span><div><div style="font-size:13.5px;font-weight:600">Abertura de conta</div><div style="font-size:11.5px;color:var(--muted)">KYC presencial · Fineract onboard</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">🎫</span><div><div style="font-size:13.5px;font-weight:600">Venda de capitalização</div><div style="font-size:11.5px;color:var(--muted)">Comissão 8% para o agente</div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">Encontrar correspondente próximo</div>
+            <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;padding:16px;text-align:center;margin-bottom:14px">
+              <div style="font-size:30px;margin-bottom:8px">📍</div>
+              <div style="font-size:14px;font-weight:700;margin-bottom:6px">São Paulo - SP</div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:12px">287 pontos em um raio de 5km</div>
+              <button class="btn btn-primary" onclick="showToast('🗺️ Mapa aberto!','info')" style="padding:10px">Ver no mapa →</button>
+            </div>
+            <div style="font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--muted)">MAIS PRÓXIMOS</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Mercado Silva &amp; Cia</div><div style="font-size:11.5px;color:var(--muted)">Rua das Flores, 123 · 350m</div></div><span class="badge bg-ok">Aberto</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Lotérica Boa Sorte</div><div style="font-size:11.5px;color:var(--muted)">Av. Brasil, 456 · 720m</div></div><span class="badge bg-ok">Aberto</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Farmácia Popular</div><div style="font-size:11.5px;color:var(--muted)">Rua São João, 89 · 1,2km</div></div><span class="badge bg-warn">Fecha 22h</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ MARKETPLACE FINANCEIRO ██ -->
+      <div class="page" id="page-mktfinanceiro">
+        <div style="background:linear-gradient(135deg,#0c4a6e,#075985,#0369a1);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💹</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💹 Marketplace Financeiro · Open Finance</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Compare e contrate produtos financeiros</h2>
+          <p style="font-size:13.5px;opacity:.7">CDBs, LCIs, fundos, crédito e seguros dos melhores parceiros · Open Finance Brasil</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px">
+          <div class="card">
+            <div class="sec-title">💰 Melhores CDBs disponíveis</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB Inter · 113% CDI</div><div style="font-size:11.5px;color:var(--muted)">12 meses · Liq. no venc. · Mín R$ 100</div></div><button class="btn-sm btn-p" onclick="showToast('✅ CDB Inter contratado!','success')">Investir</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB C6 · 111% CDI</div><div style="font-size:11.5px;color:var(--muted)">6 meses · Liq. diária · Mín R$ 50</div></div><button class="btn-sm btn-p" onclick="showToast('✅ CDB C6 contratado!','success')">Investir</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB Nubank · 109% CDI</div><div style="font-size:11.5px;color:var(--muted)">3 meses · Liq. diária · Mín R$ 1</div></div><button class="btn-sm btn-p" onclick="showToast('✅ CDB Nubank contratado!','success')">Investir</button></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">🏦 Melhores taxas de crédito</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Emp. Pessoal · 1,29% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Celcoin Flow Finance · Até R$ 50k</div></div><button class="btn-sm btn-p" onclick="showToast('💰 Proposta enviada!','info')">Simular</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Consignado · 0,99% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Servidores públicos · Fineract</div></div><button class="btn-sm btn-p" onclick="showToast('💰 Consignado simulado!','info')">Simular</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Crédito Auto · 0,79% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Financiamento veicular · FIDC</div></div><button class="btn-sm btn-p" onclick="showToast('🚗 Simulação enviada!','info')">Simular</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-title">🔗 Parceiros Open Finance conectados</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:4px">🟠</div><div style="font-size:12px;font-weight:700">Itaú</div></div>
+            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:4px">🔵</div><div style="font-size:12px;font-weight:700">Bradesco</div></div>
+            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:4px">🟡</div><div style="font-size:12px;font-weight:700">Santander</div></div>
+            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:4px">💜</div><div style="font-size:12px;font-weight:700">Nubank</div></div>
+            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:4px">🟢</div><div style="font-size:12px;font-weight:700">Inter</div></div>
+            <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:4px">🔵</div><div style="font-size:12px;font-weight:700">C6 Bank</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ INDICAÇÃO ██ -->
+      <div class="page" id="page-indicacao">
+        <div style="background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🎁</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🎁 Programa de Indicação · MeuBanco Referral</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Indique amigos e ganhe!</h2>
+          <p style="font-size:13.5px;opacity:.7">Você e seu amigo ganham R$ 50 quando ele fizer o 1º PIX · Sem limite de indicações</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px">
+          <div class="card" style="text-align:center;background:linear-gradient(135deg,#ede9fe,#ddd6fe)">
+            <div style="font-size:42px;margin-bottom:8px">🎁</div>
+            <div style="font-size:36px;font-weight:900;color:var(--pur)">R$ 350</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Ganhos totais de indicações</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="background:#fff;border-radius:9px;padding:10px"><div style="font-size:20px;font-weight:900;color:var(--pur)">7</div><div style="font-size:11.5px;color:var(--muted)">Amigos indicados</div></div>
+              <div style="background:#fff;border-radius:9px;padding:10px"><div style="font-size:20px;font-weight:900;color:var(--ok)">5</div><div style="font-size:11.5px;color:var(--muted)">Convertidos</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">Seu link de indicação</div>
+            <div style="background:var(--bg);border-radius:10px;padding:14px;margin-bottom:14px;font-family:monospace;font-size:13px;word-break:break-all;color:var(--p1)">meubanco.com.br/invite/JOAO2026</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+              <button class="btn btn-primary" style="padding:11px" onclick="showToast('📋 Link copiado!','success')">📋 Copiar link</button>
+              <button class="btn" style="padding:11px;background:var(--ok);color:#fff" onclick="showToast('📤 Compartilhado!','success')">📤 Compartilhar</button>
+            </div>
+            <div style="background:#eff6ff;border-radius:9px;padding:12px;font-size:12.5px;color:var(--muted)">
+              <strong style="color:var(--p1)">Como funciona:</strong><br>
+              1. Compartilhe seu link<br>
+              2. Amigo abre conta com seu link<br>
+              3. Amigo faz 1º PIX acima de R$ 10<br>
+              4. Vocês dois ganham R$ 50 cada! 🎉
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-title">Histórico de indicações</div>
+          <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--bg)"><th style="padding:10px 14px;text-align:left;font-size:12px;color:var(--muted)">AMIGO</th><th style="padding:10px 14px;text-align:left;font-size:12px;color:var(--muted)">DATA</th><th style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">STATUS</th><th style="padding:10px 14px;text-align:right;font-size:12px;color:var(--muted)">BÔNUS</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:11px 14px;font-size:13.5px;font-weight:600">Maria Clara</td><td style="padding:11px 14px;font-size:12.5px;color:var(--muted)">28/05/2026</td><td style="padding:11px 14px;text-align:center"><span class="badge bg-ok">Convertido ✅</span></td><td style="padding:11px 14px;text-align:right;font-weight:800;color:var(--ok)">+ R$ 50,00</td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:11px 14px;font-size:13.5px;font-weight:600">Pedro Lima</td><td style="padding:11px 14px;font-size:12.5px;color:var(--muted)">20/05/2026</td><td style="padding:11px 14px;text-align:center"><span class="badge bg-ok">Convertido ✅</span></td><td style="padding:11px 14px;text-align:right;font-weight:800;color:var(--ok)">+ R$ 50,00</td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:11px 14px;font-size:13.5px;font-weight:600">Ana Beatriz</td><td style="padding:11px 14px;font-size:12.5px;color:var(--muted)">15/05/2026</td><td style="padding:11px 14px;text-align:center"><span class="badge bg-warn">Aguardando PIX</span></td><td style="padding:11px 14px;text-align:right;font-weight:800;color:var(--muted)">Pendente</td></tr>
+              <tr><td style="padding:11px 14px;font-size:13.5px;font-weight:600">Carlos Mota</td><td style="padding:11px 14px;font-size:12.5px;color:var(--muted)">10/05/2026</td><td style="padding:11px 14px;text-align:center"><span class="badge bg-err">Expirado ❌</span></td><td style="padding:11px 14px;text-align:right;font-weight:800;color:var(--err)">R$ 0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ██ COMISSÕES ██ -->
+      <div class="page" id="page-comissoes">
+        <div style="background:linear-gradient(135deg,#14532d,#15803d,#16a34a);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💎</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Agentes e Parceiros</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Suas comissões e repasses</h2>
+          <p style="font-size:13.5px;opacity:.7">Acompanhe em tempo real os ganhos de todos os produtos vendidos e indicados</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+          <div class="card" style="text-align:center;border-top:4px solid var(--ok)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Comissões Junho</div><div style="font-size:28px;font-weight:900;color:var(--ok)">R$ 3.840</div><div style="font-size:11px;color:var(--ok)">▲ +22% vs. maio</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--inf)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Aguardando pagamento</div><div style="font-size:28px;font-weight:900;color:var(--inf)">R$ 1.240</div><div style="font-size:11.5px;color:var(--muted)">Pagamento: 10/07</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--pur)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Equipe sob gestão</div><div style="font-size:28px;font-weight:900;color:var(--pur)">18 agentes</div><div style="font-size:11.5px;color:var(--muted)">3 corretores, 15 motoboys</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--amber)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total acumulado 2026</div><div style="font-size:28px;font-weight:900;color:var(--amber)">R$ 19.420</div><div style="font-size:11.5px;color:var(--muted)">Jan–Jun 2026</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px">
+          <div class="card">
+            <div class="sec-title">Comissões por produto — Junho/2026</div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--bg)"><th style="padding:9px 12px;text-align:left;font-size:11.5px;color:var(--muted)">PRODUTO</th><th style="padding:9px 12px;text-align:center;font-size:11.5px;color:var(--muted)">VENDAS</th><th style="padding:9px 12px;text-align:right;font-size:11.5px;color:var(--muted)">COMISSÃO</th></tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">8% sobre prêmio</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">42</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 1.890</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">12% sobre prêmio</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">18</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 940</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">💰 Crédito</div><div style="font-size:11px;color:var(--muted)">1,5% sobre valor</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">8</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 720</td></tr>
+                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎁 Indicações</div><div style="font-size:11px;color:var(--muted)">R$ 25/cliente ativo</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">12</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 300</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="sec-title">Próximos pagamentos</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="padding:12px;background:#f0fdf4;border-radius:10px;border-left:3px solid var(--ok)"><div style="font-size:13.5px;font-weight:700;margin-bottom:4px">💸 Pagamento automático</div><div style="font-size:12px;color:var(--muted)">10/07/2026 · Via PIX</div><div style="font-size:20px;font-weight:900;color:var(--ok);margin-top:4px">R$ 1.240,00</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:13px;font-weight:600">Chave PIX cadastrada</div><div style="font-size:12px;color:var(--muted);margin-top:3px">CPF: •••.456.789-00</div><div style="font-size:12px;color:var(--p3);margin-top:3px;cursor:pointer" onclick="showToast('✅ Chave PIX atualizada!','success')">Alterar chave de recebimento →</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:13px;font-weight:600">Nota fiscal automática</div><div style="font-size:12px;color:var(--muted);margin-top:3px">MEI / PJ obrigatório acima de R$ 500</div><div style="font-size:12px;color:var(--p3);margin-top:3px;cursor:pointer" onclick="showToast('📄 NF gerada!','success')">Gerar NF →</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ MOTOBOYS ██ -->
+      <div class="page" id="page-motoboys">
+        <div style="background:linear-gradient(135deg,#7f1d1d,#991b1b,#b91c1c);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🛵</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🛵 Operadores Motoboy · Entrega e Cobrança Presencial</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Rede de Motoboys Bancários</h2>
+          <p style="font-size:13.5px;opacity:.7">Coleta de documentos, entrega de cartões, cobrança presencial e cash-in/out door-to-door</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">🛵</div><div style="font-size:24px;font-weight:900;color:var(--err)">147</div><div style="font-size:12px;color:var(--muted)">Motoboys ativos</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">📦</div><div style="font-size:24px;font-weight:900;color:var(--ok)">1.284</div><div style="font-size:12px;color:var(--muted)">Entregas/mês</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">⭐</div><div style="font-size:24px;font-weight:900;color:var(--amber)">4,9/5</div><div style="font-size:12px;color:var(--muted)">Avaliação média</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">⏱️</div><div style="font-size:24px;font-weight:900;color:var(--teal)">42 min</div><div style="font-size:12px;color:var(--muted)">Tempo médio</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="sec-title">Solicitar serviço de motoboy</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#e0e7ff'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('📦 Entrega de cartão agendada!','success')"><div style="font-size:13.5px;font-weight:700">💳 Entrega de Cartão</div><div style="font-size:12px;color:var(--muted)">Cartão novo ou 2ª via · Prazo: 2h · Taxa: grátis</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('💵 Coleta de dinheiro agendada!','success')"><div style="font-size:13.5px;font-weight:700">💵 Cash-in (coleta)</div><div style="font-size:12px;color:var(--muted)">Depósito na conta em até 1h · Taxa: R$ 5</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('💸 Saque em casa agendado!','success')"><div style="font-size:13.5px;font-weight:700">💸 Cash-out (entrega)</div><div style="font-size:12px;color:var(--muted)">Dinheiro na porta · Limite R$ 2.000 · Taxa: R$ 8</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('📄 Coleta de docs agendada!','info')"><div style="font-size:13.5px;font-weight:700">📄 Coleta de documentos</div><div style="font-size:12px;color:var(--muted)">KYC presencial · Prazo: 4h</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">Motoboys disponíveis agora</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#b91c1c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px">R</div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Roberto S.</div><div style="font-size:11.5px;color:var(--muted)">350m de você · ⭐ 4,9 · 842 entregas</div></div><span class="badge bg-ok">Livre</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px">M</div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Marcos P.</div><div style="font-size:11.5px;color:var(--muted)">720m de você · ⭐ 5,0 · 1.204 entregas</div></div><span class="badge bg-ok">Livre</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#10b981,#047857);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px">J</div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Jefferson L.</div><div style="font-size:11.5px;color:var(--muted)">1,1km de você · ⭐ 4,8 · 615 entregas</div></div><span class="badge bg-warn">Em rota</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ CORRETORES ██ -->
+      <div class="page" id="page-corretores">
+        <div style="background:linear-gradient(135deg,#0c4a6e,#155e75,#0e7490);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🤝</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🤝 Corretores de Seguros e Investimentos · SUSEP / CVM</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Painel do Corretor</h2>
+          <p style="font-size:13.5px;opacity:.7">Gerencie sua carteira de clientes, emita apólices e acompanhe comissões · Fineract + Celcoin</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+          <div class="card" style="text-align:center;border-top:4px solid var(--teal)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Carteira de clientes</div><div style="font-size:28px;font-weight:900;color:var(--teal)">284</div><div style="font-size:11px;color:var(--ok)">▲ +8 este mês</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--ok)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Prêmios emitidos/mês</div><div style="font-size:28px;font-weight:900;color:var(--ok)">R$ 48.200</div><div style="font-size:11px;color:var(--ok)">▲ +15%</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--amber)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Comissão pendente</div><div style="font-size:28px;font-weight:900;color:var(--amber)">R$ 6.840</div><div style="font-size:11.5px;color:var(--muted)">Pag: 10/07</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--pur)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Apólices ativas</div><div style="font-size:28px;font-weight:900;color:var(--pur)">1.042</div><div style="font-size:11.5px;color:var(--muted)">Auto + Vida + Res.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="sec-title">Top clientes — carteira</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13.5px;font-weight:700">Ana Paula Invest.</div><div style="font-size:11.5px;color:var(--muted)">3 apólices · Auto + Vida + Emp.</div></div><div style="font-size:13px;font-weight:800;color:var(--ok)">R$ 847/mês</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13.5px;font-weight:700">Pedro Alves</div><div style="font-size:11.5px;color:var(--muted)">2 apólices · Auto + Residencial</div></div><div style="font-size:13px;font-weight:800;color:var(--ok)">R$ 420/mês</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13.5px;font-weight:700">Clínica Saúde+</div><div style="font-size:11.5px;color:var(--muted)">1 apólice · Empresarial PJ</div></div><div style="font-size:13px;font-weight:800;color:var(--ok)">R$ 1.200/mês</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sec-title">Emitir nova apólice</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Tipo de seguro</label><select class="f-inp" style="border-radius:9px;padding:11px 14px"><option>🚗 Seguro Auto</option><option>🏠 Seguro Residencial</option><option>🏥 Seguro Saúde</option><option>💼 Seguro Empresarial</option></select></div>
+              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Cliente</label><input class="f-inp" placeholder="Buscar cliente..." style="border-radius:9px;padding:11px 14px"></div>
+              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Valor segurado</label><input class="f-inp" placeholder="R$ 0,00" type="number" style="border-radius:9px;padding:11px 14px"></div>
+              <button class="btn btn-primary" onclick="showToast('📄 Apólice emitida via Documenso!','success')" style="padding:12px">Emitir Apólice →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ██ PARCEIROS ██ -->
+      <div class="page" id="page-parceiros">
+        <div style="background:linear-gradient(135deg,#1e1b4b,#312e81,#4338ca);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🌐</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🌐 Rede de Parceiros · White-label e Integrações</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Ecossistema de Parceiros</h2>
+          <p style="font-size:13.5px;opacity:.7">Integre sua empresa ao MeuBanco via API · White-label · BaaS · Revenue share</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="showToast('🏪 Plano Lojista selecionado!','info')">
+            <div style="font-size:36px;margin-bottom:8px">🏪</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:6px">Lojista</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Aceite PIX, boleto e cartão. Receba pagamentos e gerencie seu negócio.</div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Taxa PIX: 0,5% · Cartão: 1,9% + R$0,09</div>
+            <button class="btn btn-primary" style="padding:10px;font-size:12.5px">Cadastrar loja →</button>
+          </div>
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s;border:2px solid var(--p3)" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:10px;background:var(--p3);color:#fff;padding:3px 10px;border-radius:20px;margin-bottom:6px;display:inline-block">🔗 WHITE-LABEL</div>
+            <div style="font-size:36px;margin-bottom:8px">🏦</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:6px">Fintech Parceira</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Lance seu próprio banco digital com nossa infraestrutura Fineract + Celcoin.</div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Revenue share: 30% · Setup: grátis</div>
+            <button class="btn btn-primary" style="padding:10px;font-size:12.5px" onclick="showToast('🏦 Proposta white-label enviada!','success')">Solicitar proposta →</button>
+          </div>
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:36px;margin-bottom:8px">👨‍💻</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:6px">Desenvolvedor</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Acesse nossa API REST + Webhooks. SDKs em Node.js, Python, Java e Flutter.</div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Sandbox gratuito · Docs completas</div>
+            <button class="btn btn-primary" style="padding:10px;font-size:12.5px" onclick="showToast('📚 Docs abertas!','info')">Acessar sandbox →</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-title">Parceiros ativos na plataforma</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">🔗</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Celcoin</div><div style="font-size:11.5px;color:var(--muted)">BaaS · PIX · Cartão</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">💸</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Fitbank</div><div style="font-size:11.5px;color:var(--muted)">PIX · Boleto · TED</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">🛍️</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Medusa</div><div style="font-size:11.5px;color:var(--muted)">Commerce · Orders</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">📝</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Documenso</div><div style="font-size:11.5px;color:var(--muted)">Assinatura digital</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">👥</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Twenty CRM</div><div style="font-size:11.5px;color:var(--muted)">CRM open-source</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">🏗️</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Fineract</div><div style="font-size:11.5px;color:var(--muted)">Core banking</div><span class="badge bg-warn" style="margin-top:6px;display:inline-block">Config.</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">🛵</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">MotoboyHub</div><div style="font-size:11.5px;color:var(--muted)">Entrega e coleta</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">➕</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Novo parceiro</div><div style="font-size:11.5px;color:var(--muted)">Integre sua empresa</div><button class="btn-sm btn-p" style="margin-top:6px;font-size:11px;padding:4px 10px" onclick="showToast('📧 Proposta enviada!','info')">Integrar</button></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1590,9 +2105,15 @@ function doLogout(){
 }
 
 /* NAV */
-const TITLES={home:'Início',pix:'PIX',extrato:'Extrato',contas:'Minhas Contas',cartoes:'Cartões',credito:'Crédito',
-  investimentos:'Investimentos',simulador:'Simulador de Operações',marketplace:'Marketplace',crm:'CRM',documentos:'Documentos',
-  integracoes:'Integrações & APIs',perfil:'Perfil',notificacoes:'Notificações',ajuda:'Ajuda'};
+const TITLES={
+  home:'Início', pix:'PIX', extrato:'Extrato', contas:'Minhas Contas',
+  cartoes:'Cartões', credito:'Crédito', investimentos:'Investimentos', simulador:'Simulador de Operações',
+  wallet:'Wallet Digital', seguros:'Seguros', capitalizacao:'Capitalização', sorteios:'Sorteios & Prêmios',
+  correspondente:'Correspondente Bancário', mktfinanceiro:'Marketplace Financeiro',
+  indicacao:'Indique & Ganhe', comissoes:'Comissões', motoboys:'Motoboys', corretores:'Corretores', parceiros:'Parceiros',
+  marketplace:'Marketplace', crm:'CRM', documentos:'Documentos',
+  integracoes:'Integrações & APIs', perfil:'Perfil', notificacoes:'Notificações', ajuda:'Ajuda'
+};
 function goPage(name,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
