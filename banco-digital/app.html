@@ -2032,7 +2032,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Cobertura completa KASKO. Colisão, roubo, incêndio + assistência 24h.</div>
             <div style="font-size:20px;font-weight:900;color:var(--p1);margin-bottom:4px">A partir de R$ 89/mês</div>
             <span class="badge bg-ok">✅ Ativo</span>
-            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="showToast('🚗 Seguro Auto renovado!','success')">Ver apólice →</button>
+            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="openSeguroProd('auto')">Ver apólice →</button>
           </div>
           <div class="card" style="border-left:4px solid var(--inf)">
             <div style="font-size:30px;margin-bottom:10px">🏥</div>
@@ -2048,17 +2048,17 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Cobertura incêndio, roubo, vendaval, danos elétricos e responsabilidade civil.</div>
             <div style="font-size:20px;font-weight:900;color:var(--p1);margin-bottom:4px">A partir de R$ 29/mês</div>
             <span class="badge bg-warn">⚠️ Renovar</span>
-            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="showToast('🏠 Seguro residencial contratado!','success')">Contratar →</button>
+            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="openSeguroProd('residencial')">Contratar →</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div class="card">
             <div class="sec-title">Outros seguros disponíveis</div>
             <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('📱 Seguro de celular contratado!','success')"><span style="font-size:22px">📱</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Celular</div><div style="font-size:11.5px;color:var(--muted)">Quebra acidental, roubo · A partir R$ 19/mês</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
-              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('✈️ Seguro viagem ativado!','success')"><span style="font-size:22px">✈️</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Viagem</div><div style="font-size:11.5px;color:var(--muted)">Emergência médica, cancelamento · A partir R$ 15/dia</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
-              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('💼 Seguro empresarial!','info')"><span style="font-size:22px">💼</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Empresarial</div><div style="font-size:11.5px;color:var(--muted)">Responsabilidade civil, estabelecimento · PJ</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
-              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="showToast('💳 Seguro cartão ativado!','success')"><span style="font-size:22px">💳</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Cartão</div><div style="font-size:11.5px;color:var(--muted)">Proteção de compras, fraudes · Celcoin</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="openSeguroProd('celular')"><span style="font-size:22px">📱</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Celular</div><div style="font-size:11.5px;color:var(--muted)">Quebra acidental, roubo · A partir R$ 19/mês</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="openSeguroProd('viagem')"><span style="font-size:22px">✈️</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Viagem</div><div style="font-size:11.5px;color:var(--muted)">Emergência médica, cancelamento · A partir R$ 15/dia</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="openSeguroProd('empresarial')"><span style="font-size:22px">💼</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Empresarial</div><div style="font-size:11.5px;color:var(--muted)">Responsabilidade civil, estabelecimento · PJ</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg);border-radius:9px;cursor:pointer" onclick="openSeguroProd('cartao')"><span style="font-size:22px">💳</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">Seguro Cartão</div><div style="font-size:11.5px;color:var(--muted)">Proteção de compras, fraudes · Celcoin</div></div><span style="color:var(--p3);font-weight:700">+</span></div>
             </div>
           </div>
           <div class="card">
@@ -2080,12 +2080,12 @@ input,select,textarea{font-family:inherit;outline:none}
           <p style="font-size:13.5px;opacity:.7">Guarde dinheiro, forme uma reserva e ainda concorra a sorteios mensais</p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
-          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="showToast('🌱 Título Semente contratado!','success')">
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="openCap('semente')">
             <div style="font-size:36px;margin-bottom:8px">🌱</div>
             <div style="font-size:15px;font-weight:800;margin-bottom:4px">Cap Semente</div>
             <div style="font-size:24px;font-weight:900;color:var(--ok);margin-bottom:4px">R$ 50/mês</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:8px">12 meses · Resgate: R$ 550<br>2 bilhetes/mês no sorteio</div>
-            <button class="btn btn-primary" style="padding:10px">Contratar →</button>
+            <button class="btn btn-primary" style="padding:10px" onclick="event.stopPropagation();openCap('semente')">Contratar →</button>
           </div>
           <div class="card" style="text-align:center;cursor:pointer;transition:all .2s;border:2px solid var(--p3)" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
             <div style="font-size:10px;background:var(--p3);color:#fff;padding:3px 10px;border-radius:20px;margin-bottom:8px;display:inline-block">⭐ MAIS POPULAR</div>
@@ -2093,14 +2093,14 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="font-size:15px;font-weight:800;margin-bottom:4px">Cap Árvore</div>
             <div style="font-size:24px;font-weight:900;color:var(--p1);margin-bottom:4px">R$ 150/mês</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:8px">24 meses · Resgate: R$ 3.420<br>5 bilhetes/mês + sorteio especial</div>
-            <button class="btn btn-primary" style="padding:10px" onclick="showToast('🌳 Cap Árvore contratado!','success')">Contratar →</button>
+            <button class="btn btn-primary" style="padding:10px" onclick="openCap('arvore')">Contratar →</button>
           </div>
           <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
             <div style="font-size:36px;margin-bottom:8px">💎</div>
             <div style="font-size:15px;font-weight:800;margin-bottom:4px">Cap Premium</div>
             <div style="font-size:24px;font-weight:900;color:var(--amber);margin-bottom:4px">R$ 500/mês</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:8px">36 meses · Resgate: R$ 17.280<br>20 bilhetes/mês + sorteio exclusivo</div>
-            <button class="btn btn-primary" style="padding:10px" onclick="showToast('💎 Cap Premium contratado!','success')">Contratar →</button>
+            <button class="btn btn-primary" style="padding:10px" onclick="openCap('premium')">Contratar →</button>
           </div>
         </div>
         <div class="card">
@@ -2159,7 +2159,7 @@ input,select,textarea{font-family:inherit;outline:none}
                   <span class="badge bg-ok">Disponível</span>
                 </div>
                 <div style="font-size:24px;font-weight:900;color:var(--ok);margin-bottom:6px">Até R$ 1.000</div>
-                <button class="btn btn-primary" style="padding:11px;background:linear-gradient(135deg,var(--ok),#16a34a)" onclick="showToast('🎉 Parabéns! Você ganhou R$ 150 em pontos!','success')">🎲 Raspar agora!</button>
+                <button class="btn btn-primary" style="padding:11px;background:linear-gradient(135deg,var(--ok),#16a34a)" onclick="openRaspadinha()">🎲 Raspar agora!</button>
               </div>
               <div class="card" style="border-left:4px solid var(--pur)">
                 <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
@@ -2581,9 +2581,9 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="card">
             <div class="sec-title">💰 Melhores CDBs disponíveis</div>
             <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB Inter · 113% CDI</div><div style="font-size:11.5px;color:var(--muted)">12 meses · Liq. no venc. · Mín R$ 100</div></div><button class="btn-sm btn-p" onclick="showToast('✅ CDB Inter contratado!','success')">Investir</button></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB C6 · 111% CDI</div><div style="font-size:11.5px;color:var(--muted)">6 meses · Liq. diária · Mín R$ 50</div></div><button class="btn-sm btn-p" onclick="showToast('✅ CDB C6 contratado!','success')">Investir</button></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB Nubank · 109% CDI</div><div style="font-size:11.5px;color:var(--muted)">3 meses · Liq. diária · Mín R$ 1</div></div><button class="btn-sm btn-p" onclick="showToast('✅ CDB Nubank contratado!','success')">Investir</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB Inter · 113% CDI</div><div style="font-size:11.5px;color:var(--muted)">12 meses · Liq. no venc. · Mín R$ 100</div></div><button class="btn-sm btn-p" onclick="openCDB('inter')">Investir</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB C6 · 111% CDI</div><div style="font-size:11.5px;color:var(--muted)">6 meses · Liq. diária · Mín R$ 50</div></div><button class="btn-sm btn-p" onclick="openCDB('c6')">Investir</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">CDB Nubank · 109% CDI</div><div style="font-size:11.5px;color:var(--muted)">3 meses · Liq. diária · Mín R$ 1</div></div><button class="btn-sm btn-p" onclick="openCDB('nubank')">Investir</button></div>
             </div>
           </div>
           <div class="card">
@@ -2853,7 +2853,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <p style="font-size:13.5px;opacity:.7">Integre sua empresa ao MeuBanco via API · White-label · BaaS · Revenue share</p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
-          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="showToast('🏪 Plano Lojista selecionado!','info')">
+          <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="openParceiro('lojista')">
             <div style="font-size:36px;margin-bottom:8px">🏪</div>
             <div style="font-size:15px;font-weight:800;margin-bottom:6px">Lojista</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Aceite PIX, boleto e cartão. Receba pagamentos e gerencie seu negócio.</div>
@@ -2866,7 +2866,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="font-size:15px;font-weight:800;margin-bottom:6px">Fintech Parceira</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Lance seu próprio banco digital com nossa infraestrutura Fineract + Celcoin.</div>
             <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Revenue share: 30% · Setup: grátis</div>
-            <button class="btn btn-primary" style="padding:10px;font-size:12.5px" onclick="showToast('🏦 Proposta white-label enviada!','success')">Solicitar proposta →</button>
+            <button class="btn btn-primary" style="padding:10px;font-size:12.5px" onclick="openParceiro('whitelabel')">Solicitar proposta →</button>
           </div>
           <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
             <div style="font-size:36px;margin-bottom:8px">👨‍💻</div>
@@ -2886,7 +2886,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">👥</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Twenty CRM</div><div style="font-size:11.5px;color:var(--muted)">CRM open-source</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
             <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">🏗️</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Fineract</div><div style="font-size:11.5px;color:var(--muted)">Core banking</div><span class="badge bg-warn" style="margin-top:6px;display:inline-block">Config.</span></div>
             <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">🛵</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">MotoboyHub</div><div style="font-size:11.5px;color:var(--muted)">Entrega e coleta</div><span class="badge bg-ok" style="margin-top:6px;display:inline-block">Ativo</span></div>
-            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">➕</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Novo parceiro</div><div style="font-size:11.5px;color:var(--muted)">Integre sua empresa</div><button class="btn-sm btn-p" style="margin-top:6px;font-size:11px;padding:4px 10px" onclick="showToast('📧 Proposta enviada!','info')">Integrar</button></div>
+            <div style="padding:14px;background:var(--bg);border-radius:10px"><div style="font-size:24px;margin-bottom:6px">➕</div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Novo parceiro</div><div style="font-size:11.5px;color:var(--muted)">Integre sua empresa</div><button class="btn-sm btn-p" style="margin-top:6px;font-size:11px;padding:4px 10px" onclick="openParceiro('premium')">Integrar</button></div>
           </div>
         </div>
       </div>
@@ -2898,6 +2898,250 @@ input,select,textarea{font-family:inherit;outline:none}
 <!-- ═══════════════════════════════════════════════════════════
      MODAIS FUNCIONAIS — TODOS OS MÓDULOS
 ═══════════════════════════════════════════════════════════ -->
+
+<!-- ████ MODAL CAPITALIZAÇÃO ████ -->
+<div id="modal-cap" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--card);border-radius:22px;padding:0;width:min(560px,96vw);max-height:90svh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35)">
+    <!-- Header -->
+    <div id="cap-modal-header" style="padding:24px 24px 20px;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div id="cap-modal-icon" style="font-size:36px;margin-bottom:4px">🌳</div>
+          <div id="cap-modal-titulo" style="font-size:20px;font-weight:900">Cap Árvore</div>
+          <div id="cap-modal-sub" style="font-size:12.5px;color:var(--muted)">Título de Capitalização · Brasilcap-style</div>
+        </div>
+        <button onclick="closeModal('modal-cap')" style="font-size:26px;color:var(--muted);padding:4px 8px;background:var(--bg);border-radius:9px">×</button>
+      </div>
+    </div>
+    <!-- Conteúdo -->
+    <div style="padding:22px 24px">
+      <!-- Planos -->
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px">ESCOLHA SEU PLANO</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px" id="cap-planos">
+        <div class="cap-plano" data-id="semente" onclick="selectCapPlano(this,'semente')" style="border:2px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s">
+          <div style="font-size:28px">🌱</div>
+          <div style="font-size:13px;font-weight:800;margin:4px 0">Cap Semente</div>
+          <div style="font-size:20px;font-weight:900;color:var(--ok)">R$ 50</div>
+          <div style="font-size:11px;color:var(--muted)">/mês · 12 meses</div>
+          <div style="font-size:10.5px;color:var(--ok);margin-top:6px;font-weight:700">Resgate: R$ 550</div>
+          <div style="font-size:10.5px;color:var(--muted)">2 bilhetes/mês</div>
+        </div>
+        <div class="cap-plano selected" data-id="arvore" onclick="selectCapPlano(this,'arvore')" style="border:2px solid var(--p1);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s;background:#eff6ff">
+          <div style="font-size:10px;background:var(--p1);color:#fff;padding:2px 8px;border-radius:20px;margin-bottom:4px;display:inline-block">⭐ POPULAR</div>
+          <div style="font-size:28px">🌳</div>
+          <div style="font-size:13px;font-weight:800;margin:4px 0">Cap Árvore</div>
+          <div style="font-size:20px;font-weight:900;color:var(--p1)">R$ 150</div>
+          <div style="font-size:11px;color:var(--muted)">/mês · 24 meses</div>
+          <div style="font-size:10.5px;color:var(--ok);margin-top:6px;font-weight:700">Resgate: R$ 3.420</div>
+          <div style="font-size:10.5px;color:var(--muted)">5 bilhetes/mês</div>
+        </div>
+        <div class="cap-plano" data-id="premium" onclick="selectCapPlano(this,'premium')" style="border:2px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s">
+          <div style="font-size:28px">💎</div>
+          <div style="font-size:13px;font-weight:800;margin:4px 0">Cap Premium</div>
+          <div style="font-size:20px;font-weight:900;color:var(--amber)">R$ 500</div>
+          <div style="font-size:11px;color:var(--muted)">/mês · 36 meses</div>
+          <div style="font-size:10.5px;color:var(--ok);margin-top:6px;font-weight:700">Resgate: R$ 17.280</div>
+          <div style="font-size:10.5px;color:var(--muted)">20 bilhetes/mês</div>
+        </div>
+      </div>
+      <!-- Resumo plano selecionado -->
+      <div id="cap-resumo" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:14px;padding:16px;margin-bottom:18px;border:1px solid #bfdbfe">
+        <div style="font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:10px">RESUMO DO PLANO SELECIONADO</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted)">Parcela mensal</div><div id="cap-r-parc" style="font-size:18px;font-weight:900;color:var(--p1)">R$ 150</div></div>
+          <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted)">Total investido</div><div id="cap-r-total" style="font-size:18px;font-weight:900;color:var(--txt)">R$ 3.600</div></div>
+          <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted)">Valor resgate</div><div id="cap-r-resgate" style="font-size:18px;font-weight:900;color:var(--ok)">R$ 3.420</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:#fff;border-radius:9px;padding:10px"><div style="font-size:10.5px;color:var(--muted)">🎫 Bilhetes/mês</div><div id="cap-r-bilhetes" style="font-size:14px;font-weight:800;color:var(--ok)">5 bilhetes</div></div>
+          <div style="background:#fff;border-radius:9px;padding:10px"><div style="font-size:10.5px;color:var(--muted)">🏆 Sorteio</div><div id="cap-r-sorteio" style="font-size:14px;font-weight:800;color:var(--amber)">Mensal + Especial</div></div>
+        </div>
+      </div>
+      <!-- Débito automático -->
+      <div style="background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Débito automático</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CONTA DÉBITO</label>
+            <select style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff">
+              <option>Conta Corrente ••• 4521 — R$ 8.420</option>
+              <option>Conta Poupança ••• 7803 — R$ 24.850</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">DIA DE VENCIMENTO</label>
+            <select style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff">
+              <option>Dia 5</option><option>Dia 10</option><option selected>Dia 15</option><option>Dia 20</option><option>Dia 25</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- Benefícios -->
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:20px;display:flex;flex-direction:column;gap:5px">
+        <div>✅ Sem carência — você pode resgatar após 12 meses</div>
+        <div>✅ Isento de IOF e IR nas primeiras parcelas</div>
+        <div>✅ SUSEP regulamentado — garantido pelo FGC</div>
+        <div>✅ Cancelamento gratuito a qualquer momento (resgate proporcional)</div>
+      </div>
+      <button class="btn btn-primary" style="padding:14px;font-size:15px;width:100%" onclick="contratarCap()">🎰 Contratar agora — débito todo dia 15</button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:10px">Ao contratar você aceita os Termos de Capitalização · Celcoin Insurance</div>
+    </div>
+  </div>
+</div>
+
+<!-- ████ MODAL SEGURO PRODUTO ████ -->
+<div id="modal-seguro-prod" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--card);border-radius:22px;padding:0;width:min(540px,96vw);max-height:90svh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35)">
+    <div id="seg-header" style="padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div><div id="seg-icon" style="font-size:36px;margin-bottom:4px">🏠</div><div id="seg-titulo" style="font-size:20px;font-weight:900">Seguro Residencial</div><div id="seg-sub" style="font-size:12.5px;color:var(--muted)">Celcoin Insurance · SUSEP</div></div>
+      <button onclick="closeModal('modal-seguro-prod')" style="font-size:26px;color:var(--muted);padding:4px 8px;background:var(--bg);border-radius:9px">×</button>
+    </div>
+    <div style="padding:22px 24px">
+      <!-- Planos do seguro -->
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px">ESCOLHA SEU PLANO</div>
+      <div id="seg-planos-grid" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px"></div>
+      <!-- Coberturas -->
+      <div id="seg-coberturas" style="background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Coberturas incluídas</div>
+        <div id="seg-cob-list" style="display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+      <!-- Dados do cliente -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CPF</label><input value="•••.456.789-00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">DATA DE NASCIMENTO</label><input value="15/03/1990" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CEP</label><input placeholder="00000-000" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PAGAMENTO</label>
+          <select style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)">
+            <option>Débito automático</option><option>Boleto mensal</option><option>Cartão crédito</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="padding:14px;font-size:15px;width:100%" onclick="contratarSeguro()">🛡️ Contratar seguro agora</button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:10px">Apólice emitida em até 2 min · Celcoin Insurance SUSEP nº 15.414</div>
+    </div>
+  </div>
+</div>
+
+<!-- ████ MODAL CDB / INVESTIMENTO ████ -->
+<div id="modal-cdb" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--card);border-radius:22px;padding:0;width:min(520px,96vw);max-height:90svh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35)">
+    <div style="padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div><div id="cdb-icon" style="font-size:36px;margin-bottom:4px">📈</div><div id="cdb-titulo" style="font-size:20px;font-weight:900">CDB Inter · 113% CDI</div><div style="font-size:12.5px;color:var(--muted)">Renda Fixa · Open Finance Brasil</div></div>
+      <button onclick="closeModal('modal-cdb')" style="font-size:26px;color:var(--muted);padding:4px 8px;background:var(--bg);border-radius:9px">×</button>
+    </div>
+    <div style="padding:22px 24px">
+      <!-- Simulador CDB -->
+      <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:14px;padding:16px;margin-bottom:18px;border:1px solid #bbf7d0">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px">Simule seu investimento</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">VALOR INICIAL</label>
+            <input id="cdb-valor" type="number" value="1000" min="100" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;font-weight:700;background:#fff" oninput="simCDB()">
+          </div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PRAZO</label>
+            <select id="cdb-prazo" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;background:#fff" onchange="simCDB()">
+              <option value="3">3 meses</option><option value="6">6 meses</option><option value="12" selected>12 meses</option><option value="24">24 meses</option><option value="36">36 meses</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted)">Rendimento</div><div id="cdb-rend" style="font-size:17px;font-weight:900;color:var(--ok)">R$ 0</div></div>
+          <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted)">Total bruto</div><div id="cdb-total" style="font-size:17px;font-weight:900;color:var(--p1)">R$ 0</div></div>
+          <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted)">IR estimado</div><div id="cdb-ir" style="font-size:17px;font-weight:900;color:var(--err)">R$ 0</div></div>
+        </div>
+      </div>
+      <!-- Detalhes do produto -->
+      <div style="background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Detalhes do produto</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="cdb-detalhes"></div>
+      </div>
+      <!-- Aportes adicionais -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CONTA DÉBITO</label>
+          <select style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)">
+            <option>CC ••• 4521 — R$ 8.420</option><option>CP ••• 7803 — R$ 24.850</option>
+          </select>
+        </div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">APORTE MENSAL (opcional)</label>
+          <input type="number" placeholder="R$ 0,00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="padding:14px;font-size:15px;width:100%" onclick="contratarCDB()">📈 Investir agora</button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:10px">Garantido pelo FGC até R$ 250.000 · Aplicação em até 30 segundos</div>
+    </div>
+  </div>
+</div>
+
+<!-- ████ MODAL RASPADINHA ████ -->
+<div id="modal-raspadinha" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px">
+  <div style="background:linear-gradient(160deg,#1a1a3e,#14532d);border-radius:24px;padding:28px;width:min(440px,96vw);text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.5)">
+    <button onclick="closeModal('modal-raspadinha')" style="position:absolute;top:16px;right:20px;font-size:24px;color:rgba(255,255,255,.5);background:none;border:none">×</button>
+    <div style="font-size:48px;margin-bottom:8px">🎰</div>
+    <div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:4px">Sorteio Instantâneo</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:24px">Raspe e descubra seu prêmio • Limite: 1 vez/dia</div>
+    <!-- Grade raspadinha -->
+    <div id="raspa-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px">
+    </div>
+    <div id="raspa-resultado" style="display:none;padding:16px;border-radius:14px;margin-bottom:18px;font-size:18px;font-weight:900"></div>
+    <button id="raspa-btn" class="btn btn-primary" style="background:linear-gradient(135deg,#22c55e,#16a34a);padding:14px;font-size:15px;width:100%;border-radius:14px" onclick="rasparAgora()">🎲 Raspar agora!</button>
+    <div style="font-size:11.5px;color:rgba(255,255,255,.35);margin-top:12px">Regulamento SUSEP nº 520 · Prêmios creditados em até 24h</div>
+  </div>
+</div>
+
+<!-- ████ MODAL PARCEIRO / LOJISTA ████ -->
+<div id="modal-parceiro" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--card);border-radius:22px;padding:0;width:min(560px,96vw);max-height:90svh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35)">
+    <div style="padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div><div id="parc-icon" style="font-size:36px;margin-bottom:4px">🏪</div><div id="parc-titulo" style="font-size:20px;font-weight:900">Plano Lojista</div><div style="font-size:12.5px;color:var(--muted)">KaiNow White-label · Correspondente Bancário</div></div>
+      <button onclick="closeModal('modal-parceiro')" style="font-size:26px;color:var(--muted);padding:4px 8px;background:var(--bg);border-radius:9px">×</button>
+    </div>
+    <div style="padding:22px 24px">
+      <!-- Planos parceiro -->
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px">PLANOS DISPONÍVEIS</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        <div onclick="selectParc(this,'lojista')" style="border:2px solid var(--ok);border-radius:12px;padding:14px;cursor:pointer;background:#f0fdf4;position:relative">
+          <div style="position:absolute;top:10px;right:12px;font-size:10px;background:var(--ok);color:#fff;padding:2px 8px;border-radius:20px;font-weight:700">SELECIONADO</div>
+          <div style="font-size:15px;font-weight:800;margin-bottom:4px">🏪 Lojista</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-bottom:8px">Para pequenos comércios · Padarias, mercados, lojas</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="background:#fff;border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Tx. transação</div><div style="font-size:14px;font-weight:900;color:var(--ok)">0,99%</div></div>
+            <div style="background:#fff;border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Mensalidade</div><div style="font-size:14px;font-weight:900;color:var(--ok)">Grátis</div></div>
+            <div style="background:#fff;border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Comissão</div><div style="font-size:14px;font-weight:900;color:var(--ok)">2%</div></div>
+          </div>
+        </div>
+        <div onclick="selectParc(this,'premium')" style="border:2px solid var(--border);border-radius:12px;padding:14px;cursor:pointer">
+          <div style="font-size:15px;font-weight:800;margin-bottom:4px">🏦 Premium</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-bottom:8px">Para estabelecimentos maiores · Farmácias, postos, bancos lotéricos</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Tx. transação</div><div style="font-size:14px;font-weight:900;color:var(--p1)">0,49%</div></div>
+            <div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Mensalidade</div><div style="font-size:14px;font-weight:900;color:var(--p1)">R$ 79</div></div>
+            <div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Comissão</div><div style="font-size:14px;font-weight:900;color:var(--p1)">2,5%</div></div>
+          </div>
+        </div>
+        <div onclick="selectParc(this,'whitelabel')" style="border:2px solid var(--border);border-radius:12px;padding:14px;cursor:pointer">
+          <div style="font-size:15px;font-weight:800;margin-bottom:4px">🌐 White-label</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-bottom:8px">Banco digital próprio com sua marca · Para fintechs e empresas</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Setup</div><div style="font-size:14px;font-weight:900;color:var(--amber)">R$ 9.900</div></div>
+            <div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Mensalidade</div><div style="font-size:14px;font-weight:900;color:var(--amber)">R$ 490</div></div>
+            <div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--muted)">Revenue share</div><div style="font-size:14px;font-weight:900;color:var(--amber)">30%</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Dados do responsável -->
+      <div style="background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Dados do estabelecimento</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">RAZÃO SOCIAL / NOME</label><input placeholder="Ex: Mercado Silva Ltda" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CNPJ / CPF</label><input placeholder="00.000.000/0001-00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TELEFONE</label><input placeholder="(11) 99999-9999" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">E-MAIL COMERCIAL</label><input placeholder="contato@empresa.com.br" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="padding:14px;font-size:15px;width:100%" onclick="contratarParceiro()">🤝 Enviar proposta de parceria</button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:10px">Nossa equipe entrará em contato em até 24h úteis</div>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL FATURA CARTÃO -->
 <div id="modal-fatura" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
@@ -4286,6 +4530,298 @@ function buscarCorrespondentes(){
 ══════════════════════════════════════════════ */
 function agendarKYC(){
   showToast('📅 KYC agendado! Um motoboy chegará em até 4h.','success');
+}
+
+/* ══════════════════════════════════════════════
+   MODAIS DE PRODUTOS — Capitalização, Seguros, CDB, Raspadinha, Parceiros
+══════════════════════════════════════════════ */
+
+// ── HELPER GERAL ──
+function closeModal(id){ const m=document.getElementById(id); if(m){m.style.display='none';} }
+function openModalEl(id){ const m=document.getElementById(id); if(m){m.style.display='flex';} }
+
+// ══ CAPITALIZAÇÃO ══
+const CAP_PLANOS={
+  semente:{icon:'🌱',nome:'Cap Semente',valor:50,meses:12,resgate:550,bilhetes:2,sorteio:'Mensal',totalInv:600},
+  arvore: {icon:'🌳',nome:'Cap Árvore', valor:150,meses:24,resgate:3420,bilhetes:5,sorteio:'Mensal + Especial',totalInv:3600},
+  premium:{icon:'💎',nome:'Cap Premium',valor:500,meses:36,resgate:17280,bilhetes:20,sorteio:'Mensal + Trimestral Exclusivo',totalInv:18000},
+};
+let _capSel='arvore';
+function openCap(plano){
+  _capSel=plano||'arvore';
+  openModalEl('modal-cap');
+  // Selecionar plano visualmente
+  document.querySelectorAll('.cap-plano').forEach(el=>{
+    const isMe=el.dataset.id===_capSel;
+    el.style.border=isMe?'2px solid var(--p1)':'2px solid var(--border)';
+    el.style.background=isMe?'#eff6ff':'var(--card)';
+  });
+  atualizarResumoCAP(_capSel);
+}
+function selectCapPlano(el,id){
+  _capSel=id;
+  document.querySelectorAll('.cap-plano').forEach(e=>{
+    e.style.border='2px solid var(--border)';e.style.background='var(--card)';
+  });
+  el.style.border='2px solid var(--p1)';el.style.background='#eff6ff';
+  atualizarResumoCAP(id);
+}
+function atualizarResumoCAP(id){
+  const p=CAP_PLANOS[id];if(!p)return;
+  document.getElementById('cap-r-parc').textContent='R$ '+p.valor;
+  document.getElementById('cap-r-total').textContent='R$ '+fmt(p.totalInv);
+  document.getElementById('cap-r-resgate').textContent='R$ '+fmt(p.resgate);
+  document.getElementById('cap-r-bilhetes').textContent=p.bilhetes+' bilhetes';
+  document.getElementById('cap-r-sorteio').textContent=p.sorteio;
+}
+function contratarCap(){
+  const p=CAP_PLANOS[_capSel];
+  closeModal('modal-cap');
+  showToast(p.icon+' '+p.nome+' contratado! Débito de R$ '+p.valor+' todo dia 15.','success');
+}
+
+// ══ SEGUROS ══
+const SEG_PRODUTOS={
+  auto:{icon:'🚗',nome:'Seguro Auto',sub:'KASKO completo · Celcoin Insurance',
+    planos:[
+      {nome:'Básico',valor:89,cob:'R$ 30.000',desc:'Colisão, roubo, incêndio'},
+      {nome:'Intermediário',valor:129,cob:'R$ 60.000',desc:'+ Vidros, terceiros, assistência 24h'},
+      {nome:'Total',valor:189,cob:'R$ 120.000',desc:'+ Carro reserva, proteção chuva/granizo'},
+    ],
+    coberturas:['✅ Colisão (casco)','✅ Roubo e furto','✅ Incêndio','✅ Assistência 24h','✅ Guincho até 500km'],
+  },
+  residencial:{icon:'🏠',nome:'Seguro Residencial',sub:'Proteção total para seu lar · Celcoin',
+    planos:[
+      {nome:'Essencial',valor:29,cob:'R$ 50.000',desc:'Incêndio, raio, explosão'},
+      {nome:'Família',valor:49,cob:'R$ 100.000',desc:'+ Roubo, danos elétricos, vendaval'},
+      {nome:'Premium',valor:89,cob:'R$ 300.000',desc:'+ Responsabilidade civil, água canalizada'},
+    ],
+    coberturas:['✅ Incêndio e explosão','✅ Roubo de bens','✅ Danos elétricos','✅ Vendaval e granizo','✅ Responsabilidade civil'],
+  },
+  celular:{icon:'📱',nome:'Seguro Celular',sub:'Proteção contra roubo e quebra',
+    planos:[
+      {nome:'Quebra acidental',valor:19,cob:'Tela + estrutura',desc:'Danos acidentais, quedas'},
+      {nome:'Roubo + Quebra',valor:29,cob:'Aparelho completo',desc:'+ Roubo, furto qualificado'},
+      {nome:'Total',valor:39,cob:'Aparelho + Acessórios',desc:'+ Celular reserva até 72h'},
+    ],
+    coberturas:['✅ Quebra acidental','✅ Danos por queda','✅ Roubo e furto (plano acima)','✅ Assistência técnica autorizada'],
+  },
+  viagem:{icon:'✈️',nome:'Seguro Viagem',sub:'Proteção para suas aventuras',
+    planos:[
+      {nome:'Nacional',valor:15,cob:'R$ 20.000',desc:'Emergência médica nacional · por dia'},
+      {nome:'Internacional',valor:35,cob:'USD 30.000',desc:'+ Cancelamento, bagagem · por dia'},
+      {nome:'Premium Global',valor:65,cob:'USD 100.000',desc:'+ Esportes, covid, aventura · por dia'},
+    ],
+    coberturas:['✅ Emergência médica','✅ Hospitalização','✅ Cancelamento de voo','✅ Extravio de bagagem','✅ Repatriação'],
+  },
+  empresarial:{icon:'💼',nome:'Seguro Empresarial',sub:'Proteção para seu negócio · PJ',
+    planos:[
+      {nome:'MEI / Pequeno',valor:79,cob:'R$ 100.000',desc:'Estabelecimento + estoque'},
+      {nome:'Médio Porte',valor:199,cob:'R$ 500.000',desc:'+ Responsabilidade civil, lucros cessantes'},
+      {nome:'Grande Porte',valor:499,cob:'R$ 2.000.000',desc:'+ D&O, cyber risk, recall'},
+    ],
+    coberturas:['✅ Incêndio do estabelecimento','✅ Roubo de equipamentos','✅ Responsabilidade civil','✅ Danos elétricos'],
+  },
+  cartao:{icon:'💳',nome:'Seguro Cartão',sub:'Proteção contra fraudes · Celcoin',
+    planos:[
+      {nome:'Básico',valor:9.9,cob:'R$ 5.000',desc:'Compras não reconhecidas'},
+      {nome:'Plus',valor:19.9,cob:'R$ 15.000',desc:'+ Saque sob coação, roubo'},
+      {nome:'Total',valor:29.9,cob:'R$ 50.000',desc:'+ Boleto fraudulento, phishing'},
+    ],
+    coberturas:['✅ Compras não reconhecidas','✅ Roubo do cartão','✅ Fraude online','✅ Saque sob coação'],
+  },
+};
+let _segProdSel=null, _segPlanoIdx=0;
+function openSeguroProd(tipo){
+  const p=SEG_PRODUTOS[tipo];if(!p)return;
+  _segProdSel=tipo;_segPlanoIdx=1;
+  document.getElementById('seg-icon').textContent=p.icon;
+  document.getElementById('seg-titulo').textContent=p.nome;
+  document.getElementById('seg-sub').textContent=p.sub;
+  // Planos
+  const g=document.getElementById('seg-planos-grid');
+  g.innerHTML=p.planos.map((pl,i)=>`
+    <div onclick="selectSegPlano(this,${i})" style="border:2px solid ${i===1?'var(--p1)':'var(--border)'};border-radius:12px;padding:14px;cursor:pointer;background:${i===1?'#eff6ff':'var(--card)'};transition:all .2s">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div style="font-size:14px;font-weight:800">${pl.nome}</div>
+        <div style="font-size:18px;font-weight:900;color:var(--p1)">R$ ${fmt(pl.valor)}<span style="font-size:11px;font-weight:400;color:var(--muted)">/mês</span></div>
+      </div>
+      <div style="font-size:12px;color:var(--muted)">${pl.desc}</div>
+      <div style="font-size:11.5px;color:var(--ok);margin-top:4px;font-weight:700">Cobertura: ${pl.cob}</div>
+    </div>`).join('');
+  // Coberturas
+  document.getElementById('seg-cob-list').innerHTML=p.coberturas.map(c=>`<div style="font-size:13px">${c}</div>`).join('');
+  openModalEl('modal-seguro-prod');
+}
+function selectSegPlano(el,idx){
+  _segPlanoIdx=idx;
+  el.parentElement.querySelectorAll('div[onclick]').forEach((e,i)=>{
+    e.style.border=i===idx?'2px solid var(--p1)':'2px solid var(--border)';
+    e.style.background=i===idx?'#eff6ff':'var(--card)';
+  });
+}
+function contratarSeguro(){
+  const p=SEG_PRODUTOS[_segProdSel];
+  const pl=p?p.planos[_segPlanoIdx]:null;
+  closeModal('modal-seguro-prod');
+  showToast((p?p.icon:'🛡️')+' '+(p?p.nome:'Seguro')+' contratado! Apólice em até 2 min.','success');
+}
+
+// ══ CDB / INVESTIMENTOS ══
+const CDB_PRODUTOS={
+  inter:{icon:'🟠',nome:'CDB Inter · 113% CDI',emissor:'Banco Inter',rentab:113,minimo:100,liquidez:'No vencimento',prazo:12,garantia:'FGC'},
+  c6:   {icon:'🔵',nome:'CDB C6 · 111% CDI',   emissor:'C6 Bank',   rentab:111,minimo:50, liquidez:'Diária',         prazo:6, garantia:'FGC'},
+  nubank:{icon:'💜',nome:'CDB Nubank · 109% CDI',emissor:'Nubank',   rentab:109,minimo:1,  liquidez:'Diária',         prazo:3, garantia:'FGC'},
+};
+let _cdbSel='inter';
+function openCDB(tipo){
+  _cdbSel=tipo||'inter';
+  const p=CDB_PRODUTOS[_cdbSel];if(!p)return;
+  document.getElementById('cdb-icon').textContent=p.icon;
+  document.getElementById('cdb-titulo').textContent=p.nome;
+  // Detalhes
+  const d=document.getElementById('cdb-detalhes');
+  d.innerHTML=[
+    ['Emissor',p.emissor],['Rentabilidade',p.rentab+'% CDI'],
+    ['Prazo típico',p.prazo+' meses'],['Liquidez',p.liquidez],
+    ['Investimento mín.','R$ '+p.minimo],['Garantia FGC','Até R$ 250.000'],
+  ].map(([k,v])=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px"><div style="font-size:10.5px;color:var(--muted)">${k}</div><div style="font-size:13px;font-weight:700">${v}</div></div>`).join('');
+  openModalEl('modal-cdb');
+  simCDB();
+}
+function simCDB(){
+  const val=parseFloat(document.getElementById('cdb-valor')?.value)||1000;
+  const prazo=parseInt(document.getElementById('cdb-prazo')?.value)||12;
+  const p=CDB_PRODUTOS[_cdbSel];if(!p)return;
+  const cdiAm=0.1065/12; // CDI ~10.65% a.a.
+  const taxa=cdiAm*(p.rentab/100);
+  const total=val*Math.pow(1+taxa,prazo);
+  const rend=total-val;
+  const aliq=prazo<=6?0.225:prazo<=12?0.20:prazo<=24?0.175:0.15;
+  const ir=rend*aliq;
+  const fmtV=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+  document.getElementById('cdb-rend').textContent=fmtV(rend);
+  document.getElementById('cdb-total').textContent=fmtV(total);
+  document.getElementById('cdb-ir').textContent=fmtV(ir);
+}
+function contratarCDB(){
+  const p=CDB_PRODUTOS[_cdbSel];
+  closeModal('modal-cdb');
+  showToast((p?p.icon:'📈')+' '+(p?p.nome:'CDB')+' contratado! Aplicação confirmada.','success');
+}
+
+// ══ RASPADINHA ══
+const RASPA_EMOJIS=['💰','🍋','💎','⭐','🎰','🍀','🎁','💸','🏆'];
+const RASPA_PREMIOS={
+  '💰💰💰':'R$ 500,00',
+  '💎💎💎':'R$ 1.000,00',
+  '🏆🏆🏆':'R$ 250,00',
+  '⭐⭐⭐':'R$ 100,00',
+  '🎰🎰🎰':'R$ 50,00',
+};
+function openRaspadinha(){
+  const g=document.getElementById('raspa-grid');
+  if(!g)return;
+  const res=document.getElementById('raspa-resultado');
+  const btn=document.getElementById('raspa-btn');
+  res.style.display='none';
+  btn.style.display='block';
+  btn.disabled=false;
+  // Gera grade com emojis aleatórios escondidos
+  const cells=[];
+  for(let i=0;i<9;i++){
+    const em=RASPA_EMOJIS[Math.floor(Math.random()*RASPA_EMOJIS.length)];
+    cells.push(em);
+  }
+  g.innerHTML=cells.map((em,i)=>`
+    <div id="raspa-cell-${i}" style="height:72px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;border:2px solid rgba(255,255,255,.3);transition:all .3s" data-em="${em}" onclick="raspaCell(this,${i})">
+      <span style="font-size:22px">🎫</span>
+    </div>`).join('');
+  g._cells=cells;
+  openModalEl('modal-raspadinha');
+}
+let _raspaRevealed=0;
+function raspaCell(el,idx){
+  if(el.dataset.revealed)return;
+  el.dataset.revealed='1';
+  _raspaRevealed++;
+  el.style.background='linear-gradient(135deg,#1a1a3e,#14532d)';
+  el.innerHTML=`<span style="font-size:30px">${el.dataset.em}</span>`;
+}
+function rasparAgora(){
+  const g=document.getElementById('raspa-grid');
+  if(!g)return;
+  _raspaRevealed=0;
+  // Revelar todas as células
+  const cells=g.querySelectorAll('[id^="raspa-cell-"]');
+  cells.forEach((el,i)=>{
+    setTimeout(()=>{
+      el.style.background='linear-gradient(135deg,#1a1a3e,#14532d)';
+      el.innerHTML=`<span style="font-size:30px">${el.dataset.em}</span>`;
+      el.dataset.revealed='1';
+    },i*80);
+  });
+  // Verificar prêmio após revelação
+  setTimeout(()=>{
+    const ems=Array.from(cells).map(e=>e.dataset.em).join('');
+    const rows=[ems.slice(0,3),ems.slice(3,6),ems.slice(6,9)]; // por linha
+    let premio=null;
+    rows.forEach(r=>{if(!premio&&RASPA_PREMIOS[r])premio=RASPA_PREMIOS[r];});
+    // chance 30% de ganhar, 70% de não ganhar
+    const ganhou=Math.random()<0.30;
+    const res=document.getElementById('raspa-resultado');
+    const btn=document.getElementById('raspa-btn');
+    if(ganhou&&!premio){ premio=['R$ 25,00','R$ 50,00','R$ 10,00','500 pontos'][Math.floor(Math.random()*4)]; }
+    res.style.display='block';
+    btn.style.display='none';
+    if(ganhou||premio){
+      res.style.background='linear-gradient(135deg,#14532d,#15803d)';
+      res.innerHTML=`<div style="color:#fff">🎉 Parabéns!</div><div style="color:#86efac;font-size:14px;margin-top:4px">Você ganhou <strong>${premio||'R$ 25,00'}</strong>!</div><div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px">Prêmio creditado em até 24h</div>`;
+      showToast('🎉 Você ganhou '+(premio||'R$ 25,00')+'! Creditado em 24h.','success');
+    } else {
+      res.style.background='rgba(255,255,255,.1)';
+      res.innerHTML=`<div style="color:rgba(255,255,255,.8)">😔 Não foi dessa vez...</div><div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px">Tente novamente amanhã</div>`;
+    }
+  },cells.length*80+200);
+}
+
+// ══ PARCEIROS ══
+let _parcSel='lojista';
+function openParceiro(plano){
+  _parcSel=plano||'lojista';
+  const icons={lojista:'🏪',premium:'🏦',whitelabel:'🌐'};
+  const nomes={lojista:'Plano Lojista',premium:'Plano Premium',whitelabel:'White-label'};
+  document.getElementById('parc-icon').textContent=icons[_parcSel]||'🏪';
+  document.getElementById('parc-titulo').textContent=nomes[_parcSel]||'Parceria';
+  openModalEl('modal-parceiro');
+  // Selecionar plano visualmente
+  selectParc(null,_parcSel);
+}
+function selectParc(el,id){
+  _parcSel=id;
+  const parc=document.getElementById('modal-parceiro');
+  if(!parc)return;
+  parc.querySelectorAll('[onclick^="selectParc"]').forEach(e=>{
+    const myId=e.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    const isMe=myId===id;
+    e.style.border=isMe?'2px solid var(--ok)':'2px solid var(--border)';
+    e.style.background=isMe?'#f0fdf4':'var(--card)';
+    // Atualiza badge selecionado
+    const badge=e.querySelector('[style*="SELECIONADO"]');
+    if(badge) badge.remove();
+    if(isMe){
+      const b=document.createElement('div');
+      b.style='position:absolute;top:10px;right:12px;font-size:10px;background:var(--ok);color:#fff;padding:2px 8px;border-radius:20px;font-weight:700';
+      b.textContent='SELECIONADO';
+      e.style.position='relative';
+      e.appendChild(b);
+    }
+  });
+}
+function contratarParceiro(){
+  const nomes={lojista:'Lojista',premium:'Premium',whitelabel:'White-label'};
+  closeModal('modal-parceiro');
+  showToast('🤝 Proposta '+nomes[_parcSel]+' enviada! Nossa equipe entrará em contato em até 24h.','success');
 }
 
 // ── MOBILE NAVIGATION ──
