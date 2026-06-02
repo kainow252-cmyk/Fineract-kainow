@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeuBanco Digital — Plataforma Completa</title>
+<title>KaiNowPay — Plataforma Financeira Completa</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════
@@ -133,7 +133,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* RIGHT PANEL */
 .lgn-right{
-  width:500px;flex-shrink:0;
+  width:500px;flex-shrink:0;max-width:100%;
   background:#fff;
   display:flex;flex-direction:column;justify-content:space-between;
   padding:0;overflow-y:auto;
@@ -800,14 +800,14 @@ input,select,textarea{font-family:inherit;outline:none}
   .topbar .ham-btn{display:flex!important}
 
   /* Content padding reduzido */
-  .content{padding:14px 12px;padding-bottom:72px}
+  .content{padding:14px 12px;padding-bottom:76px}
 
   /* Grids → 1 coluna ou 2 colunas máximo */
   .sum-cards{grid-template-columns:1fr 1fr}
   .grid2{grid-template-columns:1fr}
   .grid3{grid-template-columns:1fr 1fr}
   .grid4{grid-template-columns:1fr 1fr}
-  .qa-grid{grid-template-columns:repeat(3,1fr)}
+  .qa-grid{grid-template-columns:repeat(4,1fr)!important}
   .credit-products,.crm-cols,.doc-grid{grid-template-columns:1fr}
   .inv-cards{grid-template-columns:1fr 1fr}
   .prod-grid{grid-template-columns:1fr 1fr}
@@ -816,36 +816,94 @@ input,select,textarea{font-family:inherit;outline:none}
   /* Cards inline grids */
   .card-acts{grid-template-columns:repeat(4,1fr)}
 
-  /* Modais mobile */
-  .modal{width:96vw!important;max-width:96vw!important;padding:20px 16px!important;margin:0 auto!important;border-radius:18px!important}
+  /* Modais mobile — full width com scroll */
+  .overlay{align-items:flex-end!important;padding-bottom:0!important}
+  .modal{
+    width:100vw!important;max-width:100vw!important;
+    padding:22px 18px 28px!important;
+    margin:0!important;
+    border-radius:22px 22px 0 0!important;
+    max-height:90svh!important;
+    overflow-y:auto!important;
+  }
 
-  /* Login mobile: stack vertical */
-  .lgn-left{display:none!important}
-  .lgn-right{width:100%!important;min-height:100svh;padding:0!important}
-  .lgn-right-inner{padding:28px 22px!important}
-  .lgn-footer-bar{display:none!important}
-  .lgn-lang{padding:14px 18px 0!important}
+  /* PIX page — remove right empty space */
+  #page-pix .grid2{grid-template-columns:1fr}
+  #page-pix [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+
+  /* Bal hero */
+  .bal-hero{border-radius:16px}
+  .bal-amount{font-size:32px!important}
+  .bal-grid{grid-template-columns:1fr 1fr 1fr}
+
+  /* Quick actions 4x2 */
+  .qa-item{padding:10px 6px}
+  .qa-ico{font-size:22px}
+  .qa-lbl{font-size:10.5px}
+
+  /* Correspondente page inline grids */
+  #page-correspondente [style*="grid-template-columns"]{grid-template-columns:1fr 1fr!important}
+  #crm-nichos [style*="repeat(3"]{grid-template-columns:1fr 1fr!important}
+
+  /* CRM kanban */
+  #kanban-board{grid-template-columns:repeat(9,minmax(155px,155px))!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch}
 
   /* CRM tabs overflow scroll */
   #crm-funil .kanban-board,[id="kanban-board"]{overflow-x:auto}
+  .crm-tabs{overflow-x:auto;white-space:nowrap;display:flex;scrollbar-width:none}
+  .crm-tabs::-webkit-scrollbar{display:none}
 
   /* Tabelas scroll */
-  .card table,.mob-scroll{overflow-x:auto;display:block;max-width:100%}
+  .card table,.mob-scroll{overflow-x:auto;display:block;max-width:100%;-webkit-overflow-scrolling:touch}
+  table{min-width:500px}
 
   /* Splash */
   .spl-badges{flex-wrap:wrap;justify-content:center;gap:6px}
 
-  /* Topbar right */
+  /* Topbar right — hide help, keep bell + avatar */
   .tb-right .tb-btn:not(:last-child){display:none}
+  .tb-right .tb-btn:nth-last-child(2){display:flex!important}
+
+  /* Cards */
+  .card{border-radius:14px}
+
+  /* Section titles */
+  .sec-title{font-size:15px!important}
+
+  /* Comissoes, investimentos grids */
+  #page-comissoes [style*="grid-template-columns: repeat"]{grid-template-columns:1fr 1fr!important}
+  #page-investimentos [style*="repeat(3"]{grid-template-columns:1fr 1fr!important}
+
+  /* Seguros products grid */
+  #page-seguros [style*="repeat(3"]{grid-template-columns:1fr 1fr!important}
+  #page-seguros [style*="repeat(4"]{grid-template-columns:1fr 1fr!important}
+
+  /* Capitalização grid */
+  #page-capitalizacao [style*="repeat(3"]{grid-template-columns:1fr!important}
+
+  /* Loja grid */
+  #page-loja [style*="repeat(4"]{grid-template-columns:1fr 1fr!important}
+  #page-loja [style*="repeat(3"]{grid-template-columns:1fr 1fr!important}
 }
 
 /* ── SMALL MOBILE (≤480px) ── */
 @media(max-width:480px){
   .sum-cards{grid-template-columns:1fr 1fr}
   .grid3{grid-template-columns:1fr}
-  .qa-grid{grid-template-columns:repeat(2,1fr)}
-  .content{padding:12px 10px;padding-bottom:72px}
+  .qa-grid{grid-template-columns:repeat(4,1fr)!important}
+  .content{padding:10px 10px;padding-bottom:76px}
   .card{padding:14px 12px}
+  .bal-amount{font-size:28px!important}
+  .bal-grid{grid-template-columns:1fr 1fr 1fr}
+  .bal-mini .ml{font-size:10px}
+  .bal-mini .mv{font-size:13px}
+  /* Modais 100% bottom sheet */
+  .modal{padding:18px 14px 24px!important;max-height:92svh!important}
+  /* Grids 1 col em muito pequeno */
+  #crm-nichos [style*="repeat(3"]{grid-template-columns:1fr!important}
+  #page-correspondente [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  /* Hide less important topbar items */
+  .tb-right .tb-av{width:32px!important;height:32px!important;font-size:13px!important}
 }
 
 /* ── BOTTOM NAV (mobile only) ── */
@@ -892,6 +950,41 @@ input,select,textarea{font-family:inherit;outline:none}
   cursor:pointer;font-size:20px;flex-shrink:0;transition:all .2s;margin-right:10px;
 }
 .ham-btn:hover{background:var(--bg2)}
+
+/* ── LOGIN RESPONSIVE ── */
+@media(max-width:900px){
+  .lgn-left{flex:0.8;padding:32px 32px 28px 32px}
+  .lgn-headline{font-size:28px}
+  .lgn-features{display:none}
+  .lgn-right{width:420px}
+  .lgn-right-inner{padding:36px 36px}
+}
+
+/* ── TABLET (≤768px) LOGIN OVERRIDE ── */
+@media(max-width:768px){
+  /* Force login to single column */
+  #page-login{overflow-y:auto}
+  .lgn-wrap{flex-direction:column;overflow:visible;min-height:100svh}
+  .lgn-left{display:none!important}
+  .lgn-right{
+    width:100%!important;max-width:100%!important;
+    flex:1;min-height:100svh;
+    overflow-y:auto;
+  }
+  .lgn-right-inner{padding:32px 24px!important;justify-content:flex-start;padding-top:48px!important}
+  .lgn-lang{padding:14px 20px 0!important}
+  .lgn-footer-bar{display:none!important}
+  .lgn-form-title{font-size:24px!important}
+  .lgn-social{grid-template-columns:1fr 1fr!important}
+}
+
+/* ── SMALL MOBILE LOGIN (≤480px) ── */
+@media(max-width:480px){
+  .lgn-right-inner{padding:24px 18px!important;padding-top:40px!important}
+  .lgn-form-title{font-size:22px!important}
+  .lgn-hint{font-size:12px!important}
+  .lgn-btn{font-size:15px!important;padding:14px!important}
+}
 </style>
 </head>
 <body>
@@ -899,7 +992,7 @@ input,select,textarea{font-family:inherit;outline:none}
 <!-- SPLASH -->
 <div id="splash">
   <div class="spl-logo">🏦</div>
-  <div class="spl-name">MeuBanco</div>
+  <div class="spl-name">KaiNowPay</div>
   <div class="spl-sub">Digital Banking Platform</div>
   <div class="spl-badges">
     <span class="spl-badge">⚡ Apache Fineract</span>
@@ -934,7 +1027,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="lgn-brand">
           <div class="lgn-brand-icon"></div>
           <div class="lgn-brand-txt">
-            <h1>KAINOW</h1>
+            <h1>KAINOWPAY</h1>
             <p>BANK</p>
           </div>
         </div>
@@ -982,7 +1075,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="lgn-security-dot"></div>
           <span>Seu dinheiro protegido · Sistema 100% seguro e criptografado</span>
         </div>
-        <div class="lgn-left-footer" style="margin-top:18px">© 2026 KaiNow Financial Platform. Todos os direitos reservados.</div>
+        <div class="lgn-left-footer" style="margin-top:18px">© 2026 KaiNowPay Financial Platform. Todos os direitos reservados.</div>
       </div>
     </div>
 
@@ -997,7 +1090,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
       <!-- Form content -->
       <div class="lgn-right-inner">
-        <div class="lgn-form-title">Bem-vindo à <span>KaiNow</span></div>
+        <div class="lgn-form-title">Bem-vindo à <span>KaiNowPay</span></div>
         <div class="lgn-form-sub">Acesse sua conta para continuar</div>
 
         <div class="lgn-err" id="lgnErr">❌ Usuário ou senha incorretos</div>
@@ -1066,7 +1159,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
   <!-- Footer bar -->
   <div class="lgn-footer-bar">
-    <span>© 2026 KaiNow Financial Platform. Todos os direitos reservados.</span>
+    <span>© 2026 KaiNowPay Financial Platform. Todos os direitos reservados.</span>
     <div class="lgn-footer-links">
       <a onclick="showToast('📄 Termos de Uso','info')">Termos de Uso</a>
       <a onclick="showToast('🔒 Política de Privacidade','info')">Política de Privacidade</a>
@@ -1082,7 +1175,7 @@ input,select,textarea{font-family:inherit;outline:none}
   <nav class="sidebar">
     <div class="sb-logo">
       <div class="sb-logo-icon">🏦</div>
-      <div class="sb-logo-txt"><div class="name">MeuBanco</div><div class="tag">Digital Banking v2.0</div></div>
+      <div class="sb-logo-txt"><div class="name">KaiNowPay</div><div class="tag">Digital Banking v2.0</div></div>
     </div>
     <div class="sb-nav">
       <div class="sb-section">
@@ -1150,7 +1243,7 @@ input,select,textarea{font-family:inherit;outline:none}
       <div style="padding:16px 10px 20px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
           <div style="width:44px;height:44px;background:rgba(255,255,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(255,255,255,.18)">🏦</div>
-          <div><div style="font-size:17px;font-weight:800;color:#fff">KaiNow</div><div style="font-size:11px;color:rgba(255,255,255,.4)">Digital Banking</div></div>
+          <div><div style="font-size:17px;font-weight:800;color:#fff">KaiNowPay</div><div style="font-size:11px;color:rgba(255,255,255,.4)">Digital Banking</div></div>
         </div>
         <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:0 10px 6px">PRINCIPAL</div>
         <div class="nav-item" onclick="mobGo('home')"><span class="ni">🏠</span>Início</div>
@@ -1234,7 +1327,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div>
               <div class="bal-label">💰 Saldo disponível <span style="font-size:10px;opacity:.4">Ag.0001 · CC 12345-6</span></div>
               <div class="bal-amount" id="balAmt">R$ 8.420,50</div>
-              <div class="bal-agency">Banco 274 · MeuBanco Digital · Atualizado agora</div>
+              <div class="bal-agency">Banco 274 · KaiNowPay · Atualizado agora</div>
             </div>
             <div class="bal-actions">
               <button class="eye-btn2" id="eyeBtn" onclick="toggleBal()">👁</button>
@@ -1302,7 +1395,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="pix-tab" id="ptab-history" onclick="pixTab('history')">📋 Histórico</div>
         </div>
         <div class="pix-pane active" id="pp-send">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:900px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1100px;width:100%">
             <div>
               <div class="sec-title" style="margin-bottom:10px">Contatos recentes</div>
               <div class="cont-chips" id="contChips"></div>
@@ -1441,7 +1534,7 @@ input,select,textarea{font-family:inherit;outline:none}
       <div class="page" id="page-marketplace">
         <div class="mkt-hero">
           <div style="position:relative;z-index:1">
-            <div style="font-size:13px;opacity:.65;margin-bottom:4px">🛍️ Marketplace MeuBanco</div>
+            <div style="font-size:13px;opacity:.65;margin-bottom:4px">🛍️ Marketplace KaiNowPay</div>
             <h2 style="font-size:24px;font-weight:900;margin-bottom:5px">Compre e pague com seu saldo</h2>
             <p style="font-size:14px;opacity:.75">Powered by Medusa Commerce · Frete grátis acima de R$ 150</p>
             <div style="display:flex;gap:10px;margin-top:16px">
@@ -1819,7 +1912,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div class="sec-title mb16">📋 Terminal — imprimirExtrato()</div>
             <div style="background:#0d0d1a;border-radius:13px;padding:20px;font-family:monospace;font-size:12.5px;color:#a5f3fc;min-height:300px;max-height:380px;overflow-y:auto" id="sim-terminal">
               <div style="color:#4ade80;margin-bottom:8px">╔══════════════════════════════════════╗</div>
-              <div style="color:#4ade80;margin-bottom:8px">║   🏦  MeuBanco Digital — Terminal    ║</div>
+              <div style="color:#4ade80;margin-bottom:8px">║   🏦  KaiNowPay — Terminal    ║</div>
               <div style="color:#4ade80;margin-bottom:16px">╚══════════════════════════════════════╝</div>
               <div style="color:#fbbf24">▶ Sistema inicializado · Java 21 / Apache Fineract</div>
               <div style="color:#a5f3fc;margin-top:8px">▶ Conta Corrente criada: João da Silva</div>
@@ -1917,7 +2010,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div class="prof-hero">
               <div class="prof-big-av">J</div>
               <h2>João da Silva</h2>
-              <div class="email">joao.silva@meubanco.com.br</div>
+              <div class="email">joao.silva@kainowpay.com.br</div>
               <span class="chip chip-ac">✅ Verificado · KYC Completo</span>
               <div class="prof-stats">
                 <div class="pstat"><div class="pval">12</div><div class="plab">Meses</div></div>
@@ -1988,7 +2081,7 @@ input,select,textarea{font-family:inherit;outline:none}
           </div>
           <div class="card" style="border-top:4px solid var(--warn);text-align:center">
             <div style="font-size:32px;margin-bottom:8px">🪙</div>
-            <div style="font-size:12px;color:var(--muted);margin-bottom:4px">MeuBanco Coins</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px">KaiNowPay Coins</div>
             <div style="font-size:26px;font-weight:900;color:var(--amber)">2.840 pts</div>
             <div style="font-size:11.5px;color:var(--muted)">≈ R$ 28,40 em cashback</div>
           </div>
@@ -2118,7 +2211,7 @@ input,select,textarea{font-family:inherit;outline:none}
       <div class="page" id="page-sorteios">
         <div style="background:linear-gradient(135deg,#4c1d95,#6d28d9,#7c3aed);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏆</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏆 Sorteios e Prêmios · MeuBanco Luck</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏆 Sorteios e Prêmios · KaiNowPay Luck</div>
           <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Você tem bilhetes para sorteios!</h2>
           <p style="font-size:13.5px;opacity:.7">Seus títulos de capitalização geram bilhetes automaticamente para cada sorteio</p>
         </div>
@@ -2179,7 +2272,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- HERO CRM HEADER -->
         <div style="background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏦</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏦 KaiNow CRM · Correspondente Bancário · Res. BCB nº 4.935</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏦 KaiNowPay CRM · Correspondente Bancário · Res. BCB nº 4.935</div>
           <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Central de Relacionamento Consignado</h2>
           <p style="font-size:13.5px;opacity:.7">Gerencie leads, funil de vendas, pipeline consignado, nichos e equipes comerciais em um só lugar</p>
           <div style="display:flex;gap:10px;margin-top:14px">
@@ -2338,7 +2431,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
         <!-- TAB: FUNIL CONSIGNADO (KANBAN) -->
         <div id="crm-funil" class="crm-panel" style="display:none">
-          <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Pipeline KaiNow Consignado · 9 etapas · Arraste os cards entre colunas</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Pipeline KaiNowPay Consignado · 9 etapas · Arraste os cards entre colunas</div>
           <div style="display:grid;grid-template-columns:repeat(9,minmax(155px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px" id="kanban-board">
             <!-- Kanban columns geradas por JS -->
           </div>
@@ -2612,7 +2705,7 @@ input,select,textarea{font-family:inherit;outline:none}
       <div class="page" id="page-indicacao">
         <div style="background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🎁</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🎁 Programa de Indicação · MeuBanco Referral</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🎁 Programa de Indicação · KaiNowPay Referral</div>
           <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Indique amigos e ganhe!</h2>
           <p style="font-size:13.5px;opacity:.7">Você e seu amigo ganham R$ 50 quando ele fizer o 1º PIX · Sem limite de indicações</p>
         </div>
@@ -2628,7 +2721,7 @@ input,select,textarea{font-family:inherit;outline:none}
           </div>
           <div class="card">
             <div class="sec-title">Seu link de indicação</div>
-            <div style="background:var(--bg);border-radius:10px;padding:14px;margin-bottom:14px;font-family:monospace;font-size:13px;word-break:break-all;color:var(--p1)">meubanco.com.br/invite/JOAO2026</div>
+            <div style="background:var(--bg);border-radius:10px;padding:14px;margin-bottom:14px;font-family:monospace;font-size:13px;word-break:break-all;color:var(--p1)">kainowpay.com.br/invite/JOAO2026</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
               <button class="btn btn-primary" style="padding:11px" onclick="showToast('📋 Link copiado!','success')">📋 Copiar link</button>
               <button class="btn" style="padding:11px;background:var(--ok);color:#fff" onclick="showToast('📤 Compartilhado!','success')">📤 Compartilhar</button>
@@ -2660,7 +2753,7 @@ input,select,textarea{font-family:inherit;outline:none}
       <div class="page" id="page-comissoes">
         <div style="background:linear-gradient(135deg,#14532d,#15803d,#16a34a);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💎</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Correspondente Bancário · KaiNow Consignado</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Correspondente Bancário · KaiNowPay Consignado</div>
           <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Suas comissões e repasses</h2>
           <p style="font-size:13.5px;opacity:.7">Acompanhe em tempo real os ganhos de todos os produtos vendidos · Repasse automático via PIX</p>
           <div style="display:flex;gap:10px;margin-top:14px">
@@ -2850,7 +2943,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🌐</div>
           <div style="font-size:12px;opacity:.6;margin-bottom:4px">🌐 Rede de Parceiros · White-label e Integrações</div>
           <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Ecossistema de Parceiros</h2>
-          <p style="font-size:13.5px;opacity:.7">Integre sua empresa ao MeuBanco via API · White-label · BaaS · Revenue share</p>
+          <p style="font-size:13.5px;opacity:.7">Integre sua empresa ao KaiNowPay via API · White-label · BaaS · Revenue share</p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
           <div class="card" style="text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''" onclick="openParceiro('lojista')">
@@ -3091,7 +3184,7 @@ input,select,textarea{font-family:inherit;outline:none}
 <div id="modal-parceiro" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px">
   <div style="background:var(--card);border-radius:22px;padding:0;width:min(560px,96vw);max-height:90svh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35)">
     <div style="padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
-      <div><div id="parc-icon" style="font-size:36px;margin-bottom:4px">🏪</div><div id="parc-titulo" style="font-size:20px;font-weight:900">Plano Lojista</div><div style="font-size:12.5px;color:var(--muted)">KaiNow White-label · Correspondente Bancário</div></div>
+      <div><div id="parc-icon" style="font-size:36px;margin-bottom:4px">🏪</div><div id="parc-titulo" style="font-size:20px;font-weight:900">Plano Lojista</div><div style="font-size:12.5px;color:var(--muted)">KaiNowPay White-label · Correspondente Bancário</div></div>
       <button onclick="closeModal('modal-parceiro')" style="font-size:26px;color:var(--muted);padding:4px 8px;background:var(--bg);border-radius:9px">×</button>
     </div>
     <div style="padding:22px 24px">
@@ -3248,7 +3341,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <input value="(11) 9 9999-8888" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       </div>
       <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">E-mail</label>
-        <input value="joao.silva@meubanco.com.br" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <input value="joao.silva@kainowpay.com.br" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Endereço</label>
         <input value="Rua das Flores, 123 — São Paulo, SP" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -3302,14 +3395,14 @@ input,select,textarea{font-family:inherit;outline:none}
     <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);padding:18px 22px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:10px">
         <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px">🤖</div>
-        <div><div style="font-size:15px;font-weight:800">KaiNow IA</div><div style="font-size:11px;opacity:.7">● Online · Resposta imediata</div></div>
+        <div><div style="font-size:15px;font-weight:800">KaiNowPay IA</div><div style="font-size:11px;opacity:.7">● Online · Resposta imediata</div></div>
       </div>
       <button onclick="closeChat()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer">×</button>
     </div>
     <div id="chat-msgs" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
       <div style="display:flex;gap:8px;align-items:flex-start">
         <div style="width:30px;height:30px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🤖</div>
-        <div style="background:#f3f4f6;border-radius:0 14px 14px 14px;padding:11px 14px;max-width:80%;font-size:13.5px;line-height:1.5">Olá! Sou a KaiNow IA 👋<br>Como posso ajudar você hoje?</div>
+        <div style="background:#f3f4f6;border-radius:0 14px 14px 14px;padding:11px 14px;max-width:80%;font-size:13.5px;line-height:1.5">Olá! Sou a KaiNowPay IA 👋<br>Como posso ajudar você hoje?</div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin-left:38px">
         <button onclick="chatRapido('Como fazer um PIX?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">⚡ Como fazer PIX?</button>
@@ -3360,7 +3453,7 @@ input,select,textarea{font-family:inherit;outline:none}
 <div id="modal-abertura" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
   <div style="background:#fff;border-radius:20px;width:500px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3)">
     <div style="background:linear-gradient(135deg,#7c3aed,#4f46e5);padding:22px 28px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
-      <div><div style="font-size:13px;opacity:.7">KaiNow Bank</div><div style="font-size:19px;font-weight:900">🏦 Abrir Conta Digital</div></div>
+      <div><div style="font-size:13px;opacity:.7">KaiNowPay Bank</div><div style="font-size:19px;font-weight:900">🏦 Abrir Conta Digital</div></div>
       <button onclick="closeAbertura()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
     </div>
     <div style="padding:24px 28px">
@@ -3393,7 +3486,7 @@ input,select,textarea{font-family:inherit;outline:none}
       <div id="ab-success" style="display:none;text-align:center;padding:20px">
         <div style="font-size:64px;margin-bottom:16px">🎉</div>
         <div style="font-size:22px;font-weight:900;color:#047857;margin-bottom:8px">Conta criada!</div>
-        <div style="font-size:14px;color:#666;margin-bottom:20px">Seu acesso chegará no e-mail em instantes. Bem-vindo ao KaiNow!</div>
+        <div style="font-size:14px;color:#666;margin-bottom:20px">Seu acesso chegará no e-mail em instantes. Bem-vindo ao KaiNowPay!</div>
         <button onclick="closeAbertura()" style="padding:13px 32px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">🚀 Acessar minha conta</button>
       </div>
     </div>
@@ -3654,7 +3747,7 @@ function doLogin(){
     e.classList.remove('show');
     document.getElementById('page-login').classList.remove('active');
     document.getElementById('app').classList.add('active');
-    showToast('👋 Bem-vindo, João! Plataforma v2.0 carregada.','success');
+    showToast('👋 Bem-vindo, João! KaiNowPay v2.0 carregada.','success');
   } else { e.classList.add('show'); }
 }
 function doLogout(){
@@ -4388,11 +4481,11 @@ function confirmarSenha(){
    CHAT IA
 ══════════════════════════════════════════════ */
 const CHAT_RESPOSTAS={
-  'pix':['Para fazer um PIX, acesse o menu **PIX** na barra lateral. Você pode enviar via CPF, e-mail, telefone ou chave aleatória. 💡 Confirmação instantânea 24h!','Para receber PIX, compartilhe sua chave: joao@meubanco.com.br. O dinheiro cai na hora!'],
+  'pix':['Para fazer um PIX, acesse o menu **PIX** na barra lateral. Você pode enviar via CPF, e-mail, telefone ou chave aleatória. 💡 Confirmação instantânea 24h!','Para receber PIX, compartilhe sua chave: joao@kainowpay.com.br. O dinheiro cai na hora!'],
   'saldo':['Seu saldo atual: 💰 **Conta Corrente: R$ 8.420,50** | 🌱 **Poupança: R$ 24.850,00**. Para detalhes acesse "Minhas Contas".'],
   'seguro':['Oferecemos seguros de: 🚗 Auto, 🏥 Saúde, 🏠 Residencial, 📱 Celular e ✈️ Viagem. Quer ver as cotações? Acesse o menu "Seguros" na barra lateral!'],
   'limite':['Seu limite atual é R$ 5.000 no cartão virtual e R$ 10.000 no cartão Black. Para solicitar aumento, acesse Cartões → Limite. O processo é automático!'],
-  'default':['Entendi! Posso te ajudar com PIX, saldo, cartões, crédito, seguros, investimentos e muito mais. O que você precisa?','Claro! Estou aqui para ajudar. Você pode me perguntar sobre qualquer produto ou serviço do KaiNow Bank! 😊','Ótima pergunta! Para mais detalhes, você pode acessar o menu correspondente na barra lateral ou me fazer outra pergunta. 🎯']
+  'default':['Entendi! Posso te ajudar com PIX, saldo, cartões, crédito, seguros, investimentos e muito mais. O que você precisa?','Claro! Estou aqui para ajudar. Você pode me perguntar sobre qualquer produto ou serviço do KaiNowPay Bank! 😊','Ótima pergunta! Para mais detalhes, você pode acessar o menu correspondente na barra lateral ou me fazer outra pergunta. 🎯']
 };
 let chatCount=0;
 function openChat(){document.getElementById('modal-chat').style.display='flex';}
