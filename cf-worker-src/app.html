@@ -49,38 +49,88 @@ input,select,textarea{font-family:inherit;outline:none}
 @keyframes dotAnim{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(-9px);opacity:1}}
 
 /* ══════════════════════════════════════════════
-   LOGIN
+   LOGIN — FULL SCREEN SPLIT LAYOUT
 ══════════════════════════════════════════════ */
-#page-login{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#0d0d3b 0%,#1a237e 50%,#283593 100%);display:none;align-items:center;justify-content:center}
+#page-login{position:fixed;inset:0;z-index:100;display:none;flex-direction:row}
 #page-login.active{display:flex}
-.login-wrap{width:100%;max-width:460px;padding:20px}
-.login-card{background:rgba(255,255,255,.96);border-radius:var(--rl);padding:44px 40px;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+
+/* LEFT PANEL — Branding */
+.lgn-left{
+  flex:1.1;
+  background:linear-gradient(160deg,#050520 0%,#0d0d3b 30%,#1a237e 70%,#00bcd4 100%);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:48px 52px;position:relative;overflow:hidden;
+}
+.lgn-left::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(0,188,212,.18) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 10%,rgba(63,81,181,.25) 0%,transparent 50%);
+}
+.lgn-left-content{position:relative;z-index:1}
+.lgn-brand{display:flex;align-items:center;gap:16px;margin-bottom:56px}
+.lgn-brand-icon{width:60px;height:60px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.22);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;backdrop-filter:blur(6px)}
+.lgn-brand-txt h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px}
+.lgn-brand-txt p{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;letter-spacing:.3px}
+.lgn-headline{font-size:42px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-2px;margin-bottom:18px}
+.lgn-headline span{color:var(--ac)}
+.lgn-desc{font-size:15px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:44px;max-width:400px}
+.lgn-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:44px}
+.lgn-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 20px;backdrop-filter:blur(4px)}
+.lgn-stat-val{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px}
+.lgn-stat-lbl{font-size:11.5px;color:rgba(255,255,255,.5);margin-top:3px}
+.lgn-badges{display:flex;gap:10px;flex-wrap:wrap}
+.lgn-badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px)}
+.lgn-left-footer{position:relative;z-index:1;font-size:11.5px;color:rgba(255,255,255,.3)}
+
+/* Floating cards decoration */
+.lgn-float-cards{position:absolute;right:-30px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:1}
+.lgn-fc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 18px;backdrop-filter:blur(8px);width:200px;animation:fcFloat 3s ease-in-out infinite}
+.lgn-fc:nth-child(2){animation-delay:.8s}.lgn-fc:nth-child(3){animation-delay:1.6s}
+@keyframes fcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.lgn-fc-label{font-size:10.5px;color:rgba(255,255,255,.45);margin-bottom:4px}
+.lgn-fc-val{font-size:17px;font-weight:800;color:#fff}
+.lgn-fc-sub{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:2px}
+
+/* RIGHT PANEL — Form */
+.lgn-right{
+  width:480px;flex-shrink:0;
+  background:#fff;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:52px 52px;overflow-y:auto;
+}
+.lgn-right-logo{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.lgn-right-icon{width:46px;height:46px;background:linear-gradient(135deg,var(--p1),var(--ac));border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.lgn-right-txt h2{font-size:18px;font-weight:800;color:var(--p1)}
+.lgn-right-txt p{font-size:11.5px;color:var(--muted);margin-top:1px}
+.lgn-title{font-size:28px;font-weight:900;color:var(--txt);letter-spacing:-1px;margin-bottom:6px}
+.lgn-subtitle{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.5}
 .lgn-logo{display:flex;align-items:center;gap:14px;margin-bottom:32px}
 .lgn-icon{width:54px;height:54px;background:linear-gradient(135deg,var(--p1),var(--ac));border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px}
 .lgn-txt h1{font-size:22px;font-weight:800;color:var(--p1)}
 .lgn-txt p{font-size:12px;color:var(--muted);margin-top:2px}
 .lgn-h2{font-size:19px;font-weight:700;margin-bottom:4px}
 .lgn-sub{font-size:13px;color:var(--muted);margin-bottom:22px}
-.f-grp{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.f-label{font-size:12.5px;font-weight:600;color:var(--txt2)}
-.f-inp{background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;padding:12px 15px;font-size:14px;color:var(--txt);transition:all .2s;width:100%}
-.f-inp:focus{border-color:var(--p1);background:#fff;box-shadow:0 0 0 3px rgba(26,35,126,.07)}
+.f-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.f-label{font-size:12.5px;font-weight:700;color:var(--txt2);letter-spacing:.2px}
+.f-inp{background:#f8fafc;border:1.5px solid var(--border);border-radius:11px;padding:13px 16px;font-size:14.5px;color:var(--txt);transition:all .2s;width:100%}
+.f-inp:focus{border-color:var(--p1);background:#fff;box-shadow:0 0 0 4px rgba(26,35,126,.07)}
 .inp-wrap{position:relative}
-.inp-wrap .f-inp{padding-right:44px}
-.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:17px;color:var(--muted);cursor:pointer}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;font-family:inherit}
-.btn-primary{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,35,126,.35)}
-.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--muted)}
-.btn-ghost:hover{border-color:var(--p3);color:var(--p1)}
-.lgn-err{display:none;padding:11px 14px;background:#fef2f2;border-radius:9px;font-size:13px;color:var(--err);margin-bottom:12px;border:1px solid #fecaca}
+.inp-wrap .f-inp{padding-right:48px}
+.eye-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted);cursor:pointer;background:none;border:none;padding:4px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all .2s;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff;box-shadow:0 4px 18px rgba(26,35,126,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,35,126,.4)}
+.btn-ghost{background:#f8fafc;border:1.5px solid var(--border);color:var(--txt2)}
+.btn-ghost:hover{border-color:var(--p3);color:var(--p1);background:#eff6ff}
+.lgn-err{display:none;padding:12px 15px;background:#fef2f2;border-radius:10px;font-size:13px;color:var(--err);margin-bottom:14px;border:1px solid #fecaca}
 .lgn-err.show{display:block}
-.lgn-divider{display:flex;align-items:center;gap:12px;margin:14px 0;color:var(--muted);font-size:12px}
+.lgn-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--muted);font-size:12.5px}
 .lgn-divider::before,.lgn-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-.lgn-hint{margin-top:16px;padding:11px 14px;background:#eff6ff;border-radius:9px;font-size:12px;color:var(--muted);text-align:center;border:1px solid #c7d2fe}
+.lgn-hint{margin-top:18px;padding:12px 15px;background:#eff6ff;border-radius:10px;font-size:12.5px;color:var(--muted);text-align:center;border:1px solid #c7d2fe}
 .lgn-hint b{color:var(--p1)}
 .lgn-powered{display:flex;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
-.pow-chip{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.pow-chip{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.lgn-right-footer{font-size:11px;color:var(--muted);text-align:center;margin-top:24px}
 
 /* ══════════════════════════════════════════════
    APP SHELL
@@ -537,35 +587,119 @@ input,select,textarea{font-family:inherit;outline:none}
   </div>
 </div>
 
-<!-- LOGIN -->
+<!-- LOGIN — FULL SCREEN -->
 <div id="page-login">
-  <div class="login-wrap">
-    <div class="login-card">
-      <div class="lgn-logo">
-        <div class="lgn-icon">🏦</div>
-        <div class="lgn-txt"><h1>MeuBanco Digital</h1><p>Powered by Apache Fineract + Celcoin + Fitbank</p></div>
+
+  <!-- ═══ LEFT: BRANDING PANEL ═══ -->
+  <div class="lgn-left">
+    <div class="lgn-left-content">
+      <div class="lgn-brand">
+        <div class="lgn-brand-icon">🏦</div>
+        <div class="lgn-brand-txt">
+          <h1>MeuBanco Digital</h1>
+          <p>Plataforma Bancária Completa · v2.0</p>
+        </div>
       </div>
-      <div class="lgn-h2">Bem-vindo de volta</div>
-      <div class="lgn-sub">Acesse a plataforma bancária completa</div>
-      <div class="lgn-err" id="lgnErr">❌ Usuário ou senha incorretos</div>
-      <div class="f-grp"><label class="f-label">Usuário</label><input class="f-inp" id="inpUser" value="mifos" placeholder="mifos"></div>
-      <div class="f-grp"><label class="f-label">Senha</label>
-        <div class="inp-wrap"><input class="f-inp" id="inpPass" type="password" value="password" placeholder="••••••••"><button class="eye-btn" onclick="togglePass()">👁️</button></div>
+      <div class="lgn-headline">Banco digital<br><span>moderno e</span><br>inteligente.</div>
+      <div class="lgn-desc">Uma plataforma completa com PIX, cartões, crédito, investimentos, marketplace, CRM e assinatura digital — tudo em um só lugar.</div>
+      <div class="lgn-stats">
+        <div class="lgn-stat">
+          <div class="lgn-stat-val">R$40B</div>
+          <div class="lgn-stat-lbl">processados/mês · Celcoin</div>
+        </div>
+        <div class="lgn-stat">
+          <div class="lgn-stat-val">600+</div>
+          <div class="lgn-stat-lbl">bancos digitais conectados</div>
+        </div>
+        <div class="lgn-stat">
+          <div class="lgn-stat-val">0,3s</div>
+          <div class="lgn-stat-lbl">tempo médio de PIX · Fitbank</div>
+        </div>
+        <div class="lgn-stat">
+          <div class="lgn-stat-val">24/7</div>
+          <div class="lgn-stat-lbl">disponibilidade das APIs</div>
+        </div>
       </div>
-      <div style="margin-bottom:18px"></div>
-      <button class="btn btn-primary" onclick="doLogin()">Entrar →</button>
-      <div class="lgn-divider">ou</div>
-      <button class="btn btn-ghost" onclick="doLogin()">🔑 Biometria / Face ID</button>
-      <div class="lgn-hint">Demo: <b>mifos</b> / <b>password</b></div>
-      <div class="lgn-powered">
-        <span class="pow-chip">🏗️ Fineract</span>
-        <span class="pow-chip">🔗 Celcoin</span>
-        <span class="pow-chip">💸 Fitbank</span>
-        <span class="pow-chip">🛍️ Medusa</span>
-        <span class="pow-chip">📝 Documenso</span>
+      <div class="lgn-badges">
+        <span class="lgn-badge">🏗️ Apache Fineract</span>
+        <span class="lgn-badge">🔗 Celcoin BaaS</span>
+        <span class="lgn-badge">💸 Fitbank API</span>
+        <span class="lgn-badge">🛍️ Medusa</span>
+        <span class="lgn-badge">📝 Documenso</span>
+        <span class="lgn-badge">👥 Twenty CRM</span>
       </div>
     </div>
+
+    <!-- Floating metric cards -->
+    <div class="lgn-float-cards">
+      <div class="lgn-fc">
+        <div class="lgn-fc-label">💰 Saldo disponível</div>
+        <div class="lgn-fc-val">R$ 8.420,50</div>
+        <div class="lgn-fc-sub">Conta Corrente · Ag.0001</div>
+      </div>
+      <div class="lgn-fc">
+        <div class="lgn-fc-label">⚡ Último PIX recebido</div>
+        <div class="lgn-fc-val">+ R$ 350,00</div>
+        <div class="lgn-fc-sub">Hoje · 10:32 · Fitbank</div>
+      </div>
+      <div class="lgn-fc">
+        <div class="lgn-fc-label">📈 Investimentos</div>
+        <div class="lgn-fc-val">R$ 24.850,00</div>
+        <div class="lgn-fc-sub">+12,4% a.a. · Poupança</div>
+      </div>
+    </div>
+
+    <div class="lgn-left-footer">© 2026 MeuBanco Digital · Todos os direitos reservados</div>
   </div>
+
+  <!-- ═══ RIGHT: FORM PANEL ═══ -->
+  <div class="lgn-right">
+    <div class="lgn-right-logo">
+      <div class="lgn-right-icon">🏦</div>
+      <div class="lgn-right-txt">
+        <h2>MeuBanco Digital</h2>
+        <p>Plataforma Bancária</p>
+      </div>
+    </div>
+
+    <div class="lgn-title">Bem-vindo de volta 👋</div>
+    <div class="lgn-subtitle">Faça login para acessar sua conta digital completa com PIX, crédito, investimentos e muito mais.</div>
+
+    <div class="lgn-err" id="lgnErr">❌ Usuário ou senha incorretos</div>
+
+    <div class="f-grp">
+      <label class="f-label">👤 Usuário</label>
+      <input class="f-inp" id="inpUser" value="mifos" placeholder="Digite seu usuário">
+    </div>
+    <div class="f-grp">
+      <label class="f-label">🔒 Senha</label>
+      <div class="inp-wrap">
+        <input class="f-inp" id="inpPass" type="password" value="password" placeholder="Digite sua senha">
+        <button class="eye-btn" onclick="togglePass()">👁️</button>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;margin-bottom:22px">
+      <span style="font-size:12.5px;color:var(--p3);cursor:pointer;font-weight:600" onclick="showToast('📧 E-mail de recuperação enviado!','info')">Esqueci minha senha →</span>
+    </div>
+
+    <button class="btn btn-primary" onclick="doLogin()">Entrar na plataforma →</button>
+    <div class="lgn-divider">ou acesse com</div>
+    <button class="btn btn-ghost" onclick="doLogin()">🔑 Biometria / Face ID</button>
+
+    <div class="lgn-hint">Demo: <b>mifos</b> / <b>password</b></div>
+
+    <div class="lgn-powered">
+      <span class="pow-chip">🏗️ Fineract</span>
+      <span class="pow-chip">🔗 Celcoin</span>
+      <span class="pow-chip">💸 Fitbank</span>
+      <span class="pow-chip">🛍️ Medusa</span>
+      <span class="pow-chip">📝 Documenso</span>
+    </div>
+
+    <div class="lgn-right-footer">Plataforma protegida · mTLS + OAuth 2.0 · LGPD compliant</div>
+  </div>
+
 </div>
 
 <!-- APP -->
