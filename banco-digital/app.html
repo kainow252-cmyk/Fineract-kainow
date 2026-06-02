@@ -2795,7 +2795,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: DASHBOARD
         ════════════════════════════════════ -->
-        <div id="crm-aba-dashboard">
+        <div id="crm-aba-dashboard" class="crm-tab-content">
           <!-- KPIs -->
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px" id="crm-kpi-grid">
             <div class="card" style="text-align:center;padding:16px 12px">
@@ -2856,7 +2856,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: PROPOSTAS
         ════════════════════════════════════ -->
-        <div id="crm-aba-propostas" style="display:none">
+        <div id="crm-aba-propostas" class="crm-tab-content" style="display:none">
           <!-- Barra de filtros -->
           <div class="card" style="margin-bottom:14px">
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
@@ -2915,7 +2915,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: CLIENTES
         ════════════════════════════════════ -->
-        <div id="crm-aba-clientes" style="display:none">
+        <div id="crm-aba-clientes" class="crm-tab-content" style="display:none">
           <div class="card" style="margin-bottom:14px">
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
               <input id="crm-busca-cli" type="text" placeholder="🔍 Buscar cliente por nome ou CPF..." style="flex:1;min-width:200px;padding:9px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt);outline:none" oninput="crmFiltrarClientes()">
@@ -2939,7 +2939,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: FUNIL DE VENDAS (KANBAN)
         ════════════════════════════════════ -->
-        <div id="crm-aba-funil" style="display:none">
+        <div id="crm-aba-funil" class="crm-tab-content" style="display:none">
           <div class="card" style="margin-bottom:12px;padding:14px 18px">
             <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
               <div class="sec-title">🔀 Funil de Vendas – Pipeline Consignado</div>
@@ -2959,7 +2959,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: RELATÓRIOS
         ════════════════════════════════════ -->
-        <div id="crm-aba-relatorios" style="display:none">
+        <div id="crm-aba-relatorios" class="crm-tab-content" style="display:none">
           <!-- Resumo mensal -->
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px">
             <div class="card" style="padding:18px 16px">
@@ -3019,7 +3019,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: EQUIPE
         ════════════════════════════════════ -->
-        <div id="crm-aba-equipe" style="display:none">
+        <div id="crm-aba-equipe" class="crm-tab-content" style="display:none">
           <!-- Stats equipe -->
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
             <div class="card" style="text-align:center;padding:16px 10px">
@@ -3059,7 +3059,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <!-- ════════════════════════════════════
              ABA: ADMIN
         ════════════════════════════════════ -->
-        <div id="crm-aba-admin" style="display:none">
+        <div id="crm-aba-admin" class="crm-tab-content" style="display:none">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
 
             <!-- Status / Promotoras -->
@@ -5665,8 +5665,14 @@ function crmGetOperadorNome(id){const u=crmUsuarios.find(x=>x.id===id);return u?
 
 // ── TAB SWITCHING ──────────────────────────────────────────────────
 function crmAba(abaId){
+  // Hide all aba panels (by class OR by known IDs as fallback)
   document.querySelectorAll('.crm-tab-content').forEach(el=>{
     el.style.display='none';
+  });
+  ['crm-aba-dashboard','crm-aba-propostas','crm-aba-clientes',
+   'crm-aba-funil','crm-aba-relatorios','crm-aba-equipe','crm-aba-admin'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display='none';
   });
   document.querySelectorAll('.crm-tab').forEach(el=>{
     el.style.color='var(--muted)';
@@ -6265,11 +6271,26 @@ function crmSalvarCliente(){
 
 // ── INIT CRM ───────────────────────────────────────────────────────
 function crmInit(){
-  crmUpdateDashboard();
-  // Show first tab
-  document.querySelectorAll('.crm-tab-content').forEach((el,i)=>{
-    el.style.display=i===0?'block':'none';
+  // Show dashboard, hide others
+  const crmAbas=['crm-aba-dashboard','crm-aba-propostas','crm-aba-clientes',
+                 'crm-aba-funil','crm-aba-relatorios','crm-aba-equipe','crm-aba-admin'];
+  crmAbas.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=i===0?'block':'none';
   });
+  // Reset tabs
+  document.querySelectorAll('.crm-tab').forEach(el=>{
+    el.style.color='var(--muted)';
+    el.style.borderBottom='2.5px solid transparent';
+    el.style.fontWeight='600';
+  });
+  const activeTab=document.getElementById('crm-tab-dashboard');
+  if(activeTab){
+    activeTab.style.color='var(--p1)';
+    activeTab.style.borderBottom='2.5px solid var(--p1)';
+    activeTab.style.fontWeight='700';
+  }
+  crmUpdateDashboard();
 }
 
 
