@@ -287,7 +287,69 @@ input,select,textarea{font-family:inherit;outline:none}
 .pow-chip{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
 .lgn-right-footer{font-size:11px;color:var(--muted);text-align:center;margin-top:24px}
 
-/* ── CRM Correspondente ── */
+/* ── RESPONSIVE HELPER CLASSES ── */
+/* Grids responsivos usados inline */
+.rg2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rg3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rg4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.rg5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:768px){
+  .rg2{grid-template-columns:1fr}
+  .rg3{grid-template-columns:1fr 1fr}
+  .rg4{grid-template-columns:1fr 1fr}
+  .rg5{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .rg3,.rg4,.rg5{grid-template-columns:1fr 1fr}
+}
+
+/* Tabelas responsivas */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+.tbl-wrap table{min-width:600px}
+
+/* Modais mobile safe */
+@media(max-width:768px){
+  div[style*="position:fixed"][style*="z-index:500"] > div,
+  div[style*="position:fixed"][style*="z-index:600"] > div,
+  div[style*="position:fixed"][style*="z-index:700"] > div{
+    width:96vw!important;max-width:96vw!important;
+    padding:18px 14px!important;
+    margin:0 8px!important;
+    max-height:90svh!important;
+    overflow-y:auto!important;
+    border-radius:16px!important;
+  }
+  /* Tabs CRM scroll horizontal */
+  #page-correspondente [style*="display:flex"][style*="gap:4px"]{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:2px;
+  }
+  /* KPIs 5 colunas → 2 */
+  #page-correspondente [style*="repeat(5,1fr)"],
+  #page-comissoes [style*="repeat(5,1fr)"]{
+    grid-template-columns:1fr 1fr!important;
+  }
+  #page-correspondente [style*="repeat(4,1fr)"],
+  #page-comissoes [style*="repeat(4,1fr)"]{
+    grid-template-columns:1fr 1fr!important;
+  }
+  /* Funil kanban horizontal scroll */
+  #kanban-board{
+    grid-template-columns:repeat(9,minmax(145px,145px))!important;
+    overflow-x:auto!important;
+  }
+  /* Nichos 3 colunas → 1 */
+  #crm-nichos [style*="repeat(3,1fr)"]{
+    grid-template-columns:1fr!important;
+  }
+  /* Ranking 2 cols → 1 */
+  #crm-equipes [style*="1.2fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+}
+
+
 .crm-tab{transition:all .2s}
 .crm-tab:hover{opacity:.85}
 .crm-panel{animation:fadeIn .2s ease}
@@ -712,6 +774,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .toast.show{transform:translateX(0)}
 .toast.err{border-left-color:var(--err)}.toast.info{border-left-color:var(--inf)}.toast.warn{border-left-color:var(--warn)}.toast.pur{border-left-color:var(--pur)}
 
+/* ── TABLET (≤1100px) ── */
 @media(max-width:1100px){
   .home-layout{grid-template-columns:1fr}
   .qa-grid{grid-template-columns:repeat(4,1fr)}
@@ -720,12 +783,115 @@ input,select,textarea{font-family:inherit;outline:none}
   .prod-grid{grid-template-columns:1fr 1fr}
   .prof-layout{grid-template-columns:1fr}
 }
+
+/* ── MOBILE (≤768px) ── */
 @media(max-width:768px){
   :root{--sw:0px}
-  .sidebar{display:none}
+
+  /* Sidebar desktop hidden; bottom-nav visible */
+  .sidebar{display:none!important}
+  .bottom-nav{display:flex!important}
+  .mob-drawer{display:flex!important}
+
+  /* Topbar mobile */
+  .topbar{padding:0 14px;height:54px}
+  .tb-left .pg-title{font-size:16px}
+  .tb-left .pg-sub{display:none}
+  .topbar .ham-btn{display:flex!important}
+
+  /* Content padding reduzido */
+  .content{padding:14px 12px;padding-bottom:72px}
+
+  /* Grids → 1 coluna ou 2 colunas máximo */
   .sum-cards{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr 1fr}
   .grid4{grid-template-columns:1fr 1fr}
+  .qa-grid{grid-template-columns:repeat(3,1fr)}
+  .credit-products,.crm-cols,.doc-grid{grid-template-columns:1fr}
+  .inv-cards{grid-template-columns:1fr 1fr}
+  .prod-grid{grid-template-columns:1fr 1fr}
+  .prof-layout{grid-template-columns:1fr}
+
+  /* Cards inline grids */
+  .card-acts{grid-template-columns:repeat(4,1fr)}
+
+  /* Modais mobile */
+  .modal{width:96vw!important;max-width:96vw!important;padding:20px 16px!important;margin:0 auto!important;border-radius:18px!important}
+
+  /* Login mobile: stack vertical */
+  .lgn-left{display:none!important}
+  .lgn-right{width:100%!important;min-height:100svh;padding:0!important}
+  .lgn-right-inner{padding:28px 22px!important}
+  .lgn-footer-bar{display:none!important}
+  .lgn-lang{padding:14px 18px 0!important}
+
+  /* CRM tabs overflow scroll */
+  #crm-funil .kanban-board,[id="kanban-board"]{overflow-x:auto}
+
+  /* Tabelas scroll */
+  .card table,.mob-scroll{overflow-x:auto;display:block;max-width:100%}
+
+  /* Splash */
+  .spl-badges{flex-wrap:wrap;justify-content:center;gap:6px}
+
+  /* Topbar right */
+  .tb-right .tb-btn:not(:last-child){display:none}
 }
+
+/* ── SMALL MOBILE (≤480px) ── */
+@media(max-width:480px){
+  .sum-cards{grid-template-columns:1fr 1fr}
+  .grid3{grid-template-columns:1fr}
+  .qa-grid{grid-template-columns:repeat(2,1fr)}
+  .content{padding:12px 10px;padding-bottom:72px}
+  .card{padding:14px 12px}
+}
+
+/* ── BOTTOM NAV (mobile only) ── */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:var(--card);
+  border-top:1px solid var(--border);
+  box-shadow:0 -4px 20px rgba(0,0,0,.08);
+  height:60px;
+  align-items:stretch;
+  padding:0 4px;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.bnav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;cursor:pointer;border-radius:10px;transition:all .18s;padding:6px 4px;
+  color:var(--muted);font-size:10px;font-weight:600;
+}
+.bnav-item:active{background:var(--bg)}
+.bnav-item.active{color:var(--p1)}
+.bnav-item.active .bnav-ico{transform:scale(1.15)}
+.bnav-ico{font-size:20px;line-height:1}
+.bnav-more{position:relative}
+
+/* ── MOB DRAWER (sidebar off-canvas) ── */
+.mob-drawer{
+  display:none;position:fixed;inset:0;z-index:500;
+}
+.mob-drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px)}
+.mob-drawer-panel{
+  position:absolute;left:0;top:0;bottom:0;width:280px;
+  background:linear-gradient(180deg,#0a0a2a 0%,#1a237e 55%,#283593 100%);
+  overflow-y:auto;padding:20px 10px;
+  transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);
+}
+.mob-drawer.open .mob-drawer-panel{transform:translateX(0)}
+.mob-drawer-close{position:absolute;top:16px;right:16px;color:rgba(255,255,255,.5);font-size:24px;cursor:pointer;background:none;border:none;z-index:1}
+
+/* HAM BTN */
+.ham-btn{
+  display:none;width:37px;height:37px;border-radius:9px;background:var(--bg);
+  border:1px solid var(--border);align-items:center;justify-content:center;
+  cursor:pointer;font-size:20px;flex-shrink:0;transition:all .2s;margin-right:10px;
+}
+.ham-btn:hover{background:var(--bg2)}
 </style>
 </head>
 <body>
@@ -976,12 +1142,81 @@ input,select,textarea{font-family:inherit;outline:none}
     </div>
   </nav>
 
+  <!-- MOBILE DRAWER -->
+  <div class="mob-drawer" id="mob-drawer" onclick="closeMobDrawer(event)">
+    <div class="mob-drawer-bg"></div>
+    <div class="mob-drawer-panel" id="mob-drawer-panel">
+      <button class="mob-drawer-close" onclick="closeMobDrawerDirect()">✕</button>
+      <div style="padding:16px 10px 20px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+          <div style="width:44px;height:44px;background:rgba(255,255,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(255,255,255,.18)">🏦</div>
+          <div><div style="font-size:17px;font-weight:800;color:#fff">KaiNow</div><div style="font-size:11px;color:rgba(255,255,255,.4)">Digital Banking</div></div>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:0 10px 6px">PRINCIPAL</div>
+        <div class="nav-item" onclick="mobGo('home')"><span class="ni">🏠</span>Início</div>
+        <div class="nav-item" onclick="mobGo('pix')"><span class="ni">⚡</span>PIX</div>
+        <div class="nav-item" onclick="mobGo('extrato')"><span class="ni">📋</span>Extrato</div>
+        <div class="nav-item" onclick="mobGo('contas')"><span class="ni">🏦</span>Minhas Contas</div>
+        <div class="nav-item" onclick="mobGo('cartoes')"><span class="ni">💳</span>Cartões</div>
+        <div class="nav-item" onclick="mobGo('credito')"><span class="ni">💰</span>Crédito</div>
+        <div class="nav-item" onclick="mobGo('investimentos')"><span class="ni">📈</span>Investimentos</div>
+        <div class="nav-item" onclick="mobGo('simulador')"><span class="ni">🧮</span>Simulador</div>
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">PRODUTOS</div>
+        <div class="nav-item" onclick="mobGo('wallet')"><span class="ni">👛</span>Wallet</div>
+        <div class="nav-item" onclick="mobGo('seguros')"><span class="ni">🛡️</span>Seguros</div>
+        <div class="nav-item" onclick="mobGo('capitalizacao')"><span class="ni">🎰</span>Capitalização</div>
+        <div class="nav-item" onclick="mobGo('sorteios')"><span class="ni">🏆</span>Sorteios</div>
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">CORRESPONDENTE</div>
+        <div class="nav-item" onclick="mobGo('correspondente')"><span class="ni">🏪</span>Corresp. Bancário</div>
+        <div class="nav-item" onclick="mobGo('comissoes')"><span class="ni">💎</span>Comissões</div>
+        <div class="nav-item" onclick="mobGo('mktfinanceiro')"><span class="ni">💹</span>Mkt Financeiro</div>
+        <div class="nav-item" onclick="mobGo('indicacao')"><span class="ni">🎁</span>Indique &amp; Ganhe</div>
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">EQUIPE</div>
+        <div class="nav-item" onclick="mobGo('motoboys')"><span class="ni">🛵</span>Motoboys</div>
+        <div class="nav-item" onclick="mobGo('corretores')"><span class="ni">🤝</span>Corretores</div>
+        <div class="nav-item" onclick="mobGo('parceiros')"><span class="ni">🌐</span>Parceiros</div>
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">SISTEMA</div>
+        <div class="nav-item" onclick="mobGo('marketplace')"><span class="ni">🛍️</span>Marketplace</div>
+        <div class="nav-item" onclick="mobGo('crm')"><span class="ni">👥</span>CRM</div>
+        <div class="nav-item" onclick="mobGo('documentos')"><span class="ni">📝</span>Documentos</div>
+        <div class="nav-item" onclick="mobGo('integracoes')"><span class="ni">🔗</span>Integrações</div>
+        <div style="height:1px;background:rgba(255,255,255,.07);margin:12px 10px"></div>
+        <div class="nav-item" onclick="mobGo('perfil')"><span class="ni">👤</span>Perfil</div>
+        <div class="nav-item" onclick="mobGo('notificacoes')"><span class="ni">🔔</span>Notificações</div>
+        <div class="nav-item" onclick="mobGo('ajuda')"><span class="ni">❓</span>Ajuda</div>
+        <div class="nav-item" onclick="doLogout()" style="color:rgba(255,100,100,.7)"><span class="ni">⬅</span>Sair</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <div class="bnav-item active" id="bn-home" onclick="bnavGo('home','bn-home')">
+      <span class="bnav-ico">🏠</span><span>Início</span>
+    </div>
+    <div class="bnav-item" id="bn-pix" onclick="bnavGo('pix','bn-pix')">
+      <span class="bnav-ico">⚡</span><span>PIX</span>
+    </div>
+    <div class="bnav-item" id="bn-extrato" onclick="bnavGo('extrato','bn-extrato')">
+      <span class="bnav-ico">📋</span><span>Extrato</span>
+    </div>
+    <div class="bnav-item" id="bn-cartoes" onclick="bnavGo('cartoes','bn-cartoes')">
+      <span class="bnav-ico">💳</span><span>Cartões</span>
+    </div>
+    <div class="bnav-item bnav-more" id="bn-more" onclick="openMobDrawer()">
+      <span class="bnav-ico">☰</span><span>Menu</span>
+    </div>
+  </nav>
+
   <!-- MAIN -->
   <div class="main">
     <header class="topbar">
-      <div class="tb-left">
-        <div class="pg-title" id="pgTitle">Início</div>
-        <div class="pg-sub" id="pgDate"></div>
+      <div style="display:flex;align-items:center;gap:2px">
+        <button class="ham-btn" onclick="openMobDrawer()" aria-label="Menu">☰</button>
+        <div class="tb-left">
+          <div class="pg-title" id="pgTitle">Início</div>
+          <div class="pg-sub" id="pgDate"></div>
+        </div>
       </div>
       <div class="tb-right">
         <div class="tb-btn" onclick="goPage('ajuda',null)">❓</div>
@@ -4052,6 +4287,37 @@ function buscarCorrespondentes(){
 function agendarKYC(){
   showToast('📅 KYC agendado! Um motoboy chegará em até 4h.','success');
 }
+
+// ── MOBILE NAVIGATION ──
+function openMobDrawer(){
+  const d=document.getElementById('mob-drawer');
+  if(d){d.style.display='flex';requestAnimationFrame(()=>d.classList.add('open'));}
+}
+function closeMobDrawer(e){
+  if(e&&e.target&&!e.target.classList.contains('mob-drawer-bg')&&!e.target.classList.contains('mob-drawer'))return;
+  closeMobDrawerDirect();
+}
+function closeMobDrawerDirect(){
+  const d=document.getElementById('mob-drawer');
+  if(d){d.classList.remove('open');setTimeout(()=>{d.style.display='none';},280);}
+}
+function mobGo(page){
+  closeMobDrawerDirect();
+  setTimeout(()=>goPage(page,null),120);
+}
+function bnavGo(page,btnId){
+  document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById(btnId);
+  if(btn) btn.classList.add('active');
+  goPage(page,null);
+}
+
+// ── MOBILE INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  // Hide drawer initially
+  const d=document.getElementById('mob-drawer');
+  if(d) d.style.display='none';
+});
 
 /* UTILS */
 function fmt(n){return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
