@@ -4491,14 +4491,14 @@ const LOANS = [
 ];
 
 const PRODUCTS = [
-  {icon:'📱',name:'iPhone 15 Pro',price:'R$ 7.299',desc:'128GB · Space Black',cat:'Eletrônicos',bg:'#1a1a2e'},
-  {icon:'💻',name:'MacBook Air M3',price:'R$ 10.499',desc:'8GB · 256GB · Midnight',cat:'Computadores',bg:'#2d3748'},
-  {icon:'⌚',name:'Apple Watch S9',price:'R$ 3.199',desc:'45mm · GPS · Aluminium',cat:'Wearables',bg:'var(--p1)'},
-  {icon:'🎮',name:'PS5 Digital',price:'R$ 3.499',desc:'825GB · SSD · CFI-1200',cat:'Games',bg:'var(--p1)'},
-  {icon:'📷',name:'Canon R10',price:'R$ 6.799',desc:'24.2MP · 4K · APS-C',cat:'Câmeras',bg:'#064e3b'},
-  {icon:'🎧',name:'AirPods Pro 2',price:'R$ 1.699',desc:'ANC · USB-C · 2024',cat:'Áudio',bg:'var(--p1)'},
-  {icon:'🏋️',name:'Esteira Kikos',price:'R$ 4.299',desc:'220V · 16Km/h · 150kg',cat:'Fitness',bg:'var(--p1)'},
-  {icon:'🛋️',name:'Sofa Modular',price:'R$ 2.899',desc:'L 2,80m · Tecido · Cinza',cat:'Móveis',bg:'#0f3460'},
+  {icon:'📱',name:'iPhone 15 Pro',price:'R$ 7.299',desc:'128GB · Space Black',cat:'Eletrônicos',bg:'#1a4731'},
+  {icon:'💻',name:'MacBook Air M3',price:'R$ 10.499',desc:'8GB · 256GB · Midnight',cat:'Computadores',bg:'#1a4731'},
+  {icon:'⌚',name:'Apple Watch S9',price:'R$ 3.199',desc:'45mm · GPS · Aluminium',cat:'Wearables',bg:'#1a4731'},
+  {icon:'🎮',name:'PS5 Digital',price:'R$ 3.499',desc:'825GB · SSD · CFI-1200',cat:'Games',bg:'#1a4731'},
+  {icon:'📷',name:'Canon R10',price:'R$ 6.799',desc:'24.2MP · 4K · APS-C',cat:'Câmeras',bg:'#14532d'},
+  {icon:'🎧',name:'AirPods Pro 2',price:'R$ 1.699',desc:'ANC · USB-C · 2024',cat:'Áudio',bg:'#1a4731'},
+  {icon:'🏋️',name:'Esteira Kikos',price:'R$ 4.299',desc:'220V · 16Km/h · 150kg',cat:'Fitness',bg:'#1a4731'},
+  {icon:'🛋️',name:'Sofa Modular',price:'R$ 2.899',desc:'L 2,80m · Tecido · Cinza',cat:'Móveis',bg:'#1a4731'},
 ];
 
 const ORDERS = [
@@ -4524,10 +4524,10 @@ const CRM_PIPELINE = {
 };
 
 const CRM_CONTACTS = [
-  {name:'Maria Clara',email:'maria@email.com',phone:'+55 11 98877-6655',type:'PF',status:'Ativo',color:'#e91e63'},
-  {name:'Pedro Alves',email:'pedro@empresa.com',phone:'+55 11 97766-5544',type:'PJ',status:'Ativo',color:'#3f51b5'},
-  {name:'Lucas Souza',email:'lucas@freelancer.dev',phone:'+55 11 96655-4433',type:'PF',status:'Ativo',color:'#009688'},
-  {name:'Ana Paula',email:'ana@investidora.com',phone:'+55 11 95544-3322',type:'PF',status:'VIP',color:'#ff5722'},
+  {name:'Maria Clara',email:'maria@email.com',phone:'+55 11 98877-6655',type:'PF',status:'Ativo',color:'#16a34a'},
+  {name:'Pedro Alves',email:'pedro@empresa.com',phone:'+55 11 97766-5544',type:'PJ',status:'Ativo',color:'#1a4731'},
+  {name:'Lucas Souza',email:'lucas@freelancer.dev',phone:'+55 11 96655-4433',type:'PF',status:'Ativo',color:'#2F6D4F'},
+  {name:'Ana Paula',email:'ana@investidora.com',phone:'+55 11 95544-3322',type:'PF',status:'VIP',color:'#16a34a'},
   {name:'Carlos Melo',email:'carlos@startup.io',phone:'+55 11 94433-2211',type:'PJ',status:'Ativo',color:'#16a34a'},
 ];
 
@@ -7272,7 +7272,7 @@ function buildProducts(filtro){
   if(!el) return;
   el.innerHTML = list.map(p=>`
     <div class="prod-card">
-      <div class="prod-img" style="background:${p.bg}20">${p.icon}</div>
+      <div class="prod-img" style="background:${p.bg};filter:opacity(0.18)">${p.icon}</div>
       <div class="prod-info">
         <div class="pn">${p.name}</div>
         <div class="pd">${p.desc}</div>
