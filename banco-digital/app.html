@@ -2,1266 +2,1829 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MeuBanco Digital</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   RESET & VARIABLES
+═══════════════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --primary:#1A237E;--primary-light:#3949AB;--primary-dark:#0D0D3B;
-  --accent:#00BCD4;--success:#22C55E;--warning:#F59E0B;--danger:#EF4444;
-  --bg:#F0F2F8;--card:#FFFFFF;--text:#1A1A2E;--muted:#6B7280;--border:#E5E7EB;
-  --shadow:0 4px 24px rgba(26,35,126,.10);--shadow-lg:0 8px 40px rgba(26,35,126,.18);
+  --primary:#1a237e;--primary2:#283593;--primary3:#3949ab;
+  --accent:#00bcd4;--accent2:#0097a7;
+  --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6;
+  --bg:#f0f2f8;--bg2:#e8eaf2;--card:#fff;
+  --text:#1a1a2e;--text2:#374151;--muted:#6b7280;--border:#e5e7eb;
+  --sidebar-w:260px;
+  --shadow:0 2px 12px rgba(26,35,126,.08);--shadow-md:0 4px 24px rgba(26,35,126,.12);--shadow-lg:0 8px 40px rgba(26,35,126,.18);
+  --radius:14px;--radius-sm:8px;--radius-lg:20px;
 }
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw}
-button{cursor:pointer;border:none;outline:none;font-family:inherit}
-input{font-family:inherit;outline:none}
-a{text-decoration:none;color:inherit}
 
-/* ═══════════════════════════════════════════════════
-   LAYOUT: phone shell + desktop
-═══════════════════════════════════════════════════ */
-.app-shell{
-  display:flex;align-items:center;justify-content:center;
-  min-height:100vh;background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 60%,var(--accent) 100%);
-  padding:20px;
-}
-.phone{
-  width:390px;height:844px;background:var(--bg);border-radius:44px;
-  box-shadow:0 40px 100px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.1);
-  overflow:hidden;position:relative;display:flex;flex-direction:column;
-}
-/* Notch */
-.notch{
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:120px;height:30px;background:#000;border-radius:0 0 18px 18px;z-index:100;
-}
-.status-bar{
-  height:44px;display:flex;align-items:flex-end;justify-content:space-between;
-  padding:0 24px 6px;font-size:12px;font-weight:600;color:var(--text);flex-shrink:0;z-index:10;
-}
-.status-bar.light{color:#fff}
-.status-right{display:flex;gap:6px;align-items:center}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-/* ═══════════════════════════════════════════════════
-   SCREENS
-═══════════════════════════════════════════════════ */
-.screen{
-  flex:1;overflow:hidden;display:none;flex-direction:column;
-  position:relative;
+/* ═══════════════════════════════════════════
+   SPLASH SCREEN
+═══════════════════════════════════════════ */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#0d0d3b 0%,#1a237e 55%,#00bcd4 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .5s ease;
 }
-.screen.active{display:flex}
-
-/* ─── SPLASH ─────────────────────────────────────── */
-#screen-splash{
-  background:linear-gradient(160deg,var(--primary-dark) 0%,var(--primary) 55%,var(--primary-light) 100%);
-  align-items:center;justify-content:center;
-}
+#splash.hide{opacity:0;pointer-events:none}
 .splash-logo{
-  width:90px;height:90px;background:rgba(255,255,255,.12);border-radius:26px;
+  width:100px;height:100px;background:rgba(255,255,255,.12);border-radius:28px;
   border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;
-  font-size:42px;margin-bottom:22px;animation:pulse 2s infinite;
+  font-size:50px;margin-bottom:24px;animation:pulse-logo 2s infinite;
 }
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.splash-title{font-size:36px;font-weight:900;color:#fff;letter-spacing:-1px}
-.splash-sub{font-size:15px;color:rgba(255,255,255,.7);margin-top:8px}
-.splash-loader{margin-top:60px;display:flex;gap:8px}
-.splash-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);animation:dot-wave 1.2s ease-in-out infinite}
+@keyframes pulse-logo{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,188,212,.4)}50%{transform:scale(1.05);box-shadow:0 0 0 20px rgba(0,188,212,0)}}
+.splash-title{font-size:42px;font-weight:900;color:#fff;letter-spacing:-2px}
+.splash-sub{font-size:15px;color:rgba(255,255,255,.65);margin-top:6px;letter-spacing:.5px}
+.splash-loader{margin-top:60px;display:flex;gap:10px}
+.splash-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.35);animation:dot 1.2s ease-in-out infinite}
 .splash-dot:nth-child(2){animation-delay:.2s}
 .splash-dot:nth-child(3){animation-delay:.4s}
-@keyframes dot-wave{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-8px);opacity:1}}
+@keyframes dot{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-10px);opacity:1}}
 
-/* ─── LOGIN ──────────────────────────────────────── */
-#screen-login{background:var(--bg);overflow-y:auto}
-.login-header{
-  background:linear-gradient(160deg,var(--primary-dark),var(--primary));
-  padding:40px 28px 50px;clip-path:ellipse(120% 100% at 50% 0%);
-  display:flex;flex-direction:column;align-items:center;text-align:center;
+/* ═══════════════════════════════════════════
+   LOGIN PAGE
+═══════════════════════════════════════════ */
+#page-login{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:linear-gradient(135deg,#0d0d3b 0%,#1a237e 50%,#283593 100%);
+  align-items:center;justify-content:center;
 }
-.login-logo{
-  width:70px;height:70px;background:rgba(255,255,255,.15);border-radius:20px;
-  display:flex;align-items:center;justify-content:center;font-size:34px;
-  border:2px solid rgba(255,255,255,.25);margin-bottom:14px;
+#page-login.active{display:flex}
+.login-wrap{
+  width:100%;max-width:440px;padding:20px;
 }
-.login-title{font-size:26px;font-weight:800;color:#fff}
-.login-sub{font-size:13px;color:rgba(255,255,255,.7);margin-top:4px}
-.login-form{padding:28px 24px;display:flex;flex-direction:column;gap:14px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:13px;font-weight:600;color:var(--muted)}
+.login-card{
+  background:rgba(255,255,255,.95);backdrop-filter:blur(20px);
+  border-radius:var(--radius-lg);padding:44px 40px;
+  box-shadow:0 24px 80px rgba(0,0,0,.3);
+}
+.login-logo-row{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+.login-logo-icon{
+  width:56px;height:56px;background:linear-gradient(135deg,var(--primary),var(--accent));
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:28px;flex-shrink:0;
+}
+.login-logo-text h1{font-size:24px;font-weight:800;color:var(--primary);line-height:1.1}
+.login-logo-text p{font-size:13px;color:var(--muted);margin-top:2px}
+.login-card h2{font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px}
+.login-card p.sub{font-size:14px;color:var(--muted);margin-bottom:26px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-label{font-size:13px;font-weight:600;color:var(--text2)}
 .form-input{
-  background:#fff;border:1.5px solid var(--border);border-radius:12px;
-  padding:14px 16px;font-size:15px;color:var(--text);transition:border-color .2s;
+  background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;
+  padding:13px 16px;font-size:15px;color:var(--text);transition:all .2s;
+  font-family:inherit;
 }
-.form-input:focus{border-color:var(--primary)}
+.form-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(26,35,126,.08)}
 .input-wrap{position:relative}
-.input-wrap .form-input{padding-right:48px}
-.input-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;cursor:pointer;color:var(--muted)}
-.btn-primary{
-  background:linear-gradient(135deg,var(--primary),var(--primary-light));
-  color:#fff;padding:16px;border-radius:14px;font-size:16px;font-weight:700;
-  width:100%;transition:opacity .2s,transform .1s;box-shadow:0 4px 16px rgba(26,35,126,.35);
+.input-wrap .form-input{padding-right:46px}
+.eye-btn{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;color:var(--muted);font-size:18px;cursor:pointer;
 }
-.btn-primary:active{transform:scale(.98);opacity:.9}
-.btn-outline{
-  background:transparent;border:1.5px solid var(--primary);color:var(--primary);
-  padding:14px;border-radius:14px;font-size:15px;font-weight:600;width:100%;
+.btn{
   display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;
+  cursor:pointer;border:none;transition:all .2s;font-family:inherit;
 }
-.forgot-link{text-align:center;font-size:13px;color:var(--primary);font-weight:500;padding:4px;cursor:pointer}
-.demo-hint{
-  background:linear-gradient(135deg,rgba(0,188,212,.08),rgba(26,35,126,.06));
-  border:1px solid rgba(0,188,212,.3);border-radius:12px;padding:14px 16px;
-  font-size:12px;color:var(--muted);cursor:pointer;text-align:center;
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary3));color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,35,126,.35)}
+.btn-primary:active{transform:translateY(0)}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--muted);margin-top:10px}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.login-hint{
+  margin-top:18px;padding:12px 16px;background:#f0f4ff;border-radius:10px;
+  font-size:12.5px;color:var(--muted);text-align:center;border:1px solid #c7d2fe;
 }
-.demo-hint strong{color:var(--primary)}
+.login-hint span{font-weight:600;color:var(--primary)}
 .login-error{
-  background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;
-  padding:12px 14px;font-size:13px;color:var(--danger);display:none;
-  align-items:center;gap:8px;
+  display:none;padding:12px 16px;background:#fef2f2;border-radius:10px;
+  font-size:13px;color:var(--danger);margin-bottom:14px;border:1px solid #fecaca;
 }
+.login-error.show{display:block}
+.login-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--muted);font-size:13px}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* ─── MAIN (com bottom nav) ──────────────────────── */
-#screen-main{background:var(--bg)}
-.main-content{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:80px}
-.bottom-nav{
-  position:absolute;bottom:0;left:0;right:0;height:76px;
-  background:#fff;display:flex;align-items:center;justify-content:space-around;
-  border-top:1px solid var(--border);box-shadow:0 -4px 20px rgba(0,0,0,.06);
-  border-radius:0 0 44px 44px;padding:0 10px;
+/* ═══════════════════════════════════════════
+   APP LAYOUT (pós-login)
+═══════════════════════════════════════════ */
+#app{display:none;height:100vh;flex-direction:row}
+#app.active{display:flex}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:linear-gradient(180deg,#0d0d3b 0%,#1a237e 60%,#283593 100%);
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:4px 0 24px rgba(0,0,0,.18);position:relative;z-index:10;
+}
+.sidebar-logo{
+  padding:26px 22px 22px;border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;gap:12px;
+}
+.sidebar-logo-icon{
+  width:42px;height:42px;background:rgba(255,255,255,.12);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  border:1px solid rgba(255,255,255,.2);flex-shrink:0;
+}
+.sidebar-logo-text{color:#fff}
+.sidebar-logo-text .name{font-size:17px;font-weight:800;letter-spacing:-.5px}
+.sidebar-logo-text .tagline{font-size:11px;opacity:.55;margin-top:1px}
+.sidebar-nav{flex:1;padding:16px 12px;overflow-y:auto}
+.sidebar-nav::-webkit-scrollbar{display:none}
+.nav-section{margin-bottom:8px}
+.nav-section-label{
+  font-size:10.5px;font-weight:700;color:rgba(255,255,255,.35);
+  letter-spacing:1px;text-transform:uppercase;padding:8px 10px 6px;
 }
 .nav-item{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:6px 14px;border-radius:12px;cursor:pointer;transition:all .2s;flex:1;
+  display:flex;align-items:center;gap:12px;padding:11px 14px;
+  border-radius:10px;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.65);
+  font-size:14px;font-weight:500;margin-bottom:2px;
 }
-.nav-item.active .nav-icon{color:var(--primary)}
-.nav-item.active .nav-label{color:var(--primary);font-weight:700}
-.nav-icon{font-size:22px;color:var(--muted);transition:color .2s}
-.nav-label{font-size:10px;color:var(--muted);font-weight:500;transition:color .2s}
-.nav-center{
-  width:58px;height:58px;background:linear-gradient(135deg,var(--primary),var(--primary-light));
-  border-radius:18px;display:flex;align-items:center;justify-content:center;
-  font-size:26px;box-shadow:0 4px 16px rgba(26,35,126,.4);margin-top:-16px;flex-shrink:0;
-  cursor:pointer;transition:transform .1s;
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item.active{background:rgba(255,255,255,.14);color:#fff;font-weight:600}
+.nav-item.active .nav-icon{color:var(--accent)}
+.nav-icon{font-size:18px;width:22px;text-align:center;flex-shrink:0}
+.nav-badge{
+  margin-left:auto;background:var(--danger);color:#fff;
+  font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;
 }
-.nav-center:active{transform:scale(.94)}
+.sidebar-profile{
+  padding:16px 16px 20px;border-top:1px solid rgba(255,255,255,.08);
+}
+.sidebar-profile-inner{
+  display:flex;align-items:center;gap:10px;padding:10px 10px;
+  border-radius:10px;cursor:pointer;transition:all .2s;
+}
+.sidebar-profile-inner:hover{background:rgba(255,255,255,.08)}
+.sidebar-avatar{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;overflow:hidden;
+  background:linear-gradient(135deg,var(--accent),var(--primary3));
+  display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700;
+  border:2px solid rgba(255,255,255,.25);
+}
+.sidebar-profile-info{flex:1;min-width:0}
+.sidebar-profile-info .uname{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-profile-info .urole{font-size:11px;color:rgba(255,255,255,.45);white-space:nowrap}
+.sidebar-logout{color:rgba(255,255,255,.4);font-size:16px;flex-shrink:0;cursor:pointer;transition:color .2s}
+.sidebar-logout:hover{color:var(--danger)}
 
-/* ─── TABS DENTRO DO MAIN ────────────────────────── */
-.tab{display:none;flex-direction:column;height:100%}
-.tab.active{display:flex}
+/* ── MAIN CONTENT ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.topbar{
+  height:64px;flex-shrink:0;background:var(--card);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;box-shadow:var(--shadow);
+}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-left .page-title{font-size:20px;font-weight:800;color:var(--text)}
+.topbar-left .page-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-btn{
+  width:38px;height:38px;border-radius:10px;background:var(--bg);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:18px;transition:all .2s;position:relative;
+}
+.topbar-btn:hover{background:var(--bg2);border-color:var(--primary3)}
+.notif-dot{
+  position:absolute;top:6px;right:7px;width:8px;height:8px;
+  border-radius:50%;background:var(--danger);border:2px solid #fff;
+}
+.topbar-avatar{
+  width:38px;height:38px;border-radius:50%;overflow:hidden;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700;
+  border:2px solid var(--border);cursor:pointer;
+}
 
-/* ─── HOME TAB ───────────────────────────────────── */
-.home-appbar{
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
-  padding:16px 20px 60px;flex-shrink:0;
+/* ── PAGES ── */
+.content{flex:1;overflow-y:auto;padding:28px}
+.content::-webkit-scrollbar{width:5px}
+.content::-webkit-scrollbar-track{background:transparent}
+.content::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+.page{display:none}
+.page.active{display:block}
+
+/* ═══════════════════════════════════════════
+   CARDS & GRID UTILITIES
+═══════════════════════════════════════════ */
+.card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.card-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.card-value{font-size:28px;font-weight:800;color:var(--text);letter-spacing:-1px}
+.card-change{font-size:12px;margin-top:4px}
+.card-change.up{color:var(--success)}.card-change.down{color:var(--danger)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.section-title{
+  font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;
 }
-.home-appbar-row{display:flex;align-items:center;justify-content:space-between}
-.greeting-sub{font-size:12px;color:rgba(255,255,255,.65);font-weight:500}
-.greeting-name{font-size:17px;font-weight:700;color:#fff;margin-top:1px}
-.appbar-actions{display:flex;gap:8px}
-.icon-btn{
-  width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.12);
-  display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;
-  border:1px solid rgba(255,255,255,.15);
+.section-title a{font-size:13px;font-weight:500;color:var(--primary3);cursor:pointer}
+.section-title a:hover{text-decoration:underline}
+.mb-20{margin-bottom:20px}
+.mb-24{margin-bottom:24px}
+
+/* ═══════════════════════════════════════════
+   PAGE: HOME / DASHBOARD
+═══════════════════════════════════════════ */
+.balance-hero{
+  background:linear-gradient(135deg,#0d0d3b 0%,#1a237e 55%,#283593 100%);
+  border-radius:var(--radius-lg);padding:28px 28px 22px;color:#fff;
+  position:relative;overflow:hidden;margin-bottom:20px;
+  box-shadow:var(--shadow-lg);
 }
-.balance-card{
-  margin:-44px 16px 0;background:#fff;border-radius:22px;padding:22px;
-  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;flex-shrink:0;
+.balance-hero::before{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(0,188,212,.15);
 }
-.balance-card::before{
-  content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;
-  border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--accent));
-  opacity:.06;
+.balance-hero::after{
+  content:'';position:absolute;right:40px;bottom:-60px;
+  width:150px;height:150px;border-radius:50%;
+  background:rgba(255,255,255,.05);
 }
 .balance-row{display:flex;align-items:flex-start;justify-content:space-between}
-.balance-label{font-size:12px;color:var(--muted);font-weight:500}
-.balance-amount{font-size:28px;font-weight:800;color:var(--text);margin-top:2px;letter-spacing:-.5px}
-.balance-eye{
-  width:34px;height:34px;border-radius:10px;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;
+.balance-left .label{font-size:13px;opacity:.65;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.balance-left .amount{font-size:40px;font-weight:900;letter-spacing:-2px;filter:none;transition:filter .3s}
+.balance-left .amount.blur{filter:blur(10px)}
+.balance-left .agency{font-size:12px;opacity:.5;margin-top:8px}
+.balance-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.eye-toggle{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:8px;padding:7px 12px;color:rgba(255,255,255,.8);
+  font-size:18px;cursor:pointer;transition:all .2s;
 }
-.balance-chips{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.chip{
-  display:flex;align-items:center;gap:5px;background:var(--bg);
-  border-radius:20px;padding:5px 10px;font-size:11px;font-weight:600;color:var(--muted);
+.eye-toggle:hover{background:rgba(255,255,255,.2)}
+.pix-chip{
+  background:rgba(0,188,212,.2);border:1px solid rgba(0,188,212,.4);
+  border-radius:8px;padding:6px 12px;font-size:12px;color:var(--accent);font-weight:600;
+  display:flex;align-items:center;gap:5px;
 }
-.chip.green{background:#F0FDF4;color:#15803D}
-.chip.blue{background:#EFF6FF;color:#1D4ED8}
-.balance-footer{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between}
-.balance-stat{text-align:center}
-.balance-stat-val{font-size:14px;font-weight:700}
-.balance-stat-val.green{color:var(--success)}
-.balance-stat-val.red{color:var(--danger)}
-.balance-stat-label{font-size:10px;color:var(--muted);margin-top:2px}
+.balance-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+.balance-mini{text-align:center}
+.balance-mini .mini-label{font-size:11px;opacity:.5;margin-bottom:4px}
+.balance-mini .mini-val{font-size:17px;font-weight:700}
+.balance-mini .mini-val.green{color:#4ade80}
+.balance-mini .mini-val.red{color:#f87171}
 
-/* Quick actions */
-.section{padding:20px 16px 0}
-.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.section-title{font-size:16px;font-weight:700;color:var(--text)}
-.section-link{font-size:13px;color:var(--primary);font-weight:600}
-.actions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.action-btn{
-  display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;
-  padding:4px;
+.quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.qa-item{
+  background:var(--card);border-radius:var(--radius);padding:16px 8px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;transition:all .2s;border:1.5px solid transparent;
+  box-shadow:var(--shadow);
 }
-.action-icon{
-  width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
-  font-size:24px;transition:transform .1s;
+.qa-item:hover{border-color:var(--primary3);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.qa-icon{
+  width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;
 }
-.action-btn:active .action-icon{transform:scale(.92)}
-.action-label{font-size:11px;color:var(--muted);font-weight:600;text-align:center}
+.qa-icon.blue{background:#eff6ff}
+.qa-icon.green{background:#f0fdf4}
+.qa-icon.purple{background:#faf5ff}
+.qa-icon.orange{background:#fff7ed}
+.qa-icon.pink{background:#fdf2f8}
+.qa-item span{font-size:12px;font-weight:600;color:var(--text2);text-align:center}
 
-/* Transactions */
-.tx-list{display:flex;flex-direction:column;gap:6px;padding:0 16px}
+.recent-tx{display:flex;flex-direction:column;gap:10px}
 .tx-item{
-  background:#fff;border-radius:14px;padding:13px 14px;
-  display:flex;align-items:center;gap:12px;cursor:pointer;
-  transition:transform .1s;box-shadow:0 1px 6px rgba(0,0,0,.04);
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  background:var(--card);border-radius:var(--radius);
+  cursor:pointer;transition:all .2s;box-shadow:var(--shadow);
 }
-.tx-item:active{transform:scale(.98)}
+.tx-item:hover{box-shadow:var(--shadow-md);transform:translateX(2px)}
 .tx-icon{
-  width:44px;height:44px;border-radius:13px;display:flex;align-items:center;
-  justify-content:center;font-size:20px;flex-shrink:0;
+  width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
 }
 .tx-info{flex:1;min-width:0}
-.tx-name{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tx-date{font-size:11px;color:var(--muted);margin-top:2px}
-.tx-amount{font-size:14px;font-weight:700;white-space:nowrap}
+.tx-info .name{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-info .date{font-size:12px;color:var(--muted);margin-top:2px}
+.tx-amount{font-size:15px;font-weight:700;flex-shrink:0}
 .tx-amount.credit{color:var(--success)}
 .tx-amount.debit{color:var(--danger)}
 
-/* ─── PIX TAB ────────────────────────────────────── */
-.pix-header{
-  background:linear-gradient(135deg,#00695C,#00BCD4);
-  padding:20px 20px 28px;flex-shrink:0;
+/* ── HOME RIGHT COLUMN ── */
+.home-grid{display:grid;grid-template-columns:1fr 340px;gap:20px}
+
+.mini-chart{height:160px;position:relative;overflow:hidden;border-radius:var(--radius)}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:120px;padding:0 4px}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;min-height:4px;transition:height .5s ease}
+.chart-bar.income{background:linear-gradient(0deg,var(--success),#4ade80)}
+.chart-bar.expense{background:linear-gradient(0deg,var(--danger),#f87171);opacity:.7}
+.chart-labels{display:flex;gap:6px;margin-top:6px;padding:0 4px}
+.chart-labels span{flex:1;text-align:center;font-size:10px;color:var(--muted)}
+
+.card-widget{
+  background:linear-gradient(135deg,#1a237e,#283593,#00bcd4);
+  border-radius:var(--radius-lg);padding:22px;color:#fff;position:relative;overflow:hidden;
 }
-.pix-title{font-size:20px;font-weight:800;color:#fff}
-.pix-sub{font-size:13px;color:rgba(255,255,255,.75);margin-top:2px}
-.pix-tabs{display:flex;margin:0 16px 0;gap:0;background:#fff;border-radius:16px;padding:4px;margin-top:-16px;box-shadow:var(--shadow);flex-shrink:0}
-.pix-tab{
-  flex:1;padding:10px;border-radius:12px;font-size:13px;font-weight:600;
-  color:var(--muted);background:transparent;transition:all .2s;text-align:center;
+.card-widget::before{
+  content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;
+  border-radius:50%;background:rgba(255,255,255,.07);
 }
-.pix-tab.active{background:linear-gradient(135deg,#00695C,#00BCD4);color:#fff}
-.pix-content{flex:1;overflow-y:auto;padding:16px}
-.pix-panel{display:none}
-.pix-panel.active{display:block}
-.field-group{margin-bottom:14px}
-.field-label{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
-.field-input{
-  width:100%;background:#fff;border:1.5px solid var(--border);border-radius:12px;
-  padding:13px 14px;font-size:15px;color:var(--text);transition:border-color .2s;
+.card-widget .chip{
+  width:42px;height:30px;background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  border-radius:6px;margin-bottom:16px;
 }
-.field-input:focus{border-color:#00BCD4}
-.amount-input{
-  width:100%;background:#fff;border:2px solid var(--border);border-radius:14px;
-  padding:16px 14px;font-size:26px;font-weight:700;color:var(--text);
-  text-align:center;transition:border-color .2s;
+.card-widget .card-num{font-size:15px;letter-spacing:3px;margin-bottom:4px;opacity:.9}
+.card-widget .card-name{font-size:12px;opacity:.6;margin-bottom:12px}
+.card-widget .card-bot{display:flex;justify-content:space-between;align-items:flex-end}
+.card-widget .card-exp{font-size:11px;opacity:.6}
+.card-widget .card-brand{font-size:24px;opacity:.9}
+
+/* ═══════════════════════════════════════════
+   PAGE: PIX
+═══════════════════════════════════════════ */
+.pix-tabs{display:flex;gap:0;background:var(--card);border-radius:var(--radius);padding:4px;margin-bottom:20px;box-shadow:var(--shadow)}
+.pix-tab{flex:1;padding:11px;text-align:center;font-size:14px;font-weight:600;border-radius:10px;cursor:pointer;transition:all .2s;color:var(--muted)}
+.pix-tab.active{background:linear-gradient(135deg,var(--primary),var(--primary3));color:#fff;box-shadow:0 3px 12px rgba(26,35,126,.25)}
+.pix-content{display:none}
+.pix-content.active{display:block}
+
+.pix-send-form{max-width:560px}
+.pix-send-form .form-input{background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;font-size:15px;font-family:inherit;color:var(--text);transition:all .2s;width:100%}
+.pix-send-form .form-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(26,35,126,.08)}
+
+.contact-chips{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px}
+.contact-chips::-webkit-scrollbar{display:none}
+.contact-chip{
+  flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--card);transition:all .2s;min-width:72px;
 }
-.amount-input:focus{border-color:#00695C}
-.quick-vals{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.quick-val{
-  padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);
-  background:#fff;font-size:13px;font-weight:600;color:var(--primary);cursor:pointer;transition:all .2s;
+.contact-chip:hover,.contact-chip.sel{border-color:var(--primary3);background:#eff6ff}
+.contact-avatar{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;
 }
-.quick-val:hover,.quick-val:active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.btn-pix{
-  width:100%;padding:15px;border-radius:14px;font-size:16px;font-weight:700;
-  background:linear-gradient(135deg,#00695C,#00BCD4);color:#fff;
-  box-shadow:0 4px 14px rgba(0,188,212,.35);margin-top:8px;transition:opacity .2s;
+.contact-chip .cname{font-size:12px;font-weight:600;color:var(--text2);text-align:center}
+
+.pix-keypad{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:16px auto;
 }
-.btn-pix:active{opacity:.9}
-/* QR Code */
-.qr-container{
-  background:#fff;border-radius:20px;padding:22px;text-align:center;
-  box-shadow:var(--shadow);margin-bottom:14px;
+.key-btn{
+  padding:16px;text-align:center;font-size:20px;font-weight:600;color:var(--text);
+  background:var(--card);border-radius:12px;cursor:pointer;border:1.5px solid var(--border);
+  transition:all .15s;
 }
+.key-btn:hover{background:var(--bg2);border-color:var(--primary3)}
+.key-btn:active{transform:scale(.95)}
+.key-btn.del{font-size:18px}
+
+.amount-display{
+  text-align:center;margin:10px 0;padding:16px;background:var(--bg);border-radius:var(--radius);
+}
+.amount-display .currency{font-size:20px;color:var(--muted);font-weight:600}
+.amount-display .value{font-size:44px;font-weight:900;color:var(--text);letter-spacing:-2px}
+
 .qr-box{
-  width:200px;height:200px;margin:0 auto 14px;background:#fff;
-  border-radius:12px;padding:12px;position:relative;
-  box-shadow:0 2px 12px rgba(0,0,0,.1);
+  text-align:center;padding:28px;background:var(--card);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);max-width:380px;margin:0 auto;
 }
-.qr-svg{width:100%;height:100%}
-.qr-amount{font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px}
-.qr-info{font-size:12px;color:var(--muted)}
-.qr-key{
-  background:var(--bg);border-radius:10px;padding:10px 12px;
-  font-size:12px;font-family:monospace;color:var(--primary);margin-top:10px;word-break:break-all;
+.qr-inner{
+  width:220px;height:220px;background:#fff;border-radius:12px;margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 3px var(--border),0 0 0 6px #f0f2f8;
+  position:relative;overflow:hidden;
 }
-.share-btn{
-  width:100%;padding:13px;border-radius:14px;font-size:14px;font-weight:600;
-  background:transparent;border:1.5px solid #00695C;color:#00695C;margin-top:10px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
+.qr-pattern{display:grid;grid-template-columns:repeat(11,1fr);gap:2px;padding:12px}
+.qr-cell{border-radius:2px;height:100%}
+.qr-info{font-size:12px;color:var(--muted);line-height:1.5}
+.qr-key{font-size:14px;font-weight:700;color:var(--text);margin:8px 0 4px}
 
-/* ─── EXTRATO TAB ────────────────────────────────── */
-.extract-header{
-  background:linear-gradient(135deg,#7C3AED,#A855F7);
-  padding:20px 20px 28px;flex-shrink:0;
+/* ═══════════════════════════════════════════
+   PAGE: EXTRATO
+═══════════════════════════════════════════ */
+.filter-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-chip{
+  padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1.5px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s;
 }
-.summary-cards{
-  display:flex;gap:10px;padding:0 16px;margin-top:-16px;flex-shrink:0;
+.filter-chip.active,.filter-chip:hover{border-color:var(--primary3);color:var(--primary);background:#eff6ff}
+.date-input{
+  padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;
+  border:1.5px solid var(--border);background:var(--card);color:var(--text2);
+  font-family:inherit;cursor:pointer;
 }
+.filter-search{
+  flex:1;max-width:280px;padding:8px 14px;border-radius:20px;font-size:13px;
+  border:1.5px solid var(--border);background:var(--card);color:var(--text);
+  font-family:inherit;
+}
+.filter-search:focus{border-color:var(--primary3);outline:none}
+
+.tx-group{margin-bottom:20px}
+.tx-group-header{
+  font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;
+  text-transform:uppercase;padding:6px 4px;border-bottom:1px solid var(--border);margin-bottom:10px;
+  display:flex;justify-content:space-between;
+}
+.tx-full{
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  background:var(--card);border-radius:var(--radius);margin-bottom:8px;
+  cursor:pointer;transition:all .2s;box-shadow:var(--shadow);
+}
+.tx-full:hover{box-shadow:var(--shadow-md);transform:translateX(2px)}
+.tx-full .tx-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tx-full .tx-info{flex:1;min-width:0}
+.tx-full .tx-desc{font-size:14px;font-weight:600;color:var(--text)}
+.tx-full .tx-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.tx-full .tx-right{text-align:right;flex-shrink:0}
+.tx-full .tx-val{font-size:15px;font-weight:700}
+.tx-full .tx-time{font-size:11px;color:var(--muted);margin-top:2px}
+
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
 .sum-card{
-  flex:1;background:#fff;border-radius:14px;padding:14px;
-  box-shadow:var(--shadow);text-align:center;
+  background:var(--card);border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;
 }
-.sum-card-val{font-size:15px;font-weight:800}
-.sum-card-val.green{color:var(--success)}
-.sum-card-val.red{color:var(--danger)}
-.sum-card-val.blue{color:var(--primary)}
-.sum-card-label{font-size:10px;color:var(--muted);margin-top:2px}
+.sum-card .sum-icon{font-size:22px;margin-bottom:2px}
+.sum-card .sum-label{font-size:12px;font-weight:600;color:var(--muted)}
+.sum-card .sum-val{font-size:20px;font-weight:800;color:var(--text)}
+.sum-card .sum-val.green{color:var(--success)}
+.sum-card .sum-val.red{color:var(--danger)}
+.sum-card .sum-val.blue{color:var(--info)}
 
-/* ─── CARTÕES TAB ────────────────────────────────── */
-.cards-header{
-  background:linear-gradient(135deg,#0891B2,#06B6D4);
-  padding:20px 20px 28px;flex-shrink:0;
+/* ═══════════════════════════════════════════
+   PAGE: CARTÕES
+═══════════════════════════════════════════ */
+.cards-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.credit-card-visual{
+  border-radius:20px;padding:24px;color:#fff;position:relative;overflow:hidden;
+  min-height:190px;display:flex;flex-direction:column;justify-content:space-between;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 12px 40px rgba(0,0,0,.2);
 }
-.card-visual{
-  margin:0 16px;margin-top:-20px;
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary),#7C3AED);
-  border-radius:22px;padding:24px;color:#fff;
-  box-shadow:0 12px 40px rgba(26,35,126,.4);position:relative;overflow:hidden;
+.credit-card-visual:hover{transform:translateY(-3px) rotateX(2deg)}
+.ccv-bg1{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#00bcd4 100%)}
+.ccv-bg2{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)}
+.ccv-bg3{background:linear-gradient(135deg,#7b2d8b 0%,#9c27b0 50%,#e91e63 100%)}
+.credit-card-visual::before{
+  content:'';position:absolute;right:-30px;top:-30px;width:160px;height:160px;
+  border-radius:50%;background:rgba(255,255,255,.06);
 }
-.card-visual::after{
-  content:'';position:absolute;right:-40px;bottom:-40px;
-  width:160px;height:160px;border-radius:50%;
-  background:rgba(255,255,255,.06);
-}
-.card-brand{font-size:11px;font-weight:700;opacity:.7;letter-spacing:1px}
-.card-num{font-size:17px;letter-spacing:3px;font-weight:600;margin:18px 0 10px}
-.card-row{display:flex;justify-content:space-between;align-items:flex-end}
-.card-holder{font-size:13px;font-weight:600;opacity:.85}
-.card-expiry{font-size:11px;opacity:.65;margin-bottom:2px}
-.card-expiry span{font-size:14px;font-weight:700;display:block;opacity:1}
-.card-logo{position:absolute;top:22px;right:22px;display:flex;gap:-4px}
-.circle{width:32px;height:32px;border-radius:50%;opacity:.85}
-.circle-left{background:#EB001B}
-.circle-right{background:#F79E1B;margin-left:-10px}
-
-/* ─── CRÉDITO TAB ────────────────────────────────── */
-.credit-header{
-  background:linear-gradient(135deg,#059669,#10B981);
-  padding:20px 20px 28px;flex-shrink:0;
-}
-.credit-avail{
-  margin:0 16px;margin-top:-20px;background:#fff;border-radius:18px;
-  padding:20px;box-shadow:var(--shadow-lg);
-}
-.credit-amount-big{font-size:32px;font-weight:900;color:var(--text)}
-.progress-bar{height:8px;background:var(--bg);border-radius:4px;margin-top:12px;overflow:hidden}
-.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#059669,#10B981)}
-
-/* ─── PERFIL TAB ─────────────────────────────────── */
-.profile-header{
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
-  padding:28px 20px 50px;text-align:center;flex-shrink:0;
-}
-.avatar{
-  width:76px;height:76px;border-radius:24px;background:rgba(255,255,255,.15);
-  display:flex;align-items:center;justify-content:center;font-size:36px;
-  margin:0 auto 12px;border:2px solid rgba(255,255,255,.25);
-}
-.profile-name{font-size:20px;font-weight:800;color:#fff}
-.profile-role{font-size:13px;color:rgba(255,255,255,.65);margin-top:3px}
-.menu-group{padding:0 16px;margin-top:-20px}
-.menu-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:12px}
-.menu-item{
-  display:flex;align-items:center;gap:13px;padding:15px 16px;cursor:pointer;
-  border-bottom:1px solid var(--border);transition:background .15s;
-}
-.menu-item:last-child{border-bottom:none}
-.menu-item:active{background:var(--bg)}
-.menu-item-icon{
-  width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
-  justify-content:center;font-size:18px;flex-shrink:0;
-}
-.menu-item-text{flex:1}
-.menu-item-title{font-size:14px;font-weight:600;color:var(--text)}
-.menu-item-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.menu-item-arrow{font-size:16px;color:var(--muted)}
-.toggle-wrap{display:flex;align-items:center}
-.toggle{
-  width:44px;height:24px;border-radius:12px;background:var(--border);
-  position:relative;cursor:pointer;transition:background .2s;
-}
-.toggle.on{background:var(--primary)}
-.toggle-thumb{
-  width:20px;height:20px;border-radius:50%;background:#fff;
-  position:absolute;top:2px;left:2px;transition:left .2s;
-  box-shadow:0 2px 4px rgba(0,0,0,.2);
-}
-.toggle.on .toggle-thumb{left:22px}
-.logout-btn{
-  width:100%;padding:15px;border-radius:14px;background:#FEF2F2;
-  border:1.5px solid #FECACA;color:var(--danger);font-size:15px;
-  font-weight:700;display:flex;align-items:center;justify-content:center;
-  gap:8px;margin:4px 0 12px;
+.ccv-chip{width:40px;height:28px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:5px;margin-bottom:14px}
+.ccv-num{font-size:16px;letter-spacing:4px;margin-bottom:6px;opacity:.9;font-weight:500}
+.ccv-name{font-size:12px;opacity:.55;margin-bottom:10px}
+.ccv-bot{display:flex;justify-content:space-between;align-items:center}
+.ccv-exp{font-size:11px;opacity:.6}
+.ccv-brand{font-size:22px}
+.ccv-nfc{font-size:18px;opacity:.5}
+.ccv-type{
+  position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);border-radius:6px;
+  font-size:10px;font-weight:700;padding:3px 8px;opacity:.8;
 }
 
-/* ═══════════════════════════════════════════════════
-   MODALS
-═══════════════════════════════════════════════════ */
+.card-limit-bar{
+  height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin:8px 0;
+}
+.card-limit-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--success),#4ade80)}
+.card-limit-fill.warning{background:linear-gradient(90deg,var(--warning),#fbbf24)}
+.card-limit-fill.danger{background:linear-gradient(90deg,var(--danger),#f87171)}
+
+.card-actions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card-act{
+  background:var(--card);border-radius:var(--radius-sm);padding:14px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
+  border:1.5px solid var(--border);transition:all .2s;
+}
+.card-act:hover{border-color:var(--primary3);background:#eff6ff}
+.card-act .ca-icon{font-size:22px}
+.card-act .ca-label{font-size:11px;font-weight:600;color:var(--text2);text-align:center}
+
+/* ═══════════════════════════════════════════
+   PAGE: CRÉDITO / EMPRÉSTIMOS
+═══════════════════════════════════════════ */
+.credit-hero{
+  background:linear-gradient(135deg,#0f172a,#1e3a5f,#0097a7);
+  border-radius:var(--radius-lg);padding:28px;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+}
+.credit-hero::before{content:'';position:absolute;right:-40px;bottom:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05)}
+.credit-hero-text h2{font-size:24px;font-weight:800;margin-bottom:6px}
+.credit-hero-text p{font-size:14px;opacity:.7;max-width:320px}
+.credit-hero-val{text-align:right}
+.credit-hero-val .label{font-size:12px;opacity:.6;margin-bottom:4px}
+.credit-hero-val .val{font-size:38px;font-weight:900;letter-spacing:-2px}
+
+.credit-products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.credit-product{
+  background:var(--card);border-radius:var(--radius);padding:22px;
+  border:1.5px solid var(--border);cursor:pointer;transition:all .2s;
+  box-shadow:var(--shadow);
+}
+.credit-product:hover{border-color:var(--primary3);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.cp-icon{font-size:32px;margin-bottom:12px}
+.cp-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.cp-rate{font-size:12px;color:var(--muted);margin-bottom:14px}
+.cp-tag{
+  display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+}
+.cp-tag.green{background:#f0fdf4;color:var(--success)}
+.cp-tag.blue{background:#eff6ff;color:var(--info)}
+.cp-tag.orange{background:#fff7ed;color:var(--warning)}
+
+.loan-table{width:100%;border-collapse:collapse}
+.loan-table th{text-align:left;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg);border-bottom:1px solid var(--border)}
+.loan-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text2)}
+.loan-table tr:last-child td{border-bottom:none}
+.loan-table tr:hover td{background:var(--bg)}
+.loan-status{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.loan-status.active{background:#f0fdf4;color:var(--success)}
+.loan-status.pending{background:#fff7ed;color:var(--warning)}
+.loan-status.closed{background:#f3f4f6;color:var(--muted)}
+
+/* ═══════════════════════════════════════════
+   PAGE: PERFIL
+═══════════════════════════════════════════ */
+.profile-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.profile-hero{
+  background:linear-gradient(135deg,#0d0d3b,#1a237e,#283593);
+  border-radius:var(--radius-lg);padding:32px;color:#fff;text-align:center;
+  box-shadow:var(--shadow-lg);
+}
+.profile-big-avatar{
+  width:90px;height:90px;border-radius:50%;margin:0 auto 16px;
+  background:linear-gradient(135deg,var(--accent),var(--primary3));
+  display:flex;align-items:center;justify-content:center;font-size:38px;color:#fff;font-weight:700;
+  border:4px solid rgba(255,255,255,.25);
+}
+.profile-hero h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.profile-hero .email{font-size:13px;opacity:.6;margin-bottom:16px}
+.profile-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,188,212,.2);border:1px solid rgba(0,188,212,.4);
+  border-radius:20px;padding:6px 14px;font-size:12px;color:var(--accent);font-weight:600;
+}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border-radius:12px;overflow:hidden;margin-top:20px}
+.pstat{background:rgba(255,255,255,.06);padding:14px;text-align:center}
+.pstat .pval{font-size:18px;font-weight:800;margin-bottom:3px}
+.pstat .plabel{font-size:11px;opacity:.5}
+
+.profile-section{
+  background:var(--card);border-radius:var(--radius);padding:22px;
+  box-shadow:var(--shadow);
+}
+.profile-section h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.profile-item{
+  display:flex;align-items:center;gap:12px;padding:12px 0;
+  border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s;
+}
+.profile-item:last-child{border-bottom:none;padding-bottom:0}
+.profile-item:hover{padding-left:4px}
+.profile-item .pi-icon{
+  width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.profile-item .pi-text{flex:1}
+.profile-item .pi-text .pi-title{font-size:14px;font-weight:600;color:var(--text)}
+.profile-item .pi-text .pi-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.profile-item .pi-arrow{color:var(--muted);font-size:14px}
+.profile-item .pi-toggle{
+  width:44px;height:24px;border-radius:12px;position:relative;cursor:pointer;
+  transition:background .2s;
+}
+.profile-item .pi-toggle.on{background:var(--success)}
+.profile-item .pi-toggle.off{background:var(--border)}
+.pi-toggle::after{
+  content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;
+  border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.pi-toggle.on::after{left:calc(100% - 21px)}
+
+/* ═══════════════════════════════════════════
+   PAGE: INVESTIMENTOS
+═══════════════════════════════════════════ */
+.invest-hero{
+  background:linear-gradient(135deg,#064e3b,#065f46,#047857);
+  border-radius:var(--radius-lg);padding:28px;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+}
+.invest-hero::before{content:'';position:absolute;right:-40px;bottom:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05)}
+.invest-products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.invest-card{
+  background:var(--card);border-radius:var(--radius);padding:22px;
+  box-shadow:var(--shadow);border:1.5px solid var(--border);cursor:pointer;transition:all .2s;
+}
+.invest-card:hover{border-color:#059669;transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.invest-rate{font-size:28px;font-weight:900;color:var(--success);letter-spacing:-1px;margin:8px 0 4px}
+.invest-rate small{font-size:14px;font-weight:500}
+
+/* ═══════════════════════════════════════════
+   MODALS & TOASTS
+═══════════════════════════════════════════ */
 .modal-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.5);
-  display:none;align-items:flex-end;z-index:200;border-radius:44px;
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
 }
-.modal-overlay.active{display:flex}
-.modal-sheet{
-  background:#fff;border-radius:24px 24px 0 0;padding:20px 22px 30px;
-  width:100%;max-height:80%;overflow-y:auto;animation:slideUp .3s cubic-bezier(.4,0,.2,1);
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{
+  background:var(--card);border-radius:var(--radius-lg);padding:32px;
+  max-width:440px;width:90%;box-shadow:0 24px 80px rgba(0,0,0,.3);
+  transform:scale(.95) translateY(10px);transition:all .25s;
 }
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
-.modal-title{font-size:18px;font-weight:800;margin-bottom:16px}
-.success-modal{text-align:center;padding:10px 0}
-.success-icon{font-size:64px;margin-bottom:12px}
-.success-title{font-size:22px;font-weight:800;color:var(--text)}
-.success-amount{font-size:30px;font-weight:900;color:var(--success);margin:8px 0}
-.success-info{font-size:13px;color:var(--muted);margin-bottom:20px}
-.btn-close-modal{
-  width:100%;padding:14px;border-radius:14px;background:var(--bg);
-  font-size:15px;font-weight:700;color:var(--text);
-}
+.modal-overlay.show .modal{transform:scale(1) translateY(0)}
+.modal h2{font-size:20px;font-weight:800;margin-bottom:6px}
+.modal p{font-size:14px;color:var(--muted);margin-bottom:22px}
+.modal-actions{display:flex;gap:10px}
+.modal-actions .btn{flex:1;padding:13px}
+.btn-ghost{background:var(--bg);color:var(--text2);border:1.5px solid var(--border)}
+.btn-ghost:hover{background:var(--bg2)}
+.btn-success{background:linear-gradient(135deg,var(--success),#16a34a);color:#fff}
+.btn-success:hover{box-shadow:0 4px 15px rgba(34,197,94,.35)}
 
-/* ═══════════════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════════════ */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:1000;display:flex;flex-direction:column;gap:10px}
 .toast{
-  position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-80px);
-  background:#1E293B;color:#fff;padding:11px 18px;border-radius:12px;
-  font-size:13px;font-weight:500;white-space:nowrap;z-index:500;
-  transition:transform .3s cubic-bezier(.4,0,.2,1);pointer-events:none;
+  background:var(--card);border-radius:12px;padding:14px 18px;
+  box-shadow:var(--shadow-lg);border-left:4px solid var(--success);
+  display:flex;align-items:center;gap:12px;min-width:280px;max-width:380px;
+  transform:translateX(120%);transition:transform .3s ease;font-size:14px;font-weight:500;
 }
-.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.show{transform:translateX(0)}
+.toast.error{border-left-color:var(--danger)}
+.toast.info{border-left-color:var(--info)}
+.toast.warn{border-left-color:var(--warning)}
 
-/* ═══════════════════════════════════════════════════
-   DESKTOP INFO PANEL
-═══════════════════════════════════════════════════ */
-.desktop-info{
-  max-width:320px;color:#fff;padding:20px;
-  display:none;
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1100px){
+  .home-grid{grid-template-columns:1fr}
+  .cards-layout{grid-template-columns:1fr}
+  .profile-layout{grid-template-columns:1fr}
+  .credit-products{grid-template-columns:1fr 1fr}
+  .invest-products{grid-template-columns:1fr 1fr}
 }
-@media(min-width:800px){.desktop-info{display:block}}
-.desktop-info h1{font-size:32px;font-weight:900;margin-bottom:12px;line-height:1.2}
-.desktop-info p{font-size:15px;opacity:.8;line-height:1.6;margin-bottom:20px}
-.feature-list{display:flex;flex-direction:column;gap:10px}
-.feature{display:flex;align-items:center;gap:10px;font-size:14px;opacity:.85}
-.feature-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+@media(max-width:768px){
+  :root{--sidebar-w:0px}
+  .sidebar{display:none}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .quick-actions{grid-template-columns:repeat(4,1fr)}
+  .summary-cards{grid-template-columns:1fr 1fr}
+}
 
-/* ═══════════════════════════════════════════════════
-   LOADING SKELETON
-═══════════════════════════════════════════════════ */
-.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
-@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
-
-/* scrollbar */
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+/* ═══════════════════════════════════════════
+   BADGE, TAGS, MISC
+═══════════════════════════════════════════ */
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-green{background:#f0fdf4;color:var(--success)}
+.badge-red{background:#fef2f2;color:var(--danger)}
+.badge-blue{background:#eff6ff;color:var(--info)}
+.badge-yellow{background:#fffbeb;color:var(--warning)}
+.badge-purple{background:#faf5ff;color:#7c3aed}
+.tag{padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600}
+.btn-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600}
+.btn-icon{width:36px;height:36px;border-radius:9px;border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .2s}
+.btn-icon:hover{background:var(--bg2);border-color:var(--primary3)}
+.flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-8{gap:8px}.gap-12{gap:12px}
+.text-muted{color:var(--muted)}.text-sm{font-size:13px}.fw-700{font-weight:700}
+.w-full{width:100%}
+.progress{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:var(--primary3)}
+.divider{height:1px;background:var(--border);margin:16px 0}
 </style>
 </head>
 <body>
 
-<div class="app-shell">
+<!-- ═══════════════ SPLASH ═══════════════ -->
+<div id="splash">
+  <div class="splash-logo">🏦</div>
+  <div class="splash-title">MeuBanco</div>
+  <div class="splash-sub">Digital · Powered by Apache Fineract</div>
+  <div class="splash-loader">
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
 
-  <!-- Desktop info -->
-  <div class="desktop-info">
-    <h1>🏦 MeuBanco<br>Digital</h1>
-    <p>Plataforma bancária completa construída sobre Apache Fineract com Flutter.</p>
-    <div class="feature-list">
-      <div class="feature"><div class="feature-dot"></div>Conta digital com saldo em tempo real</div>
-      <div class="feature"><div class="feature-dot"></div>PIX — enviar e cobrar com QR Code</div>
-      <div class="feature"><div class="feature-dot"></div>Cartão virtual Visa/Mastercard</div>
-      <div class="feature"><div class="feature-dot"></div>Crédito e empréstimos pessoais</div>
-      <div class="feature"><div class="feature-dot"></div>Extrato completo com gráficos</div>
-      <div class="feature"><div class="feature-dot"></div>Perfil com biometria e 2FA</div>
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="page-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo-row">
+        <div class="login-logo-icon">🏦</div>
+        <div class="login-logo-text">
+          <h1>MeuBanco Digital</h1>
+          <p>Powered by Apache Fineract</p>
+        </div>
+      </div>
+      <h2>Bem-vindo de volta</h2>
+      <p class="sub">Acesse sua conta para continuar</p>
+      <div id="loginError" class="login-error">❌ Usuário ou senha incorretos. Tente novamente.</div>
+      <div class="form-group">
+        <label class="form-label">Usuário</label>
+        <input class="form-input" id="inpUser" type="text" placeholder="mifos" value="mifos">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha</label>
+        <div class="input-wrap">
+          <input class="form-input" id="inpPass" type="password" placeholder="••••••••" value="password">
+          <button class="eye-btn" onclick="togglePass()">👁️</button>
+        </div>
+      </div>
+      <div style="margin-bottom:20px"></div>
+      <button class="btn btn-primary" onclick="doLogin()">Entrar na conta →</button>
+      <div class="login-divider">ou</div>
+      <button class="btn btn-outline" onclick="doLogin()">🔑 Entrar com biometria</button>
+      <div class="login-hint">Demo: usuário <span>mifos</span> · senha <span>password</span></div>
     </div>
   </div>
+</div>
 
-  <!-- Phone shell -->
-  <div class="phone" id="phone">
-    <div class="notch"></div>
+<!-- ═══════════════ APP ═══════════════ -->
+<div id="app">
 
-    <!-- Status bar -->
-    <div class="status-bar" id="status-bar">
-      <span id="status-time">12:45</span>
-      <div class="status-right">
-        <span>📶</span><span>🔋</span>
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">🏦</div>
+      <div class="sidebar-logo-text">
+        <div class="name">MeuBanco</div>
+        <div class="tagline">Digital Banking</div>
       </div>
     </div>
 
-    <!-- ══ SPLASH ══ -->
-    <div class="screen active" id="screen-splash">
-      <div class="splash-logo">🏦</div>
-      <div class="splash-title">MeuBanco</div>
-      <div class="splash-sub">Seu banco digital completo</div>
-      <div class="splash-loader">
-        <div class="splash-dot"></div>
-        <div class="splash-dot"></div>
-        <div class="splash-dot"></div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Principal</div>
+        <div class="nav-item active" onclick="goPage('home',this)">
+          <span class="nav-icon">🏠</span><span>Início</span>
+        </div>
+        <div class="nav-item" onclick="goPage('pix',this)">
+          <span class="nav-icon">⚡</span><span>PIX</span>
+        </div>
+        <div class="nav-item" onclick="goPage('extrato',this)">
+          <span class="nav-icon">📋</span><span>Extrato</span>
+        </div>
       </div>
-    </div>
-
-    <!-- ══ LOGIN ══ -->
-    <div class="screen" id="screen-login">
-      <div class="login-header">
-        <div class="login-logo">🏦</div>
-        <div class="login-title">MeuBanco</div>
-        <div class="login-sub">Entre na sua conta</div>
+      <div class="nav-section">
+        <div class="nav-section-label">Produtos</div>
+        <div class="nav-item" onclick="goPage('cartoes',this)">
+          <span class="nav-icon">💳</span><span>Cartões</span>
+        </div>
+        <div class="nav-item" onclick="goPage('credito',this)">
+          <span class="nav-icon">💰</span><span>Crédito</span>
+        </div>
+        <div class="nav-item" onclick="goPage('investimentos',this)">
+          <span class="nav-icon">📈</span><span>Investimentos</span>
+        </div>
       </div>
-      <div class="login-form">
-        <div class="login-error" id="login-error">
-          <span>⚠️</span><span id="login-error-msg">Usuário ou senha incorretos</span>
+      <div class="nav-section">
+        <div class="nav-section-label">Conta</div>
+        <div class="nav-item" onclick="goPage('perfil',this)">
+          <span class="nav-icon">👤</span><span>Perfil</span>
         </div>
-        <div class="form-group">
-          <label class="form-label">Usuário ou CPF</label>
-          <input class="form-input" id="login-user" type="text" placeholder="mifos" value="mifos">
+        <div class="nav-item" onclick="goPage('notificacoes',this)">
+          <span class="nav-icon">🔔</span><span>Notificações</span>
+          <span class="nav-badge">3</span>
         </div>
-        <div class="form-group">
-          <label class="form-label">Senha</label>
-          <div class="input-wrap">
-            <input class="form-input" id="login-pass" type="password" placeholder="••••••••" value="password">
-            <span class="input-icon" onclick="togglePass()">👁️</span>
-          </div>
-        </div>
-        <div class="forgot-link">Esqueci minha senha</div>
-        <button class="btn-primary" onclick="doLogin()" id="btn-login">Entrar na conta</button>
-        <button class="btn-outline" onclick="doLoginBio()">🫆 Entrar com biometria</button>
-        <div class="demo-hint" onclick="fillDemo()">
-          💡 <strong>Conta demo:</strong> toque aqui para preencher automaticamente<br>
-          <small>mifos / password</small>
+        <div class="nav-item" onclick="goPage('ajuda',this)">
+          <span class="nav-icon">❓</span><span>Ajuda</span>
         </div>
       </div>
     </div>
 
-    <!-- ══ MAIN ══ -->
-    <div class="screen" id="screen-main">
-      <div class="main-content" id="main-content">
-
-        <!-- ── HOME ── -->
-        <div class="tab active" id="tab-home">
-          <div class="home-appbar">
-            <div class="home-appbar-row">
-              <div>
-                <div class="greeting-sub" id="greeting-sub">Bom dia,</div>
-                <div class="greeting-name" id="greeting-name">João da Silva</div>
-              </div>
-              <div class="appbar-actions">
-                <div class="icon-btn" onclick="showToast('🔔 Nenhuma notificação nova')">🔔</div>
-                <div class="icon-btn" onclick="goTab('profile')">👤</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Balance card -->
-          <div class="balance-card" id="balance-card">
-            <div class="balance-row">
-              <div>
-                <div class="balance-label">Saldo disponível</div>
-                <div class="balance-amount" id="balance-display">R$ 4.750,00</div>
-              </div>
-              <div class="balance-eye" onclick="toggleBalance()">👁️</div>
-            </div>
-            <div class="balance-chips">
-              <div class="chip green">✅ Conta ativa</div>
-              <div class="chip blue">⚡ PIX disponível</div>
-            </div>
-            <div class="balance-footer">
-              <div class="balance-stat">
-                <div class="balance-stat-val green">+ R$ 8.200</div>
-                <div class="balance-stat-label">Entradas mês</div>
-              </div>
-              <div style="width:1px;background:var(--border)"></div>
-              <div class="balance-stat">
-                <div class="balance-stat-val red">- R$ 3.450</div>
-                <div class="balance-stat-label">Saídas mês</div>
-              </div>
-              <div style="width:1px;background:var(--border)"></div>
-              <div class="balance-stat">
-                <div class="balance-stat-val blue">R$ 4.750</div>
-                <div class="balance-stat-label">Saldo</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quick actions -->
-          <div class="section">
-            <div class="section-header">
-              <div class="section-title">O que deseja fazer?</div>
-            </div>
-            <div class="actions-grid">
-              <div class="action-btn" onclick="goTab('pix')">
-                <div class="action-icon" style="background:#E0F2F1">🏦</div>
-                <div class="action-label">PIX</div>
-              </div>
-              <div class="action-btn" onclick="goTab('pix')">
-                <div class="action-icon" style="background:#EFF6FF">↑</div>
-                <div class="action-label">Transferir</div>
-              </div>
-              <div class="action-btn" onclick="goTab('pix');switchPixTab('receber')">
-                <div class="action-icon" style="background:#FAF5FF">📱</div>
-                <div class="action-label">Cobrar</div>
-              </div>
-              <div class="action-btn" onclick="goTab('extract')">
-                <div class="action-icon" style="background:#FFF7ED">📄</div>
-                <div class="action-label">Extrato</div>
-              </div>
-              <div class="action-btn" onclick="goTab('cards')">
-                <div class="action-icon" style="background:#E0F7FA">💳</div>
-                <div class="action-label">Cartão</div>
-              </div>
-              <div class="action-btn" onclick="goTab('credit')">
-                <div class="action-icon" style="background:#F0FDF4">💰</div>
-                <div class="action-label">Crédito</div>
-              </div>
-              <div class="action-btn" onclick="showToast('📈 Investimentos em breve!')">
-                <div class="action-icon" style="background:#FFFBEB">📈</div>
-                <div class="action-label">Investir</div>
-              </div>
-              <div class="action-btn" onclick="showToast('⚙️ Mais opções em breve!')">
-                <div class="action-icon" style="background:#F9FAFB">⋯</div>
-                <div class="action-label">Mais</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Transactions -->
-          <div class="section" style="margin-bottom:4px">
-            <div class="section-header">
-              <div class="section-title">Últimas transações</div>
-              <div class="section-link" onclick="goTab('extract')">Ver tudo</div>
-            </div>
-          </div>
-          <div class="tx-list" id="tx-list"></div>
-          <div style="height:16px"></div>
+    <div class="sidebar-profile">
+      <div class="sidebar-profile-inner">
+        <div class="sidebar-avatar">J</div>
+        <div class="sidebar-profile-info">
+          <div class="uname">João da Silva</div>
+          <div class="urole">Conta Digital · PF</div>
         </div>
-
-        <!-- ── PIX ── -->
-        <div class="tab" id="tab-pix">
-          <div class="pix-header">
-            <div class="pix-title">PIX</div>
-            <div class="pix-sub">Transferências instantâneas 24h</div>
-          </div>
-          <div class="pix-tabs">
-            <button class="pix-tab active" id="pix-tab-enviar" onclick="switchPixTab('enviar')">Enviar</button>
-            <button class="pix-tab" id="pix-tab-receber" onclick="switchPixTab('receber')">Cobrar / QR</button>
-          </div>
-          <div class="pix-content">
-            <!-- Enviar -->
-            <div class="pix-panel active" id="pix-panel-enviar">
-              <div class="field-group">
-                <div class="field-label">Chave PIX (CPF, e-mail, celular ou aleatória)</div>
-                <input class="field-input" id="pix-key" placeholder="Ex: 11999887766" type="text">
-              </div>
-              <div class="field-group">
-                <div class="field-label">Valor (R$)</div>
-                <input class="amount-input" id="pix-amount" placeholder="0,00" type="number" min="0.01" step="0.01">
-              </div>
-              <div class="field-label">Valores rápidos</div>
-              <div class="quick-vals">
-                <button class="quick-val" onclick="setPixAmount(10)">R$ 10</button>
-                <button class="quick-val" onclick="setPixAmount(20)">R$ 20</button>
-                <button class="quick-val" onclick="setPixAmount(50)">R$ 50</button>
-                <button class="quick-val" onclick="setPixAmount(100)">R$ 100</button>
-                <button class="quick-val" onclick="setPixAmount(200)">R$ 200</button>
-                <button class="quick-val" onclick="setPixAmount(500)">R$ 500</button>
-              </div>
-              <div class="field-group">
-                <div class="field-label">Descrição (opcional)</div>
-                <input class="field-input" id="pix-desc" placeholder="Ex: Aluguel junho" type="text">
-              </div>
-              <button class="btn-pix" onclick="sendPix()">⚡ Enviar PIX</button>
-            </div>
-            <!-- Receber -->
-            <div class="pix-panel" id="pix-panel-receber">
-              <div class="field-group">
-                <div class="field-label">Valor a cobrar (opcional)</div>
-                <input class="amount-input" id="qr-amount" placeholder="0,00" type="number" min="0">
-              </div>
-              <div class="quick-vals">
-                <button class="quick-val" onclick="setQrAmount(25)">R$ 25</button>
-                <button class="quick-val" onclick="setQrAmount(50)">R$ 50</button>
-                <button class="quick-val" onclick="setQrAmount(100)">R$ 100</button>
-                <button class="quick-val" onclick="setQrAmount(200)">R$ 200</button>
-              </div>
-              <button class="btn-pix" style="background:linear-gradient(135deg,#7C3AED,#A855F7);box-shadow:0 4px 14px rgba(124,58,237,.35)" onclick="generateQR()">📱 Gerar QR Code</button>
-              <div class="qr-container" id="qr-container" style="display:none;margin-top:14px">
-                <div class="qr-amount" id="qr-display-amount">R$ 0,00</div>
-                <div class="qr-info">Escaneie para pagar</div>
-                <div class="qr-box">
-                  <svg class="qr-svg" id="qr-svg" viewBox="0 0 200 200"></svg>
-                </div>
-                <div class="qr-key" id="qr-key-display">chave-pix: 00000000-0000-0000-0000-000000000000</div>
-                <button class="share-btn" onclick="showToast('📤 QR Code compartilhado!')">📤 Compartilhar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── EXTRATO ── -->
-        <div class="tab" id="tab-extract">
-          <div class="extract-header">
-            <div class="pix-title">Extrato</div>
-            <div class="pix-sub">Histórico completo de transações</div>
-          </div>
-          <div class="summary-cards">
-            <div class="sum-card">
-              <div class="sum-card-val green">+ R$ 8.200</div>
-              <div class="sum-card-label">Entradas</div>
-            </div>
-            <div class="sum-card">
-              <div class="sum-card-val red">- R$ 3.450</div>
-              <div class="sum-card-label">Saídas</div>
-            </div>
-            <div class="sum-card">
-              <div class="sum-card-val blue">R$ 4.750</div>
-              <div class="sum-card-label">Saldo</div>
-            </div>
-          </div>
-          <div style="padding:14px 16px 4px;font-size:12px;font-weight:700;color:var(--muted);margin-top:8px">JUNHO 2026</div>
-          <div class="tx-list" id="tx-list-full" style="padding-bottom:20px"></div>
-        </div>
-
-        <!-- ── CARTÕES ── -->
-        <div class="tab" id="tab-cards">
-          <div class="cards-header">
-            <div class="pix-title">Meu Cartão</div>
-            <div class="pix-sub">Gerencie seus cartões</div>
-          </div>
-          <div class="card-visual" style="margin:0 16px;margin-top:-16px">
-            <div class="card-logo">
-              <div class="circle circle-left"></div>
-              <div class="circle circle-right"></div>
-            </div>
-            <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,.5);font-weight:600">CARTÃO VIRTUAL</div>
-            <div class="card-num">**** **** **** 4321</div>
-            <div class="card-row">
-              <div>
-                <div style="font-size:10px;color:rgba(255,255,255,.55)">TITULAR</div>
-                <div class="card-holder" id="card-holder-name">JOÃO DA SILVA</div>
-              </div>
-              <div style="text-align:right">
-                <div class="card-expiry">VALIDADE<span>12/28</span></div>
-              </div>
-            </div>
-          </div>
-          <div style="padding:16px">
-            <div class="menu-card">
-              <div class="menu-item" onclick="showToast('🔒 Cartão bloqueado temporariamente')">
-                <div class="menu-item-icon" style="background:#FEF3C7">🔒</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Bloquear cartão</div>
-                  <div class="menu-item-sub">Bloqueio temporário</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('👁️ CVV: 321 — válido por 5min')">
-                <div class="menu-item-icon" style="background:#EFF6FF">👁️</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Ver dados do cartão</div>
-                  <div class="menu-item-sub">Número, CVV e senha</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-item-icon" style="background:#F0FDF4">📡</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Pagamento por aproximação</div>
-                  <div class="menu-item-sub">NFC ativado</div>
-                </div>
-                <div class="toggle-wrap"><div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-thumb"></div></div></div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-item-icon" style="background:#FAF5FF">🛒</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Compras online</div>
-                  <div class="menu-item-sub">Internacional ativado</div>
-                </div>
-                <div class="toggle-wrap"><div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-thumb"></div></div></div>
-              </div>
-            </div>
-            <div style="background:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)">
-              <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--muted)">LIMITE DO CARTÃO</div>
-              <div style="font-size:22px;font-weight:800">R$ 3.200 <span style="font-size:13px;font-weight:500;color:var(--muted)">/ R$ 5.000</span></div>
-              <div class="progress-bar" style="margin-top:10px"><div class="progress-fill" style="width:64%;background:linear-gradient(90deg,#0891B2,#06B6D4)"></div></div>
-              <div style="font-size:11px;color:var(--muted);margin-top:6px">64% utilizado · Disponível: R$ 1.800</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── CRÉDITO ── -->
-        <div class="tab" id="tab-credit">
-          <div class="credit-header">
-            <div class="pix-title">Crédito</div>
-            <div class="pix-sub">Empréstimos e financiamentos</div>
-          </div>
-          <div class="credit-avail">
-            <div style="font-size:12px;color:var(--muted);font-weight:600">CRÉDITO PRÉ-APROVADO</div>
-            <div class="credit-amount-big">R$ 5.000,00</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:4px">A partir de 1,99% a.m. • Até 36x</div>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-            <button class="btn-primary" style="margin-top:14px" onclick="showToast('💰 Solicitação enviada! Em análise.')">Contratar crédito</button>
-          </div>
-          <div style="padding:16px">
-            <div style="font-size:14px;font-weight:700;margin-bottom:10px">Produtos disponíveis</div>
-            <div class="menu-card">
-              <div class="menu-item" onclick="showToast('💼 Empréstimo Pessoal: até R$ 15.000')">
-                <div class="menu-item-icon" style="background:#EFF6FF">👤</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Empréstimo Pessoal</div>
-                  <div class="menu-item-sub">A partir de 1,99% a.m.</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('🏢 Crédito para MEI: até R$ 50.000')">
-                <div class="menu-item-icon" style="background:#F0FDF4">🏢</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Crédito para Negócios</div>
-                  <div class="menu-item-sub">Até R$ 50.000 para MEI</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('📊 Antecipação: receba hoje!')">
-                <div class="menu-item-icon" style="background:#FFFBEB">📊</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Antecipação de Recebíveis</div>
-                  <div class="menu-item-sub">Antecipe suas vendas</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('🏠 Financiamento imobiliário em breve!')">
-                <div class="menu-item-icon" style="background:#FAF5FF">🏠</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Financiamento Imobiliário</div>
-                  <div class="menu-item-sub">Em breve</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── PERFIL ── -->
-        <div class="tab" id="tab-profile">
-          <div class="profile-header">
-            <div class="avatar">👤</div>
-            <div class="profile-name" id="profile-name">João da Silva</div>
-            <div class="profile-role">Cliente MeuBanco · Desde Jun/2025</div>
-          </div>
-          <div class="menu-group" style="padding-top:0">
-            <div style="height:16px"></div>
-            <div style="font-size:11px;font-weight:700;color:var(--muted);padding:0 4px 8px;letter-spacing:.5px">MINHA CONTA</div>
-            <div class="menu-card">
-              <div class="menu-item" onclick="showToast('📋 Dados pessoais')">
-                <div class="menu-item-icon" style="background:#EFF6FF">👤</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Dados pessoais</div>
-                  <div class="menu-item-sub">CPF, endereço, contato</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('🔑 Chaves PIX gerenciadas')">
-                <div class="menu-item-icon" style="background:#E0F2F1">🔑</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Chaves PIX</div>
-                  <div class="menu-item-sub">3 chaves cadastradas</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('📄 Extratos e comprovantes')">
-                <div class="menu-item-icon" style="background:#FFF7ED">📄</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Comprovantes</div>
-                  <div class="menu-item-sub">Baixar extratos e recibos</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-            </div>
-            <div style="font-size:11px;font-weight:700;color:var(--muted);padding:8px 4px;letter-spacing:.5px">SEGURANÇA</div>
-            <div class="menu-card">
-              <div class="menu-item" onclick="showToast('🔒 Altere sua senha')">
-                <div class="menu-item-icon" style="background:#FEF3C7">🔐</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Alterar senha</div>
-                  <div class="menu-item-sub">Última troca há 30 dias</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-item-icon" style="background:#F0FDF4">🫆</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Biometria</div>
-                  <div class="menu-item-sub">Face ID e impressão digital</div>
-                </div>
-                <div class="toggle-wrap"><div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-thumb"></div></div></div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-item-icon" style="background:#FAF5FF">🛡️</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Autenticação 2 fatores</div>
-                  <div class="menu-item-sub">Verificação por SMS</div>
-                </div>
-                <div class="toggle-wrap"><div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-thumb"></div></div></div>
-              </div>
-            </div>
-            <div style="font-size:11px;font-weight:700;color:var(--muted);padding:8px 4px;letter-spacing:.5px">SUPORTE</div>
-            <div class="menu-card">
-              <div class="menu-item" onclick="showToast('💬 Chat de suporte aberto!')">
-                <div class="menu-item-icon" style="background:#EFF6FF">💬</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Ajuda e suporte</div>
-                  <div class="menu-item-sub">Chat 24h disponível</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-              <div class="menu-item" onclick="showToast('ℹ️ MeuBanco v1.0.0 — Fineract + Flutter')">
-                <div class="menu-item-icon" style="background:#F9FAFB">ℹ️</div>
-                <div class="menu-item-text">
-                  <div class="menu-item-title">Sobre o app</div>
-                  <div class="menu-item-sub">v1.0.0 · Apache Fineract</div>
-                </div>
-                <div class="menu-item-arrow">›</div>
-              </div>
-            </div>
-            <button class="logout-btn" onclick="doLogout()">🚪 Sair da conta</button>
-          </div>
-        </div>
-
-      </div><!-- /main-content -->
-
-      <!-- Bottom Nav -->
-      <div class="bottom-nav">
-        <div class="nav-item active" id="nav-home" onclick="goTab('home')">
-          <div class="nav-icon">🏠</div>
-          <div class="nav-label">Início</div>
-        </div>
-        <div class="nav-item" id="nav-extract" onclick="goTab('extract')">
-          <div class="nav-icon">📄</div>
-          <div class="nav-label">Extrato</div>
-        </div>
-        <div class="nav-center" onclick="goTab('pix')">⚡</div>
-        <div class="nav-item" id="nav-cards" onclick="goTab('cards')">
-          <div class="nav-icon">💳</div>
-          <div class="nav-label">Cartão</div>
-        </div>
-        <div class="nav-item" id="nav-profile" onclick="goTab('profile')">
-          <div class="nav-icon">👤</div>
-          <div class="nav-label">Perfil</div>
-        </div>
-      </div>
-    </div><!-- /screen-main -->
-
-    <!-- Modals -->
-    <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
-      <div class="modal-sheet" onclick="event.stopPropagation()">
-        <div class="modal-handle"></div>
-        <div id="modal-content"></div>
+        <div class="sidebar-logout" onclick="doLogout()" title="Sair">⬅</div>
       </div>
     </div>
+  </nav>
 
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
+  <!-- MAIN -->
+  <div class="main">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div id="topbarTitle">
+          <div class="page-title">Início</div>
+          <div class="page-sub" id="topbarDate"></div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-btn" onclick="goPage('ajuda', null)" title="Ajuda">❓</div>
+        <div class="topbar-btn" onclick="goPage('notificacoes', null)" title="Notificações">
+          🔔<span class="notif-dot"></span>
+        </div>
+        <div class="topbar-avatar" onclick="goPage('perfil', null)">J</div>
+      </div>
+    </header>
 
-  </div><!-- /phone -->
-</div><!-- /app-shell -->
+    <!-- CONTENT -->
+    <div class="content" id="contentArea">
+
+      <!-- ════════ PAGE: HOME ════════ -->
+      <div class="page active" id="page-home">
+        <!-- Balance Hero -->
+        <div class="balance-hero">
+          <div class="balance-row">
+            <div class="balance-left">
+              <div class="label">💰 Saldo disponível <span style="font-size:10px;opacity:.5">Ag. 0001 · C/C 12345-6</span></div>
+              <div class="amount" id="balanceAmt">R$ 8.420,50</div>
+              <div class="agency">Atualizado agora · Banco 274 · MeuBanco Digital</div>
+            </div>
+            <div class="balance-right">
+              <button class="eye-toggle" onclick="toggleBalance()" id="eyeBtn">👁</button>
+              <div class="pix-chip">⚡ PIX disponível</div>
+            </div>
+          </div>
+          <div class="balance-cards">
+            <div class="balance-mini">
+              <div class="mini-label">Entradas (mês)</div>
+              <div class="mini-val green">R$ 12.300,00</div>
+            </div>
+            <div class="balance-mini">
+              <div class="mini-label">Saídas (mês)</div>
+              <div class="mini-val red">- R$ 5.840,20</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mb-20">
+          <div class="section-title">Ações rápidas</div>
+          <div class="quick-actions">
+            <div class="qa-item" onclick="goPage('pix',null);pixTab('send')">
+              <div class="qa-icon blue">⚡</div><span>PIX</span>
+            </div>
+            <div class="qa-item" onclick="goPage('pix',null);pixTab('receive')">
+              <div class="qa-icon green">📲</div><span>Cobrar</span>
+            </div>
+            <div class="qa-item" onclick="goPage('extrato',null)">
+              <div class="qa-icon purple">📋</div><span>Extrato</span>
+            </div>
+            <div class="qa-item" onclick="goPage('cartoes',null)">
+              <div class="qa-icon orange">💳</div><span>Cartão</span>
+            </div>
+            <div class="qa-item" onclick="goPage('credito',null)">
+              <div class="qa-icon pink">💰</div><span>Crédito</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Grid -->
+        <div class="home-grid">
+          <div>
+            <!-- Recent Transactions -->
+            <div class="section-title">Últimas movimentações <a onclick="goPage('extrato',null)">Ver todas →</a></div>
+            <div class="recent-tx" id="recentTxList"></div>
+          </div>
+
+          <div>
+            <!-- Card Widget -->
+            <div class="mb-20">
+              <div class="section-title">Meu cartão</div>
+              <div class="card-widget" onclick="goPage('cartoes',null)" style="cursor:pointer">
+                <div class="chip"></div>
+                <div class="card-num">•••• •••• •••• 4521</div>
+                <div class="card-name">JOÃO DA SILVA</div>
+                <div class="card-bot">
+                  <div>
+                    <div class="card-exp" style="font-size:11px;opacity:.6">VALIDADE</div>
+                    <div style="font-size:14px;font-weight:600">12/28</div>
+                  </div>
+                  <div style="font-size:28px">💳</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="section-title">Fluxo — Jun/2026</div>
+            <div class="card" style="padding:18px">
+              <div class="chart-bars" id="homeChart"></div>
+              <div class="chart-labels" id="homeChartLabels"></div>
+              <div class="flex gap-12" style="margin-top:12px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+                  <div style="width:10px;height:10px;border-radius:2px;background:var(--success)"></div> Entradas
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+                  <div style="width:10px;height:10px;border-radius:2px;background:var(--danger);opacity:.7"></div> Saídas
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════ PAGE: PIX ════════ -->
+      <div class="page" id="page-pix">
+        <div class="pix-tabs">
+          <div class="pix-tab active" id="pixtab-send" onclick="pixTab('send')">⚡ Enviar PIX</div>
+          <div class="pix-tab" id="pixtab-receive" onclick="pixTab('receive')">📲 Cobrar / Receber</div>
+          <div class="pix-tab" id="pixtab-keys" onclick="pixTab('keys')">🔑 Minhas Chaves</div>
+          <div class="pix-tab" id="pixtab-history" onclick="pixTab('history')">📋 Histórico</div>
+        </div>
+
+        <!-- SEND -->
+        <div class="pix-content active" id="pixc-send">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px">
+            <div>
+              <div class="section-title" style="margin-bottom:12px">Contatos recentes</div>
+              <div class="contact-chips" id="contactChips"></div>
+
+              <div class="card">
+                <div class="section-title">Dados do destinatário</div>
+                <div class="form-group" style="margin-bottom:14px">
+                  <label class="form-label">Chave PIX (CPF, telefone, e-mail, aleatória)</label>
+                  <input class="form-input w-full" id="pixKey" placeholder="Ex: 11999887766" style="border-radius:10px;padding:12px 16px;font-size:14px;background:#f8fafc;border:1.5px solid var(--border)">
+                </div>
+                <div class="form-group" style="margin-bottom:16px">
+                  <label class="form-label">Descrição (opcional)</label>
+                  <input class="form-input w-full" id="pixDesc" placeholder="Ex: Aluguel de maio" style="border-radius:10px;padding:12px 16px;font-size:14px;background:#f8fafc;border:1.5px solid var(--border)">
+                </div>
+                <div class="amount-display">
+                  <div><span class="currency">R$</span> <span class="value" id="pixAmt">0,00</span></div>
+                </div>
+                <div class="pix-keypad" id="pixKeypad"></div>
+                <button class="btn btn-primary" style="margin-top:12px" onclick="showPixConfirm()">Continuar →</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="section-title" style="margin-bottom:12px">Informações</div>
+              <div class="card" style="margin-bottom:16px">
+                <div style="font-size:13px;color:var(--muted);line-height:1.7">
+                  <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+                    <span style="font-size:20px">⚡</span>
+                    <div><strong style="color:var(--text)">PIX 24/7</strong><br>Transferências instantâneas, qualquer hora</div>
+                  </div>
+                  <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+                    <span style="font-size:20px">🔒</span>
+                    <div><strong style="color:var(--text)">Seguro</strong><br>Criptografia end-to-end em todas as transações</div>
+                  </div>
+                  <div style="display:flex;gap:10px;padding:8px 0">
+                    <span style="font-size:20px">✅</span>
+                    <div><strong style="color:var(--text)">Sem tarifas</strong><br>PIX para pessoas físicas é sempre gratuito</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="section-title">Limites PIX</div>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div>
+                    <div class="flex justify-between text-sm text-muted" style="margin-bottom:5px"><span>Diurno (06h–20h)</span><span class="fw-700" style="color:var(--text)">R$ 5.000/tx</span></div>
+                    <div class="progress"><div class="progress-fill" style="width:30%;background:linear-gradient(90deg,var(--success),#4ade80)"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-sm text-muted" style="margin-bottom:5px"><span>Noturno (20h–06h)</span><span class="fw-700" style="color:var(--text)">R$ 1.000/tx</span></div>
+                    <div class="progress"><div class="progress-fill" style="width:10%;background:linear-gradient(90deg,var(--warning),#fbbf24)"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECEIVE -->
+        <div class="pix-content" id="pixc-receive">
+          <div style="max-width:600px;margin:0 auto">
+            <div class="qr-box">
+              <div style="font-size:28px;margin-bottom:6px">📲</div>
+              <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">Meu QR Code PIX</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Mostre este código para receber pagamentos</p>
+              <div class="qr-inner" id="qrCode"></div>
+              <div class="qr-key">+55 11 99988-7766</div>
+              <div class="qr-info">Chave Telefone · João da Silva<br>Banco 274 · Ag. 0001 · C/C 12345-6</div>
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <button class="btn btn-outline btn-sm" style="flex:1;padding:11px;font-size:13px" onclick="showToast('📋 Chave copiada!','info')">📋 Copiar chave</button>
+                <button class="btn btn-primary btn-sm" style="flex:1;padding:11px;font-size:13px" onclick="showToast('🖼 QR Code salvo!','success')">💾 Salvar QR</button>
+              </div>
+            </div>
+            <div class="card" style="margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto">
+              <div class="section-title">Cobrar valor específico</div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label class="form-label">Valor (R$)</label>
+                <input class="form-input w-full" placeholder="0,00" type="number" style="border-radius:10px;padding:12px 16px;font-size:14px;background:#f8fafc;border:1.5px solid var(--border)">
+              </div>
+              <div class="form-group" style="margin-bottom:14px">
+                <label class="form-label">Descrição</label>
+                <input class="form-input w-full" placeholder="Ex: Produto X" style="border-radius:10px;padding:12px 16px;font-size:14px;background:#f8fafc;border:1.5px solid var(--border)">
+              </div>
+              <button class="btn btn-primary" onclick="showToast('✅ QR de cobrança gerado!','success')">Gerar QR de cobrança →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KEYS -->
+        <div class="pix-content" id="pixc-keys">
+          <div style="max-width:700px">
+            <div class="section-title">Minhas chaves PIX</div>
+            <div id="pixKeysList"></div>
+            <button class="btn btn-primary" style="max-width:280px;margin-top:16px" onclick="showToast('✅ Funcionalidade disponível no app mobile!','info')">
+              + Cadastrar nova chave
+            </button>
+          </div>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="pix-content" id="pixc-history">
+          <div class="section-title">Histórico PIX</div>
+          <div id="pixHistory"></div>
+        </div>
+      </div>
+
+      <!-- ════════ PAGE: EXTRATO ════════ -->
+      <div class="page" id="page-extrato">
+        <div class="summary-cards" id="extratoSummary"></div>
+        <div class="filter-row">
+          <div class="filter-chip active" onclick="filterTx(this,'all')">Todas</div>
+          <div class="filter-chip" onclick="filterTx(this,'credit')">Entradas</div>
+          <div class="filter-chip" onclick="filterTx(this,'debit')">Saídas</div>
+          <div class="filter-chip" onclick="filterTx(this,'pix')">PIX</div>
+          <div class="filter-chip" onclick="filterTx(this,'ted')">TED</div>
+          <input class="date-input" type="month" value="2026-06">
+          <input class="filter-search" placeholder="🔍  Buscar por descrição...">
+        </div>
+        <div id="extratoList"></div>
+      </div>
+
+      <!-- ════════ PAGE: CARTÕES ════════ -->
+      <div class="page" id="page-cartoes">
+        <div class="cards-layout">
+          <div>
+            <div class="section-title" style="margin-bottom:16px">Meus cartões</div>
+            <!-- Card 1 -->
+            <div class="credit-card-visual ccv-bg1" style="margin-bottom:18px">
+              <div class="ccv-type">VIRTUAL</div>
+              <div class="ccv-chip"></div>
+              <div class="ccv-num">4521 •••• •••• 4521</div>
+              <div class="ccv-name">JOÃO DA SILVA</div>
+              <div class="ccv-bot">
+                <div><div class="ccv-exp">VAL. 12/28</div></div>
+                <div class="ccv-nfc">📶</div>
+                <div class="ccv-brand">💳</div>
+              </div>
+            </div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="section-title">Limite disponível</div>
+              <div class="flex justify-between text-sm" style="margin-bottom:6px">
+                <span style="color:var(--muted)">Utilizado: <strong style="color:var(--text)">R$ 1.240,00</strong></span>
+                <span style="color:var(--muted)">Total: <strong style="color:var(--text)">R$ 5.000,00</strong></span>
+              </div>
+              <div class="card-limit-bar"><div class="card-limit-fill" style="width:24.8%"></div></div>
+              <div style="font-size:13px;color:var(--muted);margin-top:6px">75,2% disponível · Fatura fecha em 12/06</div>
+            </div>
+            <div class="card-actions-grid">
+              <div class="card-act" onclick="showToast('💳 Fatura aberta!','info')">
+                <div class="ca-icon">📄</div><div class="ca-label">Fatura</div>
+              </div>
+              <div class="card-act" onclick="showToast('🔒 Cartão bloqueado!','warn')">
+                <div class="ca-icon">🔒</div><div class="ca-label">Bloquear</div>
+              </div>
+              <div class="card-act" onclick="showToast('💰 Limite solicitado!','success')">
+                <div class="ca-icon">💰</div><div class="ca-label">Limite</div>
+              </div>
+              <div class="card-act" onclick="showToast('📱 Cartão virtual gerado!','success')">
+                <div class="ca-icon">📱</div><div class="ca-label">Virtual</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <!-- Card 2 -->
+            <div class="section-title" style="margin-bottom:16px">Cartão Black</div>
+            <div class="credit-card-visual ccv-bg2" style="margin-bottom:18px">
+              <div class="ccv-type" style="background:rgba(255,215,0,.2);border-color:rgba(255,215,0,.4);color:#fbbf24">BLACK</div>
+              <div class="ccv-chip"></div>
+              <div class="ccv-num">5421 •••• •••• 8873</div>
+              <div class="ccv-name">JOÃO DA SILVA</div>
+              <div class="ccv-bot">
+                <div><div class="ccv-exp">VAL. 08/29</div></div>
+                <div class="ccv-nfc">📶</div>
+                <div class="ccv-brand">💳</div>
+              </div>
+            </div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="section-title">Fatura atual</div>
+              <div style="font-size:30px;font-weight:900;color:var(--text);margin:6px 0">R$ 3.850,00</div>
+              <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Vencimento: 20/06/2026</div>
+              <div class="card-limit-bar"><div class="card-limit-fill warning" style="width:38.5%"></div></div>
+              <div style="font-size:12px;color:var(--muted);margin-top:5px">Limite: R$ 10.000 · Utilizado: 38,5%</div>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('💰 Pagamento agendado!','success')">Pagar fatura →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════ PAGE: CRÉDITO ════════ -->
+      <div class="page" id="page-credito">
+        <div class="credit-hero">
+          <div class="credit-hero-text">
+            <h2>Crédito pré-aprovado</h2>
+            <p>Empréstimo pessoal com as melhores taxas do mercado, sem burocracia</p>
+          </div>
+          <div class="credit-hero-val">
+            <div class="label">Disponível para você</div>
+            <div class="val">R$ 15.000</div>
+          </div>
+        </div>
+
+        <div class="section-title mb-20">Produtos de crédito</div>
+        <div class="credit-products">
+          <div class="credit-product" onclick="showToast('💰 Simulação iniciada!','info')">
+            <div class="cp-icon">💰</div>
+            <div class="cp-name">Empréstimo Pessoal</div>
+            <div class="cp-rate">A partir de 1,49% a.m.</div>
+            <span class="cp-tag green">✅ Aprovado</span>
+          </div>
+          <div class="credit-product" onclick="showToast('🏠 Simulação de crédito habitacional!','info')">
+            <div class="cp-icon">🏠</div>
+            <div class="cp-name">Crédito Habitacional</div>
+            <div class="cp-rate">A partir de 0,79% a.m. + IPCA</div>
+            <span class="cp-tag blue">🔵 Consultar</span>
+          </div>
+          <div class="credit-product" onclick="showToast('🚗 Simulação de financiamento!','info')">
+            <div class="cp-icon">🚗</div>
+            <div class="cp-name">Financiamento Auto</div>
+            <div class="cp-rate">A partir de 0,99% a.m.</div>
+            <span class="cp-tag orange">⚡ Rápido</span>
+          </div>
+        </div>
+
+        <div class="section-title mt-4" style="margin-top:24px;margin-bottom:14px">Empréstimos ativos</div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table class="loan-table" id="loanTable"></table>
+        </div>
+      </div>
+
+      <!-- ════════ PAGE: INVESTIMENTOS ════════ -->
+      <div class="page" id="page-investimentos">
+        <div class="invest-hero">
+          <div>
+            <div style="font-size:13px;opacity:.6;margin-bottom:4px">Patrimônio investido</div>
+            <div style="font-size:40px;font-weight:900;letter-spacing:-2px">R$ 24.850,00</div>
+            <div style="font-size:13px;opacity:.65;margin-top:6px">📈 Rentabilidade: <strong>+12,4% a.a.</strong></div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:13px;opacity:.6;margin-bottom:4px">Rendimento mês</div>
+            <div style="font-size:28px;font-weight:800;color:#4ade80">+ R$ 256,30</div>
+          </div>
+        </div>
+        <div class="section-title mb-20">Produtos disponíveis</div>
+        <div class="invest-products" id="investProducts"></div>
+      </div>
+
+      <!-- ════════ PAGE: PERFIL ════════ -->
+      <div class="page" id="page-perfil">
+        <div class="profile-layout">
+          <div>
+            <div class="profile-hero">
+              <div class="profile-big-avatar">J</div>
+              <h2>João da Silva</h2>
+              <div class="email">joao.silva@email.com</div>
+              <div class="profile-badge">✅ Conta verificada</div>
+              <div class="profile-stats">
+                <div class="pstat"><div class="pval">12</div><div class="plabel">Meses</div></div>
+                <div class="pstat"><div class="pval">847</div><div class="plabel">Transações</div></div>
+                <div class="pstat"><div class="pval">3</div><div class="plabel">Chaves PIX</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="profile-section" style="margin-bottom:16px">
+              <h3>🧑‍💼 Minha conta</h3>
+              <div class="profile-item" onclick="showToast('📝 Dados pessoais','info')">
+                <div class="pi-icon" style="background:#eff6ff">📝</div>
+                <div class="pi-text"><div class="pi-title">Dados pessoais</div><div class="pi-sub">CPF, endereço, contato</div></div>
+                <div class="pi-arrow">›</div>
+              </div>
+              <div class="profile-item" onclick="goPage('pix',null);pixTab('keys')">
+                <div class="pi-icon" style="background:#f0fdf4">⚡</div>
+                <div class="pi-text"><div class="pi-title">Chaves PIX</div><div class="pi-sub">3 chaves cadastradas</div></div>
+                <div class="pi-arrow">›</div>
+              </div>
+              <div class="profile-item" onclick="showToast('📄 Comprovantes disponíveis','info')">
+                <div class="pi-icon" style="background:#fff7ed">📄</div>
+                <div class="pi-text"><div class="pi-title">Comprovantes</div><div class="pi-sub">Baixar extratos e recibos</div></div>
+                <div class="pi-arrow">›</div>
+              </div>
+            </div>
+            <div class="profile-section">
+              <h3>🔐 Segurança</h3>
+              <div class="profile-item">
+                <div class="pi-icon" style="background:#f0fdf4">🔑</div>
+                <div class="pi-text"><div class="pi-title">Alterar senha</div><div class="pi-sub">Última troca há 30 dias</div></div>
+                <div class="pi-arrow">›</div>
+              </div>
+              <div class="profile-item">
+                <div class="pi-icon" style="background:#eff6ff">👆</div>
+                <div class="pi-text"><div class="pi-title">Biometria</div><div class="pi-sub">Face ID e impressão digital</div></div>
+                <div class="pi-toggle on" id="bioToggle" onclick="toggleSetting('bioToggle')"></div>
+              </div>
+              <div class="profile-item">
+                <div class="pi-icon" style="background:#fff7ed">📱</div>
+                <div class="pi-text"><div class="pi-title">Autenticação 2 fatores</div><div class="pi-sub">Verificação por SMS</div></div>
+                <div class="pi-toggle off" id="tfaToggle" onclick="toggleSetting('tfaToggle')"></div>
+              </div>
+              <div class="profile-item" onclick="doLogout()">
+                <div class="pi-icon" style="background:#fef2f2">🚪</div>
+                <div class="pi-text"><div class="pi-title" style="color:var(--danger)">Sair da conta</div><div class="pi-sub">Encerrar sessão atual</div></div>
+                <div class="pi-arrow" style="color:var(--danger)">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════ PAGE: NOTIFICAÇÕES ════════ -->
+      <div class="page" id="page-notificacoes">
+        <div style="max-width:700px">
+          <div id="notifList"></div>
+        </div>
+      </div>
+
+      <!-- ════════ PAGE: AJUDA ════════ -->
+      <div class="page" id="page-ajuda">
+        <div style="max-width:700px">
+          <div class="card" style="margin-bottom:16px">
+            <div style="font-size:32px;margin-bottom:12px">💬</div>
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:6px">Central de Ajuda</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:18px">Como podemos ajudar você hoje?</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="card-act" style="padding:16px" onclick="showToast('🤖 Chat iniciado!','info')">
+                <div class="ca-icon">🤖</div><div class="ca-label">Chat com IA</div>
+              </div>
+              <div class="card-act" style="padding:16px" onclick="showToast('📞 Ligando...','info')">
+                <div class="ca-icon">📞</div><div class="ca-label">Ligar agora</div>
+              </div>
+              <div class="card-act" style="padding:16px" onclick="showToast('📧 E-mail enviado!','success')">
+                <div class="ca-icon">📧</div><div class="ca-label">E-mail</div>
+              </div>
+              <div class="card-act" style="padding:16px" onclick="showToast('📚 Abrindo FAQ...','info')">
+                <div class="ca-icon">📚</div><div class="ca-label">FAQ</div>
+              </div>
+            </div>
+          </div>
+          <div id="faqList"></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ═══════════════ MODAL: PIX CONFIRM ═══════════════ -->
+<div class="modal-overlay" id="pixModal">
+  <div class="modal">
+    <div style="font-size:32px;margin-bottom:12px">⚡</div>
+    <h2>Confirmar PIX</h2>
+    <p id="pixModalDesc">Confirme os dados da transferência</p>
+    <div class="card" style="margin-bottom:18px;padding:16px;background:var(--bg)">
+      <div class="flex justify-between" style="margin-bottom:8px">
+        <span class="text-muted text-sm">Para:</span>
+        <span class="fw-700" id="pixModalTo">—</span>
+      </div>
+      <div class="flex justify-between" style="margin-bottom:8px">
+        <span class="text-muted text-sm">Chave:</span>
+        <span class="fw-700" id="pixModalKey">—</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-muted text-sm">Valor:</span>
+        <span style="font-size:22px;font-weight:900;color:var(--primary)" id="pixModalAmt">R$ 0,00</span>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('pixModal')">Cancelar</button>
+      <button class="btn btn-success" onclick="confirmPix()">✅ Confirmar PIX</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOAST CONTAINER ═══════════════ -->
+<div class="toast-container" id="toastContainer"></div>
 
 <script>
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
-const state = {
-  loggedIn: false,
-  user: { name: 'João da Silva', balance: 4750.00, hidden: false },
-  currentTab: 'home',
-  pixSent: 0,
-};
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+let balance = 8420.50;
+let balanceHidden = false;
 
-// Demo transactions
-const transactions = [
-  { icon:'💰', name:'Salário', date:'01/06/2026', amount:5000, credit:true, color:'#F0FDF4' },
-  { icon:'🏪', name:'Supermercado Extra', date:'01/06/2026', amount:287.50, credit:false, color:'#FFF7ED' },
-  { icon:'⚡', name:'PIX — Maria Souza', date:'31/05/2026', amount:150, credit:false, color:'#EFF6FF' },
-  { icon:'📱', name:'Recarga Claro', date:'30/05/2026', amount:50, credit:false, color:'#FAF5FF' },
-  { icon:'🏠', name:'Aluguel', date:'05/05/2026', amount:1800, credit:false, color:'#FEF2F2' },
-  { icon:'💊', name:'Farmácia', date:'29/05/2026', amount:89.90, credit:false, color:'#FFF7ED' },
-  { icon:'⚡', name:'PIX recebido — Pedro', date:'28/05/2026', amount:200, credit:true, color:'#F0FDF4' },
-  { icon:'🍔', name:'iFood', date:'28/05/2026', amount:45.80, credit:false, color:'#FEF2F2' },
-  { icon:'🏋️', name:'Academia Smart Fit', date:'01/05/2026', amount:99.90, credit:false, color:'#EFF6FF' },
-  { icon:'💡', name:'Conta de Luz', date:'15/05/2026', amount:187.30, credit:false, color:'#FFFBEB' },
-  { icon:'🎵', name:'Spotify', date:'10/05/2026', amount:21.90, credit:false, color:'#FAF5FF' },
-  { icon:'💰', name:'Rendimento CDB', date:'01/05/2026', amount:32.40, credit:true, color:'#F0FDF4' },
+const CONTACTS = [
+  {name:'Maria C.',key:'+5511988776655',color:'#e91e63',abbr:'M'},
+  {name:'Pedro A.',key:'+5511977665544',color:'#3f51b5',abbr:'P'},
+  {name:'Lucas S.',key:'lucas@email.com',color:'#009688',abbr:'L'},
+  {name:'Ana R.',key:'123.456.789-00',color:'#ff5722',abbr:'A'},
+  {name:'Carlos M.',key:'+5511966554433',color:'#673ab7',abbr:'C'},
 ];
 
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
-window.onload = () => {
-  updateTime();
-  setInterval(updateTime, 30000);
-  renderTransactions();
-  // Splash → Login after 2s
+const TRANSACTIONS = [
+  {id:1,type:'credit',cat:'pix',desc:'PIX recebido - Maria Clara',sub:'Via chave: +5511988...',date:'Hoje, 10:32',amount:350.00,icon:'⚡',color:'#f0fdf4'},
+  {id:2,type:'debit',cat:'pix',desc:'PIX enviado - Netflix',sub:'Via chave: pagamentos@netflix...',date:'Hoje, 09:15',amount:55.90,icon:'⚡',color:'#fef2f2'},
+  {id:3,type:'credit',cat:'ted',desc:'Salário - Empresa ABC Ltda',sub:'TED · CNPJ: 12.345.678/0001-90',date:'01/06, 08:00',amount:8500.00,icon:'💰',color:'#f0fdf4'},
+  {id:4,type:'debit',cat:'card',desc:'Compra Débito - Supermercado',sub:'Cartão •••• 4521',date:'31/05, 18:45',amount:287.50,icon:'💳',color:'#fef2f2'},
+  {id:5,type:'debit',cat:'pix',desc:'PIX enviado - Água/Esgoto',sub:'Via chave: CNPJ: 00.000.000...',date:'30/05, 14:20',amount:89.40,icon:'⚡',color:'#fef2f2'},
+  {id:6,type:'debit',cat:'card',desc:'Farmácia São João',sub:'Cartão •••• 4521',date:'29/05, 11:30',amount:43.20,icon:'💳',color:'#fef2f2'},
+  {id:7,type:'credit',cat:'pix',desc:'PIX recebido - Pedro Alves',sub:'Via chave: +5511977...',date:'28/05, 20:10',amount:200.00,icon:'⚡',color:'#f0fdf4'},
+  {id:8,type:'debit',cat:'ted',desc:'TED enviado - Aluguel',sub:'Banco do Brasil · AG: 1234',date:'05/05, 09:00',amount:1500.00,icon:'🏦',color:'#fef2f2'},
+  {id:9,type:'credit',cat:'other',desc:'Rendimento Poupança',sub:'Crédito automático',date:'01/05, 00:01',amount:45.30,icon:'📈',color:'#f0fdf4'},
+  {id:10,type:'debit',cat:'card',desc:'Restaurante Sabor & Arte',sub:'Cartão •••• 4521',date:'27/05, 13:00',amount:78.60,icon:'🍽️',color:'#fef2f2'},
+];
+
+const PIX_KEYS = [
+  {type:'Telefone',key:'+55 11 99988-7766',icon:'📱'},
+  {type:'CPF',key:'•••.456.789-••',icon:'🪪'},
+  {type:'Aleatória',key:'a1b2-c3d4-e5f6-g7h8',icon:'🔑'},
+];
+
+const NOTIFICATIONS = [
+  {icon:'⚡',title:'PIX recebido',desc:'Maria Clara enviou R$ 350,00',time:'10 min atrás',unread:true},
+  {icon:'💳',title:'Compra aprovada',desc:'Supermercado Extra • R$ 287,50',time:'2 horas atrás',unread:true},
+  {icon:'📈',title:'Rendimento creditado',desc:'Sua poupança rendeu R$ 45,30',time:'Ontem, 00:01',unread:true},
+  {icon:'🔔',title:'Fatura próxima',desc:'Fatura do cartão Black vence em 20/06',time:'2 dias atrás',unread:false},
+  {icon:'✅',title:'Cadastro concluído',desc:'Seu cadastro foi aprovado com sucesso',time:'12/06/2025',unread:false},
+];
+
+const FAQ = [
+  {q:'Como fazer um PIX?',a:'Acesse a aba PIX, clique em "Enviar PIX", informe a chave, o valor e confirme. É instantâneo, 24 horas por dia.'},
+  {q:'Como bloquear meu cartão?',a:'Em Cartões, clique em "Bloquear". O bloqueio é imediato. Você pode desbloquear a qualquer momento.'},
+  {q:'Como pegar empréstimo?',a:'Acesse a seção Crédito, escolha o produto e simule. Empréstimos pré-aprovados são liberados em até 30 minutos.'},
+  {q:'Como alterar minha senha?',a:'Em Perfil > Segurança > Alterar Senha. Recomendamos trocar a senha a cada 90 dias.'},
+];
+
+const LOANS = [
+  {id:'EMP-001',type:'Empréstimo Pessoal',value:'R$ 5.000,00',parcelas:'12x R$ 447,68',saldo:'R$ 2.238,40',status:'active'},
+  {id:'EMP-002',type:'Crédito Emergencial',value:'R$ 1.500,00',parcelas:'6x R$ 258,50',saldo:'R$ 775,50',status:'active'},
+  {id:'EMP-003',type:'Empréstimo Consignado',value:'R$ 8.000,00',parcelas:'24x R$ 356,00',saldo:'Quitado',status:'closed'},
+];
+
+const INVEST = [
+  {name:'CDB 110% CDI',icon:'🏦',rate:'110% CDI',aprox:'~12,4% a.a.',tag:'Liquidez diária',tagClass:'green',min:'R$ 100'},
+  {name:'Tesouro Selic',icon:'🇧🇷',rate:'100% Selic',aprox:'~14,75% a.a.',tag:'Governo Federal',tagClass:'blue',min:'R$ 30'},
+  {name:'LCI/LCA',icon:'🏠',rate:'92% CDI',aprox:'~11,4% a.a.',tag:'Isento IR',tagClass:'orange',min:'R$ 5.000'},
+  {name:'Fundos de Renda Fixa',icon:'📊',rate:'Variável',aprox:'~11-13% a.a.',tag:'Diversificado',tagClass:'blue',min:'R$ 100'},
+  {name:'Ações BR (IBOV)',icon:'📈',rate:'Variável',aprox:'Histórico +15% a.a.',tag:'Renda variável',tagClass:'orange',min:'R$ 1'},
+  {name:'BTC — Cripto',icon:'₿',rate:'Variável',aprox:'Alta volatilidade',tag:'Crypto',tagClass:'green',min:'R$ 50'},
+];
+
+const CHART_DATA = [
+  {label:'01',inc:400,exp:250},{label:'03',inc:600,exp:350},{label:'05',inc:800,exp:200},
+  {label:'07',inc:300,exp:450},{label:'09',inc:1200,exp:600},{label:'11',inc:700,exp:400},
+  {label:'13',inc:500,exp:300},{label:'15',inc:900,exp:550},{label:'17',inc:1100,exp:700},
+  {label:'19',inc:400,exp:200},{label:'21',inc:1500,exp:800},{label:'23',inc:600,exp:350},
+];
+
+let pixAmount = '';
+let currentFilter = 'all';
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Topbar date
+  const d = new Date();
+  document.getElementById('topbarDate').textContent =
+    d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
   setTimeout(() => {
-    showScreen('login');
-    document.getElementById('status-bar').classList.remove('light');
-  }, 2000);
-  // Status bar light on splash
-  document.getElementById('status-bar').classList.add('light');
-};
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('page-login').classList.add('active');
+    }, 500);
+  }, 1800);
 
-function updateTime() {
-  const n = new Date();
-  const t = n.getHours().toString().padStart(2,'0') + ':' + n.getMinutes().toString().padStart(2,'0');
-  document.getElementById('status-time').textContent = t;
+  buildAll();
+});
+
+function buildAll() {
+  buildRecentTx();
+  buildChart();
+  buildContactChips();
+  buildPixKeypad();
+  buildQR();
+  buildPixKeys();
+  buildPixHistory();
+  buildExtrato();
+  buildExtratoSummary();
+  buildLoanTable();
+  buildInvestProducts();
+  buildNotifications();
+  buildFAQ();
 }
 
-function renderTransactions() {
-  const listHome = document.getElementById('tx-list');
-  const listFull = document.getElementById('tx-list-full');
-  const makeItem = (tx) => `
-    <div class="tx-item" onclick="showToast('${tx.credit?'✅':'💸'} ${tx.name}: R$ ${tx.amount.toFixed(2).replace('.',',')}')">
-      <div class="tx-icon" style="background:${tx.color}">${tx.icon}</div>
-      <div class="tx-info">
-        <div class="tx-name">${tx.name}</div>
-        <div class="tx-date">${tx.date}</div>
-      </div>
-      <div class="tx-amount ${tx.credit?'credit':'debit'}">${tx.credit?'+':'-'} R$ ${tx.amount.toFixed(2).replace('.',',')}</div>
-    </div>`;
-  listHome.innerHTML = transactions.slice(0,5).map(makeItem).join('');
-  listFull.innerHTML = transactions.map(makeItem).join('');
-}
-
-// ═══════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + id).classList.add('active');
-  const isMain = id === 'main';
-  document.getElementById('status-bar').className = 'status-bar' + (!isMain ? ' light' : '');
-}
-
-function goTab(tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const tabEl = document.getElementById('tab-' + tab);
-  if (tabEl) {
-    tabEl.classList.add('active');
-    document.getElementById('main-content').scrollTop = 0;
-  }
-  const navEl = document.getElementById('nav-' + tab);
-  if (navEl) navEl.classList.add('active');
-  state.currentTab = tab;
-}
-
-// ═══════════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════════
-function fillDemo() {
-  document.getElementById('login-user').value = 'mifos';
-  document.getElementById('login-pass').value = 'password';
-  showToast('✅ Dados preenchidos!');
-}
-
+/* ═══════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════ */
 function togglePass() {
-  const inp = document.getElementById('login-pass');
-  inp.type = inp.type === 'password' ? 'text' : 'password';
+  const i = document.getElementById('inpPass');
+  i.type = i.type === 'password' ? 'text' : 'password';
 }
 
 function doLogin() {
-  const user = document.getElementById('login-user').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const errDiv = document.getElementById('login-error');
-  errDiv.style.display = 'none';
-
-  if (!user || !pass) {
-    errDiv.style.display = 'flex';
-    document.getElementById('login-error-msg').textContent = 'Preencha usuário e senha';
-    return;
+  const u = document.getElementById('inpUser').value.trim().toLowerCase();
+  const p = document.getElementById('inpPass').value.trim().toLowerCase();
+  const err = document.getElementById('loginError');
+  if ((u === 'mifos' || u === 'admin') && (p === 'password' || p === 'admin')) {
+    err.classList.remove('show');
+    document.getElementById('page-login').classList.remove('active');
+    document.getElementById('app').classList.add('active');
+    showToast('👋 Bem-vindo, João!', 'success');
+  } else {
+    err.classList.add('show');
   }
-
-  const btn = document.getElementById('btn-login');
-  btn.textContent = '⏳ Autenticando...';
-  btn.disabled = true;
-
-  setTimeout(() => {
-    if ((user === 'mifos' && pass === 'password') || pass.length >= 3) {
-      state.loggedIn = true;
-      const displayName = user === 'mifos' ? 'João da Silva' : user;
-      state.user.name = displayName;
-      document.getElementById('greeting-name').textContent = displayName;
-      document.getElementById('profile-name').textContent = displayName.toUpperCase();
-      document.getElementById('card-holder-name').textContent = displayName.toUpperCase();
-      // Greeting
-      const h = new Date().getHours();
-      document.getElementById('greeting-sub').textContent = h<12 ? 'Bom dia,' : h<18 ? 'Boa tarde,' : 'Boa noite,';
-      showScreen('main');
-      showToast('✅ Bem-vindo, ' + displayName.split(' ')[0] + '!');
-    } else {
-      errDiv.style.display = 'flex';
-      document.getElementById('login-error-msg').textContent = 'Usuário ou senha incorretos';
-    }
-    btn.textContent = 'Entrar na conta';
-    btn.disabled = false;
-  }, 1200);
-}
-
-function doLoginBio() {
-  showToast('🫆 Biometria verificada!');
-  setTimeout(() => {
-    state.loggedIn = true;
-    showScreen('main');
-    showToast('✅ Acesso liberado!');
-  }, 800);
 }
 
 function doLogout() {
-  state.loggedIn = false;
-  showScreen('login');
-  showToast('👋 Até logo!');
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('page-login').classList.add('active');
+  showToast('👋 Até logo!', 'info');
 }
 
-// ═══════════════════════════════════════════
-// BALANCE
-// ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+const PAGE_TITLES = {
+  home:'Início',pix:'PIX',extrato:'Extrato',cartoes:'Cartões',
+  credito:'Crédito','investimentos':'Investimentos',perfil:'Perfil',
+  notificacoes:'Notificações',ajuda:'Central de Ajuda'
+};
+
+function goPage(name, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  else {
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+name+"'")) n.classList.add('active');
+    });
+  }
+  document.getElementById('topbarTitle').querySelector('.page-title').textContent = PAGE_TITLES[name] || name;
+  document.getElementById('contentArea').scrollTop = 0;
+}
+
+/* ═══════════════════════════════════════════
+   BALANCE
+═══════════════════════════════════════════ */
 function toggleBalance() {
-  state.user.hidden = !state.user.hidden;
-  const el = document.getElementById('balance-display');
-  el.textContent = state.user.hidden ? 'R$ ••••••' : 'R$ ' + state.user.balance.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.').replace(',','COMMA').replace(/\./g,'.').replace('COMMA',',');
+  balanceHidden = !balanceHidden;
+  const el = document.getElementById('balanceAmt');
+  const btn = document.getElementById('eyeBtn');
+  if (balanceHidden) {
+    el.classList.add('blur'); btn.textContent = '🙈';
+  } else {
+    el.classList.remove('blur'); btn.textContent = '👁';
+  }
 }
 
-// ═══════════════════════════════════════════
-// PIX
-// ═══════════════════════════════════════════
-function switchPixTab(tab) {
-  ['enviar','receber'].forEach(t => {
-    document.getElementById('pix-tab-' + t).classList.toggle('active', t === tab);
-    document.getElementById('pix-panel-' + t).classList.toggle('active', t === tab);
-  });
-}
-
-function setPixAmount(val) {
-  document.getElementById('pix-amount').value = val;
-}
-
-function setQrAmount(val) {
-  document.getElementById('qr-amount').value = val;
-}
-
-function sendPix() {
-  const key = document.getElementById('pix-key').value.trim();
-  const amount = parseFloat(document.getElementById('pix-amount').value);
-  if (!key) { showToast('⚠️ Informe a chave PIX'); return; }
-  if (!amount || amount <= 0) { showToast('⚠️ Informe um valor válido'); return; }
-  if (amount > state.user.balance) { showToast('❌ Saldo insuficiente'); return; }
-
-  state.user.balance -= amount;
-  const fmt = 'R$ ' + amount.toFixed(2).replace('.', ',');
-
-  // Add to transactions
-  transactions.unshift({
-    icon:'⚡', name:'PIX — ' + key, date: new Date().toLocaleDateString('pt-BR'),
-    amount, credit:false, color:'#EFF6FF'
-  });
-  renderTransactions();
-
-  showModal(`
-    <div class="success-modal">
-      <div class="success-icon">✅</div>
-      <div class="success-title">PIX enviado!</div>
-      <div class="success-amount">${fmt}</div>
-      <div class="success-info">Para: ${key}<br>${new Date().toLocaleString('pt-BR')}</div>
-      <button class="btn-close-modal" onclick="closeModal();document.getElementById('pix-key').value='';document.getElementById('pix-amount').value=''">Fechar</button>
+/* ═══════════════════════════════════════════
+   BUILD: RECENT TX
+═══════════════════════════════════════════ */
+function buildRecentTx() {
+  const c = document.getElementById('recentTxList');
+  c.innerHTML = TRANSACTIONS.slice(0,5).map(t => `
+    <div class="tx-item">
+      <div class="tx-icon" style="background:${t.color}">${t.icon}</div>
+      <div class="tx-info">
+        <div class="name">${t.desc}</div>
+        <div class="date">${t.date}</div>
+      </div>
+      <div class="tx-amount ${t.type}">${t.type==='credit'?'+ ':'- '}R$ ${fmt(t.amount)}</div>
     </div>
-  `);
+  `).join('');
 }
 
-function generateQR() {
-  const amount = parseFloat(document.getElementById('qr-amount').value) || 0;
-  const fmt = amount > 0 ? 'R$ ' + amount.toFixed(2).replace('.',',') : 'Sem valor definido';
-  const pixKey = '00000000-1234-5678-abcd-' + Math.random().toString(36).substr(2,12);
-
-  document.getElementById('qr-display-amount').textContent = fmt;
-  document.getElementById('qr-key-display').textContent = 'chave: ' + pixKey.substr(0,24) + '...';
-  document.getElementById('qr-container').style.display = 'block';
-
-  // Draw simple QR pattern
-  drawQR(document.getElementById('qr-svg'), pixKey + amount);
-  showToast('✅ QR Code gerado!');
+/* ═══════════════════════════════════════════
+   BUILD: CHART
+═══════════════════════════════════════════ */
+function buildChart() {
+  const maxV = Math.max(...CHART_DATA.map(d => Math.max(d.inc, d.exp)));
+  const bars = document.getElementById('homeChart');
+  const labels = document.getElementById('homeChartLabels');
+  bars.innerHTML = CHART_DATA.map(d => `
+    <div style="flex:1;display:flex;gap:1px;align-items:flex-end">
+      <div class="chart-bar income" style="height:${(d.inc/maxV)*100}%"></div>
+      <div class="chart-bar expense" style="height:${(d.exp/maxV)*100}%"></div>
+    </div>
+  `).join('');
+  labels.innerHTML = CHART_DATA.map(d => `<span>${d.label}</span>`).join('');
 }
 
-function drawQR(svg, data) {
-  svg.innerHTML = '';
-  const size = 21;
-  const cell = 200 / size;
-  // Simple pseudo-QR visual
-  const pattern = [];
-  let hash = 0;
-  for (let i = 0; i < data.length; i++) hash = ((hash << 5) - hash) + data.charCodeAt(i);
-
-  for (let r = 0; r < size; r++) {
-    for (let c = 0; c < size; c++) {
-      // Finder patterns
-      const inFinder = (r < 7 && c < 7) || (r < 7 && c >= size-7) || (r >= size-7 && c < 7);
-      const finderBorder = (r === 0 || r === 6 || c === 0 || c === 6) && r < 7 && c < 7;
-      const finderBorder2 = (r === 0 || r === 6 || c === size-1 || c === size-7) && r < 7 && c >= size-7;
-      const finderBorder3 = (r === size-7 || r === size-1 || c === 0 || c === 6) && r >= size-7 && c < 7;
-      const finderInner = (r >= 2 && r <= 4 && c >= 2 && c <= 4) || (r >= 2 && r <= 4 && c >= size-5 && c <= size-3) || (r >= size-5 && r <= size-3 && c >= 2 && c <= 4);
-
-      let dark = false;
-      if (inFinder) {
-        dark = finderBorder || finderBorder2 || finderBorder3 || finderInner;
-      } else {
-        // Data modules — pseudo random based on hash
-        dark = ((hash ^ (r * 31 + c * 17 + r*c)) % 3 !== 0);
-      }
-
-      if (dark) {
-        const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
-        rect.setAttribute('x', c * cell);
-        rect.setAttribute('y', r * cell);
-        rect.setAttribute('width', cell - 0.5);
-        rect.setAttribute('height', cell - 0.5);
-        rect.setAttribute('fill', '#000');
-        svg.appendChild(rect);
-      }
-    }
-  }
+/* ═══════════════════════════════════════════
+   BUILD: PIX
+═══════════════════════════════════════════ */
+function buildContactChips() {
+  document.getElementById('contactChips').innerHTML = CONTACTS.map(c => `
+    <div class="contact-chip" onclick="selectContact('${c.key}',this)">
+      <div class="contact-avatar" style="background:${c.color}">${c.abbr}</div>
+      <div class="cname">${c.name}</div>
+    </div>
+  `).join('');
 }
 
-// ═══════════════════════════════════════════
-// UI HELPERS
-// ═══════════════════════════════════════════
-function showModal(html) {
-  document.getElementById('modal-content').innerHTML = html;
-  document.getElementById('modal-overlay').classList.add('active');
+function selectContact(key, el) {
+  document.querySelectorAll('.contact-chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('pixKey').value = key;
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('active');
+function buildPixKeypad() {
+  const keys = ['1','2','3','4','5','6','7','8','9','.','-0-','⌫'];
+  document.getElementById('pixKeypad').innerHTML = keys.map(k => `
+    <div class="key-btn ${k==='⌫'?'del':''}" onclick="pixKey('${k}')">${k === '-0-' ? '0' : k}</div>
+  `).join('');
 }
 
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+function pixKey(k) {
+  if (k === '⌫') { pixAmount = pixAmount.slice(0,-1); }
+  else if (k === '.') { if (!pixAmount.includes('.')) pixAmount += '.'; }
+  else if (k === '-0-') { pixAmount += '0'; }
+  else { if (pixAmount.length < 10) pixAmount += k; }
+  const n = parseFloat(pixAmount) || 0;
+  document.getElementById('pixAmt').textContent = n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
-function toggleSwitch(el) {
+function pixTab(tab) {
+  document.querySelectorAll('.pix-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pix-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('pixtab-'+tab).classList.add('active');
+  document.getElementById('pixc-'+tab).classList.add('active');
+}
+
+function showPixConfirm() {
+  const key = document.getElementById('pixKey').value.trim();
+  const amt = parseFloat(pixAmount) || 0;
+  if (!key) { showToast('❌ Informe a chave PIX!','error'); return; }
+  if (amt <= 0) { showToast('❌ Informe um valor válido!','error'); return; }
+  if (amt > balance) { showToast('❌ Saldo insuficiente!','error'); return; }
+  const contact = CONTACTS.find(c => c.key === key);
+  document.getElementById('pixModalTo').textContent = contact ? contact.name : 'Destinatário';
+  document.getElementById('pixModalKey').textContent = key;
+  document.getElementById('pixModalAmt').textContent = 'R$ ' + fmt(amt);
+  document.getElementById('pixModalDesc').textContent = 'Confirme antes de enviar R$ ' + fmt(amt);
+  openModal('pixModal');
+}
+
+function confirmPix() {
+  const amt = parseFloat(pixAmount) || 0;
+  balance -= amt;
+  document.getElementById('balanceAmt').textContent = 'R$ ' + fmt(balance);
+  pixAmount = '';
+  document.getElementById('pixAmt').textContent = '0,00';
+  document.getElementById('pixKey').value = '';
+  TRANSACTIONS.unshift({
+    id:Date.now(),type:'debit',cat:'pix',
+    desc:'PIX enviado - ' + (document.getElementById('pixModalTo').textContent),
+    sub:'Via chave: ' + document.getElementById('pixModalKey').textContent,
+    date:'Agora',amount:amt,icon:'⚡',color:'#fef2f2'
+  });
+  buildRecentTx();
+  closeModal('pixModal');
+  showToast('✅ PIX enviado com sucesso!','success');
+}
+
+function buildQR() {
+  const c = document.getElementById('qrCode');
+  const cells = Array.from({length:121},(_,i) => {
+    const row = Math.floor(i/11), col = i%11;
+    const corner = (row<3&&col<3)||(row<3&&col>7)||(row>7&&col<3);
+    const active = corner || Math.random() > 0.55;
+    return `<div class="qr-cell" style="background:${active?'#1a237e':'transparent'};aspect-ratio:1"></div>`;
+  });
+  c.innerHTML = `<div class="qr-pattern">${cells.join('')}</div>`;
+}
+
+function buildPixKeys() {
+  document.getElementById('pixKeysList').innerHTML = PIX_KEYS.map(k => `
+    <div class="tx-full" style="margin-bottom:10px">
+      <div class="tx-icon" style="background:#f0f4ff;font-size:22px">${k.icon}</div>
+      <div class="tx-info">
+        <div class="tx-desc">${k.type}</div>
+        <div class="tx-sub">${k.key}</div>
+      </div>
+      <div class="tx-right">
+        <span class="badge badge-green">✅ Ativa</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildPixHistory() {
+  const pixTx = TRANSACTIONS.filter(t => t.cat === 'pix');
+  document.getElementById('pixHistory').innerHTML = pixTx.map(t => `
+    <div class="tx-full" style="margin-bottom:10px">
+      <div class="tx-icon" style="background:${t.color}">${t.icon}</div>
+      <div class="tx-info">
+        <div class="tx-desc">${t.desc}</div>
+        <div class="tx-sub">${t.sub}</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-val ${t.type}">${t.type==='credit'?'+ ':'- '}R$ ${fmt(t.amount)}</div>
+        <div class="tx-time">${t.date}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: EXTRATO
+═══════════════════════════════════════════ */
+function buildExtratoSummary() {
+  const credits = TRANSACTIONS.filter(t=>t.type==='credit').reduce((s,t)=>s+t.amount,0);
+  const debits = TRANSACTIONS.filter(t=>t.type==='debit').reduce((s,t)=>s+t.amount,0);
+  document.getElementById('extratoSummary').innerHTML = `
+    <div class="sum-card"><div class="sum-icon">💰</div><div class="sum-label">Entradas mês</div><div class="sum-val green">R$ ${fmt(credits)}</div></div>
+    <div class="sum-card"><div class="sum-icon">📤</div><div class="sum-label">Saídas mês</div><div class="sum-val red">- R$ ${fmt(debits)}</div></div>
+    <div class="sum-card"><div class="sum-icon">📊</div><div class="sum-label">Saldo mês</div><div class="sum-val blue">R$ ${fmt(credits-debits)}</div></div>
+    <div class="sum-card"><div class="sum-icon">🔢</div><div class="sum-label">Transações</div><div class="sum-val">${TRANSACTIONS.length}</div></div>
+  `;
+}
+
+function buildExtrato(filter = 'all') {
+  let txs = [...TRANSACTIONS];
+  if (filter === 'credit') txs = txs.filter(t => t.type==='credit');
+  else if (filter === 'debit') txs = txs.filter(t => t.type==='debit');
+  else if (filter === 'pix') txs = txs.filter(t => t.cat==='pix');
+  else if (filter === 'ted') txs = txs.filter(t => t.cat==='ted');
+
+  const grouped = {};
+  txs.forEach(t => {
+    const date = t.date.includes('Hoje') ? 'Hoje' : t.date.split(',')[0];
+    if (!grouped[date]) grouped[date] = [];
+    grouped[date].push(t);
+  });
+
+  document.getElementById('extratoList').innerHTML = Object.entries(grouped).map(([date, items]) => {
+    const total = items.reduce((s,t) => s + (t.type==='credit'?t.amount:-t.amount), 0);
+    return `
+      <div class="tx-group">
+        <div class="tx-group-header">
+          <span>${date}</span>
+          <span style="color:${total>=0?'var(--success)':'var(--danger)'}">${total>=0?'+ ':''}R$ ${fmt(Math.abs(total))}</span>
+        </div>
+        ${items.map(t => `
+          <div class="tx-full">
+            <div class="tx-icon" style="background:${t.color}">${t.icon}</div>
+            <div class="tx-info">
+              <div class="tx-desc">${t.desc}</div>
+              <div class="tx-sub">${t.sub}</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-val ${t.type}">${t.type==='credit'?'+ ':'- '}R$ ${fmt(t.amount)}</div>
+              <div class="tx-time">${t.date}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }).join('');
+}
+
+function filterTx(el, filter) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  buildExtrato(filter);
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: CRÉDITO
+═══════════════════════════════════════════ */
+function buildLoanTable() {
+  document.getElementById('loanTable').innerHTML = `
+    <thead><tr>
+      <th>ID</th><th>Tipo</th><th>Valor</th><th>Parcelas</th><th>Saldo</th><th>Status</th>
+    </tr></thead>
+    <tbody>
+      ${LOANS.map(l => `
+        <tr>
+          <td><code style="font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px">${l.id}</code></td>
+          <td><strong>${l.type}</strong></td>
+          <td>${l.value}</td>
+          <td style="color:var(--muted)">${l.parcelas}</td>
+          <td><strong>${l.saldo}</strong></td>
+          <td><span class="loan-status ${l.status}">${l.status==='active'?'✅ Ativo':l.status==='pending'?'⏳ Pendente':'🏁 Encerrado'}</span></td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: INVESTIMENTOS
+═══════════════════════════════════════════ */
+function buildInvestProducts() {
+  document.getElementById('investProducts').innerHTML = INVEST.map(p => `
+    <div class="invest-card" onclick="showToast('📊 Simulando ${p.name}...','info')">
+      <div style="font-size:32px;margin-bottom:8px">${p.icon}</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px">${p.name}</div>
+      <div class="invest-rate">${p.rate} <small>a.a.</small></div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">${p.aprox}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="cp-tag ${p.tagClass}">${p.tag}</span>
+        <span style="font-size:12px;color:var(--muted)">Min. ${p.min}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: NOTIFICAÇÕES
+═══════════════════════════════════════════ */
+function buildNotifications() {
+  document.getElementById('notifList').innerHTML = NOTIFICATIONS.map(n => `
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 18px;background:${n.unread?'#eff6ff':'var(--card)'};border-radius:var(--radius);margin-bottom:10px;box-shadow:var(--shadow);border-left:3px solid ${n.unread?'var(--primary3)':'var(--border)'}">
+      <div style="width:46px;height:46px;border-radius:12px;background:${n.unread?'#dbeafe':'var(--bg)'};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${n.icon}</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700;color:var(--text)">${n.title}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">${n.desc}</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);text-align:right;flex-shrink:0">${n.time}${n.unread?'<br><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary3);margin-top:4px"></span>':''}</div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: FAQ
+═══════════════════════════════════════════ */
+function buildFAQ() {
+  document.getElementById('faqList').innerHTML = FAQ.map((f,i) => `
+    <div class="card" style="margin-bottom:10px;cursor:pointer" onclick="toggleFaq(${i})">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:15px;font-weight:600;color:var(--text)">${f.q}</div>
+        <span id="faq-icon-${i}" style="font-size:18px;color:var(--muted);transition:transform .2s">›</span>
+      </div>
+      <div id="faq-ans-${i}" style="display:none;font-size:14px;color:var(--muted);margin-top:10px;line-height:1.6;padding-top:10px;border-top:1px solid var(--border)">${f.a}</div>
+    </div>
+  `).join('');
+}
+
+function toggleFaq(i) {
+  const ans = document.getElementById('faq-ans-'+i);
+  const icon = document.getElementById('faq-icon-'+i);
+  const open = ans.style.display === 'block';
+  ans.style.display = open ? 'none' : 'block';
+  icon.style.transform = open ? 'rotate(0deg)' : 'rotate(90deg)';
+}
+
+/* ═══════════════════════════════════════════
+   PROFILE
+═══════════════════════════════════════════ */
+function toggleSetting(id) {
+  const el = document.getElementById(id);
   el.classList.toggle('on');
-  showToast(el.classList.contains('on') ? '✅ Ativado' : '🔴 Desativado');
+  el.classList.toggle('off');
+  const isOn = el.classList.contains('on');
+  showToast(isOn ? '✅ Configuração ativada!' : '🔕 Configuração desativada!', isOn ? 'success' : 'warn');
 }
 
-// Enter key on login
+/* ═══════════════════════════════════════════
+   MODALS
+═══════════════════════════════════════════ */
+function openModal(id) { document.getElementById(id).classList.add('show') }
+function closeModal(id) { document.getElementById(id).classList.remove('show') }
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show') });
+});
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  const typeMap = {success:'✅',error:'❌',info:'ℹ️',warn:'⚠️'};
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span style="font-size:18px">${typeMap[type]||'📢'}</span><span>${msg}</span>`;
+  c.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => t.remove(), 350);
+  }, 3200);
+}
+
+/* ═══════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════ */
+function fmt(n) {
+  return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+// Enter to login
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('screen-login').classList.contains('active')) {
-    doLogin();
-  }
+  if (e.key === 'Enter' && document.getElementById('page-login').classList.contains('active')) doLogin();
 });
 </script>
 </body>
