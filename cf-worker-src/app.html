@@ -582,12 +582,14 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="nav-item active" onclick="goPage('home',this)"><span class="ni">🏠</span>Início</div>
         <div class="nav-item" onclick="goPage('pix',this)"><span class="ni">⚡</span>PIX</div>
         <div class="nav-item" onclick="goPage('extrato',this)"><span class="ni">📋</span>Extrato</div>
+        <div class="nav-item" onclick="goPage('contas',this)"><span class="ni">🏦</span>Minhas Contas<span class="nb blue">POO</span></div>
       </div>
       <div class="sb-section">
         <div class="sb-sec-label">Produtos</div>
         <div class="nav-item" onclick="goPage('cartoes',this)"><span class="ni">💳</span>Cartões</div>
         <div class="nav-item" onclick="goPage('credito',this)"><span class="ni">💰</span>Crédito</div>
         <div class="nav-item" onclick="goPage('investimentos',this)"><span class="ni">📈</span>Investimentos</div>
+        <div class="nav-item" onclick="goPage('simulador',this)"><span class="ni">🧮</span>Simulador<span class="nb green">NEW</span></div>
       </div>
       <div class="sb-section">
         <div class="sb-sec-label">Ecossistema</div>
@@ -656,6 +658,8 @@ input,select,textarea{font-family:inherit;outline:none}
             <div class="qa-item" onclick="goPage('pix',null);pixTab('receive')"><div class="qa-icon ib-green">📲</div><span>Cobrar</span></div>
             <div class="qa-item" onclick="goPage('extrato',null)"><div class="qa-icon ib-purple">📋</div><span>Extrato</span></div>
             <div class="qa-item" onclick="goPage('cartoes',null)"><div class="qa-icon ib-orange">💳</div><span>Cartão</span></div>
+            <div class="qa-item" onclick="goPage('contas',null)"><div class="qa-icon ib-blue">🏦</div><span>Contas</span></div>
+            <div class="qa-item" onclick="goPage('simulador',null)"><div class="qa-icon ib-purple">🧮</div><span>Simular</span></div>
             <div class="qa-item" onclick="goPage('marketplace',null)"><div class="qa-icon ib-teal">🛍️</div><span>Loja</span></div>
             <div class="qa-item" onclick="goPage('documentos',null)"><div class="qa-icon ib-pink">📝</div><span>Docs</span></div>
           </div>
@@ -985,6 +989,198 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
       </div>
 
+      <!-- ██ CONTAS (Java POO — ContaCorrente + ContaPoupança) ██ -->
+      <div class="page" id="page-contas">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px">
+          <!-- Conta Corrente -->
+          <div class="card" style="border-top:4px solid var(--p3);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--p1),var(--p3));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px">🏦</div>
+              <div><div style="font-size:15px;font-weight:800;color:var(--p1)">Conta Corrente</div><div style="font-size:11.5px;color:var(--muted)">ContaCorrente extends Conta</div></div>
+              <span class="badge bg-ok" style="margin-left:auto">Ativa</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+              <div style="background:var(--bg);border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Agência</div><div style="font-size:16px;font-weight:800">0001</div></div>
+              <div style="background:var(--bg);border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Número</div><div style="font-size:16px;font-weight:800">12345-6</div></div>
+              <div style="background:var(--bg);border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Banco</div><div style="font-size:16px;font-weight:800">274</div></div>
+            </div>
+            <div style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-radius:11px;padding:14px;margin-bottom:16px">
+              <div style="font-size:11px;color:var(--p1);margin-bottom:4px;font-weight:600">💰 SALDO DISPONÍVEL</div>
+              <div style="font-size:30px;font-weight:900;color:var(--p1)" id="cc-saldo">R$ 8.420,50</div>
+              <div style="font-size:11.5px;color:var(--p2);margin-top:3px">Titular: João da Silva · CPF: •••.456.789-••</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+              <button class="btn btn-primary" style="padding:10px;font-size:13px" onclick="openContaOp('cc','deposito')">⬇️ Depositar</button>
+              <button class="btn" style="padding:10px;font-size:13px;background:var(--err);color:#fff" onclick="openContaOp('cc','saque')">⬆️ Sacar</button>
+              <button class="btn" style="padding:10px;font-size:13px;background:var(--teal);color:#fff;grid-column:span 2" onclick="openContaOp('cc','transferir')">🔄 Transferir</button>
+            </div>
+            <div style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px">📋 Extrato Conta Corrente</div>
+            <div id="cc-extrato" style="display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto"></div>
+          </div>
+          <!-- Conta Poupança -->
+          <div class="card" style="border-top:4px solid var(--ok);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#047857,var(--ok));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px">🌱</div>
+              <div><div style="font-size:15px;font-weight:800;color:#047857">Conta Poupança</div><div style="font-size:11.5px;color:var(--muted)">ContaPoupanca extends Conta</div></div>
+              <span class="badge bg-ok" style="margin-left:auto">Ativa</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+              <div style="background:#f0fdf4;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Agência</div><div style="font-size:16px;font-weight:800">0001</div></div>
+              <div style="background:#f0fdf4;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Número</div><div style="font-size:16px;font-weight:800">54321-0</div></div>
+              <div style="background:#f0fdf4;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Banco</div><div style="font-size:16px;font-weight:800">274</div></div>
+            </div>
+            <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:11px;padding:14px;margin-bottom:16px">
+              <div style="font-size:11px;color:#047857;margin-bottom:4px;font-weight:600">🌱 SALDO POUPANÇA</div>
+              <div style="font-size:30px;font-weight:900;color:#047857" id="cp-saldo">R$ 24.850,00</div>
+              <div style="font-size:11.5px;color:#065f46;margin-top:3px">Rendimento: 0,5% a.m. + TR · Creditado em 01/06</div>
+            </div>
+            <div style="background:#f0fdf4;border-radius:9px;padding:11px;margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="font-size:12px;color:var(--muted)">Rendimento acumulado (12m)</span>
+                <span style="font-size:13px;font-weight:700;color:var(--ok)">+ R$ 1.487,20</span>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span style="font-size:12px;color:var(--muted)">Próximo rendimento</span>
+                <span style="font-size:13px;font-weight:700">01/07/2026</span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+              <button class="btn" style="padding:10px;font-size:13px;background:var(--ok);color:#fff" onclick="openContaOp('cp','deposito')">⬇️ Depositar</button>
+              <button class="btn" style="padding:10px;font-size:13px;background:var(--err);color:#fff" onclick="openContaOp('cp','saque')">⬆️ Sacar</button>
+            </div>
+            <div style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px">📋 Extrato Conta Poupança</div>
+            <div id="cp-extrato" style="display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto"></div>
+          </div>
+        </div>
+
+        <!-- POO Concepts Banner -->
+        <div class="sec-title mb16">⚛️ Conceitos POO aplicados ao Banco Digital</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+          <div style="background:linear-gradient(135deg,#e8eaf6,#fff);border:1.5px solid #c5cae9;border-radius:13px;padding:16px">
+            <div style="font-size:24px;margin-bottom:8px">🔷</div>
+            <div style="font-size:13px;font-weight:800;color:var(--p1);margin-bottom:5px">Abstração</div>
+            <div style="font-size:11.5px;color:var(--muted);line-height:1.5"><code style="background:#e8eaf6;padding:2px 5px;border-radius:4px;font-size:10.5px">abstract class Conta</code><br>Concentra-se nos aspectos essenciais: saldo, agência, número, titular.</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#e0f2fe,#fff);border:1.5px solid #bae6fd;border-radius:13px;padding:16px">
+            <div style="font-size:24px;margin-bottom:8px">🔐</div>
+            <div style="font-size:13px;font-weight:800;color:#0369a1;margin-bottom:5px">Encapsulamento</div>
+            <div style="font-size:11.5px;color:var(--muted);line-height:1.5"><code style="background:#e0f2fe;padding:2px 5px;border-radius:4px;font-size:10.5px">private double saldo</code><br>Oculta a implementação, expõe apenas: sacar(), depositar(), getSaldo().</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#f0fdf4,#fff);border:1.5px solid #bbf7d0;border-radius:13px;padding:16px">
+            <div style="font-size:24px;margin-bottom:8px">🧬</div>
+            <div style="font-size:13px;font-weight:800;color:#047857;margin-bottom:5px">Herança</div>
+            <div style="font-size:11.5px;color:var(--muted);line-height:1.5"><code style="background:#f0fdf4;padding:2px 5px;border-radius:4px;font-size:10.5px">ContaCorrente extends Conta</code><br>Reutiliza depósito/saque, estende com cheque especial.</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#fdf4ff,#fff);border:1.5px solid #e9d5ff;border-radius:13px;padding:16px">
+            <div style="font-size:24px;margin-bottom:8px">🎭</div>
+            <div style="font-size:13px;font-weight:800;color:#7c3aed;margin-bottom:5px">Polimorfismo</div>
+            <div style="font-size:11.5px;color:var(--muted);line-height:1.5"><code style="background:#fdf4ff;padding:2px 5px;border-radius:4px;font-size:10.5px">IConta.imprimirExtrato()</code><br>Cada tipo de conta implementa o extrato de forma diferente.</div>
+          </div>
+        </div>
+
+        <!-- Lista de Clientes -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="sec-title" style="margin:0">👥 Lista de Clientes do Banco (método mostrarListaClientes)</div>
+          <button class="btn-sm btn-p" onclick="showToast('📄 Lista exportada em PDF!','success')">📄 Exportar</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--bg)">
+              <th style="padding:11px 16px;text-align:left;font-size:12px;color:var(--muted);font-weight:600">#</th>
+              <th style="padding:11px 16px;text-align:left;font-size:12px;color:var(--muted);font-weight:600">TITULAR</th>
+              <th style="padding:11px 16px;text-align:left;font-size:12px;color:var(--muted);font-weight:600">TIPO CONTA</th>
+              <th style="padding:11px 16px;text-align:left;font-size:12px;color:var(--muted);font-weight:600">AGÊNCIA</th>
+              <th style="padding:11px 16px;text-align:left;font-size:12px;color:var(--muted);font-weight:600">NÚMERO</th>
+              <th style="padding:11px 16px;text-align:right;font-size:12px;color:var(--muted);font-weight:600">SALDO</th>
+              <th style="padding:11px 16px;text-align:center;font-size:12px;color:var(--muted);font-weight:600">AÇÃO</th>
+            </tr></thead>
+            <tbody id="clientesTbl"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ██ SIMULADOR (Banco Digital — Operações POO) ██ -->
+      <div class="page" id="page-simulador">
+        <div style="background:linear-gradient(135deg,#1a237e,#283593);border-radius:var(--rl);padding:24px;color:#fff;margin-bottom:24px">
+          <div style="font-size:13px;opacity:.65;margin-bottom:4px">🧮 Simulador de Banco Digital</div>
+          <h2 style="font-size:22px;font-weight:900;margin-bottom:5px">Operações Bancárias Interativas</h2>
+          <p style="font-size:13.5px;opacity:.75">Inspirado em <strong>rosacarla/Banco-digital-com-Java-POO</strong> · Apache Fineract engine</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:22px">
+          <div>
+            <div class="sec-title mb16">Selecionar conta</div>
+            <div style="display:grid;gap:10px;margin-bottom:20px">
+              <div id="sim-cc" class="card" style="cursor:pointer;border:2px solid var(--p3);" onclick="selSimConta('cc')">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="font-size:24px">🏦</div>
+                  <div style="flex:1"><div style="font-size:14px;font-weight:700">Conta Corrente</div><div style="font-size:12px;color:var(--muted)">Ag.0001 · CC 12345-6</div></div>
+                  <div style="text-align:right"><div style="font-size:13px;font-weight:800;color:var(--p1)" id="sim-cc-bal">R$ 8.420,50</div><div style="font-size:10.5px;color:var(--ok)">● Ativa</div></div>
+                </div>
+              </div>
+              <div id="sim-cp" class="card" style="cursor:pointer;border:2px solid transparent;" onclick="selSimConta('cp')">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="font-size:24px">🌱</div>
+                  <div style="flex:1"><div style="font-size:14px;font-weight:700">Conta Poupança</div><div style="font-size:12px;color:var(--muted)">Ag.0001 · CP 54321-0</div></div>
+                  <div style="text-align:right"><div style="font-size:13px;font-weight:800;color:#047857" id="sim-cp-bal">R$ 24.850,00</div><div style="font-size:10.5px;color:var(--ok)">● Ativa</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-title mb16">Tipo de operação</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+              <div class="sim-op active" id="sop-deposito" onclick="selSimOp('deposito')" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border:2px solid var(--ok);border-radius:12px;padding:14px;cursor:pointer;text-align:center">
+                <div style="font-size:22px;margin-bottom:4px">⬇️</div>
+                <div style="font-size:13px;font-weight:700;color:#047857">Depositar</div>
+              </div>
+              <div class="sim-op" id="sop-saque" onclick="selSimOp('saque')" style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;text-align:center">
+                <div style="font-size:22px;margin-bottom:4px">⬆️</div>
+                <div style="font-size:13px;font-weight:700;color:var(--err)">Sacar</div>
+              </div>
+              <div class="sim-op" id="sop-transferir" onclick="selSimOp('transferir')" style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;text-align:center;grid-column:span 2">
+                <div style="font-size:22px;margin-bottom:4px">🔄</div>
+                <div style="font-size:13px;font-weight:700;color:var(--p1)">Transferir entre contas</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:12px" id="sim-op-title">⬇️ Depositar</div>
+              <div class="f-grp" style="margin-bottom:12px">
+                <label class="f-label">Valor da operação</label>
+                <input class="f-inp w-full" id="sim-valor" type="number" placeholder="0,00" min="0.01" step="0.01" style="border-radius:9px;padding:11px 14px;font-size:16px;font-weight:700">
+              </div>
+              <div class="f-grp sim-destino" id="sim-dest-grp" style="margin-bottom:12px;display:none">
+                <label class="f-label">Conta destino</label>
+                <select class="f-inp w-full" id="sim-dest" style="border-radius:9px;padding:11px 14px">
+                  <option value="cc">🏦 Conta Corrente — 12345-6</option>
+                  <option value="cp">🌱 Conta Poupança — 54321-0</option>
+                </select>
+              </div>
+              <div class="f-grp" style="margin-bottom:14px">
+                <label class="f-label">Descrição</label>
+                <input class="f-inp w-full" id="sim-desc" placeholder="Ex: Depósito em dinheiro" style="border-radius:9px;padding:11px 14px">
+              </div>
+              <button class="btn btn-primary" onclick="executarSimOp()" style="width:100%">✅ Executar Operação</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="sec-title mb16">📋 Terminal — imprimirExtrato()</div>
+            <div style="background:#0d0d1a;border-radius:13px;padding:20px;font-family:monospace;font-size:12.5px;color:#a5f3fc;min-height:400px;max-height:520px;overflow-y:auto" id="sim-terminal">
+              <div style="color:#4ade80;margin-bottom:8px">╔══════════════════════════════════════╗</div>
+              <div style="color:#4ade80;margin-bottom:8px">║   🏦  MeuBanco Digital — Terminal    ║</div>
+              <div style="color:#4ade80;margin-bottom:16px">╚══════════════════════════════════════╝</div>
+              <div style="color:#fbbf24">▶ Sistema inicializado · Java 21 / Apache Fineract</div>
+              <div style="color:#a5f3fc;margin-top:8px">▶ Conta Corrente criada: João da Silva</div>
+              <div style="color:#a5f3fc">  Agência: 0001 | Número: 1 | Saldo: R$ 8.420,50</div>
+              <div style="color:#a5f3fc;margin-top:6px">▶ Conta Poupança criada: João da Silva</div>
+              <div style="color:#a5f3fc">  Agência: 0001 | Número: 2 | Saldo: R$ 24.850,00</div>
+              <div style="color:#6ee7b7;margin-top:10px">— Aguardando operação... —</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ██ INVESTIMENTOS ██ -->
       <div class="page" id="page-investimentos">
         <div class="inv-hero">
@@ -1237,6 +1433,7 @@ function buildAll(){
   buildExtratoSum(); buildLoanTbl(); buildProducts(); buildOrders();
   buildCRM(); buildDocs(); buildDocTemplates(); buildIntegStatus();
   buildInvCards(); buildNotifs(); buildFAQ();
+  buildContaExtratos(); buildClientesTbl();
 }
 
 /* AUTH */
@@ -1259,8 +1456,8 @@ function doLogout(){
 }
 
 /* NAV */
-const TITLES={home:'Início',pix:'PIX',extrato:'Extrato',cartoes:'Cartões',credito:'Crédito',
-  investimentos:'Investimentos',marketplace:'Marketplace',crm:'CRM',documentos:'Documentos',
+const TITLES={home:'Início',pix:'PIX',extrato:'Extrato',contas:'Minhas Contas',cartoes:'Cartões',credito:'Crédito',
+  investimentos:'Investimentos',simulador:'Simulador de Operações',marketplace:'Marketplace',crm:'CRM',documentos:'Documentos',
   integracoes:'Integrações & APIs',perfil:'Perfil',notificacoes:'Notificações',ajuda:'Ajuda'};
 function goPage(name,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1594,6 +1791,154 @@ function showToast(msg,type='success'){
   c.appendChild(t);
   requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));
   setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),350)},3500);
+}
+
+/* ══════════════════════════════════════════════
+   CONTAS POO (Java-inspired: ContaCorrente, ContaPoupanca)
+══════════════════════════════════════════════ */
+let ccSaldo = 8420.50, cpSaldo = 24850.00;
+let ccHistorico = [
+  {op:'credit',desc:'Depósito inicial — abertura de conta',val:5000,date:'01/06/2025'},
+  {op:'credit',desc:'TED recebido — Salário',val:8500,date:'01/06/2026'},
+  {op:'debit',desc:'Saque — PIX enviado',val:350,date:'02/06/2026'},
+  {op:'debit',desc:'Débito — Compra Supermercado',val:287.5,date:'03/06/2026'},
+];
+let cpHistorico = [
+  {op:'credit',desc:'Depósito inicial — poupança',val:20000,date:'01/01/2026'},
+  {op:'credit',desc:'Rendimento mensal 0,5% a.m.',val:100,date:'01/02/2026'},
+  {op:'credit',desc:'Depósito — transferência de CC',val:4500,date:'15/03/2026'},
+  {op:'credit',desc:'Rendimento mensal creditado',val:250,date:'01/06/2026'},
+];
+
+const CLIENTES_BANCO = [
+  {seq:1,nome:'João da Silva',tipo:'Corrente',ag:'0001',num:'12345-6',saldo:8420.50,status:'Ativo'},
+  {seq:2,nome:'João da Silva',tipo:'Poupança',ag:'0001',num:'54321-0',saldo:24850.00,status:'Ativo'},
+  {seq:3,nome:'Maria Clara',tipo:'Corrente',ag:'0001',num:'12346-7',saldo:3200.75,status:'Ativo'},
+  {seq:4,nome:'Pedro Alves',tipo:'Corrente',ag:'0001',num:'12347-8',saldo:15800.00,status:'Ativo'},
+  {seq:5,nome:'Pedro Alves',tipo:'Poupança',ag:'0001',num:'54322-1',saldo:42000.00,status:'Ativo'},
+  {seq:6,nome:'Lucas Souza',tipo:'Corrente',ag:'0001',num:'12348-9',saldo:980.30,status:'Ativo'},
+  {seq:7,nome:'Ana Paula',tipo:'Corrente',ag:'0002',num:'22345-1',saldo:67500.00,status:'VIP'},
+  {seq:8,nome:'Carlos Melo',tipo:'Corrente',ag:'0002',num:'22346-2',saldo:12300.00,status:'Ativo'},
+];
+
+function buildContaExtratos(){
+  function renderHist(hist,elId){
+    document.getElementById(elId).innerHTML = hist.slice().reverse().map(h=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:${h.op==='credit'?'#f0fdf4':'#fef2f2'};border-radius:8px;border-left:3px solid ${h.op==='credit'?'var(--ok)':'var(--err)'}">
+        <div><div style="font-size:12px;font-weight:600;color:var(--txt)">${h.desc}</div><div style="font-size:10.5px;color:var(--muted)">${h.date}</div></div>
+        <div style="font-size:13px;font-weight:800;color:${h.op==='credit'?'var(--ok)':'var(--err)'}">${h.op==='credit'?'+':'−'} R$ ${fmt(h.val)}</div>
+      </div>`).join('');
+  }
+  renderHist(ccHistorico,'cc-extrato');
+  renderHist(cpHistorico,'cp-extrato');
+}
+
+function buildClientesTbl(){
+  document.getElementById('clientesTbl').innerHTML = CLIENTES_BANCO.map(c=>{
+    const tipoBg = c.tipo==='Corrente'?'#e8eaf6':'#f0fdf4';
+    const tipoColor = c.tipo==='Corrente'?'var(--p1)':'#047857';
+    const statusBg = c.status==='VIP'?'bg-warn':'bg-ok';
+    return `<tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+      <td style="padding:12px 16px;font-size:12px;color:var(--muted)">${c.seq}</td>
+      <td style="padding:12px 16px"><div style="font-size:13.5px;font-weight:700">${c.nome}</div><div style="font-size:11.5px;color:var(--muted)">CPF •••.456.789-••</div></td>
+      <td style="padding:12px 16px"><span style="background:${tipoBg};color:${tipoColor};padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:700">${c.tipo}</span></td>
+      <td style="padding:12px 16px;font-size:13px;font-weight:600">${c.ag}</td>
+      <td style="padding:12px 16px;font-size:13px;font-family:monospace">${c.num}</td>
+      <td style="padding:12px 16px;text-align:right;font-size:14px;font-weight:800;color:var(--p1)">R$ ${fmt(c.saldo)}</td>
+      <td style="padding:12px 16px;text-align:center">
+        <button class="btn-sm btn-p" style="padding:5px 12px;font-size:11.5px" onclick="showToast('📋 Extrato de ${c.nome} gerado!','info')">Extrato</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function openContaOp(conta,op){
+  goPage('simulador',null);
+  selSimConta(conta);
+  selSimOp(op);
+}
+
+/* ══════════════════════════════════════════════
+   SIMULADOR POO
+══════════════════════════════════════════════ */
+let simConta = 'cc', simOp = 'deposito';
+
+function selSimConta(c){
+  simConta = c;
+  document.getElementById('sim-cc').style.border = c==='cc'?'2px solid var(--p3)':'2px solid var(--border)';
+  document.getElementById('sim-cp').style.border = c==='cp'?'2px solid var(--ok)':'2px solid var(--border)';
+}
+
+function selSimOp(op){
+  simOp = op;
+  ['deposito','saque','transferir'].forEach(o=>{
+    const el = document.getElementById('sop-'+o);
+    if(o==='deposito') el.style.background = op===o?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'var(--bg)';
+    else if(o==='saque') el.style.background = op===o?'linear-gradient(135deg,#fee2e2,#fecaca)':'var(--bg)';
+    else el.style.background = op===o?'linear-gradient(135deg,#e0e7ff,#c7d2fe)':'var(--bg)';
+    el.style.border = op===o?`2px solid ${o==='deposito'?'var(--ok)':o==='saque'?'var(--err)':'var(--p3)'}`:'2px solid var(--border)';
+  });
+  const titles = {deposito:'⬇️ Depositar',saque:'⬆️ Sacar',transferir:'🔄 Transferir entre contas'};
+  document.getElementById('sim-op-title').textContent = titles[op];
+  document.getElementById('sim-dest-grp').style.display = op==='transferir'?'flex':'none';
+  if(op==='transferir'){
+    const destSel = document.getElementById('sim-dest');
+    destSel.innerHTML = simConta==='cc'
+      ? '<option value="cp">🌱 Conta Poupança — 54321-0</option><option value="cc">🏦 Conta Corrente — 12345-6</option>'
+      : '<option value="cc">🏦 Conta Corrente — 12345-6</option><option value="cp">🌱 Conta Poupança — 54321-0</option>';
+  }
+}
+
+function executarSimOp(){
+  const val = parseFloat(document.getElementById('sim-valor').value);
+  const desc = document.getElementById('sim-desc').value.trim() || (simOp==='deposito'?'Depósito':simOp==='saque'?'Saque':'Transferência');
+  const term = document.getElementById('sim-terminal');
+  const now = new Date().toLocaleTimeString('pt-BR');
+  const nomeConta = simConta==='cc'?'Conta Corrente':'Conta Poupança';
+
+  if(isNaN(val)||val<=0){showToast('❌ Informe um valor válido!','err');return;}
+
+  let ok = true, msg = '';
+
+  if(simOp==='deposito'){
+    if(simConta==='cc'){ccSaldo+=val;document.getElementById('cc-saldo').textContent='R$ '+fmt(ccSaldo);document.getElementById('sim-cc-bal').textContent='R$ '+fmt(ccSaldo);ccHistorico.push({op:'credit',desc,val,date:new Date().toLocaleDateString('pt-BR')});}
+    else{cpSaldo+=val;document.getElementById('cp-saldo').textContent='R$ '+fmt(cpSaldo);document.getElementById('sim-cp-bal').textContent='R$ '+fmt(cpSaldo);cpHistorico.push({op:'credit',desc,val,date:new Date().toLocaleDateString('pt-BR')});}
+    msg = `✅ depositar(R$ ${fmt(val)}) → ${nomeConta}`;
+  } else if(simOp==='saque'){
+    const s = simConta==='cc'?ccSaldo:cpSaldo;
+    if(val>s){showToast('❌ Saldo insuficiente!','err');addTermLine(`<span style="color:#f87171">✗ ERRO: Saldo insuficiente! Saldo atual: R$ ${fmt(s)}</span>`,term);return;}
+    if(simConta==='cc'){ccSaldo-=val;document.getElementById('cc-saldo').textContent='R$ '+fmt(ccSaldo);document.getElementById('sim-cc-bal').textContent='R$ '+fmt(ccSaldo);ccHistorico.push({op:'debit',desc,val,date:new Date().toLocaleDateString('pt-BR')});}
+    else{cpSaldo-=val;document.getElementById('cp-saldo').textContent='R$ '+fmt(cpSaldo);document.getElementById('sim-cp-bal').textContent='R$ '+fmt(cpSaldo);cpHistorico.push({op:'debit',desc,val,date:new Date().toLocaleDateString('pt-BR')});}
+    msg = `✅ sacar(R$ ${fmt(val)}) → ${nomeConta}`;
+  } else if(simOp==='transferir'){
+    const dest = document.getElementById('sim-dest').value;
+    const s = simConta==='cc'?ccSaldo:cpSaldo;
+    if(val>s){showToast('❌ Saldo insuficiente para transferência!','err');addTermLine(`<span style="color:#f87171">✗ ERRO: Saldo insuficiente!</span>`,term);return;}
+    if(simConta==='cc'){ccSaldo-=val;document.getElementById('cc-saldo').textContent='R$ '+fmt(ccSaldo);document.getElementById('sim-cc-bal').textContent='R$ '+fmt(ccSaldo);ccHistorico.push({op:'debit',desc:'Transferência → '+( dest==='cp'?'Poupança':'Corrente'),val,date:new Date().toLocaleDateString('pt-BR')});}
+    else{cpSaldo-=val;document.getElementById('cp-saldo').textContent='R$ '+fmt(cpSaldo);document.getElementById('sim-cp-bal').textContent='R$ '+fmt(cpSaldo);cpHistorico.push({op:'debit',desc:'Transferência → '+( dest==='cc'?'Corrente':'Poupança'),val,date:new Date().toLocaleDateString('pt-BR')});}
+    if(dest==='cc'){ccSaldo+=val;document.getElementById('cc-saldo').textContent='R$ '+fmt(ccSaldo);document.getElementById('sim-cc-bal').textContent='R$ '+fmt(ccSaldo);ccHistorico.push({op:'credit',desc:'Transferência recebida ← '+(simConta==='cp'?'Poupança':'Corrente'),val,date:new Date().toLocaleDateString('pt-BR')});}
+    else{cpSaldo+=val;document.getElementById('cp-saldo').textContent='R$ '+fmt(cpSaldo);document.getElementById('sim-cp-bal').textContent='R$ '+fmt(cpSaldo);cpHistorico.push({op:'credit',desc:'Transferência recebida ← '+(simConta==='cc'?'Corrente':'Poupança'),val,date:new Date().toLocaleDateString('pt-BR')});}
+    msg = `✅ transferir(R$ ${fmt(val)}) → ${simConta.toUpperCase()} → ${dest.toUpperCase()}`;
+  }
+
+  // Update terminal
+  addTermLine(`<span style="color:#fbbf24">[${now}] ${msg}</span>`,term);
+  addTermLine(`<span style="color:#a5f3fc">  === Extrato ${nomeConta} ===</span>`,term);
+  addTermLine(`<span style="color:#a5f3fc">  Titular: João da Silva</span>`,term);
+  addTermLine(`<span style="color:#a5f3fc">  Agência: 0001 | Número: ${simConta==='cc'?'12345-6':'54321-0'}</span>`,term);
+  addTermLine(`<span style="color:#4ade80">  Saldo: R$ ${fmt(simConta==='cc'?ccSaldo:cpSaldo)}</span>`,term);
+  addTermLine(`<span style="color:#6ee7b7">————————————————————————</span>`,term);
+
+  buildContaExtratos();
+  buildClientesTbl();
+  document.getElementById('sim-valor').value='';
+  document.getElementById('sim-desc').value='';
+  showToast('✅ '+msg,'success');
+}
+
+function addTermLine(html,term){
+  const d=document.createElement('div');d.innerHTML=html;d.style.marginBottom='3px';
+  term.appendChild(d);term.scrollTop=term.scrollHeight;
 }
 
 /* UTILS */
