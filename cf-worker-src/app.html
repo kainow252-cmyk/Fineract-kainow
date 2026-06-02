@@ -388,11 +388,11 @@ input,select,textarea{font-family:inherit;outline:none}
   }
   /* KPIs 5 colunas → 2 */
   #page-correspondente [style*="repeat(5,1fr)"],
-  #page-comissoes [style*="repeat(5,1fr)"]{
+  #crm-aba-comissoes [style*="repeat(5,1fr)"]{
     grid-template-columns:1fr 1fr!important;
   }
   #page-correspondente [style*="repeat(4,1fr)"],
-  #page-comissoes [style*="repeat(4,1fr)"]{
+  #crm-aba-comissoes [style*="repeat(4,1fr)"]{
     grid-template-columns:1fr 1fr!important;
   }
   /* Funil kanban horizontal scroll */
@@ -982,7 +982,7 @@ input,select,textarea{font-family:inherit;outline:none}
   .sec-title{font-size:15px!important}
 
   /* Comissoes, investimentos grids */
-  #page-comissoes [style*="grid-template-columns: repeat"]{grid-template-columns:1fr 1fr!important}
+  #crm-aba-comissoes [style*="grid-template-columns: repeat"]{grid-template-columns:1fr 1fr!important}
   #page-investimentos [style*="repeat(3"]{grid-template-columns:1fr 1fr!important}
 
   /* Seguros products grid */
@@ -1342,7 +1342,6 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="nav-item" onclick="goPage('correspondente',this)"><span class="ni">🏪</span>Corresp. Bancário<span class="nb blue">NEW</span></div>
         <div class="nav-item" onclick="goPage('mktfinanceiro',this)"><span class="ni">💹</span>Mkt Financeiro<span class="nb blue">NEW</span></div>
         <div class="nav-item" onclick="goPage('indicacao',this)"><span class="ni">🎁</span>Indique & Ganhe<span class="nb blue">NEW</span></div>
-        <div class="nav-item" onclick="goPage('comissoes',this)"><span class="ni">💎</span>Comissões<span class="nb blue">NEW</span></div>
       </div>
       <div class="sb-section">
         <div class="sb-sec-label">Operadores</div>
@@ -1401,7 +1400,6 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="nav-item" onclick="mobGo('sorteios')"><span class="ni">🏆</span>Sorteios</div>
         <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">CORRESPONDENTE</div>
         <div class="nav-item" onclick="mobGo('correspondente')"><span class="ni">🏪</span>Corresp. Bancário</div>
-        <div class="nav-item" onclick="mobGo('comissoes')"><span class="ni">💎</span>Comissões</div>
         <div class="nav-item" onclick="mobGo('mktfinanceiro')"><span class="ni">💹</span>Mkt Financeiro</div>
         <div class="nav-item" onclick="mobGo('indicacao')"><span class="ni">🎁</span>Indique &amp; Ganhe</div>
         <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">EQUIPE</div>
@@ -3003,6 +3001,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="crm-tab" id="crm-tab-relatorios" onclick="crmAba('crm-aba-relatorios')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">📈 Relatórios</div>
           <div class="crm-tab" id="crm-tab-equipe" onclick="crmAba('crm-aba-equipe')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">👤 Equipe</div>
           <div class="crm-tab" id="crm-tab-admin" onclick="crmAba('crm-aba-admin')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">⚙️ Admin</div>
+          <div class="crm-tab" id="crm-tab-comissoes" onclick="crmAba('crm-aba-comissoes')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">💎 Comissões</div>
         </div>
 
         <!-- ════════════════════════════════════
@@ -3610,10 +3609,10 @@ input,select,textarea{font-family:inherit;outline:none}
             </tbody>
           </table>
         </div>
-      </div>
-
-      <!-- ██ COMISSÕES ██ -->
-      <div class="page" id="page-comissoes">
+        <!-- ════════════════════════════════════
+             ABA: COMISSÕES
+        ════════════════════════════════════ -->
+        <div id="crm-aba-comissoes" class="crm-tab-content" style="display:none">
         <div style="background:linear-gradient(135deg,#14532d,#15803d,#16a34a);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💎</div>
           <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Correspondente Bancário · KaiNowPay Consignado</div>
@@ -3728,7 +3727,10 @@ input,select,textarea{font-family:inherit;outline:none}
             </tbody>
           </table>
         </div>
+        </div>
       </div>
+
+      <!-- ██ COMISSÕES ██ -->
 
       <!-- ██ MOTOBOYS ██ -->
       <div class="page" id="page-motoboys">
@@ -5836,7 +5838,7 @@ function crmAba(abaId){
     el.style.display='none';
   });
   ['crm-aba-dashboard','crm-aba-propostas','crm-aba-clientes',
-   'crm-aba-funil','crm-aba-relatorios','crm-aba-equipe','crm-aba-admin'].forEach(id=>{
+   'crm-aba-funil','crm-aba-relatorios','crm-aba-equipe','crm-aba-admin','crm-aba-comissoes'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.display='none';
   });
@@ -5858,6 +5860,7 @@ function crmAba(abaId){
   if(abaId==='crm-aba-relatorios')  crmUpdateRelatorios();
   if(abaId==='crm-aba-equipe')      crmUpdateEquipe();
   if(abaId==='crm-aba-admin')       crmRenderAdmin();
+  // Comissões tab — static content, no refresh needed
 }
 
 // ── MODAL MANAGEMENT ──────────────────────────────────────────────
@@ -6452,7 +6455,7 @@ function crmSalvarCliente(){
 function crmInit(){
   // Show dashboard, hide others
   const crmAbas=['crm-aba-dashboard','crm-aba-propostas','crm-aba-clientes',
-                 'crm-aba-funil','crm-aba-relatorios','crm-aba-equipe','crm-aba-admin'];
+                 'crm-aba-funil','crm-aba-relatorios','crm-aba-equipe','crm-aba-admin','crm-aba-comissoes'];
   crmAbas.forEach((id,i)=>{
     const el=document.getElementById(id);
     if(el) el.style.display=i===0?'block':'none';
@@ -7444,6 +7447,12 @@ function docNovoUpload(){
 
 // Hook de página — disparado pelo goPage()
 function onPageOpen(id){
+  // comissoes is now a tab inside correspondente — redirect
+  if(id==='page-comissoes'){
+    goPage('correspondente',null);
+    setTimeout(()=>crmAba('crm-aba-comissoes'),120);
+    return;
+  }
   if(id==='page-correspondente'){
     setTimeout(()=>{ crmInit(); },80);
   }
