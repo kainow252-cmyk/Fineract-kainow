@@ -4642,8 +4642,16 @@ const TITLES={
   integracoes:'Integrações & APIs', perfil:'Perfil', notificacoes:'Notificações', ajuda:'Ajuda'
 };
 function goPage(name,el){
+  // comissoes is now a tab inside Correspondente Bancário
+  if(name==='comissoes'){
+    goPage('correspondente',el);
+    setTimeout(()=>crmAba('crm-aba-comissoes'),150);
+    return;
+  }
+  const pg=document.getElementById('page-'+name);
+  if(!pg) return;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
+  pg.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
   else document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"))n.classList.add('active')});
@@ -7447,12 +7455,7 @@ function docNovoUpload(){
 
 // Hook de página — disparado pelo goPage()
 function onPageOpen(id){
-  // comissoes is now a tab inside correspondente — redirect
-  if(id==='page-comissoes'){
-    goPage('correspondente',null);
-    setTimeout(()=>crmAba('crm-aba-comissoes'),120);
-    return;
-  }
+  // comissoes redirect now handled in goPage()
   if(id==='page-correspondente'){
     setTimeout(()=>{ crmInit(); },80);
   }
