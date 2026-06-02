@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Por onde começar o App Bancário?</title>
+  <style>
+    :root {
+      --primary:#1a56a7; --dark:#0e3a75; --light:#dbeafe;
+      --green:#10b981; --yellow:#f59e0b; --red:#ef4444;
+      --purple:#8b5cf6; --teal:#14b8a6; --orange:#f97316;
+      --text:#1e293b; --muted:#64748b; --bg:#f8fafc; --card:#fff; --border:#e2e8f0;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#0e3a75,#1a56a7 55%,#0ea5e9);color:#fff;padding:56px 24px 44px;text-align:center;}
+    .hero-badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+    .hero h1{font-size:clamp(24px,5vw,46px);font-weight:900;line-height:1.15;margin-bottom:12px;}
+    .hero p{font-size:17px;opacity:.88;max-width:660px;margin:0 auto;}
+
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);overflow-x:auto;}
+    .nav-inner{display:flex;padding:0 16px;white-space:nowrap;}
+    .nav-inner a{padding:13px 14px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;transition:all .2s;}
+    .nav-inner a:hover,.nav-inner a.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+    /* LAYOUT */
+    .container{max-width:1200px;margin:0 auto;padding:0 24px;}
+    .section{padding:52px 0;}
+    .alt{background:#f1f5f9;}
+    .stag{display:inline-block;background:var(--light);color:var(--primary);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:10px;}
+    .stitle{font-size:clamp(20px,3vw,30px);font-weight:800;color:var(--dark);margin-bottom:8px;}
+    .ssub{color:var(--muted);font-size:15px;max-width:680px;margin-bottom:28px;}
+
+    /* DECISION CARD */
+    .big-answer{border-radius:20px;padding:36px;margin-bottom:28px;text-align:center;}
+    .big-answer.yes{background:linear-gradient(135deg,#d1fae5,#a7f3d0);border:2px solid #6ee7b7;}
+    .big-answer .icon{font-size:56px;display:block;margin-bottom:12px;}
+    .big-answer h2{font-size:28px;font-weight:900;color:#065f46;margin-bottom:10px;}
+    .big-answer p{font-size:16px;color:#047857;max-width:600px;margin:0 auto;}
+
+    /* OPTION CARDS */
+    .opt-card{background:var(--card);border-radius:16px;border:1px solid var(--border);padding:26px;box-shadow:0 3px 16px rgba(0,0,0,.08);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+    .opt-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.13);}
+    .opt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;}
+    .opt-card.c1::before{background:linear-gradient(90deg,#0ea5e9,#3b82f6);}
+    .opt-card.c2::before{background:linear-gradient(90deg,#10b981,#059669);}
+    .opt-card.c3::before{background:linear-gradient(90deg,#8b5cf6,#7c3aed);}
+    .opt-rec{position:absolute;top:16px;right:16px;background:#d1fae5;color:#065f46;font-size:10px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:1px;}
+    .opt-icon{font-size:36px;margin-bottom:12px;}
+    .opt-title{font-size:19px;font-weight:800;margin-bottom:6px;}
+    .opt-sub{font-size:12px;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;}
+    .opt-desc{font-size:14px;color:var(--muted);margin-bottom:18px;}
+    .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .pc-col h5{font-size:12px;font-weight:700;margin-bottom:6px;}
+    .pc-col ul{list-style:none;}
+    .pc-col ul li{font-size:12px;color:var(--muted);padding:2px 0;display:flex;gap:6px;}
+    .pc-col.pro ul li::before{content:'✅';}
+    .pc-col.con ul li::before{content:'⚠️';}
+
+    /* FLUETER DETAIL */
+    .flutter-hero{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:20px;padding:36px;color:#fff;margin-bottom:28px;}
+    .flutter-hero h2{font-size:26px;font-weight:900;margin-bottom:10px;}
+    .flutter-hero p{font-size:15px;opacity:.85;max-width:620px;}
+    .flutter-stats{display:flex;gap:32px;flex-wrap:wrap;margin-top:24px;}
+    .fstat .big{font-size:34px;font-weight:900;display:block;}
+    .fstat .lbl{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:1px;}
+
+    /* GRID */
+    .g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:22px;}
+    .g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;}
+    .g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+
+    /* STEP BOX */
+    .step-row{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;}
+    .step-n{width:36px;height:36px;min-width:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0;}
+    .step-content h4{font-size:15px;font-weight:700;margin-bottom:4px;}
+    .step-content p{font-size:13px;color:var(--muted);}
+
+    /* CODE */
+    .code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px;font-family:'Consolas',monospace;font-size:13px;overflow-x:auto;line-height:1.7;}
+    .code .c{color:#475569;}
+    .code .k{color:#7dd3fc;}
+    .code .s{color:#86efac;}
+    .code .v{color:#fde68a;}
+    .code .fn{color:#f9a8d4;}
+
+    /* CALLOUT */
+    .callout{border-radius:12px;padding:14px 18px;display:flex;gap:12px;margin-bottom:14px;}
+    .callout.info{background:#dbeafe;border-left:4px solid #3b82f6;}
+    .callout.ok{background:#d1fae5;border-left:4px solid #10b981;}
+    .callout.warn{background:#fef9c3;border-left:4px solid #f59e0b;}
+    .callout.danger{background:#fee2e2;border-left:4px solid #ef4444;}
+    .callout p{font-size:13px;margin:0;}
+    .callout strong{display:block;font-size:14px;margin-bottom:3px;}
+
+    /* CARD simple */
+    .card{background:var(--card);border-radius:14px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06);}
+    .card-h{padding:16px 20px 13px;border-bottom:1px solid var(--border);display:flex;gap:11px;align-items:center;}
+    .card-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+    .card-h h3{font-size:15px;font-weight:700;}
+    .card-h p{font-size:12px;color:var(--muted);}
+    .card-b{padding:18px 20px;}
+
+    /* COMPARE */
+    .tbl{width:100%;border-collapse:collapse;font-size:13px;}
+    .tbl th{background:var(--primary);color:#fff;padding:10px 14px;text-align:left;font-size:12px;font-weight:600;}
+    .tbl td{padding:10px 14px;border-bottom:1px solid var(--border);}
+    .tbl tr:hover td{background:#f8fafc;}
+    .y{color:#10b981;font-weight:700;}
+    .n{color:#ef4444;}
+    .p{color:#f59e0b;}
+
+    /* TIMELINE */
+    .timeline{padding-left:32px;position:relative;}
+    .timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:2px;background:var(--border);}
+    .tli{position:relative;margin-bottom:24px;}
+    .tli-dot{position:absolute;left:-26px;top:3px;width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--primary);background:var(--primary);}
+    .tli h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+    .tli p{font-size:13px;color:var(--muted);}
+
+    /* BADGE */
+    .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;}
+    .badge-blue{background:#dbeafe;color:#1e40af;}
+    .badge-green{background:#d1fae5;color:#065f46;}
+    .badge-purple{background:#ede9fe;color:#5b21b6;}
+    .badge-orange{background:#ffedd5;color:#9a3412;}
+    .badge-teal{background:#ccfbf1;color:#134e4a;}
+    .badge-yellow{background:#fef9c3;color:#78350f;}
+    .badge-gray{background:#f1f5f9;color:#475569;}
+    .badge-red{background:#fee2e2;color:#991b1b;}
+
+    /* SUMMARY */
+    .summary{background:linear-gradient(135deg,var(--dark),var(--primary));color:#fff;border-radius:18px;padding:40px;text-align:center;}
+    .summary h2{font-size:26px;font-weight:900;margin-bottom:10px;}
+    .summary p{font-size:15px;opacity:.87;max-width:620px;margin:0 auto 24px;}
+
+    footer{background:#1e293b;color:#94a3b8;text-align:center;padding:26px;font-size:12px;}
+    footer strong{color:#fff;}
+
+    @media(max-width:640px){
+      .g2,.g3,.g4{grid-template-columns:1fr;}
+      .pros-cons{grid-template-columns:1fr;}
+      .hero{padding:36px 16px 28px;}
+      .container{padding:0 14px;}
+      .flutter-stats{gap:20px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Guia de Decisão · Desenvolvimento</div>
+  <h1>Por onde começar?<br>App bancário com Fineract 🏦</h1>
+  <p>Você tem <strong>duas opções</strong> para começar o desenvolvimento do app. Veja qual faz mais sentido para o seu caso — com prós, contras e passo a passo.</p>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#resposta">Resposta</a>
+    <a href="#opcoes">2 Opções</a>
+    <a href="#flutter">Flutter do Zero</a>
+    <a href="#mifos">Mifos Pay (Fork)</a>
+    <a href="#passos">Passo a Passo</a>
+    <a href="#estrutura">Estrutura do App</a>
+    <a href="#integracao">Integrar Fineract</a>
+    <a href="#escolha">Qual Escolher?</a>
+  </div>
+</nav>
+
+<!-- RESPOSTA DIRETA -->
+<section class="section" id="resposta">
+  <div class="container">
+    <div class="big-answer yes">
+      <span class="icon">🎯</span>
+      <h2>Você tem 2 caminhos — ambos funcionam!</h2>
+      <p>
+        <strong>Opção 1:</strong> Fazer um <strong>fork do Mifos Pay</strong> (app já pronto, open-source, nas lojas)<br>
+        <strong>Opção 2:</strong> Criar um <strong>app Flutter do zero</strong> consumindo a API do Fineract<br><br>
+        Para <strong>maioria dos casos</strong>, o <strong>Flutter do zero</strong> é mais recomendado — mais flexível, mais fácil de controlar e com mais devs disponíveis no mercado.
+      </p>
+    </div>
+
+    <div class="callout info">
+      <span style="font-size:22px;">💡</span>
+      <p><strong>Por que Flutter e não o Mifos Pay direto?</strong> O Mifos Pay é em Kotlin Multiplatform (KMP) — uma tecnologia mais difícil de encontrar devs. O Flutter tem muito mais desenvolvedores, tutoriais e comunidade no Brasil. E a API do Fineract funciona igual para os dois.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DUAS OPÇÕES -->
+<section class="section alt" id="opcoes">
+  <div class="container">
+    <span class="stag">Comparação</span>
+    <h2 class="stitle">As 2 opções lado a lado</h2>
+    <p class="ssub">Entenda profundamente cada caminho antes de decidir.</p>
+
+    <div class="g2">
+
+      <!-- OPÇÃO 1: Flutter do Zero -->
+      <div class="opt-card c1">
+        <div class="opt-rec">⭐ MAIS RECOMENDADO</div>
+        <div class="opt-icon">🐦</div>
+        <div class="opt-title">Flutter do Zero</div>
+        <div class="opt-sub">Criar o app do zero com Flutter + Dart</div>
+        <div class="opt-desc">
+          Você cria um app Flutter novo e conecta na API REST do Fineract. Total liberdade de design, UX e funcionalidades. O Fineract fica como backend — o app não sabe que é Fineract, só consome a API.
+        </div>
+        <div class="pros-cons">
+          <div class="pc-col pro">
+            <h5 style="color:#065f46;">✅ Vantagens</h5>
+            <ul>
+              <li>Design 100% seu</li>
+              <li>Flutter tem muito mais devs</li>
+              <li>Fácil de manter e evoluir</li>
+              <li>Comunidade enorme no BR</li>
+              <li>Pub.dev com packages prontos</li>
+              <li>Hot Reload = dev mais rápido</li>
+              <li>Android + iOS + Web juntos</li>
+              <li>Curva de aprendizado menor</li>
+            </ul>
+          </div>
+          <div class="pc-col con">
+            <h5 style="color:#9a3412;">⚠️ Desafios</h5>
+            <ul>
+              <li>Começa do zero (UI)</li>
+              <li>Você integra tudo manualmente</li>
+              <li>Mais tempo até 1ª versão</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPÇÃO 2: Fork Mifos Pay -->
+      <div class="opt-card c2">
+        <div class="opt-icon">🔱</div>
+        <div class="opt-title">Fork do Mifos Pay</div>
+        <div class="opt-sub">Usar app já pronto em Kotlin KMP</div>
+        <div class="opt-desc">
+          O Mifos Pay já está nas lojas, já tem toda a integração com Fineract feita. Você faz um fork, troca a logo, as cores e personaliza. Menos trabalho de integração, mas mais limitado em design.
+        </div>
+        <div class="pros-cons">
+          <div class="pc-col pro">
+            <h5 style="color:#065f46;">✅ Vantagens</h5>
+            <ul>
+              <li>Integração Fineract já pronta</li>
+              <li>Já nas lojas Google/Apple</li>
+              <li>Features bancárias prontas</li>
+              <li>Base testada em produção</li>
+              <li>Menos tempo de backend</li>
+            </ul>
+          </div>
+          <div class="pc-col con">
+            <h5 style="color:#9a3412;">⚠️ Desafios</h5>
+            <ul>
+              <li>Kotlin KMP = poucos devs</li>
+              <li>Design limitado pelo template</li>
+              <li>Difícil personalizar profundamente</li>
+              <li>Código complexo para iniciantes</li>
+              <li>Dependente dos releases Mifos</li>
+              <li>Atualizar sem quebrar é difícil</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DECISÃO RÁPIDA -->
+    <div style="background:#fff;border-radius:16px;border:2px solid var(--primary);padding:28px;margin-top:24px;">
+      <h3 style="font-size:18px;font-weight:800;margin-bottom:16px;text-align:center;">🤔 Qual escolher? Responda essas perguntas:</h3>
+      <div class="g3">
+        <div style="background:#f8fafc;border-radius:12px;padding:18px;border:1px solid var(--border);">
+          <div style="font-size:24px;margin-bottom:8px;">👨‍💻</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Você tem dev Flutter?</h4>
+          <p style="font-size:13px;color:var(--muted);">Se SIM → <strong style="color:#065f46;">Flutter do Zero</strong><br>Se NÃO e tem Kotlin dev → Fork Mifos Pay</p>
+        </div>
+        <div style="background:#f8fafc;border-radius:12px;padding:18px;border:1px solid var(--border);">
+          <div style="font-size:24px;margin-bottom:8px;">🎨</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Precisa de design customizado?</h4>
+          <p style="font-size:13px;color:var(--muted);">Se SIM → <strong style="color:#065f46;">Flutter do Zero</strong><br>Se o visual do Mifos Pay serve → Fork</p>
+        </div>
+        <div style="background:#f8fafc;border-radius:12px;padding:18px;border:1px solid var(--border);">
+          <div style="font-size:24px;margin-bottom:8px;">⏰</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Prazo urgente (< 2 meses)?</h4>
+          <p style="font-size:13px;color:var(--muted);">Se SIM → <strong style="color:#065f46;">Fork Mifos Pay</strong> para MVP<br>Depois refaz em Flutter</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLUTTER DO ZERO -->
+<section class="section" id="flutter">
+  <div class="container">
+    <span class="stag">Opção 1 — Recomendada</span>
+    <h2 class="stitle">🐦 App Flutter do zero com Fineract</h2>
+    <p class="ssub">Tudo que você precisa saber para criar o app bancário completo em Flutter consumindo a API do Fineract.</p>
+
+    <div class="flutter-hero">
+      <h2>Por que Flutter é a melhor escolha em 2026?</h2>
+      <p>Flutter domina o desenvolvimento mobile multiplataforma. Com um único código você entrega Android, iOS e até Web — e no Brasil a comunidade é gigante.</p>
+      <div class="flutter-stats">
+        <div class="fstat"><span class="big">46%</span><span class="lbl">Market Share Mobile 2026</span></div>
+        <div class="fstat"><span class="big">3.7M+</span><span class="lbl">Desenvolvedores globais</span></div>
+        <div class="fstat"><span class="big">35k+</span><span class="lbl">Packages no Pub.dev</span></div>
+        <div class="fstat"><span class="big">1x</span><span class="lbl">Código → Android + iOS</span></div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:24px;">
+
+      <div class="card">
+        <div class="card-h">
+          <div class="card-ico" style="background:#dbeafe;">📦</div>
+          <div><h3>Packages Flutter para app bancário</h3><p>Tudo disponível no Pub.dev</p></div>
+        </div>
+        <div class="card-b">
+          <table class="tbl">
+            <thead><tr><th>Package</th><th>Para que serve</th></tr></thead>
+            <tbody>
+              <tr><td><code>dio</code></td><td>HTTP client para chamar API Fineract</td></tr>
+              <tr><td><code>flutter_secure_storage</code></td><td>Guardar token JWT com segurança</td></tr>
+              <tr><td><code>local_auth</code></td><td>Biometria / Face ID / Impressão digital</td></tr>
+              <tr><td><code>qr_flutter</code></td><td>Gerar QR Code para PIX</td></tr>
+              <tr><td><code>mobile_scanner</code></td><td>Escanear QR Code de pagamento</td></tr>
+              <tr><td><code>firebase_messaging</code></td><td>Notificações push (FCM)</td></tr>
+              <tr><td><code>fl_chart</code></td><td>Gráficos de extrato / gastos</td></tr>
+              <tr><td><code>riverpod</code></td><td>Gerência de estado (recomendado)</td></tr>
+              <tr><td><code>go_router</code></td><td>Navegação entre telas</td></tr>
+              <tr><td><code>intl</code></td><td>Formatação de moeda (R$)</td></tr>
+              <tr><td><code>pin_code_fields</code></td><td>Input de PIN/senha de 4-6 dígitos</td></tr>
+              <tr><td><code>image_picker</code></td><td>Foto para KYC / selfie</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-h">
+            <div class="card-ico" style="background:#d1fae5;">🏗️</div>
+            <div><h3>Estrutura de pastas recomendada</h3></div>
+          </div>
+          <div class="card-b">
+            <div class="code">
+lib/
+├── <span class="k">core/</span>
+│   ├── <span class="s">api/</span>          <span class="c"># cliente HTTP Fineract</span>
+│   ├── <span class="s">auth/</span>         <span class="c"># login, token, sessão</span>
+│   └── <span class="s">storage/</span>      <span class="c"># persistência local</span>
+│
+├── <span class="k">features/</span>
+│   ├── <span class="s">onboarding/</span>   <span class="c"># cadastro, KYC</span>
+│   ├── <span class="s">home/</span>         <span class="c"># dashboard, saldo</span>
+│   ├── <span class="s">transfer/</span>     <span class="c"># PIX, TED, p2p</span>
+│   ├── <span class="s">extract/</span>      <span class="c"># extrato, histórico</span>
+│   ├── <span class="s">charge/</span>       <span class="c"># cobrar, QR Code</span>
+│   ├── <span class="s">cards/</span>        <span class="c"># cartão virtual/físico</span>
+│   └── <span class="s">loans/</span>        <span class="c"># crédito, parcelas</span>
+│
+├── <span class="k">shared/</span>
+│   ├── <span class="s">widgets/</span>      <span class="c"># componentes visuais</span>
+│   ├── <span class="s">theme/</span>        <span class="c"># cores, tipografia</span>
+│   └── <span class="s">utils/</span>        <span class="c"># formatadores</span>
+│
+└── <span class="fn">main.dart</span>
+            </div>
+          </div>
+        </div>
+        <div class="callout ok">
+          <span style="font-size:20px;">✅</span>
+          <p><strong>Arquitetura Clean + Riverpod</strong> Use feature-first com Clean Architecture: cada feature tem sua própria pasta com data, domain e presentation. Riverpod para estado reativo. Isso escala bem para um banco digital real.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Código de exemplo -->
+    <div class="card">
+      <div class="card-h">
+        <div class="card-ico" style="background:#ede9fe;">💻</div>
+        <div><h3>Código de exemplo: conectar no Fineract</h3><p>Básico para começar em 30 minutos</p></div>
+      </div>
+      <div class="card-b">
+        <div class="g2">
+          <div>
+            <p style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--muted);">1. Cliente HTTP (dio + interceptor)</p>
+            <div class="code">
+<span class="c">// core/api/fineract_client.dart</span>
+<span class="k">import</span> <span class="s">'package:dio/dio.dart'</span>;
+
+<span class="k">class</span> <span class="fn">FineractClient</span> {
+  <span class="k">final</span> _dio = Dio(BaseOptions(
+    baseUrl: <span class="s">'https://seu-banco.app/fineract-provider/api/v1'</span>,
+    headers: {
+      <span class="s">'Fineract-Platform-TenantId'</span>: <span class="s">'default'</span>,
+      <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span>,
+    },
+  ));
+
+  <span class="fn">FineractClient</span>(String token) {
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        options.headers[<span class="s">'Authorization'</span>] = <span class="s">'Bearer $token'</span>;
+        handler.next(options);
+      },
+    ));
+  }
+
+  <span class="c">// Buscar saldo da conta</span>
+  Future&lt;Map&gt; <span class="fn">getAccountBalance</span>(int accountId) <span class="k">async</span> {
+    <span class="k">final</span> res = <span class="k">await</span> _dio.get(<span class="s">'/savingsaccounts/$accountId'</span>);
+    <span class="k">return</span> res.data;
+  }
+
+  <span class="c">// Realizar depósito / crédito</span>
+  Future <span class="fn">deposit</span>(int accountId, double amount) <span class="k">async</span> {
+    <span class="k">return await</span> _dio.post(
+      <span class="s">'/savingsaccounts/$accountId/transactions'</span>,
+      queryParameters: {<span class="s">'command'</span>: <span class="s">'deposit'</span>},
+      data: {
+        <span class="s">'amount'</span>: amount,
+        <span class="s">'locale'</span>: <span class="s">'pt'</span>,
+        <span class="s">'dateFormat'</span>: <span class="s">'dd/MM/yyyy'</span>,
+        <span class="s">'transactionDate'</span>: <span class="fn">_today</span>(),
+      },
+    );
+  }
+
+  String <span class="fn">_today</span>() {
+    <span class="k">final</span> d = DateTime.now();
+    <span class="k">return</span> <span class="s">'${d.day.toString().padLeft(2,"0")}/${d.month.toString().padLeft(2,"0")}/${d.year}'</span>;
+  }
+}
+            </div>
+          </div>
+          <div>
+            <p style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--muted);">2. Tela de Saldo (Widget simples)</p>
+            <div class="code">
+<span class="c">// features/home/home_page.dart</span>
+<span class="k">class</span> <span class="fn">HomePage</span> <span class="k">extends</span> ConsumerWidget {
+  <span class="k">@override</span>
+  Widget <span class="fn">build</span>(BuildContext context, WidgetRef ref) {
+    <span class="k">final</span> account = ref.watch(accountProvider);
+
+    <span class="k">return</span> Scaffold(
+      backgroundColor: Color(<span class="v">0xFF0e3a75</span>),
+      body: account.when(
+        loading: () => CircularProgressIndicator(),
+        error: (e, _) => Text(<span class="s">'Erro: $e'</span>),
+        data: (acc) => Column(children: [
+          <span class="c">// Header com saldo</span>
+          Text(<span class="s">'Saldo disponível'</span>),
+          Text(
+            NumberFormat.currency(locale:<span class="s">'pt_BR'</span>, symbol:<span class="s">'R\$'</span>)
+              .format(acc[<span class="s">'accountBalance'</span>]),
+            style: TextStyle(fontSize: <span class="v">36</span>, fontWeight: FontWeight.w900,
+              color: Colors.white),
+          ),
+          <span class="c">// Botões de ação</span>
+          Row(children: [
+            <span class="fn">_ActionBtn</span>(icon: Icons.pix, label: <span class="s">'PIX'</span>),
+            <span class="fn">_ActionBtn</span>(icon: Icons.qr_code, label: <span class="s">'Cobrar'</span>),
+            <span class="fn">_ActionBtn</span>(icon: Icons.receipt, label: <span class="s">'Extrato'</span>),
+          ]),
+        ]),
+      ),
+    );
+  }
+}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MIFOS PAY FORK -->
+<section class="section alt" id="mifos">
+  <div class="container">
+    <span class="stag">Opção 2 — App Pronto</span>
+    <h2 class="stitle">🔱 Fork do Mifos Pay (Kotlin KMP)</h2>
+    <p class="ssub">Se quiser usar o app já pronto, aqui está como fazer o fork e personalizar.</p>
+
+    <div class="g2">
+      <div>
+        <div class="callout warn">
+          <span style="font-size:20px;">⚠️</span>
+          <p><strong>Quando usar o fork?</strong> Recomendado apenas se você já tem experiência com <strong>Kotlin</strong> e quer lançar um MVP rapidamente sem criar UI do zero. Para longo prazo, Flutter é mais sustentável.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <div class="card-ico" style="background:#fce7f3;">📋</div>
+            <div><h3>O que o Mifos Pay já tem pronto</h3></div>
+          </div>
+          <div class="card-b">
+            <ul style="list-style:none;">
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Login + autenticação OAuth2 no Fineract</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Dashboard com saldo da wallet</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Enviar dinheiro P2P</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Gerar e escanear QR Code</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Histórico de transações</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Perfil do usuário</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Funciona em Android + iOS</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">✅ <span>Já publicado nas lojas</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">⚠️ <span>Design básico — precisa de customização</span></li>
+              <li style="display:flex;gap:8px;padding:5px 0;font-size:13px;">⚠️ <span>Kotlin KMP — curva de aprendizado</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <div class="card-ico" style="background:#d1fae5;">🔧</div>
+          <div><h3>Como fazer o fork do Mifos Pay</h3></div>
+        </div>
+        <div class="card-b">
+          <div class="step-row">
+            <div class="step-n" style="background:var(--primary);">1</div>
+            <div class="step-content">
+              <h4>Fork no GitHub</h4>
+              <p>Acesse <code>github.com/openMF/mifos-pay</code> → clique em <strong>Fork</strong> → cria uma cópia no seu repositório.</p>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-n" style="background:#10b981;">2</div>
+            <div class="step-content">
+              <h4>Configurar URL do Fineract</h4>
+              <p>No arquivo de configuração, troque a URL do servidor Fineract pelo endereço da sua instância.</p>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-n" style="background:#f59e0b;">3</div>
+            <div class="step-content">
+              <h4>Trocar branding (logo, cores)</h4>
+              <p>Substitua logos, ícones do app, paleta de cores e nome do aplicativo. Isso já te dá um app white-label.</p>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-n" style="background:#8b5cf6;">4</div>
+            <div class="step-content">
+              <h4>Publicar nas lojas</h4>
+              <p>Gerar APK/IPA, criar conta no Google Play Console e App Store Connect, publicar com seu bundle ID.</p>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-n" style="background:#ec4899;">5</div>
+            <div class="step-content">
+              <h4>Adicionar features brasileiras</h4>
+              <p>PIX, boleto, notificações em português — adaptações necessárias para o mercado BR.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PASSO A PASSO FLUTTER -->
+<section class="section" id="passos">
+  <div class="container">
+    <span class="stag">Guia Prático</span>
+    <h2 class="stitle">🚀 Passo a passo: Flutter do Zero</h2>
+    <p class="ssub">Do ambiente de desenvolvimento até o app nas lojas — sequência completa.</p>
+
+    <div class="g2">
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-h">
+            <div class="card-ico" style="background:#dbeafe;">⚙️</div>
+            <div><h3>Fase 1: Configurar ambiente</h3><p>1 dia</p></div>
+          </div>
+          <div class="card-b">
+            <div class="timeline">
+              <div class="tli">
+                <div class="tli-dot"></div>
+                <h4>Instalar Flutter SDK</h4>
+                <p>Download em <code>flutter.dev</code> → rodar <code>flutter doctor</code> → instalar Android Studio + Xcode</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#10b981;box-shadow:0 0 0 2px #10b981;"></div>
+                <h4>Criar projeto Flutter</h4>
+                <p><code>flutter create meu_banco</code> → abre no VS Code ou Android Studio</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#f59e0b;box-shadow:0 0 0 2px #f59e0b;"></div>
+                <h4>Adicionar packages</h4>
+                <p>No <code>pubspec.yaml</code>: dio, riverpod, flutter_secure_storage, local_auth, qr_flutter</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#8b5cf6;box-shadow:0 0 0 2px #8b5cf6;"></div>
+                <h4>Testar no emulador</h4>
+                <p><code>flutter run</code> → app abre no emulador Android ou simulador iOS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <div class="card-ico" style="background:#ede9fe;">🏗️</div>
+            <div><h3>Fase 2: Backend Fineract</h3><p>1-2 semanas</p></div>
+          </div>
+          <div class="card-b">
+            <div class="timeline">
+              <div class="tli">
+                <div class="tli-dot"></div>
+                <h4>Subir Fineract com Docker</h4>
+                <p><code>docker compose up</code> no repositório do Fineract → servidor rodando em localhost:8443</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#10b981;box-shadow:0 0 0 2px #10b981;"></div>
+                <h4>Testar API no Swagger</h4>
+                <p>Acessar <code>localhost:8443/swagger-ui</code> → testar criar cliente, conta, transações</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#f59e0b;box-shadow:0 0 0 2px #f59e0b;"></div>
+                <h4>Configurar produto Conta Corrente</h4>
+                <p>Via API ou interface Mifos X: criar produto de savings, definir charges, currency BRL</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#8b5cf6;box-shadow:0 0 0 2px #8b5cf6;"></div>
+                <h4>Deploy em produção</h4>
+                <p>Docker + AWS ECS ou Kubernetes (GKE/EKS) com HTTPS e domínio próprio</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-h">
+            <div class="card-ico" style="background:#d1fae5;">📱</div>
+            <div><h3>Fase 3: Telas do App</h3><p>2-4 semanas</p></div>
+          </div>
+          <div class="card-b">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:13px;font-weight:700;">1. Splash + Onboarding</span>
+                  <span class="badge badge-green">2 dias</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);">Logo, animação, telas de boas-vindas, cadastro com CPF</p>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:13px;font-weight:700;">2. Login + PIN + Biometria</span>
+                  <span class="badge badge-blue">2 dias</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);">OAuth2 no Fineract, armazenar JWT, TouchID/FaceID</p>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:13px;font-weight:700;">3. Home — Saldo e Resumo</span>
+                  <span class="badge badge-purple">3 dias</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);">GET /savingsaccounts/{id} → mostrar saldo, últimas transações</p>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:13px;font-weight:700;">4. Extrato</span>
+                  <span class="badge badge-orange">2 dias</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);">GET /savingsaccounts/{id}/transactions → lista com filtro por data</p>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:13px;font-weight:700;">5. Transferência / PIX</span>
+                  <span class="badge badge-teal">4 dias</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);">Buscar beneficiário, confirmar, chamar BaaS + Fineract withdrawal/deposit</p>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:13px;font-weight:700;">6. Cobrar / QR Code</span>
+                  <span class="badge badge-yellow">3 dias</span>
+                </div>
+                <p style="font-size:12px;color:var(--muted);">Gerar QR PIX (via BaaS), exibir para o pagador, ouvir webhook de confirmação</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <div class="card-ico" style="background:#fce7f3;">🏪</div>
+            <div><h3>Fase 4: Publicar nas Lojas</h3><p>1 semana</p></div>
+          </div>
+          <div class="card-b">
+            <div class="timeline">
+              <div class="tli">
+                <div class="tli-dot"></div>
+                <h4>Google Play Console</h4>
+                <p>Conta de desenvolvedor ($25 taxa única) → upload APK/AAB → review 1-3 dias</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#10b981;box-shadow:0 0 0 2px #10b981;"></div>
+                <h4>App Store Connect</h4>
+                <p>Apple Developer Program ($99/ano) → upload IPA → review 1-7 dias (mais rigoroso)</p>
+              </div>
+              <div class="tli">
+                <div class="tli-dot" style="background:#f59e0b;box-shadow:0 0 0 2px #f59e0b;"></div>
+                <h4>Configurar Firebase</h4>
+                <p>Analytics + Crashlytics + FCM (push notifications) → integrar no Flutter</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRUTURA DO APP -->
+<section class="section alt" id="estrutura">
+  <div class="container">
+    <span class="stag">Design do Produto</span>
+    <h2 class="stitle">📱 Telas mínimas do app bancário (MVP)</h2>
+    <p class="ssub">O conjunto mínimo de telas para lançar um app bancário funcional.</p>
+
+    <div class="g4">
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">🚀</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Onboarding</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📄 Splash Screen</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">👋 Boas-vindas</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📝 Cadastro CPF</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📷 Selfie / Doc</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔑 Criar PIN</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">🏠</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Home</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">💰 Saldo disponível</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">⚡ Ações rápidas</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📊 Últimas transações</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔔 Notificações</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">💸</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Transferir / PIX</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔍 Buscar chave PIX</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">💵 Digitar valor</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">✅ Confirmar com PIN</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🎉 Comprovante</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">📋</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Extrato</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📅 Filtro por data</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔍 Busca por descrição</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📊 Gráfico mensal</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📄 Exportar PDF</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">📷</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Cobrar / QR</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">💰 Digitar valor</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📱 Gerar QR PIX</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔗 Compartilhar link</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">✅ Aguardar pagamento</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">💳</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Cartão</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">💳 Cartão virtual</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔒 Bloquear/desbloquear</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">👁️ Ver número/CVV</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📊 Limite e gastos</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">👤</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Perfil</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📝 Dados pessoais</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔑 Trocar PIN</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">🔐 Segurança</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📞 Suporte</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        <div style="font-size:28px;margin-bottom:10px;">💰</div>
+        <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">Crédito (v2)</h4>
+        <ul style="list-style:none;">
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📊 Limite disponível</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📝 Simular empréstimo</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">✅ Contratar</li>
+          <li style="font-size:12px;color:var(--muted);padding:3px 0;">📅 Parcelas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRAÇÃO FINERACT -->
+<section class="section" id="integracao">
+  <div class="container">
+    <span class="stag">Técnico</span>
+    <h2 class="stitle">🔌 Como o Flutter se conecta ao Fineract</h2>
+    <p class="ssub">O app Flutter consome a API REST do Fineract diretamente. Simples assim.</p>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-h">
+          <div class="card-ico" style="background:#dbeafe;">🗺️</div>
+          <div><h3>Mapa: Tela → API Fineract</h3><p>Qual endpoint usar para cada tela</p></div>
+        </div>
+        <div class="card-b" style="padding:0;overflow-x:auto;">
+          <table class="tbl">
+            <thead><tr><th>Tela do App</th><th>Endpoint Fineract</th><th>Método</th></tr></thead>
+            <tbody>
+              <tr><td>Cadastro de usuário</td><td><code>/clients</code></td><td style="color:#10b981;">POST</td></tr>
+              <tr><td>Login</td><td><code>/authentication</code></td><td style="color:#10b981;">POST</td></tr>
+              <tr><td>Abrir conta</td><td><code>/savingsaccounts</code></td><td style="color:#10b981;">POST</td></tr>
+              <tr><td>Ver saldo</td><td><code>/savingsaccounts/{id}</code></td><td style="color:#3b82f6;">GET</td></tr>
+              <tr><td>Extrato</td><td><code>/savingsaccounts/{id}/transactions</code></td><td style="color:#3b82f6;">GET</td></tr>
+              <tr><td>Depositar / Recarregar</td><td><code>/savingsaccounts/{id}/transactions?command=deposit</code></td><td style="color:#10b981;">POST</td></tr>
+              <tr><td>Transferir / Sacar</td><td><code>/savingsaccounts/{id}/transactions?command=withdrawal</code></td><td style="color:#10b981;">POST</td></tr>
+              <tr><td>Dados do perfil</td><td><code>/clients/{id}</code></td><td style="color:#3b82f6;">GET</td></tr>
+              <tr><td>Atualizar perfil</td><td><code>/clients/{id}</code></td><td style="color:#f59e0b;">PUT</td></tr>
+              <tr><td>Solicitar empréstimo</td><td><code>/loans</code></td><td style="color:#10b981;">POST</td></tr>
+              <tr><td>Ver parcelas</td><td><code>/loans/{id}/repaymentschedule</code></td><td style="color:#3b82f6;">GET</td></tr>
+              <tr><td>Pagar parcela</td><td><code>/loans/{id}/transactions?command=repayment</code></td><td style="color:#10b981;">POST</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-h">
+            <div class="card-ico" style="background:#d1fae5;">🔐</div>
+            <div><h3>Fluxo de autenticação</h3></div>
+          </div>
+          <div class="card-b">
+            <div class="code">
+<span class="c">// Passo 1: Login → recebe token JWT</span>
+<span class="k">POST</span> <span class="s">/api/v1/authentication</span>
+{
+  <span class="k">"username"</span>: <span class="s">"joao.silva"</span>,
+  <span class="k">"password"</span>: <span class="s">"minha_senha"</span>
+}
+<span class="c">// Resposta:</span>
+{
+  <span class="k">"base64EncodedAuthenticationKey"</span>: <span class="s">"am9hbzpzZW5oYQ=="</span>,
+  <span class="k">"authenticated"</span>: <span class="v">true</span>,
+  <span class="k">"userId"</span>: <span class="v">42</span>,
+  <span class="k">"roles"</span>: [<span class="s">"CLIENTE"</span>]
+}
+
+<span class="c">// Passo 2: Guardar token com segurança</span>
+<span class="c">// No Flutter → flutter_secure_storage</span>
+<span class="k">await</span> storage.write(
+  key: <span class="s">'fineract_token'</span>,
+  value: <span class="s">'Bearer am9hbzpzZW5oYQ=='</span>
+);
+
+<span class="c">// Passo 3: Todas as chamadas usam o token</span>
+dio.options.headers[<span class="s">'Authorization'</span>] = token;
+            </div>
+          </div>
+        </div>
+
+        <div class="callout ok">
+          <span style="font-size:20px;">✅</span>
+          <p><strong>Gerar SDK automaticamente!</strong> O Fineract tem uma spec OpenAPI 3.0 completa. Você pode rodar <strong>openapi-generator</strong> e ele cria automaticamente todas as classes Dart/Flutter para chamar a API — sem precisar escrever nenhum client na mão.</p>
+        </div>
+
+        <div class="callout info">
+          <span style="font-size:20px;">💡</span>
+          <p><strong>Self Service Plugin</strong> O <code>openMF/selfservice-plugin</code> é um plugin Spring Boot que adiciona ao Fineract endpoints específicos para o cliente final (não para operadores). Recomendado instalar para o app mobile ter endpoints mais simples e seguros.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUAL ESCOLHER -->
+<section class="section alt" id="escolha">
+  <div class="container">
+    <span class="stag">Decisão Final</span>
+    <h2 class="stitle">🎯 Recomendação final: qual caminho tomar?</h2>
+    <p class="ssub">Baseado no seu contexto, aqui está a recomendação mais clara possível.</p>
+
+    <div class="g3" style="margin-bottom:28px;">
+      <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:16px;padding:26px;border:2px solid #93c5fd;">
+        <div style="font-size:32px;margin-bottom:10px;">🐦</div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:8px;">Flutter do Zero</h3>
+        <p style="font-size:13px;color:#1e40af;margin-bottom:12px;"><strong>Escolha se você:</strong></p>
+        <ul style="list-style:none;">
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Quer design personalizado</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Tem (ou vai contratar) dev Flutter</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Quer total controle do código</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Pensa a longo prazo</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Tem 2+ meses para desenvolver</span></li>
+        </ul>
+      </div>
+      <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:16px;padding:26px;border:2px solid #6ee7b7;">
+        <div style="font-size:32px;margin-bottom:10px;">🔱</div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:8px;">Fork Mifos Pay</h3>
+        <p style="font-size:13px;color:#065f46;margin-bottom:12px;"><strong>Escolha se você:</strong></p>
+        <ul style="list-style:none;">
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Precisa lançar MVP em &lt; 2 meses</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Tem dev Kotlin no time</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Design básico é suficiente</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Quer validar ideia rapidamente</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">⚠️ <span>Depois refaz em Flutter</span></li>
+        </ul>
+      </div>
+      <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:16px;padding:26px;border:2px solid #c4b5fd;">
+        <div style="font-size:32px;margin-bottom:10px;">⚡</div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:8px;">Híbrido (Recomendado)</h3>
+        <p style="font-size:13px;color:#5b21b6;margin-bottom:12px;"><strong>Melhor dos dois mundos:</strong></p>
+        <ul style="list-style:none;">
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">🚀 <span>Fork Mifos Pay para MVP (semana 1-8)</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">🔧 <span>Fineract rodando em paralelo</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">🎨 <span>Começa Flutter customizado (mês 3+)</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">🔄 <span>Migra usuários do fork para o Flutter</span></li>
+          <li style="font-size:13px;padding:3px 0;display:flex;gap:8px;">✅ <span>Valida + escala</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="summary">
+      <h2>🚀 Próximos passos concretos</h2>
+      <p>Comece <strong>hoje</strong> com esses 3 comandos e você já tem um app bancário funcional localmente em menos de 1 hora.</p>
+      <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:20px;text-align:left;max-width:640px;margin:20px auto 0;font-family:'Consolas',monospace;font-size:13px;line-height:2;">
+        <span style="color:#86efac;"># 1. Subir Fineract com Docker</span><br>
+        <span style="color:#7dd3fc;">git clone</span> <span style="color:#fde68a;">https://github.com/apache/fineract.git</span><br>
+        <span style="color:#7dd3fc;">cd</span> fineract && <span style="color:#7dd3fc;">docker compose up -d</span><br>
+        <br>
+        <span style="color:#86efac;"># 2. Criar app Flutter</span><br>
+        <span style="color:#7dd3fc;">flutter create</span> <span style="color:#fde68a;">meu_banco_app</span><br>
+        <span style="color:#7dd3fc;">cd</span> meu_banco_app<br>
+        <br>
+        <span style="color:#86efac;"># 3. Adicionar package HTTP</span><br>
+        <span style="color:#7dd3fc;">flutter pub add</span> <span style="color:#fde68a;">dio riverpod flutter_secure_storage</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Guia: App Bancário Flutter + Apache Fineract</strong> · Junho 2026
+  <br><br>
+  Fineract: Apache 2.0 · Flutter: BSD 3-Clause · Mifos Pay: MPL 2.0
+</footer>
+
+<script>
+  const links = document.querySelectorAll('.nav-inner a');
+  const secs = document.querySelectorAll('section[id]');
+  const io = new IntersectionObserver(e => {
+    e.forEach(s => {
+      if(s.isIntersecting) {
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+s.target.id));
+      }
+    });
+  }, {threshold:0.25});
+  secs.forEach(s => io.observe(s));
+</script>
+</body>
+</html>

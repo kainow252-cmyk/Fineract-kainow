@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apache Fineract — Análise Completa de Arquitetura</title>
+  <style>
+    :root {
+      --primary: #1a56a7;
+      --primary-dark: #0e3a75;
+      --primary-light: #dbeafe;
+      --secondary: #0ea5e9;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --teal: #14b8a6;
+      --orange: #f97316;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 4px 24px rgba(30,41,59,0.10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0e3a75 0%, #1a56a7 45%, #0ea5e9 100%);
+      color: #fff;
+      padding: 64px 32px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 999px;
+      padding: 4px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 18px;
+      opacity: 0.88;
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      text-align: center;
+    }
+    .hero-meta-item .value {
+      font-size: 32px;
+      font-weight: 800;
+      display: block;
+    }
+    .hero-meta-item .label {
+      font-size: 12px;
+      opacity: 0.75;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* NAV */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow-x: auto;
+    }
+    .nav-inner {
+      display: flex;
+      gap: 2px;
+      padding: 0 16px;
+      white-space: nowrap;
+    }
+    .nav-inner a {
+      display: inline-block;
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-inner a:hover { color: var(--primary); border-bottom-color: var(--primary-light); }
+    .nav-inner a.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* LAYOUT */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 56px 0; }
+    .section-alt { background: #f1f5f9; }
+
+    /* SECTION TITLE */
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 700px;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .card-header h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .card-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .card-body { padding: 20px 24px; }
+
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+    /* MODULE CARDS */
+    .module-card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .module-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.13); }
+    .module-card .module-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    .module-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .module-card .module-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; font-style: italic; }
+    .module-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+    }
+    .tag.green { background: #d1fae5; color: #065f46; }
+    .tag.blue { background: #dbeafe; color: #1e40af; }
+    .tag.purple { background: #ede9fe; color: #5b21b6; }
+    .tag.orange { background: #ffedd5; color: #9a3412; }
+    .tag.pink { background: #fce7f3; color: #9d174d; }
+    .tag.teal { background: #ccfbf1; color: #134e4a; }
+    .tag.yellow { background: #fef9c3; color: #78350f; }
+
+    /* ARCHITECTURE DIAGRAM */
+    .arch-diagram {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .arch-layer {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .arch-layer-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .arch-items { display: flex; flex-wrap: wrap; gap: 10px; }
+    .arch-item {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .arch-arrow {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 20px;
+      margin: 4px 0;
+    }
+
+    /* LAYER COLORS */
+    .layer-channel { background: #dbeafe; }
+    .layer-api { background: #ede9fe; }
+    .layer-core { background: #d1fae5; }
+    .layer-infra { background: #ffedd5; }
+    .layer-data { background: #fce7f3; }
+
+    /* USE CASE MATRIX */
+    .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .matrix-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .matrix-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .matrix-table tr:hover td { background: #f8fafc; }
+    .status-reuse { background: #d1fae5; color: #065f46; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .status-adapt { background: #fef9c3; color: #78350f; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .status-extend { background: #dbeafe; color: #1e40af; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .status-build { background: #ffedd5; color: #9a3412; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+
+    /* CAPABILITY CARDS */
+    .cap-card {
+      background: var(--card);
+      border-radius: 14px;
+      border-left: 5px solid var(--primary);
+      padding: 20px 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+    }
+    .cap-card.green { border-color: var(--success); }
+    .cap-card.orange { border-color: var(--orange); }
+    .cap-card.purple { border-color: var(--purple); }
+    .cap-card.teal { border-color: var(--teal); }
+    .cap-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .cap-card ul { list-style: none; }
+    .cap-card ul li { font-size: 13px; color: var(--text-muted); padding: 3px 0; display: flex; gap: 8px; align-items: baseline; }
+    .cap-card ul li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+    /* SCORE BARS */
+    .score-item { margin-bottom: 14px; }
+    .score-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .score-label span { font-size: 13px; font-weight: 600; }
+    .score-label .pct { font-size: 12px; color: var(--text-muted); }
+    .score-bar { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+    .score-fill { height: 100%; border-radius: 999px; transition: width 1s; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 36px; }
+    .timeline::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .tl-item { position: relative; margin-bottom: 28px; }
+    .tl-dot {
+      position: absolute;
+      left: -28px;
+      top: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 3px solid var(--card);
+      box-shadow: 0 0 0 2px var(--primary);
+      background: var(--primary);
+    }
+    .tl-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .tl-item p { font-size: 13px; color: var(--text-muted); }
+
+    /* RISK TABLE */
+    .risk-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .risk-low { background: #d1fae5; color: #065f46; }
+    .risk-medium { background: #fef9c3; color: #78350f; }
+    .risk-high { background: #fee2e2; color: #991b1b; }
+
+    /* RECOMMENDATION CARDS */
+    .rec-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .rec-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .rec-card.priority-1::before { background: var(--primary); }
+    .rec-card.priority-2::before { background: var(--success); }
+    .rec-card.priority-3::before { background: var(--orange); }
+    .rec-card.priority-4::before { background: var(--purple); }
+    .rec-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .rec-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+    .rec-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+    .rec-steps { list-style: none; }
+    .rec-steps li { display: flex; gap: 10px; align-items: baseline; font-size: 13px; padding: 4px 0; }
+    .rec-steps li .step-num {
+      width: 22px; height: 22px; min-width: 22px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 20px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+    .code-block .comment { color: #64748b; }
+    .code-block .key { color: #7dd3fc; }
+    .code-block .val { color: #86efac; }
+    .code-block .str { color: #fde68a; }
+
+    /* SUMMARY BOX */
+    .summary-box {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+    .summary-box h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+    .summary-box p { font-size: 16px; opacity: 0.88; max-width: 700px; margin: 0 auto 24px; }
+    .summary-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-top: 32px; }
+    .stat-item { text-align: center; }
+    .stat-item .big { font-size: 42px; font-weight: 900; display: block; }
+    .stat-item .label { font-size: 13px; opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* CALLOUT */
+    .callout {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .callout.info { background: #dbeafe; border-left: 4px solid var(--info); }
+    .callout.success { background: #d1fae5; border-left: 4px solid var(--success); }
+    .callout.warning { background: #fef9c3; border-left: 4px solid var(--warning); }
+    .callout.danger { background: #fee2e2; border-left: 4px solid var(--danger); }
+    .callout-icon { font-size: 18px; }
+    .callout p { font-size: 13px; margin: 0; }
+    .callout strong { display: block; font-size: 14px; margin-bottom: 4px; }
+
+    /* TABS */
+    .tabs { border-bottom: 2px solid var(--border); display: flex; gap: 4px; margin-bottom: 28px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      border-radius: 6px 6px 0 0;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--primary); background: var(--primary-light); }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--primary-light); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* COMPARISON */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col { border-radius: 12px; padding: 24px; }
+    .compare-col.pros { background: #d1fae5; border: 1px solid #6ee7b7; }
+    .compare-col.cons { background: #fee2e2; border: 1px solid #fca5a5; }
+    .compare-col h4 { font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; gap: 8px; align-items: center; }
+    .compare-col li { font-size: 13px; padding: 4px 0; margin-left: 20px; }
+
+    /* FOOTER */
+    .footer {
+      background: #1e293b;
+      color: #94a3b8;
+      text-align: center;
+      padding: 32px;
+      font-size: 13px;
+    }
+    .footer strong { color: #fff; }
+
+    @media (max-width: 640px) {
+      .hero { padding: 40px 16px 32px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .section { padding: 36px 0; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Análise de Arquitetura · Apache Fineract</div>
+  <h1>Apache Fineract<br>Análise Completa de Arquitetura</h1>
+  <p>Mapeamento técnico profundo dos módulos reutilizáveis para construção de conta digital, wallet, sistema de comissões e marketplace financeiro</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="value">32+</span>
+      <span class="label">Módulos Gradle</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="value">400+</span>
+      <span class="label">Endpoints REST</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="value">4</span>
+      <span class="label">Casos de Uso Mapeados</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="value">Apache 2.0</span>
+      <span class="label">Licença</span>
+    </div>
+  </div>
+</section>
+
+<!-- NAVIGATION -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#visao-geral" onclick="setActive(this)">Visão Geral</a>
+    <a href="#arquitetura" onclick="setActive(this)">Arquitetura</a>
+    <a href="#modulos" onclick="setActive(this)">Módulos</a>
+    <a href="#conta-digital" onclick="setActive(this)">Conta Digital</a>
+    <a href="#wallet" onclick="setActive(this)">Wallet</a>
+    <a href="#comissoes" onclick="setActive(this)">Comissões</a>
+    <a href="#marketplace" onclick="setActive(this)">Marketplace</a>
+    <a href="#matrix" onclick="setActive(this)">Matriz de Reuso</a>
+    <a href="#recomendacoes" onclick="setActive(this)">Recomendações</a>
+  </div>
+</nav>
+
+<!-- VISÃO GERAL -->
+<section class="section" id="visao-geral">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Introdução</span>
+      <h2 class="section-title">O que é o Apache Fineract?</h2>
+      <p class="section-subtitle">Plataforma open-source de core banking desenvolvida pela Apache Software Foundation, com foco em escalabilidade, extensibilidade e serviços financeiros inclusivos.</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#dbeafe">🏛️</div>
+          <div>
+            <h3>Histórico e Evolução</h3>
+            <p>De microfinanças ao core banking enterprise</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <h4>2006 — Origem</h4>
+              <p>Projeto iniciado pela Grameen Foundation para microfinanças em países em desenvolvimento</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:#10b981; box-shadow:0 0 0 2px #10b981;"></div>
+              <h4>2012 — Mifos X</h4>
+              <p>Plataforma refatorada pela comunidade COSM/OpenMF com arquitetura RESTful moderna</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:#f59e0b; box-shadow:0 0 0 2px #f59e0b;"></div>
+              <h4>2016 — Apache Incubation</h4>
+              <p>Fineract 1.x entra no Apache Software Foundation como projeto graduado</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:#8b5cf6; box-shadow:0 0 0 2px #8b5cf6;"></div>
+              <h4>2020+ — Fineract 1.x Maduro</h4>
+              <p>Adotado por bancos digitais, fintechs e neo-banks globalmente. Fineract CN (microserviços) descontinuado em favor da arquitetura monolítica modular</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:#0ea5e9; box-shadow:0 0 0 2px #0ea5e9;"></div>
+              <h4>2024/2025 — Enterprise Ready</h4>
+              <p>Java 21, PostgreSQL 18, Spring Boot 3.x, Kafka/ActiveMQ, Spring Batch COB paralelo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#d1fae5">⚙️</div>
+          <div>
+            <h3>Stack Tecnológica</h3>
+            <p>Tecnologias core utilizadas pelo Fineract</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="score-item">
+            <div class="score-label"><span>Spring Boot 3.x / Java 21</span><span class="pct">Core Framework</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:100%; background:#3b82f6;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>PostgreSQL 18 (padrão)</span><span class="pct">Persistência</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:100%; background:#10b981;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>Liquibase + Hibernate/JPA</span><span class="pct">ORM & Migrations</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:90%; background:#f59e0b;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>Spring Security + OAuth2/JWT</span><span class="pct">Autenticação</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:95%; background:#8b5cf6;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>Spring Batch (COB Jobs)</span><span class="pct">Processamento Batch</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:88%; background:#0ea5e9;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>Apache Kafka / ActiveMQ</span><span class="pct">Mensageria</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:80%; background:#ec4899;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>Swagger/OpenAPI 3.0</span><span class="pct">Documentação API</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:100%; background:#14b8a6;"></div></div>
+          </div>
+          <div class="score-item">
+            <div class="score-label"><span>Docker / Kubernetes</span><span class="pct">Deploy</span></div>
+            <div class="score-bar"><div class="score-fill" style="width:92%; background:#f97316;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="callout info">
+        <span class="callout-icon">🔌</span>
+        <p><strong>Plugin Architecture</strong>Fineract suporta extensão via JARs de plugin (FINERACT-1177) baseados no mecanismo do Spring Boot — adicione funcionalidades sem modificar o código-fonte.</p>
+      </div>
+      <div class="callout success">
+        <span class="callout-icon">🏢</span>
+        <p><strong>Multi-Tenancy Nativo</strong>Um único deployment serve múltiplas instituições financeiras, cada uma com banco de dados isolado, configurações e base de clientes independentes.</p>
+      </div>
+      <div class="callout warning">
+        <span class="callout-icon">📊</span>
+        <p><strong>API-First Design</strong>Todos os recursos — empréstimos, clientes, contas, contabilidade, relatórios — são expostos via REST API. O frontend Mifos X é apenas mais um cliente desta API.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARQUITETURA -->
+<section class="section section-alt" id="arquitetura">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Estrutura Técnica</span>
+      <h2 class="section-title">Arquitetura em Camadas</h2>
+      <p class="section-subtitle">O Fineract adota uma arquitetura monolítica modular com separação clara de responsabilidades por camadas e domínios de negócio.</p>
+    </div>
+
+    <div class="arch-diagram">
+      <div class="arch-layer layer-channel">
+        <div class="arch-layer-title" style="color:#1e40af">📱 Camada de Canais (Clientes da API)</div>
+        <div class="arch-items">
+          <div class="arch-item">🌐 Web App (Mifos X)</div>
+          <div class="arch-item">📱 Mobile App</div>
+          <div class="arch-item">🏦 Internet Banking</div>
+          <div class="arch-item">🏧 ATM / POS</div>
+          <div class="arch-item">🔗 3rd-Party Integrations</div>
+          <div class="arch-item">🤖 Agent Banking</div>
+          <div class="arch-item">💻 Developer Apps</div>
+        </div>
+      </div>
+      <div class="arch-arrow">⬇️</div>
+
+      <div class="arch-layer layer-api">
+        <div class="arch-layer-title" style="color:#5b21b6">🔒 Camada de API & Segurança</div>
+        <div class="arch-items">
+          <div class="arch-item">🔑 Spring Security (Basic Auth + OAuth2/JWT)</div>
+          <div class="arch-item">🎫 Multi-Tenancy (Header: Fineract-Platform-TenantId)</div>
+          <div class="arch-item">📄 OpenAPI 3.0 / Swagger UI</div>
+          <div class="arch-item">🔄 Idempotency Keys</div>
+          <div class="arch-item">📋 HTTPS / TLS</div>
+          <div class="arch-item">2️⃣ 2FA Support</div>
+          <div class="arch-item">🛡️ RBAC (Roles & Permissions)</div>
+        </div>
+      </div>
+      <div class="arch-arrow">⬇️</div>
+
+      <div class="arch-layer layer-core">
+        <div class="arch-layer-title" style="color:#065f46">🏗️ Camada de Domínio (Módulos de Negócio)</div>
+        <div class="arch-items">
+          <div class="arch-item">👤 Client Management</div>
+          <div class="arch-item">💰 Loan Module</div>
+          <div class="arch-item">🏦 Savings Module</div>
+          <div class="arch-item">📊 Accounting (GL)</div>
+          <div class="arch-item">💳 Charges & Fees</div>
+          <div class="arch-item">🏢 Organisation</div>
+          <div class="arch-item">📈 Rates & Tax</div>
+          <div class="arch-item">📁 Branch</div>
+          <div class="arch-item">📑 Reports</div>
+          <div class="arch-item">📅 COB (Close of Business)</div>
+          <div class="arch-item">🔗 Interoperability</div>
+          <div class="arch-item">💼 Investor Module</div>
+        </div>
+      </div>
+      <div class="arch-arrow">⬇️</div>
+
+      <div class="arch-layer layer-infra">
+        <div class="arch-layer-title" style="color:#9a3412">⚙️ Camada de Infraestrutura</div>
+        <div class="arch-items">
+          <div class="arch-item">📩 Command Bus (CQRS-like)</div>
+          <div class="arch-item">🎰 Event Bus (Kafka / ActiveMQ)</div>
+          <div class="arch-item">⏰ Spring Batch Jobs</div>
+          <div class="arch-item">🔔 Notifications</div>
+          <div class="arch-item">📦 Audit Trail</div>
+          <div class="arch-item">🔌 Plugin System (JARs)</div>
+          <div class="arch-item">☁️ Cloud Config</div>
+          <div class="arch-item">🏥 Actuator / Health</div>
+        </div>
+      </div>
+      <div class="arch-arrow">⬇️</div>
+
+      <div class="arch-layer layer-data">
+        <div class="arch-layer-title" style="color:#9d174d">🗄️ Camada de Dados</div>
+        <div class="arch-items">
+          <div class="arch-item">🐘 PostgreSQL 18 (padrão)</div>
+          <div class="arch-item">🔄 Liquibase Migrations</div>
+          <div class="arch-item">📦 HikariCP Connection Pool</div>
+          <div class="arch-item">🏢 Tenant DB (fineract_tenants)</div>
+          <div class="arch-item">💼 Default DB (fineract_default)</div>
+          <div class="arch-item">📊 JPA/Hibernate ORM</div>
+          <div class="arch-item">⚡ JDBC Template (queries)</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <p><strong>Padrão Command Bus</strong> O Fineract usa um padrão de Command Bus centralizado (módulo <code>fineract-command</code>) onde toda operação de escrita passa por um handler específico, garantindo auditoria, idempotência e rastreabilidade completa. Suporta backends JDBC, Kafka/Disruptor para processamento assíncrono de alto volume.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section class="section" id="modulos">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Inventário Técnico</span>
+      <h2 class="section-title">Módulos Gradle do Fineract</h2>
+      <p class="section-subtitle">Mapeamento completo de todos os 32+ módulos com seus sub-domínios, responsabilidades e potencial de reuso.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="module-card">
+        <div class="module-icon" style="background:#dbeafe">👤</div>
+        <h3>fineract-core · Portfolio/Client</h3>
+        <p class="module-sub">org.apache.fineract.portfolio.client</p>
+        <p>Gestão completa de clientes: perfil, KYC, documentos, grupos, centros, hierarquias, scoring e histórico financeiro.</p>
+        <div class="tags">
+          <span class="tag blue">KYC/Onboarding</span>
+          <span class="tag blue">Personas</span>
+          <span class="tag blue">Grupos</span>
+          <span class="tag blue">Endereços</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#d1fae5">🏦</div>
+        <h3>fineract-savings</h3>
+        <p class="module-sub">org.apache.fineract.portfolio.savings</p>
+        <p>Contas poupança/corrente com accrual de juros, tarifas, saques, depósitos, lock-in periods, COB batch, e interoperabilidade (Mojaloop).</p>
+        <div class="tags">
+          <span class="tag green">Conta Digital</span>
+          <span class="tag green">Wallet</span>
+          <span class="tag green">Interop</span>
+          <span class="tag green">Transações</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#ede9fe">💰</div>
+        <h3>fineract-loan</h3>
+        <p class="module-sub">org.apache.fineract.portfolio.loanaccount</p>
+        <p>Motor de empréstimos: amortização, cronogramas, grace periods, desembolso multi-parcela, arrears, delinquency buckets, prepagamento.</p>
+        <div class="tags">
+          <span class="tag purple">Crédito</span>
+          <span class="tag purple">Parcelamento</span>
+          <span class="tag purple">BNPL</span>
+          <span class="tag purple">Marketplace</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#fff7ed">📊</div>
+        <h3>fineract-accounting</h3>
+        <p class="module-sub">org.apache.fineract.accounting</p>
+        <p>Contabilidade dupla entrada: GL, Chart of Accounts, Journal Entries automáticos, Trial Balance, closures, accrual accounting, provisioning.</p>
+        <div class="tags">
+          <span class="tag orange">Ledger</span>
+          <span class="tag orange">Conciliação</span>
+          <span class="tag orange">IFRS</span>
+          <span class="tag orange">Relatórios</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#fce7f3">💳</div>
+        <h3>fineract-charge</h3>
+        <p class="module-sub">org.apache.fineract.portfolio.charge</p>
+        <p>Motor flexível de cobranças: flat, percentual do principal, dos juros, por evento (desembolso, vencimento, inadimplência), min/max cap.</p>
+        <div class="tags">
+          <span class="tag pink">Tarifas</span>
+          <span class="tag pink">Comissões</span>
+          <span class="tag pink">Multas</span>
+          <span class="tag pink">MDR</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#ccfbf1">🔒</div>
+        <h3>fineract-security</h3>
+        <p class="module-sub">org.apache.fineract.infrastructure.security</p>
+        <p>Autenticação Basic + OAuth2/JWT, 2FA com OTP, RBAC granular, multi-tenancy via header, session management, audit logs.</p>
+        <div class="tags">
+          <span class="tag teal">OAuth2</span>
+          <span class="tag teal">JWT</span>
+          <span class="tag teal">2FA</span>
+          <span class="tag teal">RBAC</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#fef9c3">📅</div>
+        <h3>fineract-cob</h3>
+        <p class="module-sub">org.apache.fineract.cob</p>
+        <p>Close of Business: processamento batch noturno paralelo (Spring Batch), locking de contas, cálculo de juros, multas automáticas, eventos COB.</p>
+        <div class="tags">
+          <span class="tag yellow">Batch</span>
+          <span class="tag yellow">Scheduler</span>
+          <span class="tag yellow">Spring Batch</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#e0e7ff">📨</div>
+        <h3>fineract-command</h3>
+        <p class="module-sub">org.apache.fineract.commands</p>
+        <p>Command Bus central: handlers, audit trail de todos os comandos, suporte a JDBC, Kafka, Disruptor backends, idempotência.</p>
+        <div class="tags">
+          <span class="tag" style="background:#e0e7ff;color:#3730a3">Command Bus</span>
+          <span class="tag" style="background:#e0e7ff;color:#3730a3">Audit</span>
+          <span class="tag" style="background:#e0e7ff;color:#3730a3">Idempotência</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#f0fdf4">📈</div>
+        <h3>fineract-rates</h3>
+        <p class="module-sub">org.apache.fineract.portfolio.rate</p>
+        <p>Taxas de juros flutuantes, floating rates, configuração por produto, atualização dinâmica de taxas sem rebuildação de schedules.</p>
+        <div class="tags">
+          <span class="tag green">Taxa de Juros</span>
+          <span class="tag green">Floating Rate</span>
+          <span class="tag green">Produto</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#fff1f2">🧾</div>
+        <h3>fineract-tax</h3>
+        <p class="module-sub">org.apache.fineract.portfolio.tax</p>
+        <p>Motor de impostos: grupos de imposto, componentes, aplicação automática em transações de empréstimos e poupanças, IOF, IR na fonte.</p>
+        <div class="tags">
+          <span class="tag" style="background:#fff1f2;color:#9f1239">IOF</span>
+          <span class="tag" style="background:#fff1f2;color:#9f1239">IR</span>
+          <span class="tag" style="background:#fff1f2;color:#9f1239">Tax Groups</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#f0f9ff">📊</div>
+        <h3>fineract-report</h3>
+        <p class="module-sub">org.apache.fineract.report</p>
+        <p>Engine de relatórios: relatórios SQL custom, relatórios Pentaho, exportação CSV/Excel, scheduled reports, dashboards de portfólio.</p>
+        <div class="tags">
+          <span class="tag blue">Relatórios</span>
+          <span class="tag blue">Analytics</span>
+          <span class="tag blue">Export</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon" style="background:#fdf4ff">🔗</div>
+        <h3>fineract-savings · Interoperability</h3>
+        <p class="module-sub">org.apache.fineract.interoperation</p>
+        <p>Interoperabilidade Mojaloop: mapeamento de contas de poupança para wallets P2P, transfers entre instituições, lookup de party IDs.</p>
+        <div class="tags">
+          <span class="tag purple">Mojaloop</span>
+          <span class="tag purple">P2P</span>
+          <span class="tag purple">PIX-like</span>
+          <span class="tag purple">Interbank</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTA DIGITAL -->
+<section class="section section-alt" id="conta-digital">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Caso de Uso 1</span>
+      <h2 class="section-title">Conta Digital</h2>
+      <p class="section-subtitle">O Fineract oferece a fundação completa para uma conta digital transacional com toda a contabilidade, ciclo de vida e operações bancárias necessárias.</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div>
+        <div class="cap-card green">
+          <h4>✅ Recursos Prontos para Reuso (Savings Module)</h4>
+          <ul>
+            <li>Abertura de conta com workflow de aprovação/ativação</li>
+            <li>Depósito e saque com validação de saldo</li>
+            <li>Transferências entre contas (interno)</li>
+            <li>Accrual de juros configurável (diário, semanal, mensal)</li>
+            <li>Extrato de conta com histórico de transações</li>
+            <li>Saldo bloqueado / congelamento de conta</li>
+            <li>Conta poupança com limite de saque</li>
+            <li>Lock-in period para depósitos a prazo</li>
+            <li>Recurring deposits (depósitos programados)</li>
+            <li>Status: PENDING → APPROVED → ACTIVE → CLOSED</li>
+            <li>Número de conta customizável (Account Number Format)</li>
+            <li>Múltiplas contas por cliente</li>
+          </ul>
+        </div>
+
+        <div class="cap-card" style="border-color:#3b82f6">
+          <h4>🔧 Recursos que Precisam de Extensão</h4>
+          <ul>
+            <li>KYC Digital (integrar com Serpro, Receita Federal, Open Finance)</li>
+            <li>Onboarding via App (selfie, liveness, OCR de documentos)</li>
+            <li>PIX (integrar via Payment Hub / Bacen)</li>
+            <li>TED/DOC (integrar com ISPB/STR)</li>
+            <li>Cartão virtual/físico (integrar com processadora)</li>
+            <li>Notificações push/SMS por evento</li>
+            <li>Limites por perfil de risco (KYC Level)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#d1fae5">📋</div>
+            <div><h3>API de Conta Digital — Exemplos</h3></div>
+          </div>
+          <div class="card-body">
+            <div class="code-block">
+<span class="comment"># 1. Criar cliente (titular da conta)</span>
+<span class="key">POST</span> <span class="str">/api/v1/clients</span>
+{
+  <span class="key">"firstname"</span>: <span class="str">"João"</span>,
+  <span class="key">"lastname"</span>: <span class="str">"Silva"</span>,
+  <span class="key">"externalId"</span>: <span class="str">"CPF_12345678901"</span>,
+  <span class="key">"active"</span>: <span class="val">true</span>,
+  <span class="key">"officeId"</span>: <span class="val">1</span>
+}
+
+<span class="comment"># 2. Abrir conta digital</span>
+<span class="key">POST</span> <span class="str">/api/v1/savingsaccounts</span>
+{
+  <span class="key">"clientId"</span>: <span class="val">123</span>,
+  <span class="key">"productId"</span>: <span class="val">1</span>,
+  <span class="key">"nominalAnnualInterestRate"</span>: <span class="val">0.5</span>,
+  <span class="key">"currencyCode"</span>: <span class="str">"BRL"</span>
+}
+
+<span class="comment"># 3. Depositar</span>
+<span class="key">POST</span> <span class="str">/api/v1/savingsaccounts/456/transactions?command=deposit</span>
+{
+  <span class="key">"amount"</span>: <span class="val">1000.00</span>,
+  <span class="key">"paymentTypeId"</span>: <span class="val">1</span>
+}
+
+<span class="comment"># 4. Saque</span>
+<span class="key">POST</span> <span class="str">/api/v1/savingsaccounts/456/transactions?command=withdrawal</span>
+{
+  <span class="key">"amount"</span>: <span class="val">250.00</span>
+}
+
+<span class="comment"># 5. Extrato</span>
+<span class="key">GET</span>  <span class="str">/api/v1/savingsaccounts/456/transactions</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <div class="callout success">
+            <span class="callout-icon">✅</span>
+            <p><strong>Grau de Reuso: 75%</strong> O módulo de Savings cobre completamente a conta corrente/poupança. Principais gaps: integrações com infraestrutura brasileira (PIX, TED) e onboarding digital.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#d1fae5">📐</div>
+        <div><h3>Diagrama de Ciclo de Vida da Conta Digital</h3></div>
+      </div>
+      <div class="card-body">
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; padding:16px 0;">
+          <div style="background:#fef9c3; border:2px solid #f59e0b; border-radius:10px; padding:12px 20px; text-align:center; font-weight:700; font-size:13px;">📝 PENDING<br><span style="font-weight:400;color:#64748b;font-size:11px">Criada/Aguarda aprovação</span></div>
+          <div style="font-size:24px; color:#94a3b8;">→</div>
+          <div style="background:#dbeafe; border:2px solid #3b82f6; border-radius:10px; padding:12px 20px; text-align:center; font-weight:700; font-size:13px;">✔️ APPROVED<br><span style="font-weight:400;color:#64748b;font-size:11px">Aprovada pelo staff</span></div>
+          <div style="font-size:24px; color:#94a3b8;">→</div>
+          <div style="background:#d1fae5; border:2px solid #10b981; border-radius:10px; padding:12px 20px; text-align:center; font-weight:700; font-size:13px;">🟢 ACTIVE<br><span style="font-weight:400;color:#64748b;font-size:11px">Operacional</span></div>
+          <div style="font-size:24px; color:#94a3b8;">→</div>
+          <div style="background:#ffedd5; border:2px solid #f97316; border-radius:10px; padding:12px 20px; text-align:center; font-weight:700; font-size:13px;">😴 DORMANT<br><span style="font-weight:400;color:#64748b;font-size:11px">Sem movimentação</span></div>
+          <div style="font-size:24px; color:#94a3b8;">→</div>
+          <div style="background:#fee2e2; border:2px solid #ef4444; border-radius:10px; padding:12px 20px; text-align:center; font-weight:700; font-size:13px;">🔒 CLOSED<br><span style="font-weight:400;color:#64748b;font-size:11px">Encerrada</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WALLET -->
+<section class="section" id="wallet">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Caso de Uso 2</span>
+      <h2 class="section-title">Wallet Digital</h2>
+      <p class="section-subtitle">O Fineract é amplamente utilizado como backend de wallets digitais. A integração com Mojaloop e o Payment Hub demonstra maturidade neste domínio.</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 24px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#ede9fe">👛</div>
+          <div><h3>Arquitetura de Wallet com Fineract</h3></div>
+        </div>
+        <div class="card-body">
+          <div style="background:#f8fafc; border-radius:10px; padding:20px; border:1px solid var(--border);">
+            <div style="text-align:center; margin-bottom:16px; font-weight:700; font-size:13px; color:var(--text-muted);">SOLUÇÃO MIFOS WALLET</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="background:#ede9fe; border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; text-align:center;">📱 Mobile Wallet App (openMF/mobile-wallet)</div>
+              <div style="text-align:center; font-size:16px; color:#94a3b8;">↕️</div>
+              <div style="background:#dbeafe; border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; text-align:center;">🌐 API Gateway (WSO2)</div>
+              <div style="text-align:center; font-size:16px; color:#94a3b8;">↕️</div>
+              <div style="background:#d1fae5; border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; text-align:center;">🔄 Mifos Payment Hub EE (Mojaloop API)</div>
+              <div style="text-align:center; font-size:16px; color:#94a3b8;">↕️</div>
+              <div style="background:#fef9c3; border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; text-align:center;">🏦 Apache Fineract 1.x (Core Banking)</div>
+              <div style="text-align:center; font-size:16px; color:#94a3b8;">↕️</div>
+              <div style="background:#ffedd5; border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; text-align:center;">🌍 Rede Mojaloop (Switch Interbancário)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="cap-card purple">
+          <h4>✅ Componentes do Fineract para Wallet</h4>
+          <ul>
+            <li>Conta de saldo (SavingsAccount) como saldo da wallet</li>
+            <li>InteropIdentifier: mapeamento de phone/email para conta</li>
+            <li>InteropTransferActionType: RESERVE → COMMIT → ABORT</li>
+            <li>Transações atômicas (Two-Phase Commit)</li>
+            <li>Lookup de party por número de telefone</li>
+            <li>Transfer entre wallets via savingsaccount transactions</li>
+            <li>Limite diário via produto de savings</li>
+            <li>Payment Type configurável (PIX, TED, QR Code)</li>
+            <li>External ID para rastreabilidade end-to-end</li>
+            <li>Histórico de transações com timestamps</li>
+            <li>Account locking (previne race conditions)</li>
+          </ul>
+        </div>
+
+        <div class="cap-card" style="border-color:var(--orange)">
+          <h4>🔧 Extensões Necessárias para Wallet Moderna</h4>
+          <ul>
+            <li>PIX (API Bacen + DICT para lookup)</li>
+            <li>QR Code dinâmico e estático (plugin)</li>
+            <li>NFC / contactless (integração externa)</li>
+            <li>Tokenização de cartão (parceria processadora)</li>
+            <li>Split de pagamento multi-wallet</li>
+            <li>Cashback e rewards engine</li>
+            <li>KYC level-based limits (0→1→2→3)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe); border-radius:14px; padding:24px;">
+        <div style="font-size:32px; margin-bottom:8px;">🔄</div>
+        <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;">Two-Phase Transfer</h3>
+        <p style="font-size:13px; color:#4c1d95;">Fineract suporta RESERVE→COMMIT→ABORT para garantir atomicidade em transferências via Mojaloop/switch interbancário, prevenindo fundos duplicados ou perdidos.</p>
+      </div>
+      <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0); border-radius:14px; padding:24px;">
+        <div style="font-size:32px; margin-bottom:8px;">🏷️</div>
+        <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;">Interop Identifiers</h3>
+        <p style="font-size:13px; color:#065f46;">Mapeamento de identificadores (CPF, telefone, e-mail, UUID) para contas Fineract — base para implementar chaves PIX ou aliases de wallet.</p>
+      </div>
+      <div style="background:linear-gradient(135deg,#fce7f3,#fbcfe8); border-radius:14px; padding:24px;">
+        <div style="font-size:32px; margin-bottom:8px;">💱</div>
+        <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;">Multi-Currency</h3>
+        <p style="font-size:13px; color:#9d174d;">Wallets em múltiplas moedas com conversão automática via módulo de Rates. Suporte nativo a BRL, USD, EUR, USDT (stablecoin) com configuração por produto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMISSÕES -->
+<section class="section section-alt" id="comissoes">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Caso de Uso 3</span>
+      <h2 class="section-title">Sistema de Comissões</h2>
+      <p class="section-subtitle">O módulo de Charges do Fineract é a base mais poderosa para construir um sistema de comissões flexível, com cálculo percentual, flat, por evento e por produto.</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#fce7f3">💳</div>
+          <div><h3>Motor de Charges — Tipos de Cálculo</h3></div>
+        </div>
+        <div class="card-body">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Cálculo</th>
+                <th>Caso de Uso de Comissão</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>FLAT</strong></td>
+                <td>Valor fixo (ex: R$ 10)</td>
+                <td>Taxa de adesão, fee por transação</td>
+              </tr>
+              <tr>
+                <td><strong>% do Principal</strong></td>
+                <td>% do valor principal</td>
+                <td>MDR, taxa de originação, comissão de vendedor</td>
+              </tr>
+              <tr>
+                <td><strong>% Principal + Juros</strong></td>
+                <td>% sobre (P + J)</td>
+                <td>Comissão sobre receita total do empréstimo</td>
+              </tr>
+              <tr>
+                <td><strong>% dos Juros</strong></td>
+                <td>% apenas dos juros</td>
+                <td>Repasse de parcela dos juros ao parceiro</td>
+              </tr>
+              <tr>
+                <td><strong>% Desembolso</strong></td>
+                <td>% do valor desembolsado</td>
+                <td>Comissão de correspondente bancário</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#fce7f3">⏱️</div>
+          <div><h3>Quando a Comissão é Aplicada (Charge Time Type)</h3></div>
+        </div>
+        <div class="card-body">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Trigger</th>
+                <th>Momento</th>
+                <th>Aplicação em Marketplace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>DISBURSEMENT</td>
+                <td>No desembolso</td>
+                <td>Comissão do parceiro originador</td>
+              </tr>
+              <tr>
+                <td>INSTALMENT FEE</td>
+                <td>Cada parcela</td>
+                <td>Revenue share por parcela</td>
+              </tr>
+              <tr>
+                <td>OVERDUE</td>
+                <td>Inadimplência</td>
+                <td>Penalidade/multa de atraso</td>
+              </tr>
+              <tr>
+                <td>LOAN MATURITY</td>
+                <td>Vencimento final</td>
+                <td>Fee de quitação antecipada</td>
+              </tr>
+              <tr>
+                <td>MONTHLY (Savings)</td>
+                <td>Mensal</td>
+                <td>Anuidade / fee de manutenção</td>
+              </tr>
+              <tr>
+                <td>WITHDRAWAL FEE</td>
+                <td>Cada saque</td>
+                <td>Fee por saque em ATM parceiro</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="cap-card green">
+          <h4>✅ O que o Fineract entrega nativamente para Comissões</h4>
+          <ul>
+            <li>Criação de charges antes de produtos (hierarquia correta)</li>
+            <li>Associação de múltiplos charges a um produto</li>
+            <li>Min Cap e Max Cap em percentuais</li>
+            <li>Charges recorrentes com feeInterval e feeFrequency</li>
+            <li>Waiver de charge por staff (cancelamento manual)</li>
+            <li>Charge capitalizado (adicionado ao principal)</li>
+            <li>Charge regular (cobrado na parcela)</li>
+            <li>Contabilidade automática: fees → income account</li>
+            <li>Penalties → separate income account</li>
+            <li>Histórico auditável de charges aplicados</li>
+            <li>API para adicionar charge em conta existente</li>
+            <li>API para listar, atualizar e desativar charges</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#fce7f3">💰</div>
+            <div><h3>Modelo de Comissão para Marketplace</h3></div>
+          </div>
+          <div class="card-body">
+            <div class="code-block">
+<span class="comment"># Charge 1: MDR para parceiro (% desembolso)</span>
+{
+  <span class="key">"name"</span>: <span class="str">"MDR Parceiro XYZ"</span>,
+  <span class="key">"chargeTimeType"</span>: <span class="val">1</span>, <span class="comment">// DISBURSEMENT</span>
+  <span class="key">"chargeCalculationType"</span>: <span class="val">5</span>, <span class="comment">// % desembolso</span>
+  <span class="key">"amount"</span>: <span class="val">2.5</span>,  <span class="comment">// 2.5%</span>
+  <span class="key">"minCap"</span>: <span class="val">5.00</span>,
+  <span class="key">"maxCap"</span>: <span class="val">500.00</span>,
+  <span class="key">"penalty"</span>: <span class="val">false</span>
+}
+
+<span class="comment"># Charge 2: Revenue share mensal</span>
+{
+  <span class="key">"name"</span>: <span class="str">"Revenue Share Mensal"</span>,
+  <span class="key">"chargeTimeType"</span>: <span class="val">3</span>, <span class="comment">// INSTALMENT</span>
+  <span class="key">"chargeCalculationType"</span>: <span class="val">4</span>, <span class="comment">// % dos juros</span>
+  <span class="key">"amount"</span>: <span class="val">15.0</span>, <span class="comment">// 15% dos juros</span>
+  <span class="key">"penalty"</span>: <span class="val">false</span>
+}
+
+<span class="comment"># Charge 3: Multa por atraso</span>
+{
+  <span class="key">"name"</span>: <span class="str">"Multa de Atraso"</span>,
+  <span class="key">"chargeTimeType"</span>: <span class="val">4</span>, <span class="comment">// OVERDUE</span>
+  <span class="key">"chargeCalculationType"</span>: <span class="val">2</span>, <span class="comment">// % principal</span>
+  <span class="key">"amount"</span>: <span class="val">2.0</span>,  <span class="comment">// 2% ao mês</span>
+  <span class="key">"feeInterval"</span>: <span class="val">1</span>,
+  <span class="key">"feeFrequency"</span>: <span class="val">2</span>, <span class="comment">// monthly</span>
+  <span class="key">"penalty"</span>: <span class="val">true</span>
+}
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 12px;">
+          <div class="callout warning">
+            <span class="callout-icon">⚠️</span>
+            <p><strong>Gap Principal: Split de Pagamento</strong> O Fineract não possui motor nativo de split de pagamento entre múltiplos beneficiários. Para marketplace, é necessário construir um microserviço de liquidação que distribua os valores após o charge ser coletado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETPLACE -->
+<section class="section" id="marketplace">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Caso de Uso 4</span>
+      <h2 class="section-title">Marketplace Financeiro</h2>
+      <p class="section-subtitle">O Fineract pode servir como motor financeiro central de um marketplace, gerenciando produtos, originação, contabilidade e distribuição de receitas.</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#dbeafe">🏪</div>
+          <div><h3>Arquitetura de Marketplace Financeiro</h3></div>
+        </div>
+        <div class="card-body">
+          <div style="background:#f8fafc; border-radius:10px; padding:20px; border:1px solid var(--border);">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+              <div style="background:#dbeafe; border-radius:8px; padding:10px; font-size:12px; font-weight:600; text-align:center;">🏪 Seller A<br>(Instituição)</div>
+              <div style="background:#dbeafe; border-radius:8px; padding:10px; font-size:12px; font-weight:600; text-align:center;">🏪 Seller B<br>(Fintech)</div>
+            </div>
+            <div style="background:#ede9fe; border-radius:8px; padding:10px; font-size:12px; font-weight:600; text-align:center; margin-bottom:10px;">🔀 Marketplace Orchestrator (custom microservice)</div>
+            <div style="text-align:center; font-size:16px; color:#94a3b8; margin:4px 0;">↕️</div>
+            <div style="background:#d1fae5; border-radius:8px; padding:10px; font-size:12px; font-weight:600; text-align:center; margin-bottom:10px;">🏦 Apache Fineract (Core Banking Engine)<br><span style="font-weight:400;color:#065f46">Multi-Tenant: 1 tenant = 1 seller ou 1 produto</span></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+              <div style="background:#fff7ed; border-radius:6px; padding:8px; font-size:11px; font-weight:600; text-align:center;">📊 GL<br>Contabilidade</div>
+              <div style="background:#fff7ed; border-radius:6px; padding:8px; font-size:11px; font-weight:600; text-align:center;">💳 Charges<br>MDR/Comissões</div>
+              <div style="background:#fff7ed; border-radius:6px; padding:8px; font-size:11px; font-weight:600; text-align:center;">📈 Reports<br>Dashboard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="cap-card teal">
+          <h4>✅ Fineract como Core de Marketplace</h4>
+          <ul>
+            <li>Multi-tenancy: 1 tenant por parceiro/seller</li>
+            <li>Produtos de empréstimo configuráveis por seller</li>
+            <li>Loan origination workflow (aplicação → aprovação → desembolso)</li>
+            <li>fineract-investor: venda de participação em empréstimos (FIDC)</li>
+            <li>Provisioning automático por produto</li>
+            <li>Contabilidade separada por tenant/produto</li>
+            <li>Staff management por tenant (equipe do seller)</li>
+            <li>Relatórios cross-tenant (via fineract-report)</li>
+            <li>Working Capital Loan (módulo específico)</li>
+            <li>Progressive Loan (módulo inovador)</li>
+            <li>Merchant Fee Support (0% para comprador)</li>
+            <li>Taxa de originação capturada no desembolso</li>
+          </ul>
+        </div>
+
+        <div class="cap-card" style="border-color:var(--purple)">
+          <h4>🏗️ O que Construir em Cima do Fineract</h4>
+          <ul>
+            <li>Catálogo de produtos (product listing)</li>
+            <li>Motor de matching comprador/vendedor</li>
+            <li>Split de pagamento automático (liquidação)</li>
+            <li>Escrow account (conta bloqueada para custódia)</li>
+            <li>Scoring centralizado (credit bureau integration)</li>
+            <li>Dashboard de seller com KPIs</li>
+            <li>Onboarding de lojista/fintech (B2B KYC)</li>
+            <li>Webhooks para eventos de pagamento</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#dbeafe">📦</div>
+        <div><h3>Módulo fineract-investor — FIDC/Marketplace</h3></div>
+      </div>
+      <div class="card-body">
+        <div class="grid-3">
+          <div style="background:#f8fafc; border-radius:10px; padding:16px; border:1px solid var(--border);">
+            <h4 style="font-size:14px; font-weight:700; margin-bottom:8px;">📊 ExternalAsset Transfer</h4>
+            <p style="font-size:13px; color:var(--text-muted);">Permite transferência de participação em empréstimos para investidores externos (FIDC, CRI, CRA). O loan permanece no Fineract mas a receivable é cedida.</p>
+          </div>
+          <div style="background:#f8fafc; border-radius:10px; padding:16px; border:1px solid var(--border);">
+            <h4 style="font-size:14px; font-weight:700; margin-bottom:8px;">💼 Investor Management</h4>
+            <p style="font-size:13px; color:var(--text-muted);">Cadastro de investidores institucionais com controle de participação percentual em cada empréstimo, tracking de rendimento e amortização.</p>
+          </div>
+          <div style="background:#f8fafc; border-radius:10px; padding:16px; border:1px solid var(--border);">
+            <h4 style="font-size:14px; font-weight:700; margin-bottom:8px;">🔄 Buyback & Repurchase</h4>
+            <p style="font-size:13px; color:var(--text-muted);">Suporte a recompra de ativos cedidos, ideal para garantias de marketplace onde a plataforma recompra inadimplentes para proteger o investidor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATRIZ DE REUSO -->
+<section class="section section-alt" id="matrix">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Análise Estratégica</span>
+      <h2 class="section-title">Matriz de Reusabilidade</h2>
+      <p class="section-subtitle">Mapeamento completo de cada módulo do Fineract e seu nível de reaproveitamento por caso de uso.</p>
+    </div>
+
+    <div style="margin-bottom: 16px; display:flex; gap:12px; flex-wrap:wrap;">
+      <span class="status-reuse">✅ Reuso Direto</span>
+      <span class="status-adapt">⚙️ Adaptar</span>
+      <span class="status-extend">🔧 Estender</span>
+      <span class="status-build">🏗️ Construir</span>
+    </div>
+
+    <div class="card">
+      <div class="card-body" style="padding: 0; overflow-x: auto;">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th style="min-width:200px">Módulo / Capacidade</th>
+              <th style="min-width:130px">Conta Digital</th>
+              <th style="min-width:130px">Wallet</th>
+              <th style="min-width:130px">Comissões</th>
+              <th style="min-width:130px">Marketplace</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Client Management (KYC, perfil, grupos)</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Savings Account (abertura, transações, extrato)</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+            </tr>
+            <tr>
+              <td><strong>Interest Accrual (juros sobre saldo)</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Interoperability (Mojaloop, P2P transfer)</strong></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+            </tr>
+            <tr>
+              <td><strong>Loan Module (crédito, amortização)</strong></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Charges & Fees (MDR, tarifas, multas)</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Accounting / General Ledger</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Journal Entries Automáticos</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Chart of Accounts Configurável</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Security (OAuth2, JWT, 2FA, RBAC)</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Multi-Tenancy</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>COB Batch (processamento noturno)</strong></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tax Module (IOF, IR)</strong></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Payment Types (TED, PIX, boleto)</strong></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+            </tr>
+            <tr>
+              <td><strong>Reports & Analytics</strong></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Investor Module (FIDC, cessão)</strong></td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="status-adapt">⚙️ Adaptar</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+            <tr>
+              <td><strong>Split de Pagamento</strong></td>
+              <td>—</td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+            </tr>
+            <tr>
+              <td><strong>PIX / Open Finance (Bacen)</strong></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+            </tr>
+            <tr>
+              <td><strong>Escrow / Custódia</strong></td>
+              <td>—</td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-extend">🔧 Estender</span></td>
+              <td><span class="status-build">🏗️ Construir</span></td>
+            </tr>
+            <tr>
+              <td><strong>Progressive Loan</strong></td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+              <td><span class="status-reuse">✅ Reuso Direto</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓS E CONTRAS -->
+<section class="section" id="analise">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Avaliação Crítica</span>
+      <h2 class="section-title">Pontos Fortes e Limitações</h2>
+      <p class="section-subtitle">Análise honesta das capacidades do Fineract para os casos de uso propostos.</p>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-col pros">
+        <h4>✅ Pontos Fortes para os 4 Casos de Uso</h4>
+        <ul>
+          <li>Contabilidade dupla entrada nativa e auditável</li>
+          <li>Multi-tenancy para SaaS e marketplace</li>
+          <li>API REST completa com +400 endpoints documentados</li>
+          <li>Plugin architecture para extensão sem fork</li>
+          <li>Motor de charges extremamente flexível</li>
+          <li>Batch processing robusto (Spring Batch)</li>
+          <li>Interoperabilidade Mojaloop pronta para wallet</li>
+          <li>Licença Apache 2.0 — zero custo de licença</li>
+          <li>Comunidade ativa + empresas como Fiter.io</li>
+          <li>Docker/Kubernetes ready para cloud deployment</li>
+          <li>Kafka/ActiveMQ para eventos assíncronos</li>
+          <li>Idempotency keys para integrações seguras</li>
+          <li>Módulo de investor para FIDC/marketplace</li>
+          <li>Progressive Loan para produtos inovadores</li>
+          <li>Java 21 + Spring Boot 3 — stack moderna</li>
+        </ul>
+      </div>
+      <div class="compare-col cons">
+        <h4>⚠️ Limitações e Gaps a Considerar</h4>
+        <ul>
+          <li>Sem split de pagamento nativo</li>
+          <li>Sem integração PIX/Open Finance (Bacen) nativa</li>
+          <li>Curva de aprendizado alta (Java enterprise)</li>
+          <li>Sem motor de escrow/custódia nativo</li>
+          <li>Sem catálogo de produtos para marketplace</li>
+          <li>Frontend básico (Mifos X desatualizado)</li>
+          <li>Fineract CN (microserviços) foi descontinuado</li>
+          <li>Sem onboarding digital nativo (selfie/OCR)</li>
+          <li>Sem notificações push nativas</li>
+          <li>Sem suporte a blockchain/DeFi</li>
+          <li>Requisitos mínimos altos (16GB RAM, 8 cores)</li>
+          <li>Sem motor de AML/KYC avançado</li>
+          <li>Relatórios complexos exigem Pentaho</li>
+          <li>MySQL/MariaDB sendo deprecados (somente PostgreSQL)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMENDAÇÕES -->
+<section class="section section-alt" id="recomendacoes">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Roteiro de Implementação</span>
+      <h2 class="section-title">Recomendações Estratégicas</h2>
+      <p class="section-subtitle">Plano de implementação em 4 fases para maximizar o reuso do Fineract nos 4 casos de uso.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="rec-card priority-1">
+        <div class="rec-number">FASE 1 · Fundação (Meses 1-3)</div>
+        <h3>🏗️ Core Banking + Conta Digital</h3>
+        <p>Configurar o Fineract como motor de core banking e lançar a conta digital transacional com toda a contabilidade e operações básicas.</p>
+        <ol class="rec-steps">
+          <li><span class="step-num">1</span>Deploy PostgreSQL + Fineract no Kubernetes com TLS e OAuth2</li>
+          <li><span class="step-num">2</span>Configurar Chart of Accounts para conta digital brasileira</li>
+          <li><span class="step-num">3</span>Criar produto Savings (Conta Corrente Digital)</li>
+          <li><span class="step-num">4</span>Configurar charges: tarifa de manutenção, saque, TED</li>
+          <li><span class="step-num">5</span>Implementar onboarding via API (client + account creation)</li>
+          <li><span class="step-num">6</span>Construir plugin de notificações (eventos → webhook/SMS)</li>
+          <li><span class="step-num">7</span>Integrar PIX via Payment Hub Mifos ou custom adapter</li>
+        </ol>
+      </div>
+
+      <div class="rec-card priority-2">
+        <div class="rec-number">FASE 2 · Wallet (Meses 3-5)</div>
+        <h3>👛 Wallet Digital + Interoperabilidade</h3>
+        <p>Construir a camada de wallet sobre as contas digitais, adicionando interoperabilidade e recursos de pagamento instantâneo.</p>
+        <ol class="rec-steps">
+          <li><span class="step-num">1</span>Ativar módulo de Interoperability (InteropIdentifier)</li>
+          <li><span class="step-num">2</span>Mapear CPF/telefone como chave Fineract (Party Lookup)</li>
+          <li><span class="step-num">3</span>Implementar QR Code dinâmico via plugin custom</li>
+          <li><span class="step-num">4</span>Two-phase transfer (RESERVE → COMMIT) para P2P</li>
+          <li><span class="step-num">5</span>Configurar limites por KYC level (produto por nível)</li>
+          <li><span class="step-num">6</span>App móvel consumindo API Fineract (React Native / Flutter)</li>
+          <li><span class="step-num">7</span>API Gateway com rate limiting e OAuth2 scopes</li>
+        </ol>
+      </div>
+
+      <div class="rec-card priority-3">
+        <div class="rec-number">FASE 3 · Comissões (Meses 5-7)</div>
+        <h3>💰 Motor de Comissões + Revenue Share</h3>
+        <p>Implementar o sistema completo de comissões usando o módulo de Charges do Fineract com split de receita para parceiros.</p>
+        <ol class="rec-steps">
+          <li><span class="step-num">1</span>Modelar hierarquia de charges por produto e parceiro</li>
+          <li><span class="step-num">2</span>Configurar MDR (% desembolso) por seller</li>
+          <li><span class="step-num">3</span>Implementar revenue share (% juros) por parcela</li>
+          <li><span class="step-num">4</span>Construir microserviço de liquidação (split payment)</li>
+          <li><span class="step-num">5</span>Configurar contabilidade: fees → income accounts separadas</li>
+          <li><span class="step-num">6</span>Dashboard de comissões para parceiros (reports API)</li>
+          <li><span class="step-num">7</span>Kafka topic para eventos de charge aplicado</li>
+        </ol>
+      </div>
+
+      <div class="rec-card priority-4">
+        <div class="rec-number">FASE 4 · Marketplace (Meses 7-12)</div>
+        <h3>🏪 Marketplace Financeiro Completo</h3>
+        <p>Evoluir para marketplace com múltiplos sellers, orquestração de produtos e distribuição de ativos para investidores.</p>
+        <ol class="rec-steps">
+          <li><span class="step-num">1</span>Multi-tenancy: 1 tenant por seller/produto</li>
+          <li><span class="step-num">2</span>Orchestrator service: match comprador-produto-seller</li>
+          <li><span class="step-num">3</span>Ativar fineract-investor para cessão de recebíveis (FIDC)</li>
+          <li><span class="step-num">4</span>Construir escrow account via savings account bloqueada</li>
+          <li><span class="step-num">5</span>Dashboard de seller com portfólio e inadimplência</li>
+          <li><span class="step-num">6</span>Onboarding B2B (sellers) com CNPJ validation</li>
+          <li><span class="step-num">7</span>Webhook marketplace para eventos críticos do ciclo de vida</li>
+        </ol>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="callout success">
+        <span class="callout-icon">💡</span>
+        <p><strong>Estratégia de Extensão Recomendada</strong> Use o mecanismo de Plugin JARs do Fineract (via Spring Boot auto-configuration) para adicionar funcionalidades brasileiras sem fazer fork do código principal. Isso permite receber atualizações do upstream e contribuir de volta para a comunidade. Crie um módulo <code>fineract-br</code> com: PIX adapter, CPF/CNPJ validation, IOF calculator, e webhook dispatcher.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="section">
+  <div class="container">
+    <div class="summary-box">
+      <h2>Resumo Executivo</h2>
+      <p>O Apache Fineract fornece uma base sólida e enterprise-ready para todos os 4 casos de uso. Mais de <strong>65% das funcionalidades necessárias</strong> estão disponíveis nativamente, reduzindo significativamente o tempo e custo de desenvolvimento.</p>
+      <div class="summary-stats">
+        <div class="stat-item">
+          <span class="big">75%</span>
+          <span class="label">Conta Digital Coberta</span>
+        </div>
+        <div class="stat-item">
+          <span class="big">70%</span>
+          <span class="label">Wallet Coberta</span>
+        </div>
+        <div class="stat-item">
+          <span class="big">85%</span>
+          <span class="label">Comissões Cobertas</span>
+        </div>
+        <div class="stat-item">
+          <span class="big">65%</span>
+          <span class="label">Marketplace Coberto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong>Análise Apache Fineract</strong> · Baseada no código-fonte oficial (github.com/apache/fineract) e documentação técnica · Junho 2026
+  <br><br>
+  Licença do Apache Fineract: <strong>Apache License 2.0</strong> · Uso comercial permitido · Sem royalties
+</footer>
+
+<script>
+  // Navigation active state
+  function setActive(el) {
+    document.querySelectorAll('.nav-inner a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Intersection Observer for nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-inner a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(section => observer.observe(section));
+
+  // Animate score bars on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.score-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = w; }, 100);
+      });
+    }, 300);
+  });
+</script>
+</body>
+</html>

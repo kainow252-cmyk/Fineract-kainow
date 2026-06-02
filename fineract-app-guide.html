@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>App Bancário com Fineract + Integrações</title>
+  <style>
+    :root {
+      --primary:#1a56a7; --primary-dark:#0e3a75; --primary-light:#dbeafe;
+      --success:#10b981; --warning:#f59e0b; --danger:#ef4444;
+      --purple:#8b5cf6; --teal:#14b8a6; --orange:#f97316; --pink:#ec4899;
+      --text:#1e293b; --muted:#64748b; --bg:#f8fafc; --card:#fff; --border:#e2e8f0;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#0e3a75 0%,#1a56a7 50%,#0ea5e9 100%);color:#fff;padding:60px 24px 44px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,0.06) 0%,transparent 60%);}
+    .hero-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+    .hero h1{font-size:clamp(26px,5vw,50px);font-weight:900;line-height:1.1;margin-bottom:14px;}
+    .hero p{font-size:17px;opacity:.87;max-width:680px;margin:0 auto 32px;}
+    .hero-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;}
+    .hero-pill{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:6px 18px;font-size:13px;font-weight:600;}
+
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06);overflow-x:auto;}
+    .nav-inner{display:flex;gap:0;padding:0 16px;white-space:nowrap;}
+    .nav-inner a{display:inline-block;padding:13px 15px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;transition:all .2s;}
+    .nav-inner a:hover,.nav-inner a.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+    /* LAYOUT */
+    .container{max-width:1240px;margin:0 auto;padding:0 24px;}
+    .section{padding:52px 0;}
+    .section-alt{background:#f1f5f9;}
+    .section-tag{display:inline-block;background:var(--primary-light);color:var(--primary);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:10px;}
+    .section-title{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--primary-dark);margin-bottom:8px;}
+    .section-sub{color:var(--muted);font-size:15px;max-width:680px;margin-bottom:32px;}
+
+    /* CARDS */
+    .card{background:var(--card);border-radius:16px;box-shadow:0 4px 24px rgba(30,41,59,0.09);border:1px solid var(--border);overflow:hidden;}
+    .card-head{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+    .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+    .card-head h3{font-size:16px;font-weight:700;}
+    .card-head p{font-size:12px;color:var(--muted);}
+    .card-body{padding:20px 22px;}
+
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:22px;}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+    .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+
+    /* PLAYER CARDS */
+    .player-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+    .player-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.12);}
+    .player-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+    .player-stripe{background:var(--primary);}
+    .player-mp{background:#009EE3;}
+    .player-pag{background:#39B54A;}
+    .player-pix{background:#32BCAD;}
+    .player-stripe2{background:#635BFF;}
+    .player-opf{background:#F7931A;}
+    .player-eft{background:#FF6B35;}
+    .player-cielo{background:#003087;}
+    .player-logo{font-size:28px;margin-bottom:10px;}
+    .player-name{font-size:16px;font-weight:800;margin-bottom:4px;}
+    .player-type{font-size:11px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;}
+    .player-desc{font-size:13px;color:var(--muted);margin-bottom:14px;}
+    .tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;}
+    .tag-green{background:#d1fae5;color:#065f46;}
+    .tag-blue{background:#dbeafe;color:#1e40af;}
+    .tag-purple{background:#ede9fe;color:#5b21b6;}
+    .tag-orange{background:#ffedd5;color:#9a3412;}
+    .tag-pink{background:#fce7f3;color:#9d174d;}
+    .tag-teal{background:#ccfbf1;color:#134e4a;}
+    .tag-yellow{background:#fef9c3;color:#78350f;}
+    .tag-gray{background:#f1f5f9;color:#475569;}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;}
+
+    /* DIFFICULTY BADGE */
+    .diff{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+    .diff-easy{background:#d1fae5;color:#065f46;}
+    .diff-medium{background:#fef9c3;color:#78350f;}
+    .diff-hard{background:#ffedd5;color:#9a3412;}
+    .diff-complex{background:#fee2e2;color:#991b1b;}
+
+    /* APP CARDS */
+    .app-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:22px;position:relative;}
+    .app-card .app-icon{font-size:36px;margin-bottom:12px;}
+    .app-card h3{font-size:16px;font-weight:800;margin-bottom:6px;}
+    .app-card .app-source{font-size:11px;color:var(--muted);margin-bottom:10px;}
+    .app-card p{font-size:13px;color:var(--muted);margin-bottom:12px;}
+    .app-badge{display:inline-block;background:var(--primary-light);color:var(--primary);font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:12px;}
+
+    /* ARCH DIAGRAM */
+    .arch-box{background:var(--card);border-radius:16px;border:1px solid var(--border);padding:28px;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+    .arch-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;justify-content:center;}
+    .arch-node{border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;text-align:center;min-width:120px;border:1px solid rgba(0,0,0,0.08);}
+    .arch-arrow{text-align:center;font-size:20px;color:#94a3b8;margin:4px 0;}
+
+    /* INTEGRATION STEPS */
+    .steps{counter-reset:step;}
+    .step-item{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;}
+    .step-num{width:32px;height:32px;min-width:32px;border-radius:50%;background:var(--primary);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+    .step-content h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+    .step-content p{font-size:13px;color:var(--muted);}
+
+    /* CODE */
+    .code{background:#1e293b;color:#e2e8f0;border-radius:10px;padding:18px;font-family:'Consolas',monospace;font-size:12px;overflow-x:auto;line-height:1.7;}
+    .code .c{color:#64748b;}
+    .code .k{color:#7dd3fc;}
+    .code .s{color:#86efac;}
+    .code .v{color:#fde68a;}
+    .code .m{color:#f9a8d4;}
+
+    /* CALLOUT */
+    .callout{border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;}
+    .callout.info{background:#dbeafe;border-left:4px solid #3b82f6;}
+    .callout.success{background:#d1fae5;border-left:4px solid #10b981;}
+    .callout.warn{background:#fef9c3;border-left:4px solid #f59e0b;}
+    .callout.danger{background:#fee2e2;border-left:4px solid #ef4444;}
+    .callout p{font-size:13px;margin:0;}
+    .callout strong{display:block;font-size:14px;margin-bottom:3px;}
+
+    /* CHECKLIST */
+    .checklist{list-style:none;}
+    .checklist li{display:flex;gap:10px;align-items:baseline;font-size:13px;padding:4px 0;color:var(--muted);}
+    .checklist li.done::before{content:'✅';flex-shrink:0;}
+    .checklist li.build::before{content:'🔧';flex-shrink:0;}
+    .checklist li.warn::before{content:'⚠️';flex-shrink:0;}
+    .checklist li.no::before{content:'❌';flex-shrink:0;}
+
+    /* ROADMAP */
+    .roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+    .phase{padding:22px;border-right:1px solid var(--border);}
+    .phase:last-child{border-right:none;}
+    .phase-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
+    .phase h3{font-size:15px;font-weight:800;margin-bottom:10px;}
+    .phase ul{list-style:none;}
+    .phase ul li{font-size:12px;color:var(--muted);padding:3px 0;display:flex;gap:6px;align-items:baseline;}
+    .phase ul li::before{content:'▸';color:var(--primary);}
+
+    /* COMPARE TABLE */
+    .tbl{width:100%;border-collapse:collapse;font-size:13px;}
+    .tbl th{background:var(--primary);color:#fff;padding:11px 14px;text-align:left;font-size:12px;font-weight:600;}
+    .tbl td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+    .tbl tr:hover td{background:#f8fafc;}
+    .y{color:#10b981;font-size:16px;}
+    .n{color:#ef4444;font-size:16px;}
+    .p{color:#f59e0b;font-size:16px;}
+
+    /* SUMMARY */
+    .summary-box{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;border-radius:16px;padding:40px;text-align:center;}
+    .summary-box h2{font-size:26px;font-weight:800;margin-bottom:12px;}
+    .summary-box p{font-size:15px;opacity:.87;max-width:640px;margin:0 auto 28px;}
+    .summary-grid{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:20px;}
+    .stat{text-align:center;}
+    .stat .big{font-size:38px;font-weight:900;display:block;}
+    .stat .lbl{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:1px;}
+
+    footer{background:#1e293b;color:#94a3b8;text-align:center;padding:28px;font-size:13px;}
+    footer strong{color:#fff;}
+
+    @media(max-width:640px){
+      .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+      .roadmap{grid-template-columns:1fr;}
+      .phase{border-right:none;border-bottom:1px solid var(--border);}
+      .hero{padding:40px 16px 32px;}
+      .container{padding:0 16px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Guia Completo · App Bancário + Integrações</div>
+  <h1>Sim! Você pode criar um App Bancário<br>e integrar com qualquer player 🚀</h1>
+  <p>O Apache Fineract funciona como <strong>motor financeiro central</strong>. O app mobile consome a API REST do Fineract e cada player de pagamento se conecta via adapters — confira o guia completo abaixo.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">📱 Mifos Pay (KMP — já existe!)</span>
+    <span class="hero-pill">🇧🇷 PIX / Open Finance</span>
+    <span class="hero-pill">💳 Mercado Pago</span>
+    <span class="hero-pill">🟢 PagBank / PagSeguro</span>
+    <span class="hero-pill">🔵 Stripe</span>
+    <span class="hero-pill">🏦 Cielo / Rede</span>
+    <span class="hero-pill">🌐 Mojaloop</span>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#resposta">Resposta Direta</a>
+    <a href="#apps">Apps Disponíveis</a>
+    <a href="#arquitetura">Arquitetura</a>
+    <a href="#players">Players BR</a>
+    <a href="#players-global">Players Globais</a>
+    <a href="#como-integrar">Como Integrar</a>
+    <a href="#roteiro">Roteiro</a>
+    <a href="#comparativo">Comparativo</a>
+  </div>
+</nav>
+
+<!-- RESPOSTA DIRETA -->
+<section class="section" id="resposta">
+  <div class="container">
+    <span class="section-tag">Resposta Direta</span>
+    <h2 class="section-title">Sim — e já existe um app pronto como base!</h2>
+    <p class="section-sub">O ecossistema Mifos/Fineract fornece apps mobile prontos e open-source para Android e iOS, que você pode usar como white-label e personalizar.</p>
+
+    <div class="grid-3" style="margin-bottom:28px;">
+      <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:14px;padding:24px;">
+        <div style="font-size:36px;margin-bottom:10px;">✅</div>
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;">App mobile pronto</h3>
+        <p style="font-size:13px;color:#065f46;">O <strong>Mifos Pay</strong> (Kotlin Multiplatform) está nas lojas Google Play e App Store. Open-source, white-label, conecta direto ao Fineract.</p>
+      </div>
+      <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:14px;padding:24px;">
+        <div style="font-size:36px;margin-bottom:10px;">🔌</div>
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;">API REST pública</h3>
+        <p style="font-size:13px;color:#1e40af;">O Fineract expõe 400+ endpoints REST. Qualquer app (Flutter, React Native, Angular, etc.) consome a mesma API. Players se integram via adapters.</p>
+      </div>
+      <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:14px;padding:24px;">
+        <div style="font-size:36px;margin-bottom:10px;">🔧</div>
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;">Plugin Architecture</h3>
+        <p style="font-size:13px;color:#5b21b6;">Cada integração com player (Mercado Pago, PIX, Stripe) vira um Plugin JAR carregado pelo Fineract sem modificar o core.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="callout success">
+        <span style="font-size:22px;">🎯</span>
+        <p><strong>Modelo Mental Correto</strong>O Fineract é o <em>banco</em> (guarda dinheiro, faz contabilidade, gerencia contas). Os players (PIX, Mercado Pago, Stripe) são os <em>canais de entrada/saída de dinheiro</em>. O app mobile é a <em>interface do usuário</em>. Você precisa conectar os três.</p>
+      </div>
+      <div class="callout info">
+        <span style="font-size:22px;">💡</span>
+        <p><strong>Payment Gateway vs Core Banking</strong>Mercado Pago, PagBank e Stripe são gateways de captura de pagamento — eles movem dinheiro mas não gerenciam contas bancárias completas. O Fineract é o ledger (livro-caixa) onde cada transação é registrada com contabilidade dupla entrada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPS DISPONÍVEIS -->
+<section class="section section-alt" id="apps">
+  <div class="container">
+    <span class="section-tag">Apps Mobile Disponíveis</span>
+    <h2 class="section-title">Apps prontos para usar como base</h2>
+    <p class="section-sub">O ecossistema openMF/Mifos oferece 3 apps open-source diferentes para mobile banking, todos conectados ao Fineract via REST API.</p>
+
+    <div class="grid-3" style="margin-bottom:28px;">
+      <div class="app-card">
+        <div class="app-icon">💳</div>
+        <span class="app-badge">⭐ RECOMENDADO · KMP</span>
+        <h3>Mifos Pay</h3>
+        <div class="app-source">github.com/openMF/mifos-pay · Kotlin Multiplatform</div>
+        <p>App de wallet completo — Android + iOS em um único codebase Kotlin. Nas lojas Google Play e App Store. White-label ready.</p>
+        <div class="tags">
+          <span class="tag tag-green">Android + iOS</span>
+          <span class="tag tag-blue">KMP (Kotlin)</span>
+          <span class="tag tag-purple">Wallet / P2P</span>
+          <span class="tag tag-teal">QR Code</span>
+          <span class="tag tag-orange">White-label</span>
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted);">
+          ✅ Enviar/receber dinheiro<br>
+          ✅ Pagar merchants com QR<br>
+          ✅ Histórico de transações<br>
+          ✅ Autenticação + biometria<br>
+          ✅ Disponível nas lojas oficiais
+        </div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon">🏦</div>
+        <span class="app-badge">Mobile Banking · KMP</span>
+        <h3>Mifos Mobile</h3>
+        <div class="app-source">github.com/openMF/mifos-mobile · Kotlin</div>
+        <p>App self-service para cliente final — gerencia contas de poupança, empréstimos, extratos, transferências e notificações.</p>
+        <div class="tags">
+          <span class="tag tag-blue">Android</span>
+          <span class="tag tag-green">iOS</span>
+          <span class="tag tag-purple">Savings</span>
+          <span class="tag tag-orange">Loans</span>
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted);">
+          ✅ Gestão de conta/poupança<br>
+          ✅ Aplicação de empréstimo<br>
+          ✅ Pagamento de parcelas<br>
+          ✅ Extrato e notificações
+        </div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon">👨‍💼</div>
+        <span class="app-badge">Staff App · Android</span>
+        <h3>Mifos Android Client</h3>
+        <div class="app-source">github.com/openMF/android-client · Kotlin</div>
+        <p>App para equipe interna — agentes de campo, gerentes de conta, operadores de caixa. Cadastro offline, coleta de dados.</p>
+        <div class="tags">
+          <span class="tag tag-yellow">Staff/Agentes</span>
+          <span class="tag tag-blue">Android</span>
+          <span class="tag tag-gray">Offline</span>
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted);">
+          ✅ Cadastro offline de clientes<br>
+          ✅ Coleta de repagamentos<br>
+          ✅ Gestão de grupos<br>
+          ✅ Sincronização automática
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span style="font-size:22px;">⚡</span>
+      <p><strong>Quer criar do zero?</strong> Se os apps acima não atendem ao design desejado, você pode construir com <strong>Flutter</strong> (recomendado — 46% market share em 2026) ou <strong>React Native</strong> consumindo a API REST do Fineract. O Fineract gera automaticamente um SDK cliente em qualquer linguagem via Swagger Codegen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ARQUITETURA COMPLETA -->
+<section class="section" id="arquitetura">
+  <div class="container">
+    <span class="section-tag">Visão de Sistema</span>
+    <h2 class="section-title">Arquitetura completa: App + Fineract + Players</h2>
+    <p class="section-sub">Como todos os componentes se conectam — do usuário final até o clearing interbancário.</p>
+
+    <div class="arch-box">
+      <!-- Camada 1: Usuário -->
+      <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">👤 USUÁRIO FINAL</div>
+      <div class="arch-row">
+        <div class="arch-node" style="background:#dbeafe;min-width:100px;">📱 Mifos Pay<br><small>KMP App</small></div>
+        <div class="arch-node" style="background:#dbeafe;min-width:100px;">🌐 Web App<br><small>Angular</small></div>
+        <div class="arch-node" style="background:#dbeafe;min-width:100px;">📲 Seu App<br><small>Flutter/RN</small></div>
+        <div class="arch-node" style="background:#dbeafe;min-width:100px;">🏧 ATM/POS<br><small>Terminal</small></div>
+      </div>
+      <div class="arch-arrow">⬇️ HTTPS / REST API + OAuth2 JWT</div>
+
+      <!-- Camada 2: API Gateway -->
+      <div class="arch-row">
+        <div class="arch-node" style="background:#ede9fe;min-width:300px;">🛡️ API Gateway / Load Balancer<br><small>Rate Limiting · Auth · TLS · Idempotency Keys</small></div>
+      </div>
+      <div class="arch-arrow">⬇️</div>
+
+      <!-- Camada 3: Fineract Core -->
+      <div style="background:#d1fae5;border-radius:12px;padding:16px;margin-bottom:10px;border:2px solid #6ee7b7;">
+        <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#065f46;margin-bottom:12px;">🏦 APACHE FINERACT — CORE BANKING ENGINE</div>
+        <div class="arch-row">
+          <div class="arch-node" style="background:rgba(255,255,255,0.8);">👤 Clients</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.8);">💰 Savings</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.8);">📋 Loans</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.8);">📊 Accounting GL</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.8);">💳 Charges</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.8);">🔗 Interop</div>
+        </div>
+      </div>
+      <div class="arch-arrow">⬇️ Payment Type API · Plugin JARs · Webhooks</div>
+
+      <!-- Camada 4: Payment Adapter Layer -->
+      <div style="background:#fff7ed;border-radius:12px;padding:16px;margin-bottom:10px;border:2px solid #fed7aa;">
+        <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9a3412;margin-bottom:12px;">🔌 PAYMENT ADAPTER LAYER (seus plugins / microserviços)</div>
+        <div class="arch-row">
+          <div class="arch-node" style="background:rgba(255,255,255,0.85);min-width:100px;">🇧🇷 PIX<br>Adapter</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.85);min-width:100px;">💳 Mercado<br>Pago</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.85);min-width:100px;">🟢 PagBank<br>Adapter</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.85);min-width:100px;">🔵 Stripe<br>Adapter</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.85);min-width:100px;">🏦 Cielo<br>Adapter</div>
+          <div class="arch-node" style="background:rgba(255,255,255,0.85);min-width:100px;">🌐 Mojaloop<br>Hub</div>
+        </div>
+      </div>
+      <div class="arch-arrow">⬇️ HTTPS / Webhooks / Message Queue</div>
+
+      <!-- Camada 5: Players Externos -->
+      <div class="arch-row">
+        <div class="arch-node" style="background:#ccfbf1;min-width:100px;">🇧🇷 Bacen<br>PIX/DICT</div>
+        <div class="arch-node" style="background:#bfdbfe;min-width:100px;">💙 Mercado<br>Pago API</div>
+        <div class="arch-node" style="background:#dcfce7;min-width:100px;">🟢 PagBank<br>API</div>
+        <div class="arch-node" style="background:#e0e7ff;min-width:100px;">🟣 Stripe<br>API</div>
+        <div class="arch-node" style="background:#fce7f3;min-width:100px;">🔴 Cielo<br>API</div>
+        <div class="arch-node" style="background:#fef9c3;min-width:100px;">🌐 Mojaloop<br>Network</div>
+      </div>
+      <div class="arch-arrow">⬇️ Clearing / Settlement</div>
+
+      <!-- Camada 6: Banking -->
+      <div class="arch-row">
+        <div class="arch-node" style="background:#fce7f3;min-width:220px;">🏛️ Sistema Bancário Brasileiro<br><small>SPB · STR · COMPE · Bacen</small></div>
+        <div class="arch-node" style="background:#dbeafe;min-width:220px;">🌍 Redes Internacionais<br><small>SWIFT · Visa · Mastercard</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYERS BRASIL -->
+<section class="section section-alt" id="players">
+  <div class="container">
+    <span class="section-tag">Players Brasileiros</span>
+    <h2 class="section-title">Integrações com o mercado brasileiro</h2>
+    <p class="section-sub">Os principais players do Brasil e como integrar cada um com o Fineract para capturar, processar e reconciliar pagamentos.</p>
+
+    <div class="grid-3">
+
+      <!-- PIX -->
+      <div class="player-card">
+        <div class="player-stripe player-pix"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;margin-top:8px;">
+          <span style="font-size:32px;">🇧🇷</span>
+          <div>
+            <div class="player-name">PIX</div>
+            <div class="player-type">Bacen — Pagamento Instantâneo</div>
+          </div>
+        </div>
+        <span class="diff diff-hard">🔧 Alta Complexidade</span>
+        <div class="player-desc">Sistema de pagamento instantâneo do Banco Central. Obrigatório para qualquer banco digital brasileiro. Transferências em segundos, 24/7, taxa zero para PF.</div>
+        <div class="tags" style="margin-bottom:14px;">
+          <span class="tag tag-teal">PIX Transferência</span>
+          <span class="tag tag-teal">PIX Cobrança</span>
+          <span class="tag tag-teal">QR Dinâmico</span>
+          <span class="tag tag-teal">Chaves DICT</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">
+          <strong style="color:var(--text);">Como integrar:</strong><br>
+          → Registrar como PSP no Bacen (ISPB)<br>
+          → Ou usar um PSP habilitado como intermediário (Celcoin, BancaA3, SWAP)<br>
+          → Criar adapter que recebe webhook do PSP e chama API Fineract: <code>POST /savingsaccounts/{id}/transactions?command=deposit</code><br>
+          → Mapear chave PIX → InteropIdentifier no Fineract
+        </div>
+      </div>
+
+      <!-- Mercado Pago -->
+      <div class="player-card">
+        <div class="player-stripe player-mp"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;margin-top:8px;">
+          <span style="font-size:32px;">💙</span>
+          <div>
+            <div class="player-name">Mercado Pago</div>
+            <div class="player-type">Gateway · Wallet · Adquirência</div>
+          </div>
+        </div>
+        <span class="diff diff-medium">⚡ Média Complexidade</span>
+        <div class="player-desc">Maior gateway da América Latina. API REST completa, SDK mobile, PIX integrado, boleto, cartão. Webhooks para eventos de pagamento em tempo real.</div>
+        <div class="tags" style="margin-bottom:14px;">
+          <span class="tag tag-blue">Checkout Pro</span>
+          <span class="tag tag-blue">PIX MP</span>
+          <span class="tag tag-blue">Boleto</span>
+          <span class="tag tag-blue">Cartão</span>
+          <span class="tag tag-blue">Wallet MP</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">
+          <strong style="color:var(--text);">Como integrar:</strong><br>
+          → Criar payment intent no MP → obter QR / link de pagamento<br>
+          → MP envia webhook de status (approved, pending, rejected)<br>
+          → Adapter recebe webhook → chama Fineract deposit API<br>
+          → Registrar <code>paymentTypeId</code> "Mercado Pago" no Fineract
+        </div>
+      </div>
+
+      <!-- PagBank -->
+      <div class="player-card">
+        <div class="player-stripe player-pag"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;margin-top:8px;">
+          <span style="font-size:32px;">🟢</span>
+          <div>
+            <div class="player-name">PagBank / PagSeguro</div>
+            <div class="player-type">Banco Digital · Gateway · Adquirente</div>
+          </div>
+        </div>
+        <span class="diff diff-medium">⚡ Média Complexidade</span>
+        <div class="player-desc">Banco digital + gateway de pagamentos com grande base no Brasil. API bem documentada, PIX, boleto, cartão, split de pagamentos, subconta para marketplace.</div>
+        <div class="tags" style="margin-bottom:14px;">
+          <span class="tag tag-green">PIX</span>
+          <span class="tag tag-green">Boleto</span>
+          <span class="tag tag-green">Split Pay</span>
+          <span class="tag tag-green">Subconta</span>
+          <span class="tag tag-green">Cartão</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">
+          <strong style="color:var(--text);">Como integrar:</strong><br>
+          → API PagSeguro/PagBank para criar cobranças<br>
+          → Webhook de notificação → adapter → Fineract deposit<br>
+          → Split nativo do PagBank complementa o Fineract (marketplace)<br>
+          → Ótimo para recarga de carteiras via boleto/cartão
+        </div>
+      </div>
+
+      <!-- Open Finance Brasil -->
+      <div class="player-card">
+        <div class="player-stripe player-opf"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;margin-top:8px;">
+          <span style="font-size:32px;">🏛️</span>
+          <div>
+            <div class="player-name">Open Finance Brasil</div>
+            <div class="player-type">Regulatório · Dados + Pagamentos</div>
+          </div>
+        </div>
+        <span class="diff diff-complex">🔴 Alta Complexidade</span>
+        <div class="player-desc">Padrão regulatório Bacen. Permite que usuários compartilhem dados bancários e iniciem pagamentos (PIX via OFB) em qualquer instituição participante.</div>
+        <div class="tags" style="margin-bottom:14px;">
+          <span class="tag tag-orange">Consent API</span>
+          <span class="tag tag-orange">Accounts API</span>
+          <span class="tag tag-orange">Payments API</span>
+          <span class="tag tag-orange">FAPI Security</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">
+          <strong style="color:var(--text);">Como integrar:</strong><br>
+          → Certificação Bacen como participante OFB<br>
+          → Implementar APIs obrigatórias sobre o Fineract<br>
+          → FAPI 1.0 Advanced (segurança reforçada)<br>
+          → Usar TPP (Iniciador de Pagamento) terceirizado para simplificar
+        </div>
+      </div>
+
+      <!-- Cielo -->
+      <div class="player-card">
+        <div class="player-stripe player-cielo"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;margin-top:8px;">
+          <span style="font-size:32px;">🏦</span>
+          <div>
+            <div class="player-name">Cielo / Rede / GetNet</div>
+            <div class="player-type">Adquirente · Cartão · POS</div>
+          </div>
+        </div>
+        <span class="diff diff-medium">⚡ Média Complexidade</span>
+        <div class="player-desc">Principais adquirentes brasileiras. Necessário para capturar pagamentos com cartão de crédito/débito e processar transações em terminais POS físicos.</div>
+        <div class="tags" style="margin-bottom:14px;">
+          <span class="tag tag-blue">Crédito</span>
+          <span class="tag tag-blue">Débito</span>
+          <span class="tag tag-blue">POS</span>
+          <span class="tag tag-blue">e-commerce</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">
+          <strong style="color:var(--text);">Como integrar:</strong><br>
+          → API REST da adquirente para autorização/captura<br>
+          → Webhook de confirmação → adapter → Fineract deposit<br>
+          → Necessário para emissão de cartão pré-pago/débito<br>
+          → Parceria com Visa/Mastercard para BIN próprio
+        </div>
+      </div>
+
+      <!-- Celcoin / BaaS -->
+      <div class="player-card">
+        <div class="player-stripe" style="background:#9333ea;"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;margin-top:8px;">
+          <span style="font-size:32px;">⚡</span>
+          <div>
+            <div class="player-name">Celcoin / SWAP / Dock</div>
+            <div class="player-type">BaaS — Banking as a Service</div>
+          </div>
+        </div>
+        <span class="diff diff-easy">✅ Baixa Complexidade</span>
+        <div class="player-desc">Plataformas BaaS brasileiras que fornecem infraestrutura bancária já regulada: PIX, conta, cartão, TED — tudo via API. Você usa o Fineract como ledger/core.</div>
+        <div class="tags" style="margin-bottom:14px;">
+          <span class="tag tag-purple">PIX pronto</span>
+          <span class="tag tag-purple">TED/DOC</span>
+          <span class="tag tag-purple">Cartão</span>
+          <span class="tag tag-purple">Regulado Bacen</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">
+          <strong style="color:var(--text);">⭐ Recomendado para começar!</strong><br>
+          → BaaS já tem licença do Bacen<br>
+          → API simples: criar conta → movimentar → receber webhook<br>
+          → Fineract recebe eventos do BaaS via adapter<br>
+          → Muito mais rápido que obter licença própria
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PLAYERS GLOBAIS -->
+<section class="section" id="players-global">
+  <div class="container">
+    <span class="section-tag">Players Globais</span>
+    <h2 class="section-title">Integrações internacionais</h2>
+    <p class="section-sub">Para usuários fora do Brasil, remessas internacionais ou produtos em USD/EUR.</p>
+
+    <div class="grid-4">
+
+      <div class="player-card">
+        <div class="player-stripe player-stripe2"></div>
+        <div style="font-size:28px;margin:12px 0 6px;">🟣</div>
+        <div class="player-name">Stripe</div>
+        <div class="player-type" style="margin-bottom:10px;">Gateway Global</div>
+        <span class="diff diff-easy">✅ Fácil</span>
+        <p style="font-size:12px;color:var(--muted);margin:10px 0;">Melhor API do mercado. SDK para todos os frameworks. Webhooks confiáveis. Ideal para pagamentos internacionais, assinaturas e marketplaces.</p>
+        <div class="tags">
+          <span class="tag tag-purple">Cartão Global</span>
+          <span class="tag tag-purple">Assinatura</span>
+          <span class="tag tag-purple">Connect</span>
+        </div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-stripe" style="background:#003087;"></div>
+        <div style="font-size:28px;margin:12px 0 6px;">🔵</div>
+        <div class="player-name">PayPal</div>
+        <div class="player-type" style="margin-bottom:10px;">Wallet Global</div>
+        <span class="diff diff-easy">✅ Fácil</span>
+        <p style="font-size:12px;color:var(--muted);margin:10px 0;">Grande base de usuários globais. Ideal para recebimentos internacionais e operações em USD. API bem documentada com webhooks.</p>
+        <div class="tags">
+          <span class="tag tag-blue">USD</span>
+          <span class="tag tag-blue">Global</span>
+          <span class="tag tag-blue">Buyers</span>
+        </div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-stripe" style="background:#F7931A;"></div>
+        <div style="font-size:28px;margin:12px 0 6px;">🌐</div>
+        <div class="player-name">Mojaloop</div>
+        <div class="player-type" style="margin-bottom:10px;">Switch Interbancário</div>
+        <span class="diff diff-hard">🔧 Complexo</span>
+        <p style="font-size:12px;color:var(--muted);margin:10px 0;">Rede aberta de pagamentos P2P para interoperabilidade entre bancos. Já integrado nativamente ao Fineract via Payment Hub EE e módulo de Interoperability.</p>
+        <div class="tags">
+          <span class="tag tag-orange">P2P</span>
+          <span class="tag tag-orange">Inter-bank</span>
+          <span class="tag tag-orange">Nativo</span>
+        </div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-stripe" style="background:#00A651;"></div>
+        <div style="font-size:28px;margin:12px 0 6px;">📡</div>
+        <div class="player-name">Wise / Remessa</div>
+        <div class="player-type" style="margin-bottom:10px;">Câmbio / Remessas</div>
+        <span class="diff diff-medium">⚡ Médio</span>
+        <p style="font-size:12px;color:var(--muted);margin:10px 0;">Para câmbio e remessas internacionais. Wise API permite criar contas em múltiplas moedas e transferências cross-border com taxas competitivas.</p>
+        <div class="tags">
+          <span class="tag tag-green">Câmbio</span>
+          <span class="tag tag-green">Multi-moeda</span>
+          <span class="tag tag-green">Swift</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMO INTEGRAR -->
+<section class="section section-alt" id="como-integrar">
+  <div class="container">
+    <span class="section-tag">Guia Técnico</span>
+    <h2 class="section-title">Como integrar um player na prática</h2>
+    <p class="section-sub">O padrão de integração é sempre o mesmo: 4 passos independente do player escolhido.</p>
+
+    <div class="grid-2" style="margin-bottom:28px;">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon" style="background:#dbeafe;">🔄</div>
+          <div><h3>Padrão Universal de Integração</h3><p>Funciona para qualquer player</p></div>
+        </div>
+        <div class="card-body">
+          <div class="steps">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Registrar Payment Type no Fineract</h4>
+                <p>Criar um <code>paymentType</code> (ex: "PIX", "Mercado Pago") para rastrear a origem de cada transação na contabilidade.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num" style="background:#10b981;">2</div>
+              <div class="step-content">
+                <h4>Criar o Adapter (microserviço/plugin)</h4>
+                <p>Um serviço que "fala" o protocolo do player externo (API deles) e traduz para chamadas REST do Fineract.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num" style="background:#f59e0b;">3</div>
+              <div class="step-content">
+                <h4>Configurar Webhooks bidirecionais</h4>
+                <p>Player → chama seu adapter quando pagamento é confirmado. Fineract → emite evento via Kafka quando transação é processada.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num" style="background:#8b5cf6;">4</div>
+              <div class="step-content">
+                <h4>Reconciliação automática</h4>
+                <p>Job noturno (Spring Batch / COB) compara extrato do player com transações no Fineract. Diferenças geram alertas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head">
+            <div class="card-icon" style="background:#fce7f3;">💙</div>
+            <div><h3>Exemplo: Integrar Mercado Pago</h3></div>
+          </div>
+          <div class="card-body">
+            <div class="code">
+<span class="c">// 1. Criar PaymentType no Fineract</span>
+<span class="k">POST</span> <span class="s">/api/v1/paymenttypes</span>
+{ <span class="k">"name"</span>: <span class="s">"Mercado Pago"</span>, <span class="k">"isSystemDefined"</span>: <span class="v">false</span> }
+
+<span class="c">// 2. Criar cobrança MP (seu adapter chama MP API)</span>
+<span class="k">POST</span> <span class="s">https://api.mercadopago.com/v1/payments</span>
+{
+  <span class="k">"transaction_amount"</span>: <span class="v">100.00</span>,
+  <span class="k">"payment_method_id"</span>: <span class="s">"pix"</span>,
+  <span class="k">"external_reference"</span>: <span class="s">"fineract-account-456"</span>
+}
+
+<span class="c">// 3. MP envia webhook quando aprovado</span>
+<span class="k">POST</span> <span class="s">https://seu-adapter.app/webhook/mp</span>
+{ <span class="k">"status"</span>: <span class="s">"approved"</span>, <span class="k">"external_reference"</span>: <span class="s">"fineract-account-456"</span> }
+
+<span class="c">// 4. Adapter credita no Fineract</span>
+<span class="k">POST</span> <span class="s">/api/v1/savingsaccounts/456/transactions?command=deposit</span>
+{
+  <span class="k">"amount"</span>: <span class="v">100.00</span>,
+  <span class="k">"paymentTypeId"</span>: <span class="v">5</span>, <span class="c">// ID do Mercado Pago</span>
+  <span class="k">"accountNumber"</span>: <span class="s">"MP-TXN-12345"</span>
+}
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <span style="font-size:20px;">✅</span>
+          <p><strong>Contabilidade automática</strong>Ao chamar o deposit com <code>paymentTypeId</code>, o Fineract registra automaticamente o journal entry: Débito na conta de recebíveis do gateway, Crédito na conta do cliente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIX específico -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:#ccfbf1;">🇧🇷</div>
+        <div><h3>Integração PIX — O caminho mais rápido para o Brasil</h3></div>
+      </div>
+      <div class="card-body">
+        <div class="grid-3">
+          <div style="background:#f8fafc;border-radius:10px;padding:16px;border:1px solid var(--border);">
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:8px;">🏁 Opção 1: Via BaaS (Recomendado)</h4>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Use Celcoin, SWAP, Dock ou BancaA3 como intermediário. Eles têm licença Bacen, você só integra a API deles.</p>
+            <ul class="checklist">
+              <li class="done">PIX em dias, não meses</li>
+              <li class="done">Sem licença Bacen própria</li>
+              <li class="done">API simples + webhooks</li>
+              <li class="warn">Custo por transação</li>
+            </ul>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:16px;border:1px solid var(--border);">
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:8px;">🔧 Opção 2: Via Mercado Pago / PagBank</h4>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">MP e PagBank já têm PIX integrado nas suas APIs. Você cria uma cobrança PIX no MP e eles cuidam do clearing.</p>
+            <ul class="checklist">
+              <li class="done">Integração conhecida</li>
+              <li class="done">QR Code PIX nativo</li>
+              <li class="done">Muito bem documentado</li>
+              <li class="warn">Liquidação D+1</li>
+            </ul>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:16px;border:1px solid var(--border);">
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:8px;">🏛️ Opção 3: PSP Direto (Bacen)</h4>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Registrar sua empresa como PSP no Bacen e acessar o SPI (Sistema de Pagamentos Instantâneos) diretamente.</p>
+            <ul class="checklist">
+              <li class="done">Controle total</li>
+              <li class="done">Menores custos por volume</li>
+              <li class="no">Processo longo (6-18 meses)</li>
+              <li class="no">Requer regulação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROTEIRO -->
+<section class="section" id="roteiro">
+  <div class="container">
+    <span class="section-tag">Plano de Execução</span>
+    <h2 class="section-title">Roteiro: do zero ao app bancário completo</h2>
+    <p class="section-sub">4 fases práticas para lançar seu app bancário com Fineract e integrações com players.</p>
+
+    <div class="roadmap" style="margin-bottom:28px;">
+      <div class="phase" style="background:#dbeafe;">
+        <div class="phase-num">Fase 1 · Meses 1-2</div>
+        <h3>🏗️ Fundação</h3>
+        <ul>
+          <li>Deploy Fineract (Docker/K8s)</li>
+          <li>Configurar PostgreSQL + TLS</li>
+          <li>OAuth2 + JWT + RBAC</li>
+          <li>Produto: Conta Corrente</li>
+          <li>Onboarding via API (CPF)</li>
+          <li>Fork do Mifos Pay</li>
+          <li>Design system / branding</li>
+        </ul>
+      </div>
+      <div class="phase" style="background:#d1fae5;">
+        <div class="phase-num">Fase 2 · Meses 2-4</div>
+        <h3>💳 Pagamentos Básicos</h3>
+        <ul>
+          <li>Integrar BaaS (Celcoin)</li>
+          <li>PIX via BaaS adapter</li>
+          <li>Mercado Pago adapter</li>
+          <li>Recarga via boleto/cartão</li>
+          <li>Webhook → Fineract deposit</li>
+          <li>Notificações push (FCM)</li>
+          <li>Extrato em tempo real</li>
+        </ul>
+      </div>
+      <div class="phase" style="background:#ede9fe;">
+        <div class="phase-num">Fase 3 · Meses 4-6</div>
+        <h3>🚀 Features Avançadas</h3>
+        <ul>
+          <li>Cartão virtual (parceria)</li>
+          <li>PagBank split payment</li>
+          <li>Crédito pessoal (Loan API)</li>
+          <li>Investimentos (savings)</li>
+          <li>Cashback engine</li>
+          <li>KYC Nível 2 (renda)</li>
+          <li>Open Finance fase 1</li>
+        </ul>
+      </div>
+      <div class="phase" style="background:#ffedd5;">
+        <div class="phase-num">Fase 4 · Meses 6-12</div>
+        <h3>🏦 Marketplace</h3>
+        <ul>
+          <li>Multi-tenant sellers</li>
+          <li>Motor de comissões</li>
+          <li>FIDC / Investidores</li>
+          <li>Cielo/Rede para POS</li>
+          <li>Open Finance fase 2</li>
+          <li>Stripe para global</li>
+          <li>Regulação Bacen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span style="font-size:22px;">💡</span>
+      <p><strong>Stack de tecnologia recomendada</strong>
+      <br>• <strong>Backend:</strong> Apache Fineract (Java 21) + microserviço de adapters (Node.js ou Go)
+      <br>• <strong>App Mobile:</strong> Mifos Pay fork (Kotlin KMP) ou Flutter com pacote <code>fineract_sdk</code>
+      <br>• <strong>API Gateway:</strong> Kong / AWS API Gateway / Nginx
+      <br>• <strong>Eventos:</strong> Apache Kafka ou RabbitMQ
+      <br>• <strong>Cloud:</strong> AWS (EKS) ou GCP (GKE) com PostgreSQL RDS/Cloud SQL
+      <br>• <strong>PIX (fase 1):</strong> Celcoin ou SWAP (BaaS) para ir rápido</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section class="section section-alt" id="comparativo">
+  <div class="container">
+    <span class="section-tag">Comparativo</span>
+    <h2 class="section-title">Players: o que cada um entrega</h2>
+    <p class="section-sub">Comparativo completo de capacidades para escolher os players certos para cada funcionalidade do seu app.</p>
+
+    <div class="card">
+      <div class="card-body" style="padding:0;overflow-x:auto;">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th style="min-width:180px;">Funcionalidade</th>
+              <th>🇧🇷 PIX</th>
+              <th>💙 Mercado Pago</th>
+              <th>🟢 PagBank</th>
+              <th>🟣 Stripe</th>
+              <th>🏦 Cielo</th>
+              <th>⚡ BaaS (Celcoin)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Transferência instantânea</strong></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>PIX Cobrança / QR</strong></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cartão de crédito/débito</strong></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Boleto bancário</strong></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="p">~</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Conta digital própria</strong></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Split de pagamento</strong></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="p">~</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Pagamento global</strong></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="n">✗</span></td>
+            </tr>
+            <tr>
+              <td><strong>Webhook confiável</strong></td>
+              <td><span class="p">~</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>SDK Mobile nativo</strong></td>
+              <td><span class="n">✗</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="y">✓</span></td>
+              <td><span class="p">~</span></td>
+              <td><span class="p">~</span></td>
+            </tr>
+            <tr>
+              <td><strong>Facilidade de integração</strong></td>
+              <td>🔴 Alta</td>
+              <td>🟢 Fácil</td>
+              <td>🟡 Média</td>
+              <td>🟢 Fácil</td>
+              <td>🟡 Média</td>
+              <td>🟢 Fácil</td>
+            </tr>
+            <tr>
+              <td><strong>Custo (taxa)</strong></td>
+              <td>Grátis PF</td>
+              <td>2-5% PJ</td>
+              <td>1-4% PJ</td>
+              <td>2.9%+$0.30</td>
+              <td>1.5-3%</td>
+              <td>Fixo/TXN</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;" class="grid-2">
+      <div class="callout success">
+        <span style="font-size:20px;">🎯</span>
+        <p><strong>Combinação ideal para começar no Brasil</strong><br>
+        1️⃣ <strong>BaaS (Celcoin)</strong> → PIX + TED + Conta<br>
+        2️⃣ <strong>Mercado Pago</strong> → Cartão + Boleto + Checkout<br>
+        3️⃣ <strong>Fineract</strong> → Ledger + Contabilidade + Motor de Charges<br>
+        4️⃣ <strong>Mifos Pay</strong> → App mobile white-label</p>
+      </div>
+      <div class="callout warn">
+        <span style="font-size:20px;">⚠️</span>
+        <p><strong>Atenção: regulação</strong><br>
+        Para <strong>emitir conta bancária</strong> com IBAN/ISPB próprio você precisa de licença Bacen (IP — Instituição de Pagamento). Para começar, use um BaaS como banco parceiro e depois solicite sua própria licença quando tiver volume/capital.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="section">
+  <div class="container">
+    <div class="summary-box">
+      <h2>🚀 Pronto para começar?</h2>
+      <p>Com o Apache Fineract como core + Mifos Pay como app + BaaS para PIX + Mercado Pago para cartão, você tem um banco digital completo operando em menos de 4 meses.</p>
+      <div class="summary-grid">
+        <div class="stat">
+          <span class="big">1</span>
+          <span class="lbl">Core Banking (Fineract)</span>
+        </div>
+        <div class="stat">
+          <span class="big">6+</span>
+          <span class="lbl">Players integráveis</span>
+        </div>
+        <div class="stat">
+          <span class="big">3</span>
+          <span class="lbl">Apps mobile prontos</span>
+        </div>
+        <div class="stat">
+          <span class="big">R$0</span>
+          <span class="lbl">Licença de software</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>App Bancário com Apache Fineract</strong> · Guia de Integrações · Junho 2026
+  <br><br>
+  Fineract: Apache 2.0 · Mifos Pay: MPL 2.0 · Integrações externas sujeitas aos termos de cada player
+</footer>
+
+<script>
+  const navLinks = document.querySelectorAll('.nav-inner a');
+  const sections = document.querySelectorAll('section[id]');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#'+id);
+        });
+      }
+    });
+  }, {threshold: 0.3});
+  sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
