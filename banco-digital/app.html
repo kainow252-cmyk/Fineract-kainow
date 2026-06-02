@@ -1243,6 +1243,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="lgn-err" id="lgnErr">❌ Usuário ou senha incorretos</div>
         <div class="lgn-hint">Demo: <b>mifos</b> / <b>password</b> &nbsp;ou&nbsp; <b>admin</b> / <b>admin</b></div>
 
+        <form onsubmit="doLogin();return false" autocomplete="on">
         <!-- CPF ou E-mail -->
         <div class="lgn-field">
           <label class="lgn-label">CPF ou E-mail</label>
@@ -1258,7 +1259,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="lgn-inp-wrap">
             <span class="lgn-inp-ico">🔒</span>
             <input class="lgn-inp" id="inpPass" type="password" value="password" placeholder="Digite sua senha" autocomplete="current-password" style="padding-right:44px">
-            <button class="lgn-inp-eye" onclick="togglePass()" title="Mostrar/ocultar senha">👁️</button>
+            <button type="button" class="lgn-inp-eye" onclick="togglePass()" title="Mostrar/ocultar senha">👁️</button>
           </div>
         </div>
 
@@ -1272,7 +1273,8 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
 
         <!-- Login button -->
-        <button class="lgn-btn-primary" onclick="doLogin()">Entrar</button>
+        <button type="submit" class="lgn-btn-primary">Entrar</button>
+        </form>
 
         <!-- Divider -->
         <div class="lgn-divider">ou continue com</div>
@@ -1612,8 +1614,8 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="f-chip" onclick="filterTx(this,'debit')">Saídas</div>
           <div class="f-chip" onclick="filterTx(this,'pix')">PIX</div>
           <div class="f-chip" onclick="filterTx(this,'ted')">TED</div>
-          <input type="month" value="2026-06" style="padding:7px 13px;border-radius:20px;font-size:12px;border:1.5px solid var(--border);background:var(--card);font-family:inherit;cursor:pointer">
-          <input class="f-search" placeholder="🔍 Buscar...">
+          <input aria-label="2026-06" type="month" value="2026-06" style="padding:7px 13px;border-radius:20px;font-size:12px;border:1.5px solid var(--border);background:var(--card);font-family:inherit;cursor:pointer">
+          <input class="f-search" id="globalSearch" aria-label="Buscar" placeholder="🔍 Buscar...">
         </div>
         <div id="extratoList"></div>
       </div>
@@ -3413,7 +3415,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
             <div class="sec-title" style="margin:0">📋 Extrato de Comissões — Junho/2026</div>
             <div style="display:flex;gap:8px">
-              <input placeholder="🔍 Buscar..." style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;width:160px;background:var(--card)">
+              <input aria-label="Buscar..." placeholder="🔍 Buscar..." style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;width:160px;background:var(--card)">
               <button class="btn-sm btn-p" onclick="exportarComissoes()">⬇️ CSV</button>
             </div>
           </div>
@@ -3809,8 +3811,8 @@ input,select,textarea{font-family:inherit;outline:none}
             <div class="sec-title">Emitir nova apólice</div>
             <div style="display:flex;flex-direction:column;gap:10px">
               <div class="f-grp" style="margin-bottom:0"><label class="f-label">Tipo de seguro</label><select class="f-inp" style="border-radius:9px;padding:11px 14px"><option>🚗 Seguro Auto</option><option>🏠 Seguro Residencial</option><option>🏥 Seguro Saúde</option><option>💼 Seguro Empresarial</option></select></div>
-              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Cliente</label><input class="f-inp" placeholder="Buscar cliente..." style="border-radius:9px;padding:11px 14px"></div>
-              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Valor segurado</label><input class="f-inp" placeholder="R$ 0,00" type="number" style="border-radius:9px;padding:11px 14px"></div>
+              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Cliente</label><input class="f-inp" aria-label="Buscar cliente" placeholder="Buscar cliente..." style="border-radius:9px;padding:11px 14px"></div>
+              <div class="f-grp" style="margin-bottom:0"><label class="f-label">Valor segurado</label><input class="f-inp" aria-label="Valor" placeholder="R$ 0,00" type="number" style="border-radius:9px;padding:11px 14px"></div>
               <button class="btn btn-primary" onclick="showToast('📄 Apólice emitida via Documenso!','success')" style="padding:12px">Emitir Apólice →</button>
             </div>
           </div>
@@ -3980,9 +3982,9 @@ input,select,textarea{font-family:inherit;outline:none}
       </div>
       <!-- Dados do cliente -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
-        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CPF</label><input value="•••.456.789-00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
-        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">DATA DE NASCIMENTO</label><input value="15/03/1990" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
-        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CEP</label><input placeholder="00000-000" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CPF</label><input aria-label=".456.789-00" value="•••.456.789-00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">DATA DE NASCIMENTO</label><input aria-label="15/03/1990" value="15/03/1990" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CEP</label><input aria-label="00000-000" placeholder="00000-000" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)"></div>
         <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PAGAMENTO</label>
           <select style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)">
             <option>Débito automático</option><option>Boleto mensal</option><option>Cartão crédito</option>
@@ -4035,7 +4037,7 @@ input,select,textarea{font-family:inherit;outline:none}
           </select>
         </div>
         <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">APORTE MENSAL (opcional)</label>
-          <input type="number" placeholder="R$ 0,00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)">
+          <input aria-label="R$ 0,00" type="number" placeholder="R$ 0,00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg)">
         </div>
       </div>
       <button class="btn btn-primary" style="padding:14px;font-size:15px;width:100%" onclick="contratarCDB()">📈 Investir agora</button>
@@ -4104,10 +4106,10 @@ input,select,textarea{font-family:inherit;outline:none}
       <div style="background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px">
         <div style="font-size:13px;font-weight:700;margin-bottom:10px">Dados do estabelecimento</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">RAZÃO SOCIAL / NOME</label><input placeholder="Ex: Mercado Silva Ltda" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
-          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CNPJ / CPF</label><input placeholder="00.000.000/0001-00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
-          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TELEFONE</label><input placeholder="(11) 99999-9999" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
-          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">E-MAIL COMERCIAL</label><input placeholder="contato@empresa.com.br" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">RAZÃO SOCIAL / NOME</label><input aria-label="Ex: Mercado Silva Ltda" placeholder="Ex: Mercado Silva Ltda" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CNPJ / CPF</label><input aria-label="00.000.000/0001-00" placeholder="00.000.000/0001-00" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TELEFONE</label><input aria-label="(11) 99999-9999" placeholder="(11) 99999-9999" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
+          <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">E-MAIL COMERCIAL</label><input aria-label="contato@empresa.com.br" placeholder="contato@empresa.com.br" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:#fff"></div>
         </div>
       </div>
       <button class="btn btn-primary" style="padding:14px;font-size:15px;width:100%" onclick="contratarParceiro()">🤝 Enviar proposta de parceria</button>
@@ -4210,23 +4212,23 @@ input,select,textarea{font-family:inherit;outline:none}
     <div style="padding:24px 28px;display:flex;flex-direction:column;gap:13px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Nome completo</label>
-          <input value="João da Silva" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <input aria-label="João da Silva" value="João da Silva" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
         <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">CPF</label>
-          <input value="•••.456.789-••" readonly style="width:100%;padding:12px 14px;border:1.5px solid #f0f0f0;background:#f9f9f9;border-radius:11px;font-size:14px;outline:none;color:#888"></div>
+          <input aria-label=".456.789-" value="•••.456.789-••" readonly style="width:100%;padding:12px 14px;border:1.5px solid #f0f0f0;background:#f9f9f9;border-radius:11px;font-size:14px;outline:none;color:#888"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Data de nascimento</label>
-          <input type="date" value="1990-05-15" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <input aria-label="1990-05-15" type="date" value="1990-05-15" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
         <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Telefone</label>
-          <input value="(11) 9 9999-8888" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <input aria-label="(11) 9 9999-8888" value="(11) 9 9999-8888" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       </div>
       <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">E-mail</label>
-        <input value="joao.silva@kainowpay.com.br" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <input aria-label="joao.silva@kainowpay.com.br" value="joao.silva@kainowpay.com.br" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Endereço</label>
-        <input value="Rua das Flores, 123 — São Paulo, SP" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <input aria-label="Rua das Flores, 123 — São Paul" value="Rua das Flores, 123 — São Paulo, SP" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">CEP</label>
-          <input value="01310-100" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <input aria-label="01310-100" value="01310-100" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
         <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Estado</label>
           <select style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none">
             <option selected>SP — São Paulo</option><option>RJ — Rio de Janeiro</option><option>MG — Minas Gerais</option></select></div>
@@ -4250,22 +4252,22 @@ input,select,textarea{font-family:inherit;outline:none}
       <div style="font-size:18px;font-weight:900">🔑 Alterar Senha</div>
       <button onclick="closeSenha()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
     </div>
-    <div style="padding:24px 26px;display:flex;flex-direction:column;gap:13px">
+    <form onsubmit="confirmarSenha();return false" autocomplete="on" style="padding:24px 26px;display:flex;flex-direction:column;gap:13px">
       <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Senha atual</label>
-        <input id="senha-atual" type="password" placeholder="Digite a senha atual" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <input id="senha-atual" type="password" autocomplete="current-password" placeholder="Digite a senha atual" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Nova senha</label>
-        <input id="senha-nova" type="password" placeholder="Mínimo 8 caracteres" oninput="checkSenhaForte()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <input id="senha-nova" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres" oninput="checkSenhaForte()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div id="senha-forca" style="display:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600"></div>
       <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Confirmar nova senha</label>
-        <input id="senha-conf" type="password" placeholder="Repita a nova senha" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <input id="senha-conf" type="password" autocomplete="new-password" placeholder="Repita a nova senha" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
       <div style="background:#f0fdf4;border-radius:10px;padding:12px;font-size:12px;color:#047857">
         ✅ Dica: Use letras maiúsculas, números e símbolos para uma senha forte.
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <button onclick="closeSenha()" style="padding:13px;border:1.5px solid #e0e0e0;background:#fff;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Cancelar</button>
-        <button onclick="confirmarSenha()" style="padding:13px;background:linear-gradient(135deg,#047857,#059669);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">🔒 Alterar senha</button>
+        <button type="button" onclick="closeSenha()" style="padding:13px;border:1.5px solid #e0e0e0;background:#fff;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Cancelar</button>
+        <button type="submit" style="padding:13px;background:linear-gradient(135deg,#047857,#059669);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">🔒 Alterar senha</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
@@ -7169,16 +7171,16 @@ function openNovoLead(){
       </div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">NOME COMPLETO</label><input placeholder="Ex: João da Silva" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CPF</label><input placeholder="000.000.000-00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">NOME COMPLETO</label><input aria-label="Ex: João da Silva" placeholder="Ex: João da Silva" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CPF</label><input aria-label="000.000.000-00" placeholder="000.000.000-00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <div><label style="font-size:12px;font-weight:700;color:var(--muted)">NICHO</label><select style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"><option>INSS</option><option>Servidor Público</option><option>Forças Armadas</option><option>Aposentado</option><option>Pensionista</option><option>CLT Convênio</option></select></div>
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR PRETENDIDO</label><input placeholder="R$ 0,00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR PRETENDIDO</label><input aria-label="R$ 0,00" placeholder="R$ 0,00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">RENDA MENSAL</label><input placeholder="R$ 0,00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">TELEFONE</label><input placeholder="(11) 99999-9999" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">RENDA MENSAL</label><input aria-label="R$ 0,00" placeholder="R$ 0,00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">TELEFONE</label><input aria-label="(11) 99999-9999" placeholder="(11) 99999-9999" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
         </div>
         <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CORRESPONDENTE</label><select style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"><option>Lotérica Boa Sorte</option><option>Mercado Silva &amp; Cia</option><option>Farmácia Popular</option><option>Papelaria Central</option></select></div>
         <div><label style="font-size:12px;font-weight:700;color:var(--muted)">OBSERVAÇÕES</label><textarea placeholder="Informações adicionais..." style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box;resize:vertical;min-height:70px"></textarea></div>
@@ -7209,8 +7211,8 @@ function openNovaProposta(){
       </div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CPF DO CLIENTE</label><input placeholder="000.000.000-00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
-          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">MATRÍCULA / NB</label><input placeholder="Número do benefício" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CPF DO CLIENTE</label><input aria-label="000.000.000-00" placeholder="000.000.000-00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">MATRÍCULA / NB</label><input aria-label="Número do benefício" placeholder="Número do benefício" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
           <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR SOLICITADO</label><input placeholder="R$ 0,00" id="prop-valor" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
@@ -7250,7 +7252,7 @@ function openRepassePix(){
         <div style="font-size:12px;color:var(--muted);margin-top:4px">Comissões aprovadas — Junho/2026</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px">
-        <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR DO REPASSE</label><input placeholder="R$ 0,00" value="18400.00" style="width:100%;margin-top:4px;padding:12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;background:var(--bg);box-sizing:border-box"></div>
+        <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR DO REPASSE</label><input aria-label="R$ 0,00" placeholder="R$ 0,00" value="18400.00" style="width:100%;margin-top:4px;padding:12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;background:var(--bg);box-sizing:border-box"></div>
         <div style="background:var(--bg);border-radius:9px;padding:12px"><div style="font-size:12px;font-weight:700;margin-bottom:4px">Chave PIX de recebimento</div><div style="font-size:13px;color:var(--p1)">CPF: •••.456.789-00 · Carlos Mota</div></div>
         <div style="background:#fef3c7;border-radius:9px;padding:10px;font-size:12px;color:var(--p2)">⚠️ Repasse antecipado sujeito a taxa de 0,5% sobre o valor</div>
         <button class="btn btn-primary" style="padding:13px;font-size:14px" onclick="document.getElementById('modal-repasse-pix').remove();showToast('✅ Repasse PIX solicitado! Será processado em até 30min.','success')">⚡ Confirmar Repasse PIX</button>
