@@ -2269,400 +2269,552 @@ input,select,textarea{font-family:inherit;outline:none}
 
       <!-- ██ CORRESPONDENTE BANCÁRIO ██ -->
       <div class="page" id="page-correspondente">
-        <!-- HERO CRM HEADER -->
-        <div style="background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden">
-          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏦</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏦 KaiNowPay CRM · Correspondente Bancário · Res. BCB nº 4.935</div>
-          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Central de Relacionamento Consignado</h2>
-          <p style="font-size:13.5px;opacity:.7">Gerencie leads, funil de vendas, pipeline consignado, nichos e equipes comerciais em um só lugar</p>
-          <div style="display:flex;gap:10px;margin-top:14px">
-            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openNovoLead()">＋ Novo Lead</button>
-            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openNovaProposta()">📄 Nova Proposta</button>
-            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openMapa()">📍 Mapa Correspondentes</button>
+
+        <!-- ─── HERO ─── -->
+        <div style="background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:var(--rl);padding:26px 28px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.06">🏦</div>
+          <div style="font-size:11px;opacity:.55;margin-bottom:3px;letter-spacing:.5px;text-transform:uppercase">KaiNowPay CRM · Correspondente Bancário · Res. BCB nº 4.935</div>
+          <h2 style="font-size:24px;font-weight:900;margin-bottom:4px">CRM CORBAN – Gestão Consignado</h2>
+          <p style="font-size:13px;opacity:.7;margin-bottom:14px">Propostas · Clientes · Funil de Vendas · Relatórios · Equipe · Administração</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1.5px solid rgba(255,255,255,.3);font-size:13px;padding:8px 18px;border-radius:9px" onclick="crmOpenModal('modal-nova-proposta')">＋ Nova Proposta</button>
+            <button class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.2);font-size:13px;padding:8px 18px;border-radius:9px" onclick="crmOpenModal('modal-novo-cliente')">＋ Novo Cliente</button>
+            <button class="btn" style="background:rgba(255,255,255,.10);color:#fff;border:1.5px solid rgba(255,255,255,.18);font-size:13px;padding:8px 18px;border-radius:9px" onclick="crmAba('crm-aba-relatorios')">📊 Relatórios</button>
           </div>
-        </div>
-        <!-- KPIs LINHA -->
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
-          <div class="card" style="text-align:center;border-top:3px solid var(--ok);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--ok)">147</div><div style="font-size:11px;color:var(--muted)">Leads ativos</div><div style="font-size:10px;color:var(--ok)">▲ +12 hoje</div></div>
-          <div class="card" style="text-align:center;border-top:3px solid var(--p1);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--p1)">38</div><div style="font-size:11px;color:var(--muted)">Em aprovação</div><div style="font-size:10px;color:var(--p1)">▲ +5 esta semana</div></div>
-          <div class="card" style="text-align:center;border-top:3px solid var(--teal);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--teal)">R$ 4,2M</div><div style="font-size:11px;color:var(--muted)">Propostas/mês</div><div style="font-size:10px;color:var(--ok)">▲ +28%</div></div>
-          <div class="card" style="text-align:center;border-top:3px solid var(--amber);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--amber)">1.284</div><div style="font-size:11px;color:var(--muted)">Correspondentes</div><div style="font-size:10px;color:var(--muted)">312 municípios</div></div>
-          <div class="card" style="text-align:center;border-top:3px solid var(--err);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--err)">R$ 84.200</div><div style="font-size:11px;color:var(--muted)">Comissões/mês</div><div style="font-size:10px;color:var(--ok)">▲ +22%</div></div>
-        </div>
-        <!-- TABS CRM -->
-        <div style="display:flex;gap:4px;margin-bottom:20px;background:var(--bg);padding:5px;border-radius:12px;overflow-x:auto">
-          <button id="crm-tab-dash" class="crm-tab active" onclick="setCrmTab('dash')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:var(--p1);color:#fff;white-space:nowrap">📊 Dashboard</button>
-          <button id="crm-tab-leads" class="crm-tab" onclick="setCrmTab('leads')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">👥 Leads</button>
-          <button id="crm-tab-funil" class="crm-tab" onclick="setCrmTab('funil')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">🔀 Funil Consignado</button>
-          <button id="crm-tab-nichos" class="crm-tab" onclick="setCrmTab('nichos')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">🎯 Nichos</button>
-          <button id="crm-tab-equipes" class="crm-tab" onclick="setCrmTab('equipes')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">👔 Equipes</button>
-          <button id="crm-tab-rede" class="crm-tab" onclick="setCrmTab('rede')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">🏪 Rede</button>
         </div>
 
-        <!-- TAB: DASHBOARD -->
-        <div id="crm-dash" class="crm-panel">
-          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px">
-            <!-- Pipeline resumo -->
-            <div class="card">
-              <div class="sec-title">🔀 Pipeline Consignado — Visão Geral</div>
-              <div style="display:flex;flex-direction:column;gap:6px" id="crm-pipeline-summary">
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
-                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#4f46e5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">1</div>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Simulador</div><div style="font-size:11px;color:var(--muted)">Simulações iniciadas</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--p1)">54</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
-                  <div style="width:80px;height:6px;background:#e0e7ff;border-radius:3px"><div style="width:82%;height:6px;background:var(--p1);border-radius:3px"></div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
-                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">2</div>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Proposta</div><div style="font-size:11px;color:var(--muted)">Formalizando contrato</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:#0284c7">31</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
-                  <div style="width:80px;height:6px;background:#e0f2fe;border-radius:3px"><div style="width:57%;height:6px;background:#0284c7;border-radius:3px"></div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
-                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">3</div>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Upload de Documentos</div><div style="font-size:11px;color:var(--muted)">Aguardando envio</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--amber)">19</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
-                  <div style="width:80px;height:6px;background:#fef3c7;border-radius:3px"><div style="width:35%;height:6px;background:var(--amber);border-radius:3px"></div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
-                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">4</div>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Assinatura</div><div style="font-size:11px;color:var(--muted)">Assinatura digital pendente</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:#7c3aed">14</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
-                  <div style="width:80px;height:6px;background:#ede9fe;border-radius:3px"><div style="width:26%;height:6px;background:#7c3aed;border-radius:3px"></div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
-                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#ef4444,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">5</div>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Aprovação</div><div style="font-size:11px;color:var(--muted)">Em análise bancária</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--err)">11</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
-                  <div style="width:80px;height:6px;background:#fee2e2;border-radius:3px"><div style="width:20%;height:6px;background:var(--err);border-radius:3px"></div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#f0fdf4;border-radius:9px;border:1px solid #bbf7d0">
-                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">✓</div>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Contratos Aprovados</div><div style="font-size:11px;color:var(--muted)">Comissão processada</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">18</div><div style="font-size:10px;color:var(--ok)">este mês</div></div>
-                  <div style="width:80px;height:6px;background:#dcfce7;border-radius:3px"><div style="width:100%;height:6px;background:var(--ok);border-radius:3px"></div></div>
-                </div>
-              </div>
+        <!-- ─── TABS ─── -->
+        <div class="crm-tabs" id="crm-tabs-bar" style="display:flex;gap:6px;margin-bottom:18px;border-bottom:2px solid var(--border);padding-bottom:0;overflow-x:auto;white-space:nowrap">
+          <div class="crm-tab active" id="crm-tab-dashboard" onclick="crmAba('crm-aba-dashboard')" style="padding:9px 18px;font-size:13px;font-weight:700;color:var(--p1);border-bottom:2.5px solid var(--p1);cursor:pointer;white-space:nowrap">📊 Dashboard</div>
+          <div class="crm-tab" id="crm-tab-propostas" onclick="crmAba('crm-aba-propostas')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">📋 Propostas</div>
+          <div class="crm-tab" id="crm-tab-clientes" onclick="crmAba('crm-aba-clientes')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">👥 Clientes</div>
+          <div class="crm-tab" id="crm-tab-funil" onclick="crmAba('crm-aba-funil')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">🔀 Funil</div>
+          <div class="crm-tab" id="crm-tab-relatorios" onclick="crmAba('crm-aba-relatorios')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">📈 Relatórios</div>
+          <div class="crm-tab" id="crm-tab-equipe" onclick="crmAba('crm-aba-equipe')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">👤 Equipe</div>
+          <div class="crm-tab" id="crm-tab-admin" onclick="crmAba('crm-aba-admin')" style="padding:9px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">⚙️ Admin</div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             ABA: DASHBOARD
+        ════════════════════════════════════ -->
+        <div id="crm-aba-dashboard">
+          <!-- KPIs -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px" id="crm-kpi-grid">
+            <div class="card" style="text-align:center;padding:16px 12px">
+              <div style="font-size:28px;font-weight:900;color:var(--p1)" id="kpi-total-prop">0</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Total de Propostas</div>
             </div>
-            <!-- Atividade recente + metas -->
-            <div style="display:flex;flex-direction:column;gap:14px">
-              <div class="card" style="flex:1">
-                <div class="sec-title">🎯 Meta Mensal</div>
-                <div style="text-align:center;padding:8px 0 12px">
-                  <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Propostas aprovadas</div>
-                  <div style="font-size:32px;font-weight:900;color:var(--ok)">18 <span style="font-size:16px;color:var(--muted)">/ 30</span></div>
-                  <div style="background:#e5e7eb;border-radius:99px;height:10px;margin:10px 0 6px;overflow:hidden"><div style="width:60%;height:10px;background:linear-gradient(90deg,var(--ok),#86efac);border-radius:99px"></div></div>
-                  <div style="font-size:12px;color:var(--muted)">60% atingido · 12 dias restantes</div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                  <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center"><div style="font-size:17px;font-weight:900;color:var(--p1)">R$ 4,2M</div><div style="font-size:10.5px;color:var(--muted)">Volume proposto</div></div>
-                  <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center"><div style="font-size:17px;font-weight:900;color:var(--teal)">R$ 84,2k</div><div style="font-size:10.5px;color:var(--muted)">Comissão gerada</div></div>
-                </div>
-              </div>
-              <div class="card" style="flex:1">
-                <div class="sec-title">⚡ Atividade recente</div>
-                <div style="display:flex;flex-direction:column;gap:7px">
-                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--ok);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">Maria Santos aprovada ✅</div><div style="font-size:11px;color:var(--muted)">INSS · R$ 18.400 · há 15min</div></div></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--p1);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">João Pedro — Upload docs</div><div style="font-size:11px;color:var(--muted)">Servidor · R$ 32.000 · há 42min</div></div></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--amber);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">Ana Lima — Aguardando assinatura</div><div style="font-size:11px;color:var(--muted)">Aposentado · R$ 9.800 · há 1h</div></div></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">Carlos Neto — Nova simulação</div><div style="font-size:11px;color:var(--muted)">CLT Convênio · R$ 15.000 · há 2h</div></div></div>
-                </div>
-              </div>
+            <div class="card" style="text-align:center;padding:16px 12px">
+              <div style="font-size:22px;font-weight:900;color:#22c55e" id="kpi-valor-total">R$ 0</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Valor Total</div>
+            </div>
+            <div class="card" style="text-align:center;padding:16px 12px">
+              <div style="font-size:28px;font-weight:900;color:#f59e0b" id="kpi-pagas">0</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Propostas Pagas</div>
+            </div>
+            <div class="card" style="text-align:center;padding:16px 12px">
+              <div style="font-size:22px;font-weight:900;color:#7c3aed" id="kpi-ticket">R$ 0</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Ticket Médio</div>
             </div>
           </div>
-          <!-- Top correspondentes -->
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
+            <!-- Distribuição por Status -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">📊 Distribuição por Status</div>
+              <div id="crm-status-dist"></div>
+            </div>
+            <!-- Desempenho por Operador -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">🏆 Top Operadores</div>
+              <div id="crm-top-operadores"></div>
+            </div>
+          </div>
+
+          <!-- Propostas Recentes -->
           <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-              <div class="sec-title" style="margin:0">🏆 Top Correspondentes — Junho/2026</div>
-              <button class="btn-sm btn-p" onclick="setCrmTab('rede')">Ver todos →</button>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <div class="sec-title">🕐 Propostas Recentes</div>
+              <button class="btn btn-sm" style="font-size:12px;padding:5px 12px;background:var(--p1);color:#fff;border-radius:8px" onclick="crmAba('crm-aba-propostas')">Ver todas →</button>
             </div>
-            <table style="width:100%;border-collapse:collapse">
-              <thead><tr style="background:var(--bg)">
-                <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted)">#</th>
-                <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted)">CORRESPONDENTE</th>
-                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">NICHO</th>
-                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">PROPOSTAS</th>
-                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">VOLUME</th>
-                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">COMISSÃO</th>
-              </tr></thead>
-              <tbody>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 12px;font-weight:900;color:var(--amber)">🥇</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Lotérica Boa Sorte</div><div style="font-size:11px;color:var(--muted)">Av. Brasil, 456 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#ede9fe;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">47</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 620.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 12.400</td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 12px;font-weight:900;color:#9ca3af">🥈</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Mercado Silva &amp; Cia</div><div style="font-size:11px;color:var(--muted)">Rua das Flores, 123 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">38</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 540.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 10.800</td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 12px;font-weight:900;color:#b45309">🥉</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Farmácia Popular</div><div style="font-size:11px;color:var(--muted)">Rua São João, 89 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">29</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 390.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 7.800</td></div></tr>
-                <tr><td style="padding:9px 12px;font-weight:700;color:var(--muted)">4</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Papelaria Central</div><div style="font-size:11px;color:var(--muted)">Praça da Sé, 10 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Forças Arm.</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">22</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 280.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 5.600</td></tr>
-              </tbody>
-            </table>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:13px" id="crm-tabela-recentes">
+                <thead><tr style="background:var(--bg);color:var(--muted);font-size:11.5px;text-transform:uppercase">
+                  <th style="padding:8px 10px;text-align:left">ID</th>
+                  <th style="padding:8px 10px;text-align:left">Cliente</th>
+                  <th style="padding:8px 10px;text-align:left">Convênio</th>
+                  <th style="padding:8px 10px;text-align:left">Operação</th>
+                  <th style="padding:8px 10px;text-align:right">Valor</th>
+                  <th style="padding:8px 10px;text-align:left">Status</th>
+                  <th style="padding:8px 10px;text-align:left">Data</th>
+                  <th style="padding:8px 10px;text-align:center">Ações</th>
+                </tr></thead>
+                <tbody id="crm-tbody-recentes"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <!-- TAB: LEADS -->
-        <div id="crm-leads" class="crm-panel" style="display:none">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-            <div style="display:flex;gap:8px;align-items:center">
-              <input id="leads-search" placeholder="🔍  Buscar lead..." style="padding:9px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;width:220px;background:var(--card)" oninput="filtrarLeads()">
-              <select id="leads-filter-nicho" style="padding:9px;border:1.5px solid var(--border);border-radius:9px;font-size:12.5px;background:var(--card)" onchange="filtrarLeads()">
-                <option value="">Todos nichos</option>
-                <option>INSS</option><option>Servidor Público</option><option>Forças Armadas</option>
-                <option>Aposentado</option><option>Pensionista</option><option>CLT Convênio</option>
+        <!-- ════════════════════════════════════
+             ABA: PROPOSTAS
+        ════════════════════════════════════ -->
+        <div id="crm-aba-propostas" style="display:none">
+          <!-- Barra de filtros -->
+          <div class="card" style="margin-bottom:14px">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <input id="crm-busca" type="text" placeholder="🔍 Buscar por nome, CPF, ID..." style="flex:1;min-width:180px;padding:9px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt);outline:none" oninput="crmFiltrar()">
+              <select id="crm-filtro-status" onchange="crmFiltrar()" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt)">
+                <option value="">Todos os Status</option>
+                <option>PENDENTE</option><option>DIGITADO</option><option>EM DIGITAÇÃO</option>
+                <option>AGUARD DIGITAÇÃO</option><option>AGUARDANDO AVERBAÇÃO</option>
+                <option>AVERBADA</option><option>FORMALIZAÇÃO CONCLUÍDA</option>
+                <option>PAGA</option><option>CANCELADO</option><option>SALDO RETORNADO</option>
               </select>
-              <select id="leads-filter-etapa" style="padding:9px;border:1.5px solid var(--border);border-radius:9px;font-size:12.5px;background:var(--card)" onchange="filtrarLeads()">
-                <option value="">Todas etapas</option>
-                <option>Simulador</option><option>Proposta</option><option>Upload Docs</option>
-                <option>Assinatura</option><option>Aprovação</option><option>Aprovado</option>
+              <select id="crm-filtro-convenio" onchange="crmFiltrar()" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt)">
+                <option value="">Todos Convênios</option>
+                <option>INSS</option><option>SIAPE</option><option>Forças Armadas</option>
+                <option>Servidor Estadual</option><option>Servidor Municipal</option>
+                <option>CLT Convênio</option><option>FGTS</option>
+              </select>
+              <select id="crm-filtro-ordem" onchange="crmFiltrar()" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt)">
+                <option value="desc">Mais recente</option>
+                <option value="asc">Mais antiga</option>
+                <option value="valor_desc">Maior valor</option>
+              </select>
+              <button class="btn" style="padding:9px 18px;background:var(--p1);color:#fff;border-radius:9px;font-size:13px;font-weight:700" onclick="crmOpenModal('modal-nova-proposta')">＋ Nova Proposta</button>
+            </div>
+          </div>
+          <!-- Tabela propostas -->
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div class="sec-title">📋 Propostas Cadastradas</div>
+              <span id="crm-count-props" style="font-size:12px;color:var(--muted);background:var(--bg);padding:4px 10px;border-radius:20px;font-weight:600">0 propostas</span>
+            </div>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <thead><tr style="background:var(--bg);color:var(--muted);font-size:11px;text-transform:uppercase">
+                  <th style="padding:8px 10px;text-align:left">ID</th>
+                  <th style="padding:8px 10px;text-align:left">Cliente</th>
+                  <th style="padding:8px 10px;text-align:left">CPF</th>
+                  <th style="padding:8px 10px;text-align:left">Convênio</th>
+                  <th style="padding:8px 10px;text-align:left">Banco</th>
+                  <th style="padding:8px 10px;text-align:left">Operação</th>
+                  <th style="padding:8px 10px;text-align:left">Prazo</th>
+                  <th style="padding:8px 10px;text-align:right">Valor</th>
+                  <th style="padding:8px 10px;text-align:right">Parcela</th>
+                  <th style="padding:8px 10px;text-align:left">Canal</th>
+                  <th style="padding:8px 10px;text-align:left">Status</th>
+                  <th style="padding:8px 10px;text-align:left">Operador</th>
+                  <th style="padding:8px 10px;text-align:left">Data</th>
+                  <th style="padding:8px 10px;text-align:center">Ações</th>
+                </tr></thead>
+                <tbody id="crm-tbody-propostas"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             ABA: CLIENTES
+        ════════════════════════════════════ -->
+        <div id="crm-aba-clientes" style="display:none">
+          <div class="card" style="margin-bottom:14px">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <input id="crm-busca-cli" type="text" placeholder="🔍 Buscar cliente por nome ou CPF..." style="flex:1;min-width:200px;padding:9px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt);outline:none" oninput="crmFiltrarClientes()">
+              <select id="crm-filtro-convenio-cli" onchange="crmFiltrarClientes()" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt)">
+                <option value="">Todos Convênios</option>
+                <option>INSS</option><option>SIAPE</option><option>Forças Armadas</option>
+                <option>Servidor Estadual</option><option>CLT Convênio</option>
+              </select>
+              <button class="btn" style="padding:9px 18px;background:var(--p1);color:#fff;border-radius:9px;font-size:13px;font-weight:700" onclick="crmOpenModal('modal-novo-cliente')">＋ Novo Cliente</button>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div class="sec-title">👥 Base de Clientes</div>
+              <span id="crm-count-clientes" style="font-size:12px;color:var(--muted);background:var(--bg);padding:4px 10px;border-radius:20px;font-weight:600">0 clientes</span>
+            </div>
+            <div id="crm-grid-clientes" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"></div>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             ABA: FUNIL DE VENDAS (KANBAN)
+        ════════════════════════════════════ -->
+        <div id="crm-aba-funil" style="display:none">
+          <div class="card" style="margin-bottom:12px;padding:14px 18px">
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+              <div class="sec-title">🔀 Funil de Vendas – Pipeline Consignado</div>
+              <span style="font-size:12px;color:var(--muted)">Arraste os cards entre colunas · 9 etapas</span>
+              <select id="crm-funil-filtro" onchange="crmBuildKanban()" style="margin-left:auto;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12.5px;background:var(--bg);color:var(--txt)">
+                <option value="">Todas Convênios</option>
+                <option>INSS</option><option>SIAPE</option><option>Forças Armadas</option>
+                <option>Servidor Estadual</option><option>CLT Convênio</option>
               </select>
             </div>
-            <button class="btn btn-primary" style="padding:9px 18px" onclick="openNovoLead()">＋ Novo Lead</button>
           </div>
-          <div class="card" style="padding:0;overflow:hidden">
-            <table style="width:100%;border-collapse:collapse" id="leads-table">
-              <thead><tr style="background:var(--bg)">
-                <th style="padding:11px 14px;text-align:left;font-size:11.5px;color:var(--muted)">CLIENTE</th>
-                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">NICHO</th>
-                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">ETAPA</th>
-                <th style="padding:11px 14px;text-align:right;font-size:11.5px;color:var(--muted)">VALOR PROPOSTA</th>
-                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">CORRESPONDENTE</th>
-                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">DATA</th>
-                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">AÇÃO</th>
-              </tr></thead>
-              <tbody id="leads-tbody"></tbody>
-            </table>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px">
+            <div id="crm-kanban" style="display:grid;grid-template-columns:repeat(9,minmax(185px,185px));gap:10px;min-width:max-content"></div>
           </div>
         </div>
 
-        <!-- TAB: FUNIL CONSIGNADO (KANBAN) -->
-        <div id="crm-funil" class="crm-panel" style="display:none">
-          <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Pipeline KaiNowPay Consignado · 9 etapas · Arraste os cards entre colunas</div>
-          <div style="display:grid;grid-template-columns:repeat(9,minmax(155px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px" id="kanban-board">
-            <!-- Kanban columns geradas por JS -->
-          </div>
-        </div>
-
-        <!-- TAB: NICHOS -->
-        <div id="crm-nichos" class="crm-panel" style="display:none">
+        <!-- ════════════════════════════════════
+             ABA: RELATÓRIOS
+        ════════════════════════════════════ -->
+        <div id="crm-aba-relatorios" style="display:none">
+          <!-- Resumo mensal -->
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px">
-            <!-- INSS -->
-            <div class="card" style="border-top:4px solid #6d28d9;position:relative;overflow:hidden">
-              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">👴</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#5b21b6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">👴</div>
-                <div><div style="font-size:15px;font-weight:900">INSS</div><div style="font-size:11px;color:var(--muted)">Instituto Nacional do Seguro Social</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#6d28d9">1,39% a.m.</div></div>
-                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#6d28d9">35%</div></div>
-                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#6d28d9">R$ 12.400</div></div>
-                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#6d28d9">84 meses</div></div>
-              </div>
-              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Beneficiários INSS · Cartão consignado disponível · Desconto folha automático</div>
-              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('INSS')">Simular para este nicho →</button>
+            <div class="card" style="padding:18px 16px">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Volume Mensal</div>
+              <div style="font-size:24px;font-weight:900;color:var(--p1)" id="rel-vol-mensal">R$ 0</div>
+              <div style="font-size:11.5px;color:#22c55e;margin-top:4px">↑ +18% vs mês anterior</div>
             </div>
-            <!-- Servidores Públicos -->
-            <div class="card" style="border-top:4px solid #1d4ed8;position:relative;overflow:hidden">
-              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🏛️</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🏛️</div>
-                <div><div style="font-size:15px;font-weight:900">Servidores Públicos</div><div style="font-size:11px;color:var(--muted)">Federal, Estadual e Municipal</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">0,99% a.m.</div></div>
-                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">35%</div></div>
-                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">R$ 28.000</div></div>
-                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">96 meses</div></div>
-              </div>
-              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Convênio com órgãos públicos · Siape/SIGEPE · Estabilidade no emprego</div>
-              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Servidor')">Simular para este nicho →</button>
+            <div class="card" style="padding:18px 16px">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Taxa de Aprovação</div>
+              <div style="font-size:24px;font-weight:900;color:#22c55e" id="rel-taxa-aprov">0%</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Propostas pagas / total</div>
             </div>
-            <!-- Forças Armadas -->
-            <div class="card" style="border-top:4px solid #92400e;position:relative;overflow:hidden">
-              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🎖️</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#b45309,#92400e);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🎖️</div>
-                <div><div style="font-size:15px;font-weight:900">Forças Armadas</div><div style="font-size:11px;color:var(--muted)">Exército, Marinha e Aeronáutica</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#92400e">1,15% a.m.</div></div>
-                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#92400e">35%</div></div>
-                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#92400e">R$ 35.000</div></div>
-                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#92400e">96 meses</div></div>
-              </div>
-              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ SIGPES / Contracheque militar · Maior ticket médio · Cartão 6% a.a.</div>
-              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Forças Armadas')">Simular para este nicho →</button>
+            <div class="card" style="padding:18px 16px">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Comissão Estimada</div>
+              <div style="font-size:24px;font-weight:900;color:#f59e0b" id="rel-comissao">R$ 0</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:4px">2% média sobre valor</div>
             </div>
-            <!-- Aposentados -->
-            <div class="card" style="border-top:4px solid #047857;position:relative;overflow:hidden">
-              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🌿</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🌿</div>
-                <div><div style="font-size:15px;font-weight:900">Aposentados</div><div style="font-size:11px;color:var(--muted)">Beneficiários de aposentadoria</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#047857">1,39% a.m.</div></div>
-                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#047857">35%</div></div>
-                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#047857">R$ 9.800</div></div>
-                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#047857">84 meses</div></div>
-              </div>
-              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Cartão benefício INSS · Refinanciamento disponível · Alto volume de leads</div>
-              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Aposentado')">Simular para este nicho →</button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <!-- Evolução Mensal -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">📈 Evolução de Propostas (6 meses)</div>
+              <div id="rel-evolucao" style="display:flex;flex-direction:column;gap:8px"></div>
             </div>
-            <!-- Pensionistas -->
-            <div class="card" style="border-top:4px solid #0e7490;position:relative;overflow:hidden">
-              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">💙</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#0891b2,#0e7490);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">💙</div>
-                <div><div style="font-size:15px;font-weight:900">Pensionistas</div><div style="font-size:11px;color:var(--muted)">Pensionistas do INSS e militares</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#0e7490">1,39% a.m.</div></div>
-                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#0e7490">35%</div></div>
-                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#0e7490">R$ 8.200</div></div>
-                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#0e7490">84 meses</div></div>
-              </div>
-              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Desconto automático no benefício · Sem análise de crédito restritiva</div>
-              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Pensionista')">Simular para este nicho →</button>
+            <!-- Por Convênio -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">🎯 Volume por Convênio</div>
+              <div id="rel-por-convenio" style="display:flex;flex-direction:column;gap:8px"></div>
             </div>
-            <!-- CLT Convênio -->
-            <div class="card" style="border-top:4px solid #dc2626;position:relative;overflow:hidden">
-              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🏢</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🏢</div>
-                <div><div style="font-size:15px;font-weight:900">CLT com Convênio</div><div style="font-size:11px;color:var(--muted)">Empregados de empresas conveniadas</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#dc2626">1,49% a.m.</div></div>
-                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#dc2626">30%</div></div>
-                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#dc2626">R$ 7.500</div></div>
-                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#dc2626">48 meses</div></div>
-              </div>
-              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Empresas conveniadas · Desconto em folha · Aprovação mais ágil</div>
-              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('CLT Convênio')">Simular para este nicho →</button>
+          </div>
+
+          <!-- Por Banco -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="sec-title" style="margin-bottom:14px">🏦 Ranking de Bancos</div>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:13px" id="rel-tabela-bancos">
+                <thead><tr style="background:var(--bg);color:var(--muted);font-size:11px;text-transform:uppercase">
+                  <th style="padding:8px 10px;text-align:left">Banco</th>
+                  <th style="padding:8px 10px;text-align:right">Qtd</th>
+                  <th style="padding:8px 10px;text-align:right">Volume</th>
+                  <th style="padding:8px 10px;text-align:right">Ticket Médio</th>
+                  <th style="padding:8px 10px;text-align:left">Share</th>
+                </tr></thead>
+                <tbody id="rel-tbody-bancos"></tbody>
+              </table>
             </div>
+          </div>
+
+          <!-- Por Canal de Vendas -->
+          <div class="card">
+            <div class="sec-title" style="margin-bottom:14px">📡 Canal de Captação</div>
+            <div id="rel-canais" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px"></div>
           </div>
         </div>
 
-        <!-- TAB: EQUIPES COMERCIAIS -->
-        <div id="crm-equipes" class="crm-panel" style="display:none">
+        <!-- ════════════════════════════════════
+             ABA: EQUIPE
+        ════════════════════════════════════ -->
+        <div id="crm-aba-equipe" style="display:none">
+          <!-- Stats equipe -->
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-            <div class="card" style="text-align:center;border-top:3px solid var(--p1)"><div style="font-size:22px;font-weight:900;color:var(--p1)">3</div><div style="font-size:11px;color:var(--muted)">Supervisores</div></div>
-            <div class="card" style="text-align:center;border-top:3px solid var(--ok)"><div style="font-size:22px;font-weight:900;color:var(--ok)">18</div><div style="font-size:11px;color:var(--muted)">Agentes ativos</div></div>
-            <div class="card" style="text-align:center;border-top:3px solid var(--amber)"><div style="font-size:22px;font-weight:900;color:var(--amber)">R$ 84,2k</div><div style="font-size:11px;color:var(--muted)">Comissão equipe</div></div>
-            <div class="card" style="text-align:center;border-top:3px solid var(--teal)"><div style="font-size:22px;font-weight:900;color:var(--teal)">127</div><div style="font-size:11px;color:var(--muted)">Propostas enviadas</div></div>
-          </div>
-          <!-- Ranking agentes -->
-          <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px">
-            <div class="card">
-              <div class="sec-title">🏆 Ranking de Agentes — Junho/2026</div>
-              <div style="display:flex;flex-direction:column;gap:8px" id="ranking-agentes">
-                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:linear-gradient(135deg,#fef9c3,#fef3c7);border-radius:10px;border:1px solid #fde68a">
-                  <div style="font-size:22px">🥇</div>
-                  <div style="flex:1"><div style="font-size:13.5px;font-weight:800">Carlos Mota</div><div style="font-size:11px;color:var(--muted)">Supervisor · INSS + Servidor</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 18.400</div><div style="font-size:10.5px;color:var(--muted)">28 propostas</div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
-                  <div style="font-size:22px">🥈</div>
-                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Fernanda Lima</div><div style="font-size:11px;color:var(--muted)">Agente · Forças Armadas</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 12.800</div><div style="font-size:10.5px;color:var(--muted)">19 propostas</div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
-                  <div style="font-size:22px">🥉</div>
-                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Roberto Souza</div><div style="font-size:11px;color:var(--muted)">Agente · INSS + Aposentado</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 9.200</div><div style="font-size:10.5px;color:var(--muted)">14 propostas</div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
-                  <div style="font-size:20px;color:var(--muted)">4</div>
-                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Juliana Pereira</div><div style="font-size:11px;color:var(--muted)">Agente · Servidor + CLT</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 7.600</div><div style="font-size:10.5px;color:var(--muted)">11 propostas</div></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
-                  <div style="font-size:20px;color:var(--muted)">5</div>
-                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Anderson Cruz</div><div style="font-size:11px;color:var(--muted)">Agente · Pensionista</div></div>
-                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 5.400</div><div style="font-size:10.5px;color:var(--muted)">8 propostas</div></div>
-                </div>
-              </div>
+            <div class="card" style="text-align:center;padding:16px 10px">
+              <div style="font-size:26px;font-weight:900;color:var(--p1)">8</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Operadores Ativos</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:14px">
-              <div class="card">
-                <div class="sec-title">📋 Times por Supervisor</div>
-                <div style="display:flex;flex-direction:column;gap:10px">
-                  <div style="padding:12px;background:var(--bg);border-radius:10px">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                      <div style="font-size:13px;font-weight:800">Carlos Mota</div>
-                      <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">Supervisor</span>
-                    </div>
-                    <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">7 agentes · Nichos: INSS, Servidor, Forças Arm.</div>
-                    <div style="background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="width:78%;height:6px;background:var(--ok);border-radius:99px"></div></div>
-                    <div style="font-size:10.5px;color:var(--muted);margin-top:4px">Meta 78% · R$ 52.000 / R$ 67.000</div>
-                  </div>
-                  <div style="padding:12px;background:var(--bg);border-radius:10px">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                      <div style="font-size:13px;font-weight:800">Patrícia Rocha</div>
-                      <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">Supervisora</span>
-                    </div>
-                    <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">6 agentes · Nichos: Aposentado, Pensionista</div>
-                    <div style="background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="width:55%;height:6px;background:var(--amber);border-radius:99px"></div></div>
-                    <div style="font-size:10.5px;color:var(--muted);margin-top:4px">Meta 55% · R$ 21.000 / R$ 38.000</div>
-                  </div>
-                  <div style="padding:12px;background:var(--bg);border-radius:10px">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                      <div style="font-size:13px;font-weight:800">Diego Santos</div>
-                      <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">Supervisor</span>
-                    </div>
-                    <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">5 agentes · Nichos: CLT Convênio, Servidor</div>
-                    <div style="background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="width:42%;height:6px;background:var(--err);border-radius:99px"></div></div>
-                    <div style="font-size:10.5px;color:var(--muted);margin-top:4px">Meta 42% · R$ 11.200 / R$ 26.000</div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="sec-title">➕ Adicionar Agente</div>
-                <div style="display:flex;flex-direction:column;gap:8px">
-                  <input placeholder="Nome completo" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--card)">
-                  <input placeholder="CPF / E-mail" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--card)">
-                  <select style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--card)">
-                    <option>Supervisor: Carlos Mota</option>
-                    <option>Supervisora: Patrícia Rocha</option>
-                    <option>Supervisor: Diego Santos</option>
-                  </select>
-                  <button class="btn btn-primary" style="padding:10px" onclick="showToast('✅ Agente cadastrado com sucesso!','success')">Cadastrar Agente</button>
-                </div>
-              </div>
+            <div class="card" style="text-align:center;padding:16px 10px">
+              <div style="font-size:26px;font-weight:900;color:#22c55e">3</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Adm / Master</div>
+            </div>
+            <div class="card" style="text-align:center;padding:16px 10px">
+              <div style="font-size:26px;font-weight:900;color:#f59e0b">94%</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Taxa Atividade</div>
+            </div>
+            <div class="card" style="text-align:center;padding:16px 10px">
+              <div style="font-size:26px;font-weight:900;color:#7c3aed">12.4</div>
+              <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Média Props/Op</div>
+            </div>
+          </div>
+
+          <!-- Ranking Operadores -->
+          <div class="card" style="margin-bottom:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <div class="sec-title">🏆 Ranking de Operadores</div>
+              <span style="font-size:11px;color:var(--muted)">Mês atual · Jun/2026</span>
+            </div>
+            <div id="crm-equipe-ranking" style="display:flex;flex-direction:column;gap:10px"></div>
+          </div>
+
+          <!-- Cards dos usuários -->
+          <div class="card">
+            <div class="sec-title" style="margin-bottom:14px">👤 Usuários do Sistema</div>
+            <div id="crm-equipe-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"></div>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             ABA: ADMIN
+        ════════════════════════════════════ -->
+        <div id="crm-aba-admin" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+            <!-- Status / Promotoras -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">🔖 Status das Propostas</div>
+              <div id="adm-status-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
+              <button class="btn" style="width:100%;padding:9px;background:var(--p1);color:#fff;border-radius:9px;font-size:13px;font-weight:600" onclick="crmOpenModal('modal-novo-status')">＋ Novo Status</button>
+            </div>
+
+            <!-- Bancos -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">🏦 Bancos Cadastrados</div>
+              <input type="text" id="adm-busca-banco" placeholder="Filtrar banco..." style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;margin-bottom:10px" oninput="admFiltrarBancos()">
+              <div id="adm-bancos-list" style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:5px"></div>
+            </div>
+
+            <!-- Notificações -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">🔔 Notificações do Sistema</div>
+              <div id="adm-notif-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
+              <button class="btn" style="width:100%;padding:9px;background:#7c3aed;color:#fff;border-radius:9px;font-size:13px;font-weight:600" onclick="crmOpenModal('modal-nova-notif')">📨 Enviar Notificação</button>
+            </div>
+
+            <!-- Promotoras -->
+            <div class="card">
+              <div class="sec-title" style="margin-bottom:14px">🏢 Promotoras / Correspondentes</div>
+              <div id="adm-promotoras-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
+              <button class="btn" style="width:100%;padding:9px;background:#047857;color:#fff;border-radius:9px;font-size:13px;font-weight:600" onclick="crmOpenModal('modal-nova-promotora')">＋ Nova Promotora</button>
             </div>
           </div>
         </div>
 
-        <!-- TAB: REDE DE CORRESPONDENTES -->
-        <div id="crm-rede" class="crm-panel" style="display:none">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="card">
-              <div class="sec-title">📍 Encontrar correspondente</div>
-              <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;padding:16px;text-align:center;margin-bottom:14px">
-                <div style="font-size:30px;margin-bottom:8px">📍</div>
-                <div style="font-size:14px;font-weight:700;margin-bottom:6px">São Paulo - SP</div>
-                <div style="font-size:12px;color:var(--muted);margin-bottom:12px">287 pontos em um raio de 5km</div>
-                <button class="btn btn-primary" onclick="openMapa()" style="padding:10px">Ver no mapa →</button>
-              </div>
-              <div style="font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--muted)">MAIS PRÓXIMOS</div>
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Mercado Silva &amp; Cia</div><div style="font-size:11.5px;color:var(--muted)">Rua das Flores, 123 · 350m</div></div><span class="badge bg-ok">Aberto</span></div>
-                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Lotérica Boa Sorte</div><div style="font-size:11.5px;color:var(--muted)">Av. Brasil, 456 · 720m</div></div><span class="badge bg-ok">Aberto</span></div>
-                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Farmácia Popular</div><div style="font-size:11.5px;color:var(--muted)">Rua São João, 89 · 1,2km</div></div><span class="badge bg-warn">Fecha 22h</span></div>
+        <!-- ════════════════════════════════════
+             MODAIS CRM
+        ════════════════════════════════════ -->
+
+        <!-- MODAL: Nova Proposta (campos completos do CORBAN) -->
+        <div class="overlay" id="modal-nova-proposta" style="z-index:601;align-items:flex-start;padding-top:40px;overflow-y:auto">
+          <div class="modal" style="max-width:760px;width:95vw;max-height:90vh;overflow-y:auto">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+              <div style="font-size:18px;font-weight:900;color:var(--txt)">📋 Nova Proposta Consignado</div>
+              <button onclick="crmCloseModal('modal-nova-proposta')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">✕</button>
+            </div>
+
+            <!-- Dados do Cliente -->
+            <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:700;color:var(--p1);text-transform:uppercase;margin-bottom:12px;letter-spacing:.5px">1. Dados do Cliente</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">NOME COMPLETO*</label><input id="np-nome" type="text" placeholder="Ex: João da Silva" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CPF</label><input id="np-cpf" type="text" placeholder="000.000.000-00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">RG</label><input id="np-rg" type="text" placeholder="00.000.000-0" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">NÚMERO DO BENEFÍCIO</label><input id="np-beneficio" type="text" placeholder="Ex: 1234567890" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">DATA DE NASCIMENTO</label><input id="np-nascimento" type="date" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TELEFONE</label><input id="np-telefone" type="text" placeholder="(00) 90000-0000" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div style="grid-column:span 2"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">E-MAIL</label><input id="np-email" type="email" placeholder="email@email.com" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
               </div>
             </div>
-            <div class="card">
-              <div class="sec-title">🏪 Serviços disponíveis</div>
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💵</span><div><div style="font-size:13.5px;font-weight:600">Saque em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Limite: R$ 3.000/dia · Sem taxa</div></div></div>
-                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💰</span><div><div style="font-size:13.5px;font-weight:600">Depósito em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Crédito imediato · 24h/7</div></div></div>
-                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📄</span><div><div style="font-size:13.5px;font-weight:600">Pagamento de boletos</div><div style="font-size:11.5px;color:var(--muted)">Até vencimento D+1 · Fitbank</div></div></div>
-                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">⚡</span><div><div style="font-size:13.5px;font-weight:600">PIX no balcão</div><div style="font-size:11.5px;color:var(--muted)">QR Code físico · Instantâneo</div></div></div>
-                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📝</span><div><div style="font-size:13.5px;font-weight:600">Abertura de conta</div><div style="font-size:11.5px;color:var(--muted)">KYC presencial · Fineract</div></div></div>
-                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">🤝</span><div><div style="font-size:13.5px;font-weight:600">Proposta Consignado</div><div style="font-size:11.5px;color:var(--muted)">Contratação no balcão · Comissão 2%</div></div></div>
+
+            <!-- Dados da Proposta -->
+            <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:700;color:var(--p1);text-transform:uppercase;margin-bottom:12px;letter-spacing:.5px">2. Dados da Proposta</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CONVÊNIO*</label>
+                  <select id="np-convenio" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option value="">Selecionar...</option>
+                    <option>INSS</option><option>SIAPE</option><option>Forças Armadas</option>
+                    <option>Servidor Estadual</option><option>Servidor Municipal</option>
+                    <option>CLT Convênio</option><option>FGTS</option><option>Aposentados</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">OPERAÇÃO*</label>
+                  <select id="np-operacao" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option value="">Selecionar...</option>
+                    <option>NOVO</option><option>REFINANCIAMENTO</option><option>PORTABILIDADE</option>
+                    <option>PORTABILIDADE COM REFIN</option><option>CARTÃO PLÁSTICO</option>
+                    <option>CARTÃO COM SAQUE</option><option>CARTÃO BENEFÍCIO COM SEGURO</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">BANCO (PROPOSTA)*</label>
+                  <select id="np-banco" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option value="">Selecionar...</option>
+                    <option>341 - ITAU UNIBANCO</option><option>104 - CAIXA ECONOMICA FEDERAL</option>
+                    <option>033 - BANCO SANTANDER BRASIL</option><option>237 - BRADESCO</option>
+                    <option>623 - BANCO PAN</option><option>318 - BANCO BMG</option>
+                    <option>029 - BANCO ITAU CONSIGNADO</option><option>169 - BANCO OLE CONSIGNADO</option>
+                    <option>955 - BANCO BONSUCESSO CONSIGNADO</option><option>070 - BRB</option>
+                    <option>077 - BANCO INTER</option><option>260 - NU PAGAMENTOS</option>
+                    <option>336 - C6 BANK</option><option>121 - BANCO AGIBANK</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TABELA</label><input id="np-tabela" type="text" placeholder="Ex: TB1234" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PRAZO (meses)*</label>
+                  <select id="np-prazo" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>12</option><option>24</option><option>36</option><option>48</option>
+                    <option>60</option><option>72</option><option>84</option><option>96</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">MARGEM DISPONÍVEL</label><input id="np-margem" type="text" placeholder="Ex: R$ 850,00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">VALOR DA PROPOSTA (R$)*</label><input id="np-valor" type="number" placeholder="0,00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none" oninput="crmCalcParcela()"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">VALOR PARCELAS (R$)</label><input id="np-parcela" type="text" placeholder="Calculado auto" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2);color:var(--muted);outline:none" readonly></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">RENDA</label><input id="np-renda" type="text" placeholder="Ex: R$ 3.500,00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PROMOTORA</label>
+                  <select id="np-promotora" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>KaiNowPay CORBAN</option><option>CREDIBRASIL CONSIGNADO</option>
+                    <option>CREDIBRASIL LOJAS</option><option>Outra</option>
+                  </select></div>
               </div>
+            </div>
+
+            <!-- Formalização e Canal -->
+            <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:700;color:var(--p1);text-transform:uppercase;margin-bottom:12px;letter-spacing:.5px">3. Formalização e Canal</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">FORMALIZAÇÃO</label>
+                  <select id="np-formalizacao" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>DIGITAL</option><option>FÍSICO</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CANAL</label>
+                  <select id="np-canal" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>WHATSAPP</option><option>TELEMARKETING</option><option>INDICAÇÃO</option>
+                    <option>INSTAGRAM</option><option>FACEBOOK</option><option>CLIENTE BALCÃO</option>
+                    <option>LIGAÇÃO</option><option>SMS</option><option>OUTROS</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">STATUS INICIAL</label>
+                  <select id="np-status" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>PENDENTE</option><option>EM DIGITAÇÃO</option><option>DIGITADO</option>
+                    <option>AGUARD DIGITAÇÃO</option>
+                  </select></div>
+              </div>
+              <div style="margin-top:10px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">OBSERVAÇÃO</label><textarea id="np-obs" placeholder="Informações adicionais sobre a proposta..." style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none;resize:none;min-height:60px"></textarea></div>
+            </div>
+
+            <!-- Dados Bancários para Crédito -->
+            <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:18px">
+              <div style="font-size:12px;font-weight:700;color:var(--p1);text-transform:uppercase;margin-bottom:12px;letter-spacing:.5px">4. Dados Bancários para Crédito</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">BANCO</label>
+                  <select id="np-banco-cred" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>CAIXA</option><option>BRADESCO</option><option>ITAU</option>
+                    <option>SANTANDER</option><option>BB</option><option>NUBANK</option><option>INTER</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TIPO CONTA</label>
+                  <select id="np-tipo-conta" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt)">
+                    <option>CONTA CORRENTE</option><option>CONTA SALÁRIO</option><option>POUPANÇA</option>
+                  </select></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">AGÊNCIA</label><input id="np-agencia" type="text" placeholder="0000" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CONTA</label><input id="np-conta" type="text" placeholder="00000-0" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);color:var(--txt);outline:none"></div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button onclick="crmCloseModal('modal-nova-proposta')" style="padding:11px 22px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-size:14px;cursor:pointer;color:var(--txt)">Cancelar</button>
+              <button onclick="crmSalvarProposta()" style="padding:11px 28px;background:var(--p1);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">✅ Salvar Proposta</button>
             </div>
           </div>
         </div>
+
+        <!-- MODAL: Novo Cliente -->
+        <div class="overlay" id="modal-novo-cliente" style="z-index:601">
+          <div class="modal" style="max-width:580px;width:95vw;max-height:88vh;overflow-y:auto">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+              <div style="font-size:18px;font-weight:900">👤 Novo Cliente</div>
+              <button onclick="crmCloseModal('modal-novo-cliente')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">✕</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">NOME*</label><input id="nc-nome" type="text" placeholder="Nome completo" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none"></div>
+              <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CPF</label><input id="nc-cpf" type="text" placeholder="000.000.000-00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none"></div>
+              <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TELEFONE</label><input id="nc-tel" type="text" placeholder="(00) 90000-0000" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none"></div>
+              <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">CONVÊNIO</label>
+                <select id="nc-convenio" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt)">
+                  <option>INSS</option><option>SIAPE</option><option>Forças Armadas</option>
+                  <option>Servidor Estadual</option><option>CLT Convênio</option>
+                </select></div>
+              <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">MARGEM DISPONÍVEL</label><input id="nc-margem" type="text" placeholder="R$ 0,00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none"></div>
+              <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">RENDA</label><input id="nc-renda" type="text" placeholder="R$ 0,00" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none"></div>
+              <div style="grid-column:span 2"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">OBSERVAÇÃO</label><textarea id="nc-obs" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;resize:none;min-height:55px" placeholder="Informações adicionais..."></textarea></div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+              <button onclick="crmCloseModal('modal-novo-cliente')" style="padding:10px 20px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;font-size:13.5px;cursor:pointer">Cancelar</button>
+              <button onclick="crmSalvarCliente()" style="padding:10px 24px;background:var(--p1);color:#fff;border:none;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer">✅ Salvar Cliente</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL: Ver / Editar Proposta -->
+        <div class="overlay" id="modal-ver-proposta" style="z-index:602;align-items:flex-start;padding-top:40px;overflow-y:auto">
+          <div class="modal" style="max-width:700px;width:95vw;max-height:90vh;overflow-y:auto">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <div style="font-size:17px;font-weight:900" id="vp-titulo">📋 Proposta #0</div>
+              <button onclick="crmCloseModal('modal-ver-proposta')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">✕</button>
+            </div>
+            <div id="vp-conteudo"></div>
+          </div>
+        </div>
+
+        <!-- MODAL: Alterar Status -->
+        <div class="overlay" id="modal-alterar-status" style="z-index:603">
+          <div class="modal" style="max-width:400px;width:95vw">
+            <div style="font-size:17px;font-weight:900;margin-bottom:16px">🔄 Alterar Status</div>
+            <div style="font-size:13.5px;color:var(--muted);margin-bottom:12px" id="as-nome"></div>
+            <select id="as-status" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;background:var(--bg);color:var(--txt);margin-bottom:16px">
+              <option>PENDENTE</option><option>DIGITADO</option><option>EM DIGITAÇÃO</option>
+              <option>AGUARD DIGITAÇÃO</option><option>AGUARDANDO AVERBAÇÃO</option>
+              <option>AVERBADA</option><option>FORMALIZAÇÃO CONCLUÍDA</option>
+              <option>PAGA</option><option>CANCELADO</option><option>SALDO RETORNADO</option>
+              <option>INTEGRADO</option><option>PENDENCIA RESOLVIDA</option>
+            </select>
+            <div style="margin-bottom:16px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">OBSERVAÇÃO</label><textarea id="as-obs" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;resize:none;min-height:55px" placeholder="Motivo da alteração..."></textarea></div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button onclick="crmCloseModal('modal-alterar-status')" style="padding:10px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer">Cancelar</button>
+              <button onclick="crmConfirmarStatus()" style="padding:10px 22px;background:var(--p1);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">Confirmar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL: Novo Status Admin -->
+        <div class="overlay" id="modal-novo-status" style="z-index:602">
+          <div class="modal" style="max-width:380px;width:95vw">
+            <div style="font-size:17px;font-weight:900;margin-bottom:16px">🔖 Novo Status</div>
+            <div style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">NOME DO STATUS</label><input id="ns-nome" type="text" placeholder="Ex: EM ANÁLISE" style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;background:var(--bg);color:var(--txt);outline:none;text-transform:uppercase"></div>
+            <div style="margin-bottom:16px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">COR</label><input id="ns-cor" type="color" value="#7B3FF2" style="width:100%;padding:5px;border:1.5px solid var(--border);border-radius:8px;height:40px;cursor:pointer"></div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button onclick="crmCloseModal('modal-novo-status')" style="padding:10px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer">Cancelar</button>
+              <button onclick="admSalvarStatus()" style="padding:10px 22px;background:var(--p1);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">Salvar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL: Nova Notificação -->
+        <div class="overlay" id="modal-nova-notif" style="z-index:602">
+          <div class="modal" style="max-width:460px;width:95vw">
+            <div style="font-size:17px;font-weight:900;margin-bottom:16px">📨 Nova Notificação</div>
+            <div style="margin-bottom:11px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">TÍTULO</label><input id="nn-titulo" type="text" placeholder="Ex: Reunião de equipe amanhã" style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;background:var(--bg);color:var(--txt);outline:none"></div>
+            <div style="margin-bottom:16px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">MENSAGEM</label><textarea id="nn-msg" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;resize:none;min-height:80px" placeholder="Escreva a mensagem..."></textarea></div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button onclick="crmCloseModal('modal-nova-notif')" style="padding:10px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer">Cancelar</button>
+              <button onclick="admEnviarNotif()" style="padding:10px 22px;background:#7c3aed;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">📨 Enviar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL: Nova Promotora -->
+        <div class="overlay" id="modal-nova-promotora" style="z-index:602">
+          <div class="modal" style="max-width:380px;width:95vw">
+            <div style="font-size:17px;font-weight:900;margin-bottom:16px">🏢 Nova Promotora</div>
+            <div style="margin-bottom:16px"><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">NOME DA PROMOTORA</label><input id="npo-nome" type="text" placeholder="Ex: CREDIBRASIL CONSIGNADO" style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;background:var(--bg);color:var(--txt);outline:none"></div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button onclick="crmCloseModal('modal-nova-promotora')" style="padding:10px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer">Cancelar</button>
+              <button onclick="admSalvarPromotora()" style="padding:10px 22px;background:#047857;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">Salvar</button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- ██ MARKETPLACE FINANCEIRO ██ -->
+
+            <!-- ██ MARKETPLACE FINANCEIRO ██ -->
       <div class="page" id="page-mktfinanceiro">
         <div style="background:linear-gradient(135deg,#0c4a6e,#075985,#0369a1);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💹</div>
@@ -4917,6 +5069,713 @@ function contratarParceiro(){
   showToast('🤝 Proposta '+nomes[_parcSel]+' enviada! Nossa equipe entrará em contato em até 24h.','success');
 }
 
+
+// ══════════════════════════════════════════════════════════════════
+// ██  CRM CORBAN — MOTOR COMPLETO  ██
+// ══════════════════════════════════════════════════════════════════
+
+// ── MOCK DATA ──────────────────────────────────────────────────────
+const crmUsuarios = [
+  {id:1, nome:'Carlos Mendes',   cargo:'Master',   email:'carlos@kainowpay.com', ativo:true},
+  {id:2, nome:'Ana Souza',       cargo:'Adm',      email:'ana@kainowpay.com',    ativo:true},
+  {id:3, nome:'João Lima',       cargo:'Operador', email:'joao@kainowpay.com',   ativo:true},
+  {id:4, nome:'Maria Oliveira',  cargo:'Operador', email:'maria@kainowpay.com',  ativo:true},
+  {id:5, nome:'Pedro Costa',     cargo:'Operador', email:'pedro@kainowpay.com',  ativo:false}
+];
+
+const crmBancos = [
+  'BMG','C6 Consignado','Bradesco','Caixa Econômica','Banco do Brasil',
+  'Itaú','Santander','Pan','Safra','Inbursa','Banrisul','Mercantil'
+];
+
+const crmPromotoras = [
+  {id:1, nome:'Promotora Alpha',  ativo:true},
+  {id:2, nome:'Promotora Beta',   ativo:true},
+  {id:3, nome:'Consultores XYZ',  ativo:true},
+  {id:4, nome:'Parceiros Omega',  ativo:false}
+];
+
+const crmStatusList = [
+  'PENDENTE','DIGITADO','EM DIGITAÇÃO','AGUARD DIGITAÇÃO',
+  'AGUARDANDO AVERBAÇÃO','AVERBADA','FORMALIZAÇÃO CONCLUÍDA',
+  'PAGA','CANCELADO','SALDO RETORNADO','INTEGRADO','PENDENCIA RESOLVIDA'
+];
+
+let crmPropostas = [
+  {id:'P001',cliente:'José da Silva',        cpf:'123.456.789-00',rg:'12.345.678-9',dataNasc:'1958-03-12',telefone:'(11) 98765-4321',email:'jose@email.com',beneficio:'1234567890',convenio:'INSS',operacao:'NOVO EMPRÉSTIMO',banco:'BMG',tabela:'TB-001',prazo:84,valorBruto:25000,valorLiquido:18500,valorParcela:297.62,margem:297.62,renda:1412.00,promotora:'Promotora Alpha',formalizacao:'DIGITAL',canal:'WHATSAPP',status:'PAGA',operador:3,agencia:'0001',contaBancaria:'12345-6',obs:'Cliente satisfeito',createdAt:'2024-11-05'},
+  {id:'P002',cliente:'Maria Santos',         cpf:'234.567.890-11',rg:'23.456.789-0',dataNasc:'1962-07-24',telefone:'(21) 97654-3210',email:'maria@email.com',beneficio:'2345678901',convenio:'INSS',operacao:'REFINANCIAMENTO',banco:'C6 Consignado',tabela:'TB-002',prazo:96,valorBruto:32000,valorLiquido:24000,valorParcela:333.33,margem:333.33,renda:2212.00,promotora:'Promotora Beta',formalizacao:'DIGITAL',canal:'TELEMARKETING',status:'AVERBADA',operador:4,agencia:'0002',contaBancaria:'23456-7',obs:'',createdAt:'2024-11-12'},
+  {id:'P003',cliente:'Antonio Ferreira',     cpf:'345.678.901-22',rg:'34.567.890-1',dataNasc:'1955-01-30',telefone:'(31) 96543-2109',email:'antonio@email.com',beneficio:'3456789012',convenio:'INSS',operacao:'PORTABILIDADE',banco:'Pan',tabela:'TB-003',prazo:72,valorBruto:18000,valorLiquido:14000,valorParcela:250.00,margem:250.00,renda:1412.00,promotora:'Consultores XYZ',formalizacao:'FÍSICO',canal:'LOJA FÍSICA',status:'FORMALIZAÇÃO CONCLUÍDA',operador:3,agencia:'0003',contaBancaria:'34567-8',obs:'Documentos físicos enviados',createdAt:'2024-11-18'},
+  {id:'P004',cliente:'Ana Paula Rodrigues',  cpf:'456.789.012-33',rg:'45.678.901-2',dataNasc:'1970-09-15',telefone:'(41) 95432-1098',email:'ana.paula@email.com',beneficio:'',convenio:'SIAPE',operacao:'NOVO EMPRÉSTIMO',banco:'Bradesco',tabela:'TB-004',prazo:60,valorBruto:15000,valorLiquido:11500,valorParcela:250.00,margem:250.00,renda:3800.00,promotora:'Promotora Alpha',formalizacao:'DIGITAL',canal:'INDICAÇÃO',status:'DIGITADO',operador:4,agencia:'0004',contaBancaria:'45678-9',obs:'',createdAt:'2024-12-02'},
+  {id:'P005',cliente:'Carlos Eduardo Lima',  cpf:'567.890.123-44',rg:'56.789.012-3',dataNasc:'1968-05-22',telefone:'(51) 94321-0987',email:'carlos.lima@email.com',beneficio:'',convenio:'Forças Armadas',operacao:'NOVO EMPRÉSTIMO',banco:'Banco do Brasil',tabela:'TB-005',prazo:48,valorBruto:40000,valorLiquido:31000,valorParcela:833.33,margem:833.33,renda:6200.00,promotora:'Promotora Beta',formalizacao:'DIGITAL',canal:'WHATSAPP',status:'AGUARDANDO AVERBAÇÃO',operador:3,agencia:'0005',contaBancaria:'56789-0',obs:'',createdAt:'2024-12-08'},
+  {id:'P006',cliente:'Fernanda Costa',       cpf:'678.901.234-55',rg:'67.890.123-4',dataNasc:'1980-11-03',telefone:'(61) 93210-9876',email:'fernanda@email.com',beneficio:'',convenio:'CLT Privado',operacao:'REFINANCIAMENTO',banco:'Itaú',tabela:'TB-006',prazo:36,valorBruto:12000,valorLiquido:9200,valorParcela:333.33,margem:333.33,renda:4500.00,promotora:'Consultores XYZ',formalizacao:'DIGITAL',canal:'SITE',status:'PENDENTE',operador:5,agencia:'0006',contaBancaria:'67890-1',obs:'Aguardando documentos',createdAt:'2024-12-15'},
+  {id:'P007',cliente:'Roberto Alves',        cpf:'789.012.345-66',rg:'78.901.234-5',dataNasc:'1953-08-17',telefone:'(71) 92109-8765',email:'roberto@email.com',beneficio:'7890123456',convenio:'INSS',operacao:'PORTABILIDADE',banco:'Santander',tabela:'TB-007',prazo:84,valorBruto:22000,valorLiquido:17000,valorParcela:261.90,margem:261.90,renda:1412.00,promotora:'Promotora Alpha',formalizacao:'FÍSICO',canal:'TELEMARKETING',status:'EM DIGITAÇÃO',operador:3,agencia:'0007',contaBancaria:'78901-2',obs:'',createdAt:'2025-01-06'},
+  {id:'P008',cliente:'Luciana Mendes',       cpf:'890.123.456-77',rg:'89.012.345-6',dataNasc:'1975-04-29',telefone:'(81) 91098-7654',email:'luciana@email.com',beneficio:'',convenio:'SIAPE',operacao:'NOVO EMPRÉSTIMO',banco:'Caixa Econômica',tabela:'TB-008',prazo:60,valorBruto:28000,valorLiquido:21500,valorParcela:466.67,margem:466.67,renda:5100.00,promotora:'Promotora Beta',formalizacao:'DIGITAL',canal:'INDICAÇÃO',status:'INTEGRADO',operador:4,agencia:'0008',contaBancaria:'89012-3',obs:'',createdAt:'2025-01-14'},
+  {id:'P009',cliente:'Marcos Vieira',        cpf:'901.234.567-88',rg:'90.123.456-7',dataNasc:'1965-12-08',telefone:'(85) 90987-6543',email:'marcos@email.com',beneficio:'9012345678',convenio:'INSS',operacao:'SAQUE COMPLEMENTAR',banco:'BMG',tabela:'TB-009',prazo:72,valorBruto:19500,valorLiquido:15000,valorParcela:270.83,margem:270.83,renda:1412.00,promotora:'Consultores XYZ',formalizacao:'DIGITAL',canal:'WHATSAPP',status:'CANCELADO',operador:3,agencia:'0009',contaBancaria:'90123-4',obs:'Cliente cancelou',createdAt:'2025-01-20'},
+  {id:'P010',cliente:'Patrícia Nunes',       cpf:'012.345.678-99',rg:'01.234.567-8',dataNasc:'1972-06-14',telefone:'(92) 89876-5432',email:'patricia@email.com',beneficio:'',convenio:'CLT Privado',operacao:'REFINANCIAMENTO',banco:'Pan',tabela:'TB-010',prazo:48,valorBruto:16000,valorLiquido:12500,valorParcela:333.33,margem:333.33,renda:3200.00,promotora:'Parceiros Omega',formalizacao:'FÍSICO',canal:'LOJA FÍSICA',status:'AGUARD DIGITAÇÃO',operador:4,agencia:'0010',contaBancaria:'01234-5',obs:'',createdAt:'2025-02-03'},
+  {id:'P011',cliente:'Diego Barbosa',        cpf:'111.222.333-44',rg:'11.122.333-4',dataNasc:'1960-02-19',telefone:'(11) 77665-5443',email:'diego@email.com',beneficio:'1112223334',convenio:'INSS',operacao:'NOVO EMPRÉSTIMO',banco:'BMG',tabela:'TB-001',prazo:84,valorBruto:30000,valorLiquido:23000,valorParcela:357.14,margem:357.14,renda:2212.00,promotora:'Promotora Alpha',formalizacao:'DIGITAL',canal:'WHATSAPP',status:'PAGA',operador:3,agencia:'0001',contaBancaria:'11122-3',obs:'',createdAt:'2025-02-10'},
+  {id:'P012',cliente:'Simone Ramos',         cpf:'222.333.444-55',rg:'22.233.344-5',dataNasc:'1978-10-25',telefone:'(21) 66554-4332',email:'simone@email.com',beneficio:'',convenio:'SIAPE',operacao:'PORTABILIDADE',banco:'C6 Consignado',tabela:'TB-002',prazo:60,valorBruto:21000,valorLiquido:16000,valorParcela:350.00,margem:350.00,renda:4200.00,promotora:'Promotora Beta',formalizacao:'DIGITAL',canal:'TELEMARKETING',status:'PAGA',operador:4,agencia:'0002',contaBancaria:'22233-4',obs:'',createdAt:'2025-02-18'},
+  {id:'P013',cliente:'Tiago Carvalho',       cpf:'333.444.555-66',rg:'33.344.455-6',dataNasc:'1985-03-07',telefone:'(31) 55443-3221',email:'tiago@email.com',beneficio:'',convenio:'CLT Privado',operacao:'NOVO EMPRÉSTIMO',banco:'Bradesco',tabela:'TB-004',prazo:36,valorBruto:9000,valorLiquido:7200,valorParcela:250.00,margem:250.00,renda:3100.00,promotora:'Consultores XYZ',formalizacao:'DIGITAL',canal:'SITE',status:'DIGITADO',operador:5,agencia:'0003',contaBancaria:'33344-5',obs:'',createdAt:'2025-03-01'},
+  {id:'P014',cliente:'Renata Souza',         cpf:'444.555.666-77',rg:'44.455.566-7',dataNasc:'1955-07-31',telefone:'(41) 44332-2110',email:'renata@email.com',beneficio:'4445556667',convenio:'INSS',operacao:'REFINANCIAMENTO',banco:'Banco do Brasil',tabela:'TB-005',prazo:96,valorBruto:38000,valorLiquido:29000,valorParcela:395.83,margem:395.83,renda:2212.00,promotora:'Promotora Alpha',formalizacao:'FÍSICO',canal:'INDICAÇÃO',status:'FORMALIZAÇÃO CONCLUÍDA',operador:3,agencia:'0004',contaBancaria:'44455-6',obs:'',createdAt:'2025-03-12'},
+  {id:'P015',cliente:'Fernando Melo',        cpf:'555.666.777-88',rg:'55.566.677-8',dataNasc:'1950-11-23',telefone:'(51) 33221-1009',email:'fernando@email.com',beneficio:'5556667778',convenio:'INSS',operacao:'NOVO EMPRÉSTIMO',banco:'BMG',tabela:'TB-001',prazo:84,valorBruto:27000,valorLiquido:20500,valorParcela:321.43,margem:321.43,renda:1412.00,promotora:'Promotora Beta',formalizacao:'DIGITAL',canal:'WHATSAPP',status:'AVERBADA',operador:4,agencia:'0005',contaBancaria:'55566-7',obs:'',createdAt:'2025-03-20'},
+  {id:'P016',cliente:'Gabriela Torres',      cpf:'666.777.888-99',rg:'66.677.788-9',dataNasc:'1983-08-14',telefone:'(61) 22110-0998',email:'gabriela@email.com',beneficio:'',convenio:'Forças Armadas',operacao:'PORTABILIDADE',banco:'Santander',tabela:'TB-007',prazo:60,valorBruto:45000,valorLiquido:34500,valorParcela:750.00,margem:750.00,renda:7800.00,promotora:'Consultores XYZ',formalizacao:'DIGITAL',canal:'INDICAÇÃO',status:'PENDENTE',operador:3,agencia:'0006',contaBancaria:'66677-8',obs:'',createdAt:'2025-04-02'},
+  {id:'P017',cliente:'Henrique Pinto',       cpf:'777.888.999-00',rg:'77.788.899-0',dataNasc:'1963-04-06',telefone:'(71) 11009-9887',email:'henrique@email.com',beneficio:'7778889990',convenio:'INSS',operacao:'NOVO EMPRÉSTIMO',banco:'C6 Consignado',tabela:'TB-002',prazo:72,valorBruto:23000,valorLiquido:17800,valorParcela:319.44,margem:319.44,renda:1412.00,promotora:'Promotora Alpha',formalizacao:'DIGITAL',canal:'TELEMARKETING',status:'INTEGRADO',operador:4,agencia:'0007',contaBancaria:'77788-9',obs:'',createdAt:'2025-04-15'},
+  {id:'P018',cliente:'Isabel Freitas',       cpf:'888.999.000-11',rg:'88.899.000-1',dataNasc:'1967-01-18',telefone:'(81) 00998-8776',email:'isabel@email.com',beneficio:'8889990001',convenio:'INSS',operacao:'SAQUE COMPLEMENTAR',banco:'Pan',tabela:'TB-003',prazo:48,valorBruto:14000,valorLiquido:10800,valorParcela:291.67,margem:291.67,renda:2212.00,promotora:'Promotora Beta',formalizacao:'FÍSICO',canal:'LOJA FÍSICA',status:'AGUARDANDO AVERBAÇÃO',operador:3,agencia:'0008',contaBancaria:'88899-0',obs:'Aguardando averbação no INSS',createdAt:'2025-04-28'},
+  {id:'P019',cliente:'Juliana Castro',       cpf:'999.000.111-22',rg:'99.900.011-2',dataNasc:'1990-06-09',telefone:'(85) 99887-7665',email:'juliana@email.com',beneficio:'',convenio:'CLT Privado',operacao:'NOVO EMPRÉSTIMO',banco:'Itaú',tabela:'TB-006',prazo:24,valorBruto:8000,valorLiquido:6500,valorParcela:333.33,margem:333.33,renda:2800.00,promotora:'Consultores XYZ',formalizacao:'DIGITAL',canal:'SITE',status:'PENDENCIA RESOLVIDA',operador:5,agencia:'0009',contaBancaria:'99900-1',obs:'',createdAt:'2025-05-06'},
+  {id:'P020',cliente:'Leonardo Gomes',       cpf:'101.202.303-43',rg:'10.120.230-3',dataNasc:'1956-09-21',telefone:'(92) 88776-6554',email:'leonardo@email.com',beneficio:'1012023034',convenio:'INSS',operacao:'PORTABILIDADE',banco:'Bradesco',tabela:'TB-004',prazo:96,valorBruto:35000,valorLiquido:27000,valorParcela:364.58,margem:364.58,renda:2212.00,promotora:'Parceiros Omega',formalizacao:'DIGITAL',canal:'WHATSAPP',status:'SALDO RETORNADO',operador:4,agencia:'0010',contaBancaria:'10120-2',obs:'Saldo retornado ao cliente',createdAt:'2025-05-18'}
+];
+
+let crmClientes = [
+  {id:'C001',nome:'José da Silva',       cpf:'123.456.789-00',telefone:'(11) 98765-4321',email:'jose@email.com',   dataNasc:'1958-03-12',convenio:'INSS',      cidade:'São Paulo',    uf:'SP',obs:'Cliente fidelizado'},
+  {id:'C002',nome:'Maria Santos',        cpf:'234.567.890-11',telefone:'(21) 97654-3210',email:'maria@email.com',  dataNasc:'1962-07-24',convenio:'INSS',      cidade:'Rio de Janeiro',uf:'RJ',obs:''},
+  {id:'C003',nome:'Antonio Ferreira',    cpf:'345.678.901-22',telefone:'(31) 96543-2109',email:'antonio@email.com',dataNasc:'1955-01-30',convenio:'INSS',      cidade:'Belo Horizonte',uf:'MG',obs:''},
+  {id:'C004',nome:'Ana Paula Rodrigues', cpf:'456.789.012-33',telefone:'(41) 95432-1098',email:'ana.paula@email.com',dataNasc:'1970-09-15',convenio:'SIAPE', cidade:'Curitiba',     uf:'PR',obs:'Servidora federal'},
+  {id:'C005',nome:'Carlos Eduardo Lima', cpf:'567.890.123-44',telefone:'(51) 94321-0987',email:'carlos.lima@email.com',dataNasc:'1968-05-22',convenio:'Forças Armadas',cidade:'Porto Alegre',uf:'RS',obs:'Militar reformado'},
+  {id:'C006',nome:'Fernanda Costa',      cpf:'678.901.234-55',telefone:'(61) 93210-9876',email:'fernanda@email.com',dataNasc:'1980-11-03',convenio:'CLT Privado',cidade:'Brasília',  uf:'DF',obs:''},
+  {id:'C007',nome:'Roberto Alves',       cpf:'789.012.345-66',telefone:'(71) 92109-8765',email:'roberto@email.com',dataNasc:'1953-08-17',convenio:'INSS',      cidade:'Salvador',     uf:'BA',obs:''},
+  {id:'C008',nome:'Luciana Mendes',      cpf:'890.123.456-77',telefone:'(81) 91098-7654',email:'luciana@email.com',dataNasc:'1975-04-29',convenio:'SIAPE',     cidade:'Recife',       uf:'PE',obs:'Servidora estadual'},
+  {id:'C009',nome:'Marcos Vieira',       cpf:'901.234.567-88',telefone:'(85) 90987-6543',email:'marcos@email.com',dataNasc:'1965-12-08',convenio:'INSS',      cidade:'Fortaleza',    uf:'CE',obs:''},
+  {id:'C010',nome:'Patrícia Nunes',      cpf:'012.345.678-99',telefone:'(92) 89876-5432',email:'patricia@email.com',dataNasc:'1972-06-14',convenio:'CLT Privado',cidade:'Manaus',   uf:'AM',obs:''}
+];
+
+let crmNotificacoes = [
+  {id:1, titulo:'Nova Proposta INSS', mensagem:'Proposta P020 aguardando digitação', tipo:'info',  data:'2025-05-18', lida:false},
+  {id:2, titulo:'Proposta Paga!',     mensagem:'P011 - Diego Barbosa foi paga com sucesso', tipo:'success', data:'2025-05-10', lida:false},
+  {id:3, titulo:'Cancelamento',       mensagem:'P009 - Marcos Vieira cancelou a proposta', tipo:'warning', data:'2025-04-20', lida:true},
+  {id:4, titulo:'Pendência',          mensagem:'P019 - Juliana Castro: pendência resolvida', tipo:'info', data:'2025-05-06', lida:true}
+];
+
+let _crmPropostaEditId = null;
+let _crmStatusEditId   = null;
+
+// ── HELPERS ────────────────────────────────────────────────────────
+function crmFmt(v){return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);}
+function crmFmtDate(d){if(!d)return'–';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
+function crmStatusColor(s){
+  const map={
+    'PAGA':'#22c55e','INTEGRADO':'#16a34a','FORMALIZAÇÃO CONCLUÍDA':'#3b82f6',
+    'AVERBADA':'#6366f1','AGUARDANDO AVERBAÇÃO':'#8b5cf6','DIGITADO':'#0ea5e9',
+    'EM DIGITAÇÃO':'#0ea5e9','AGUARD DIGITAÇÃO':'#f59e0b','PENDENTE':'#f97316',
+    'CANCELADO':'#ef4444','SALDO RETORNADO':'#ec4899','PENDENCIA RESOLVIDA':'#10b981'
+  };
+  return map[s]||'#94a3b8';
+}
+function crmConvenioIcon(c){
+  const map={'INSS':'🏛️','SIAPE':'🏢','Forças Armadas':'🎖️','CLT Privado':'💼','CLT Público':'🏛️','Prefeitura':'🏙️','Governo Estadual':'🏛️'};
+  return map[c]||'📋';
+}
+function crmGetOperadorNome(id){const u=crmUsuarios.find(x=>x.id===id);return u?u.nome:'–';}
+
+// ── TAB SWITCHING ──────────────────────────────────────────────────
+function crmAba(abaId){
+  document.querySelectorAll('.crm-tab-content').forEach(el=>{
+    el.style.display='none';
+  });
+  document.querySelectorAll('.crm-tab').forEach(el=>{
+    el.style.color='var(--muted)';
+    el.style.borderBottom='2.5px solid transparent';
+    el.style.fontWeight='600';
+  });
+  const content=document.getElementById(abaId);
+  if(content) content.style.display='block';
+  const tabId='crm-tab-'+abaId.replace('crm-aba-','');
+  const tab=document.getElementById(tabId);
+  if(tab){tab.style.color='var(--p1)';tab.style.borderBottom='2.5px solid var(--p1)';tab.style.fontWeight='700';}
+  // Refresh content
+  if(abaId==='crm-aba-dashboard')   crmUpdateDashboard();
+  if(abaId==='crm-aba-propostas')   crmRenderPropostas(crmPropostas);
+  if(abaId==='crm-aba-clientes')    crmRenderClientes(crmClientes);
+  if(abaId==='crm-aba-funil')       crmBuildKanban();
+  if(abaId==='crm-aba-relatorios')  crmUpdateRelatorios();
+  if(abaId==='crm-aba-equipe')      crmUpdateEquipe();
+  if(abaId==='crm-aba-admin')       crmRenderAdmin();
+}
+
+// ── MODAL MANAGEMENT ──────────────────────────────────────────────
+function crmOpenModal(id){
+  const m=document.getElementById(id);
+  if(m){m.style.display='flex';document.body.style.overflow='hidden';}
+}
+function crmCloseModal(id){
+  const m=document.getElementById(id);
+  if(m){m.style.display='none';document.body.style.overflow='';}
+}
+
+// ── DASHBOARD ──────────────────────────────────────────────────────
+function crmUpdateDashboard(){
+  const total=crmPropostas.length;
+  const pagas=crmPropostas.filter(p=>p.status==='PAGA'||p.status==='INTEGRADO').length;
+  const valorTotal=crmPropostas.reduce((s,p)=>s+(p.valorBruto||0),0);
+  const ticket=total?valorTotal/total:0;
+  const pcPagas=total?Math.round(pagas/total*100):0;
+
+  const setEl=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  setEl('crm-dash-total',total);
+  setEl('crm-dash-valor',crmFmt(valorTotal));
+  setEl('crm-dash-pagas',pcPagas+'%');
+  setEl('crm-dash-ticket',crmFmt(ticket));
+
+  // Status distribution
+  const distEl=document.getElementById('crm-dash-status-dist');
+  if(distEl){
+    const counts={};
+    crmStatusList.forEach(s=>{counts[s]=(crmPropostas.filter(p=>p.status===s).length);});
+    distEl.innerHTML=Object.entries(counts)
+      .filter(([s,n])=>n>0)
+      .sort((a,b)=>b[1]-a[1])
+      .map(([s,n])=>`
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span style="width:10px;height:10px;border-radius:50%;background:${crmStatusColor(s)};flex-shrink:0"></span>
+          <span style="flex:1;font-size:13px;color:var(--txt)">${s}</span>
+          <span style="font-size:13px;font-weight:700;color:${crmStatusColor(s)}">${n}</span>
+          <div style="width:80px;height:6px;background:var(--border);border-radius:4px;overflow:hidden">
+            <div style="width:${Math.round(n/total*100)}%;height:100%;background:${crmStatusColor(s)};border-radius:4px"></div>
+          </div>
+        </div>`).join('');
+  }
+
+  // Top 3 operadores
+  const topEl=document.getElementById('crm-dash-top-ops');
+  if(topEl){
+    const opCount={};
+    crmPropostas.forEach(p=>{opCount[p.operador]=(opCount[p.operador]||0)+1;});
+    const sorted=Object.entries(opCount).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    topEl.innerHTML=sorted.map(([uid,cnt],i)=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:18px">${['🥇','🥈','🥉'][i]}</span>
+        <span style="flex:1;font-size:13px;font-weight:600;color:var(--txt)">${crmGetOperadorNome(+uid)}</span>
+        <span style="font-size:13px;color:var(--p1);font-weight:700">${cnt} propostas</span>
+      </div>`).join('');
+  }
+
+  // Recent proposals
+  const recentEl=document.getElementById('crm-dash-recentes');
+  if(recentEl){
+    const recentes=[...crmPropostas].sort((a,b)=>b.createdAt.localeCompare(a.createdAt)).slice(0,5);
+    recentEl.innerHTML=recentes.map(p=>`
+      <tr>
+        <td style="padding:8px 10px;font-size:12px;color:var(--muted)">${p.id}</td>
+        <td style="padding:8px 10px;font-size:13px;font-weight:600;color:var(--txt)">${p.cliente}</td>
+        <td style="padding:8px 10px;font-size:12px;color:var(--muted)">${crmConvenioIcon(p.convenio)} ${p.convenio}</td>
+        <td style="padding:8px 10px;font-size:13px;font-weight:700;color:var(--p1)">${crmFmt(p.valorBruto)}</td>
+        <td style="padding:8px 10px">
+          <span style="background:${crmStatusColor(p.status)}22;color:${crmStatusColor(p.status)};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${p.status}</span>
+        </td>
+        <td style="padding:8px 10px;font-size:12px;color:var(--muted)">${crmFmtDate(p.createdAt)}</td>
+      </tr>`).join('');
+  }
+}
+
+// ── PROPOSTAS TABLE ────────────────────────────────────────────────
+function crmRenderPropostas(list){
+  const tbody=document.getElementById('crm-propostas-tbody');
+  if(!tbody)return;
+  if(!list.length){
+    tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--muted)">Nenhuma proposta encontrada</td></tr>`;
+    return;
+  }
+  tbody.innerHTML=list.map(p=>`
+    <tr style="border-bottom:1px solid var(--border);cursor:pointer" onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background=''">
+      <td style="padding:10px 12px;font-size:12px;color:var(--muted);font-weight:700">${p.id}</td>
+      <td style="padding:10px 12px">
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">${p.cliente}</div>
+        <div style="font-size:11px;color:var(--muted)">${p.cpf}</div>
+      </td>
+      <td style="padding:10px 12px;font-size:12px;color:var(--muted)">${crmConvenioIcon(p.convenio)} ${p.convenio}</td>
+      <td style="padding:10px 12px;font-size:12px;color:var(--muted)">${p.operacao}</td>
+      <td style="padding:10px 12px;font-size:12px;color:var(--txt)">${p.banco}</td>
+      <td style="padding:10px 12px;font-size:12px;font-weight:700;color:var(--p1)">${p.prazo}x ${crmFmt(p.valorParcela)}</td>
+      <td style="padding:10px 12px;font-size:13px;font-weight:700;color:var(--txt)">${crmFmt(p.valorBruto)}</td>
+      <td style="padding:10px 12px">
+        <span style="background:${crmStatusColor(p.status)}22;color:${crmStatusColor(p.status)};padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap">${p.status}</span>
+      </td>
+      <td style="padding:10px 12px">
+        <div style="display:flex;gap:6px">
+          <button onclick="crmVerProposta('${p.id}')" style="background:var(--p1);color:#fff;border:none;padding:4px 10px;border-radius:7px;font-size:11px;cursor:pointer;font-weight:600">Ver</button>
+          <button onclick="crmAlterarStatus('${p.id}')" style="background:var(--bg);color:var(--txt);border:1.5px solid var(--border);padding:4px 10px;border-radius:7px;font-size:11px;cursor:pointer">Status</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function crmFiltrar(){
+  const busca=(document.getElementById('crm-busca')||{}).value||'';
+  const status=(document.getElementById('crm-filtro-status')||{}).value||'';
+  const convenio=(document.getElementById('crm-filtro-convenio')||{}).value||'';
+  const ordem=(document.getElementById('crm-filtro-ordem')||{}).value||'data_desc';
+  let list=[...crmPropostas];
+  if(busca){const b=busca.toLowerCase();list=list.filter(p=>p.cliente.toLowerCase().includes(b)||p.cpf.includes(b)||p.id.toLowerCase().includes(b));}
+  if(status)list=list.filter(p=>p.status===status);
+  if(convenio)list=list.filter(p=>p.convenio===convenio);
+  if(ordem==='data_desc')list.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+  else if(ordem==='data_asc')list.sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
+  else if(ordem==='valor_desc')list.sort((a,b)=>b.valorBruto-a.valorBruto);
+  else if(ordem==='valor_asc')list.sort((a,b)=>a.valorBruto-b.valorBruto);
+  crmRenderPropostas(list);
+}
+
+// ── CLIENTES ──────────────────────────────────────────────────────
+function crmRenderClientes(list){
+  const grid=document.getElementById('crm-clientes-grid');
+  if(!grid)return;
+  if(!list.length){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Nenhum cliente encontrado</div>`;
+    return;
+  }
+  grid.innerHTML=list.map(c=>{
+    const props=crmPropostas.filter(p=>p.cpf===c.cpf);
+    return`<div style="background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.12)'" onmouseout="this.style.boxShadow='none'">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--p1);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;flex-shrink:0">${c.nome.charAt(0)}</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--txt)">${c.nome}</div>
+          <div style="font-size:12px;color:var(--muted)">${c.cpf}</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:12px">
+        <div><span style="color:var(--muted)">📞</span> <span style="color:var(--txt)">${c.telefone}</span></div>
+        <div><span style="color:var(--muted)">📍</span> <span style="color:var(--txt)">${c.cidade||'–'}/${c.uf||'–'}</span></div>
+        <div><span style="color:var(--muted)">🏛️</span> <span style="color:var(--txt)">${c.convenio||'–'}</span></div>
+        <div><span style="color:var(--muted)">🎂</span> <span style="color:var(--txt)">${crmFmtDate(c.dataNasc)}</span></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:12px;color:var(--muted)">${props.length} proposta${props.length!==1?'s':''}</span>
+        <span style="background:var(--p1)22;color:var(--p1);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${c.id}</span>
+      </div>
+      ${c.obs?`<div style="margin-top:10px;font-size:11px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:8px">${c.obs}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function crmFiltrarClientes(){
+  const busca=(document.getElementById('crm-busca-cli')||{}).value||'';
+  const convenio=(document.getElementById('crm-filtro-convenio-cli')||{}).value||'';
+  let list=[...crmClientes];
+  if(busca){const b=busca.toLowerCase();list=list.filter(c=>c.nome.toLowerCase().includes(b)||c.cpf.includes(b));}
+  if(convenio)list=list.filter(c=>c.convenio===convenio);
+  crmRenderClientes(list);
+}
+
+// ── FUNIL / KANBAN ────────────────────────────────────────────────
+function crmBuildKanban(){
+  const board=document.getElementById('crm-kanban-board');
+  if(!board)return;
+  const cols=['PENDENTE','DIGITADO','EM DIGITAÇÃO','AGUARD DIGITAÇÃO','AGUARDANDO AVERBAÇÃO','AVERBADA','FORMALIZAÇÃO CONCLUÍDA','PAGA','CANCELADO'];
+  board.innerHTML=cols.map(st=>{
+    const props=crmPropostas.filter(p=>p.status===st);
+    const total=props.reduce((s,p)=>s+(p.valorBruto||0),0);
+    return`<div style="min-width:220px;max-width:240px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px;flex-shrink:0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="width:10px;height:10px;border-radius:50%;background:${crmStatusColor(st)};flex-shrink:0"></span>
+          <span style="font-size:12px;font-weight:700;color:var(--txt)">${st}</span>
+        </div>
+        <span style="background:${crmStatusColor(st)}22;color:${crmStatusColor(st)};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">${props.length}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:600">${crmFmt(total)}</div>
+      <div style="display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto">
+        ${props.length?props.map(p=>`
+          <div onclick="crmVerProposta('${p.id}')" style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 2px 10px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">
+            <div style="font-size:12px;font-weight:700;color:var(--txt);margin-bottom:4px">${p.cliente}</div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:6px">${crmConvenioIcon(p.convenio)} ${p.convenio} • ${p.banco}</div>
+            <div style="font-size:13px;font-weight:700;color:var(--p1)">${crmFmt(p.valorBruto)}</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:4px">${crmFmtDate(p.createdAt)}</div>
+          </div>`).join(''):`<div style="text-align:center;padding:20px 10px;color:var(--muted);font-size:12px">Sem propostas</div>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── RELATÓRIOS ────────────────────────────────────────────────────
+function crmUpdateRelatorios(){
+  // Convenio distribution
+  const convEl=document.getElementById('crm-rel-convenio');
+  if(convEl){
+    const convs={};
+    crmPropostas.forEach(p=>{convs[p.convenio]=(convs[p.convenio]||0)+1;});
+    const total=crmPropostas.length;
+    convEl.innerHTML=Object.entries(convs).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span style="color:var(--txt);font-weight:600">${crmConvenioIcon(k)} ${k}</span>
+          <span style="color:var(--p1);font-weight:700">${v} (${Math.round(v/total*100)}%)</span>
+        </div>
+        <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden">
+          <div style="width:${Math.round(v/total*100)}%;height:100%;background:var(--p1);border-radius:4px"></div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Banco ranking
+  const bancoEl=document.getElementById('crm-rel-banco');
+  if(bancoEl){
+    const bancos={};
+    crmPropostas.forEach(p=>{
+      if(!bancos[p.banco])bancos[p.banco]={count:0,valor:0};
+      bancos[p.banco].count++;
+      bancos[p.banco].valor+=p.valorBruto||0;
+    });
+    bancoEl.innerHTML=Object.entries(bancos).sort((a,b)=>b[1].count-a[1].count).slice(0,6).map(([k,v],i)=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:16px">${['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'][i]}</span>
+        <span style="flex:1;font-size:13px;font-weight:600;color:var(--txt)">${k}</span>
+        <div style="text-align:right">
+          <div style="font-size:12px;font-weight:700;color:var(--p1)">${v.count} ops</div>
+          <div style="font-size:11px;color:var(--muted)">${crmFmt(v.valor)}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Canal distribution
+  const canalEl=document.getElementById('crm-rel-canal');
+  if(canalEl){
+    const canais={};
+    crmPropostas.forEach(p=>{canais[p.canal]=(canais[p.canal]||0)+1;});
+    const canalIcons={'WHATSAPP':'💬','TELEMARKETING':'📞','LOJA FÍSICA':'🏪','SITE':'🌐','INDICAÇÃO':'🤝'};
+    const total=crmPropostas.length;
+    canalEl.innerHTML=Object.entries(canais).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span style="font-size:16px">${canalIcons[k]||'📋'}</span>
+        <span style="flex:1;font-size:13px;color:var(--txt)">${k}</span>
+        <span style="font-size:13px;font-weight:700;color:var(--p1)">${v}</span>
+        <span style="font-size:11px;color:var(--muted)">${Math.round(v/total*100)}%</span>
+      </div>`).join('');
+  }
+
+  // Volume by month
+  const mensalEl=document.getElementById('crm-rel-mensal');
+  if(mensalEl){
+    const meses={};
+    crmPropostas.forEach(p=>{
+      const m=p.createdAt.substring(0,7);
+      if(!meses[m])meses[m]={count:0,valor:0};
+      meses[m].count++;
+      meses[m].valor+=p.valorBruto||0;
+    });
+    const sorted=Object.entries(meses).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6);
+    const maxVal=Math.max(...sorted.map(([,v])=>v.valor));
+    mensalEl.innerHTML=`<div style="display:flex;align-items:flex-end;gap:12px;height:120px;margin-bottom:8px">
+      ${sorted.map(([m,v])=>`
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <span style="font-size:10px;color:var(--muted)">${v.count}</span>
+          <div style="width:100%;background:var(--p1);border-radius:6px 6px 0 0;height:${Math.max(8,Math.round(v.valor/maxVal*100))}px;min-height:8px"></div>
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:12px">
+      ${sorted.map(([m])=>`<span style="flex:1;text-align:center;font-size:10px;color:var(--muted)">${m.substring(5)}</span>`).join('')}
+    </div>`;
+  }
+}
+
+// ── EQUIPE ─────────────────────────────────────────────────────────
+function crmUpdateEquipe(){
+  const grid=document.getElementById('crm-equipe-grid');
+  if(!grid)return;
+  const opCount={};
+  const opValor={};
+  crmPropostas.forEach(p=>{
+    opCount[p.operador]=(opCount[p.operador]||0)+1;
+    opValor[p.operador]=(opValor[p.operador]||0)+(p.valorBruto||0);
+  });
+  grid.innerHTML=crmUsuarios.map((u,i)=>{
+    const cnt=opCount[u.id]||0;
+    const val=opValor[u.id]||0;
+    const medal=i<3?['🥇','🥈','🥉'][i]:'';
+    const cargoColor={'Master':'#ef4444','Adm':'#f59e0b','Operador':'#3b82f6'}[u.cargo]||'#94a3b8';
+    return`<div style="background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:20px;text-align:center">
+      <div style="font-size:32px;margin-bottom:8px">${medal||'👤'}</div>
+      <div style="font-size:15px;font-weight:700;color:var(--txt);margin-bottom:4px">${u.nome}</div>
+      <div style="font-size:11px;color:#fff;background:${cargoColor};padding:3px 12px;border-radius:20px;display:inline-block;margin-bottom:14px">${u.cargo}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">${u.email}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div style="background:var(--bg);border-radius:10px;padding:10px">
+          <div style="font-size:20px;font-weight:700;color:var(--p1)">${cnt}</div>
+          <div style="font-size:11px;color:var(--muted)">Propostas</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px">
+          <div style="font-size:13px;font-weight:700;color:var(--p1)">${crmFmt(val)}</div>
+          <div style="font-size:11px;color:var(--muted)">Volume</div>
+        </div>
+      </div>
+      <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:${u.ativo?'#22c55e22':'#ef444422'};color:${u.ativo?'#22c55e':'#ef4444'};font-weight:700">${u.ativo?'✓ Ativo':'✗ Inativo'}</span>
+    </div>`;
+  }).join('');
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────
+function crmRenderAdmin(){
+  // Populate banco list
+  const bancoListEl=document.getElementById('crm-adm-banco-list');
+  if(bancoListEl){
+    bancoListEl.innerHTML=crmBancos.map(b=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:13px;color:var(--txt)">🏦 ${b}</span>
+        <button onclick="showToast('Banco removido: ${b}','info')" style="background:none;border:1px solid #ef4444;color:#ef4444;padding:3px 10px;border-radius:7px;font-size:11px;cursor:pointer">Remover</button>
+      </div>`).join('');
+  }
+  // Populate status list
+  const statusListEl=document.getElementById('crm-adm-status-list');
+  if(statusListEl){
+    statusListEl.innerHTML=crmStatusList.map(s=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="width:10px;height:10px;border-radius:50%;background:${crmStatusColor(s)};flex-shrink:0"></span>
+        <span style="flex:1;font-size:13px;color:var(--txt)">${s}</span>
+        <span style="font-size:11px;color:${crmStatusColor(s)};background:${crmStatusColor(s)}22;padding:2px 8px;border-radius:20px">Ativo</span>
+      </div>`).join('');
+  }
+  // Promotoras
+  const promListEl=document.getElementById('crm-adm-promotora-list');
+  if(promListEl){
+    promListEl.innerHTML=crmPromotoras.map(p=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="flex:1;font-size:13px;color:var(--txt)">${p.nome}</span>
+        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:${p.ativo?'#22c55e22':'#ef444422'};color:${p.ativo?'#22c55e':'#ef4444'}">${p.ativo?'Ativa':'Inativa'}</span>
+      </div>`).join('');
+  }
+  // Notifications
+  const notifListEl=document.getElementById('crm-adm-notif-list');
+  if(notifListEl){
+    notifListEl.innerHTML=crmNotificacoes.map(n=>`
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:18px">${n.tipo==='success'?'✅':n.tipo==='warning'?'⚠️':'ℹ️'}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">${n.titulo}</div>
+          <div style="font-size:12px;color:var(--muted)">${n.mensagem}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">${crmFmtDate(n.data)}</div>
+        </div>
+        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:${n.lida?'var(--border)':'#3b82f622'};color:${n.lida?'var(--muted)':'#3b82f6'}">${n.lida?'Lida':'Nova'}</span>
+      </div>`).join('');
+  }
+}
+
+function admFiltrarBancos(){
+  const q=(document.getElementById('adm-banco-busca')||{}).value||'';
+  const el=document.getElementById('crm-adm-banco-list');
+  if(!el)return;
+  const list=q?crmBancos.filter(b=>b.toLowerCase().includes(q.toLowerCase())):crmBancos;
+  el.innerHTML=list.map(b=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:13px;color:var(--txt)">🏦 ${b}</span>
+      <button onclick="showToast('Banco: ${b}','info')" style="background:none;border:1px solid #ef4444;color:#ef4444;padding:3px 10px;border-radius:7px;font-size:11px;cursor:pointer">Remover</button>
+    </div>`).join('');
+}
+
+function admSalvarBanco(){
+  const inp=document.getElementById('adm-novo-banco');
+  if(!inp||!inp.value.trim()){showToast('Digite o nome do banco','warning');return;}
+  crmBancos.push(inp.value.trim());
+  inp.value='';
+  crmRenderAdmin();
+  showToast('Banco adicionado!','success');
+}
+
+function admSalvarStatus(){
+  const inp=document.getElementById('adm-novo-status');
+  if(!inp||!inp.value.trim()){showToast('Digite o nome do status','warning');return;}
+  crmStatusList.push(inp.value.trim().toUpperCase());
+  inp.value='';
+  crmRenderAdmin();
+  showToast('Status adicionado!','success');
+}
+
+function admSalvarPromotora(){
+  const inp=document.getElementById('adm-nova-promotora');
+  if(!inp||!inp.value.trim()){showToast('Digite o nome da promotora','warning');return;}
+  crmPromotoras.push({id:crmPromotoras.length+1,nome:inp.value.trim(),ativo:true});
+  inp.value='';
+  crmRenderAdmin();
+  showToast('Promotora adicionada!','success');
+}
+
+function admEnviarNotif(){
+  const titulo=(document.getElementById('adm-notif-titulo')||{}).value||'';
+  const msg=(document.getElementById('adm-notif-msg')||{}).value||'';
+  if(!titulo||!msg){showToast('Preencha título e mensagem','warning');return;}
+  const today=new Date().toISOString().split('T')[0];
+  crmNotificacoes.unshift({id:crmNotificacoes.length+1,titulo,mensagem:msg,tipo:'info',data:today,lida:false});
+  document.getElementById('adm-notif-titulo').value='';
+  document.getElementById('adm-notif-msg').value='';
+  crmRenderAdmin();
+  showToast('Notificação enviada!','success');
+}
+
+// ── PROPOSTA: VER / EDITAR ─────────────────────────────────────────
+function crmVerProposta(id){
+  const p=crmPropostas.find(x=>x.id===id);
+  if(!p)return;
+  _crmPropostaEditId=id;
+  const el=document.getElementById('crm-modal-ver-body');
+  if(el){
+    el.innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 14px;text-transform:uppercase;letter-spacing:.5px">Dados do Cliente</h4>
+          ${[
+            ['ID',p.id],['Nome',p.cliente],['CPF',p.cpf],['RG',p.rg],
+            ['Data Nasc.',crmFmtDate(p.dataNasc)],['Telefone',p.telefone],
+            ['E-mail',p.email],['Nº Benefício',p.beneficio||'–']
+          ].map(([k,v])=>`
+            <div style="margin-bottom:10px">
+              <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase">${k}</div>
+              <div style="font-size:14px;color:var(--txt);font-weight:600">${v||'–'}</div>
+            </div>`).join('')}
+        </div>
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 14px;text-transform:uppercase;letter-spacing:.5px">Dados da Proposta</h4>
+          ${[
+            ['Convênio',`${crmConvenioIcon(p.convenio)} ${p.convenio}`],
+            ['Operação',p.operacao],['Banco',p.banco],['Tabela',p.tabela],
+            ['Prazo',`${p.prazo}x`],['Valor Bruto',crmFmt(p.valorBruto)],
+            ['Valor Líquido',crmFmt(p.valorLiquido)],['Parcela',crmFmt(p.valorParcela)],
+            ['Margem',crmFmt(p.margem)],['Renda',crmFmt(p.renda)],
+            ['Promotora',p.promotora],['Formalização',p.formalizacao],
+            ['Canal',p.canal],['Operador',crmGetOperadorNome(p.operador)],
+            ['Data',crmFmtDate(p.createdAt)]
+          ].map(([k,v])=>`
+            <div style="margin-bottom:10px">
+              <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase">${k}</div>
+              <div style="font-size:14px;color:var(--txt);font-weight:600">${v||'–'}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:20px;padding-top:20px;border-top:1.5px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 10px;text-transform:uppercase">Status Atual</h4>
+          <span style="background:${crmStatusColor(p.status)}22;color:${crmStatusColor(p.status)};padding:8px 18px;border-radius:20px;font-size:14px;font-weight:700">${p.status}</span>
+        </div>
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 10px;text-transform:uppercase">Dados Bancários</h4>
+          <div style="font-size:13px;color:var(--txt)">Ag: ${p.agencia||'–'} / CC: ${p.contaBancaria||'–'}</div>
+        </div>
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 10px;text-transform:uppercase">Observação</h4>
+          <div style="font-size:13px;color:var(--muted);font-style:italic">${p.obs||'Sem observações'}</div>
+        </div>
+      </div>`;
+  }
+  crmOpenModal('crm-modal-ver');
+}
+
+// ── ALTERAR STATUS ─────────────────────────────────────────────────
+function crmAlterarStatus(id){
+  _crmStatusEditId=id;
+  const p=crmPropostas.find(x=>x.id===id);
+  if(!p)return;
+  const nameEl=document.getElementById('crm-status-nome');
+  if(nameEl)nameEl.textContent=p.cliente+' ('+p.id+')';
+  const sel=document.getElementById('crm-novo-status-sel');
+  if(sel){
+    sel.innerHTML=crmStatusList.map(s=>`<option value="${s}" ${s===p.status?'selected':''}>${s}</option>`).join('');
+  }
+  const obsEl=document.getElementById('crm-status-obs');
+  if(obsEl)obsEl.value='';
+  crmCloseModal('crm-modal-ver');
+  crmOpenModal('crm-modal-status');
+}
+
+function crmConfirmarStatus(){
+  if(!_crmStatusEditId)return;
+  const sel=document.getElementById('crm-novo-status-sel');
+  const obs=document.getElementById('crm-status-obs');
+  const newStatus=sel?sel.value:'';
+  if(!newStatus){showToast('Selecione um status','warning');return;}
+  const idx=crmPropostas.findIndex(x=>x.id===_crmStatusEditId);
+  if(idx===-1)return;
+  crmPropostas[idx].status=newStatus;
+  if(obs&&obs.value.trim())crmPropostas[idx].obs=obs.value.trim();
+  crmCloseModal('crm-modal-status');
+  showToast('Status atualizado para: '+newStatus,'success');
+  crmFiltrar();
+  crmUpdateDashboard();
+  _crmStatusEditId=null;
+}
+
+// ── SALVAR PROPOSTA ────────────────────────────────────────────────
+function crmCalcParcela(){
+  const val=parseFloat((document.getElementById('nova-valor-bruto')||{}).value||0);
+  const pr=parseInt((document.getElementById('nova-prazo')||{}).value||84);
+  const taxa=0.0199;
+  if(val>0&&pr>0){
+    const pmt=val*taxa/(1-Math.pow(1+taxa,-pr));
+    const el=document.getElementById('nova-valor-parcela');
+    if(el)el.value=pmt.toFixed(2);
+  }
+}
+
+function crmSalvarProposta(){
+  const g=id=>(document.getElementById(id)||{}).value||'';
+  const cliente=g('nova-nome-cliente');
+  const cpf=g('nova-cpf');
+  if(!cliente||!cpf){showToast('Preencha Nome e CPF do cliente','warning');return;}
+
+  const newId='P'+String(crmPropostas.length+1).padStart(3,'0');
+  const today=new Date().toISOString().split('T')[0];
+  const novaProp={
+    id:newId,
+    cliente,cpf,
+    rg:g('nova-rg'),
+    dataNasc:g('nova-data-nasc'),
+    telefone:g('nova-telefone'),
+    email:g('nova-email'),
+    beneficio:g('nova-beneficio'),
+    convenio:g('nova-convenio'),
+    operacao:g('nova-operacao'),
+    banco:g('nova-banco'),
+    tabela:g('nova-tabela'),
+    prazo:parseInt(g('nova-prazo'))||84,
+    valorBruto:parseFloat(g('nova-valor-bruto'))||0,
+    valorLiquido:parseFloat(g('nova-valor-liquido'))||0,
+    valorParcela:parseFloat(g('nova-valor-parcela'))||0,
+    margem:parseFloat(g('nova-margem'))||0,
+    renda:parseFloat(g('nova-renda'))||0,
+    promotora:g('nova-promotora'),
+    formalizacao:g('nova-formalizacao'),
+    canal:g('nova-canal'),
+    status:'PENDENTE',
+    operador:3,
+    agencia:g('nova-agencia'),
+    contaBancaria:g('nova-conta'),
+    obs:g('nova-obs'),
+    createdAt:today
+  };
+  crmPropostas.unshift(novaProp);
+  crmCloseModal('crm-modal-nova-proposta');
+  showToast('Proposta '+newId+' cadastrada com sucesso!','success');
+  crmAba('crm-aba-propostas');
+}
+
+// ── SALVAR CLIENTE ─────────────────────────────────────────────────
+function crmSalvarCliente(){
+  const g=id=>(document.getElementById(id)||{}).value||'';
+  const nome=g('novo-cli-nome');
+  const cpf=g('novo-cli-cpf');
+  if(!nome||!cpf){showToast('Preencha Nome e CPF','warning');return;}
+  const newId='C'+String(crmClientes.length+1).padStart(3,'0');
+  crmClientes.unshift({
+    id:newId,nome,cpf,
+    telefone:g('novo-cli-telefone'),
+    email:g('novo-cli-email'),
+    dataNasc:g('novo-cli-data-nasc'),
+    convenio:g('novo-cli-convenio'),
+    cidade:g('novo-cli-cidade'),
+    uf:g('novo-cli-uf'),
+    obs:g('novo-cli-obs')
+  });
+  crmCloseModal('crm-modal-novo-cliente');
+  showToast('Cliente '+newId+' cadastrado!','success');
+  crmAba('crm-aba-clientes');
+}
+
+// ── INIT CRM ───────────────────────────────────────────────────────
+function crmInit(){
+  crmUpdateDashboard();
+  // Show first tab
+  document.querySelectorAll('.crm-tab-content').forEach((el,i)=>{
+    el.style.display=i===0?'block':'none';
+  });
+}
+
+
+
 // ── MOBILE NAVIGATION ──
 function openMobDrawer(){
   const d=document.getElementById('mob-drawer');
@@ -5187,7 +6046,7 @@ const _origShowPage=showPage;
 function showPage(id){
   _origShowPage(id);
   if(id==='page-correspondente'){
-    setTimeout(()=>{ setCrmTab('dash'); },50);
+    setTimeout(()=>{ crmInit(); },80);
   }
 }
 </script>
