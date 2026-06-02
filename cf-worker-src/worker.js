@@ -132,8 +132,7 @@ export default {
 
     const html = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600' };
 
-    if (path === '/')          return new Response(INDEX_HTML,    { headers: html });
-    if (path === '/app')       return new Response(APP_HTML,      { headers: html });
+    if (path === '/' || path === '/app') return new Response(APP_HTML, { headers: html });
     if (path === '/analysis')  return new Response(ANALYSIS_HTML, { headers: html });
     if (path === '/guide')     return new Response(GUIDE_HTML,    { headers: html });
     if (path === '/decisao')   return new Response(DECISAO_HTML,  { headers: html });
