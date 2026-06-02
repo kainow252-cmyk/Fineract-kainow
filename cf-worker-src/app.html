@@ -48,7 +48,7 @@ input,select,textarea{font-family:inherit;outline:none}
 @keyframes splPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,188,212,.5)}50%{transform:scale(1.04);box-shadow:0 0 0 22px rgba(0,188,212,0)}}
 .spl-name{font-size:32px;font-weight:900;color:#fff;letter-spacing:-1px}
 .spl-sub{font-size:14px;color:rgba(255,255,255,.55);margin-top:6px;letter-spacing:.5px}
-.spl-badges{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center}
+.spl-badges{display:none}
 .spl-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:5px}
 .spl-dots{margin-top:50px;display:flex;gap:10px}
 .spl-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3);animation:dotAnim 1.2s ease-in-out infinite}
@@ -905,7 +905,7 @@ input,select,textarea{font-family:inherit;outline:none}
   table{min-width:500px}
 
   /* Splash */
-  .spl-badges{flex-wrap:wrap;justify-content:center;gap:6px}
+  .spl-badges{display:none}
 
   /* Topbar right — hide help, keep bell + avatar */
   .tb-right .tb-btn:not(:last-child){display:none}
@@ -1047,14 +1047,7 @@ input,select,textarea{font-family:inherit;outline:none}
   <div class="spl-logo">🏦</div>
   <div class="spl-name">KaiNowPay</div>
   <div class="spl-sub">Digital Banking Platform</div>
-  <div class="spl-badges">
-    <span class="spl-badge">⚡ Apache Fineract</span>
-    <span class="spl-badge">🔗 Celcoin BaaS</span>
-    <span class="spl-badge">💳 Fitbank PIX</span>
-    <span class="spl-badge">🛍️ Marketplace</span>
-    <span class="spl-badge">📝 Documenso</span>
-    <span class="spl-badge">👥 CRM Twenty</span>
-  </div>
+  <!-- badges removidos a pedido do usuário -->
   <div class="spl-dots">
     <div class="spl-dot"></div><div class="spl-dot"></div><div class="spl-dot"></div>
   </div>
