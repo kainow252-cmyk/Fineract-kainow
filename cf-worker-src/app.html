@@ -5679,11 +5679,24 @@ function crmAba(abaId){
 // ── MODAL MANAGEMENT ──────────────────────────────────────────────
 function crmOpenModal(id){
   const m=document.getElementById(id);
-  if(m){m.style.display='flex';document.body.style.overflow='hidden';}
+  if(!m) return;
+  // Support both .overlay (CSS class system) and inline-style modals
+  if(m.classList.contains('overlay')){
+    m.classList.add('show');
+  } else {
+    m.style.display='flex';
+  }
+  document.body.style.overflow='hidden';
 }
 function crmCloseModal(id){
   const m=document.getElementById(id);
-  if(m){m.style.display='none';document.body.style.overflow='';}
+  if(!m) return;
+  if(m.classList.contains('overlay')){
+    m.classList.remove('show');
+  } else {
+    m.style.display='none';
+  }
+  document.body.style.overflow='';
 }
 
 // ── DASHBOARD ──────────────────────────────────────────────────────
