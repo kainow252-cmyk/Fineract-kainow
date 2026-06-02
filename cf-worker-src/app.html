@@ -51,56 +51,211 @@ input,select,textarea{font-family:inherit;outline:none}
 /* ══════════════════════════════════════════════
    LOGIN — FULL SCREEN SPLIT LAYOUT
 ══════════════════════════════════════════════ */
-#page-login{position:fixed;inset:0;z-index:100;display:none;flex-direction:row}
+#page-login{position:fixed;inset:0;z-index:100;display:none;flex-direction:column}
 #page-login.active{display:flex}
 
-/* LEFT PANEL — Branding */
+/* ══════════════════════════════════════
+   KAINOW LOGIN — SPLIT SCREEN
+══════════════════════════════════════ */
+.lgn-wrap{display:flex;flex:1;overflow:hidden}
+
+/* LEFT PANEL */
 .lgn-left{
-  flex:1.1;
-  background:linear-gradient(160deg,#050520 0%,#0d0d3b 30%,#1a237e 70%,#00bcd4 100%);
+  flex:1.2;
+  background:linear-gradient(155deg,#0B071E 0%,#13103A 40%,#1E1650 75%,#2D1F6E 100%);
   display:flex;flex-direction:column;justify-content:space-between;
-  padding:48px 52px;position:relative;overflow:hidden;
+  padding:44px 52px 36px 52px;position:relative;overflow:hidden;
 }
 .lgn-left::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 20% 50%,rgba(0,188,212,.18) 0%,transparent 60%),
-             radial-gradient(ellipse at 80% 10%,rgba(63,81,181,.25) 0%,transparent 50%);
+  background:
+    radial-gradient(ellipse 60% 50% at 110% 80%, rgba(120,60,220,.30) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at -10% 20%, rgba(80,40,180,.20) 0%,transparent 60%);
+  pointer-events:none;
 }
-.lgn-left-content{position:relative;z-index:1}
-.lgn-brand{display:flex;align-items:center;gap:16px;margin-bottom:56px}
-.lgn-brand-icon{width:60px;height:60px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.22);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;backdrop-filter:blur(6px)}
-.lgn-brand-txt h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px}
-.lgn-brand-txt p{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;letter-spacing:.3px}
-.lgn-headline{font-size:42px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-2px;margin-bottom:18px}
-.lgn-headline span{color:var(--ac)}
-.lgn-desc{font-size:15px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:44px;max-width:400px}
-.lgn-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:44px}
-.lgn-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 20px;backdrop-filter:blur(4px)}
-.lgn-stat-val{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px}
-.lgn-stat-lbl{font-size:11.5px;color:rgba(255,255,255,.5);margin-top:3px}
-.lgn-badges{display:flex;gap:10px;flex-wrap:wrap}
-.lgn-badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px)}
-.lgn-left-footer{position:relative;z-index:1;font-size:11.5px;color:rgba(255,255,255,.3)}
+/* Dots decorativos */
+.lgn-dots{
+  position:absolute;top:0;right:0;width:240px;height:200px;
+  background-image:radial-gradient(rgba(160,130,255,.22) 1.5px,transparent 1.5px);
+  background-size:22px 22px;pointer-events:none;
+}
+/* Ondas decorativas */
+.lgn-waves{
+  position:absolute;bottom:0;right:0;width:320px;height:220px;
+  overflow:hidden;pointer-events:none;
+}
+.lgn-waves svg{position:absolute;bottom:0;right:0;opacity:.55}
 
-/* Floating cards decoration */
-.lgn-float-cards{position:absolute;right:-30px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:1}
-.lgn-fc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 18px;backdrop-filter:blur(8px);width:200px;animation:fcFloat 3s ease-in-out infinite}
-.lgn-fc:nth-child(2){animation-delay:.8s}.lgn-fc:nth-child(3){animation-delay:1.6s}
-@keyframes fcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.lgn-fc-label{font-size:10.5px;color:rgba(255,255,255,.45);margin-bottom:4px}
-.lgn-fc-val{font-size:17px;font-weight:800;color:#fff}
-.lgn-fc-sub{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:2px}
+/* Logo */
+.lgn-brand{display:flex;align-items:center;gap:14px;margin-bottom:48px;position:relative;z-index:1}
+.lgn-brand-icon{
+  width:58px;height:58px;
+  background:linear-gradient(135deg,#7B3FF2,#5B2AC4);
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:0;box-shadow:0 4px 22px rgba(100,40,220,.5);
+  position:relative;overflow:hidden;
+}
+.lgn-brand-icon::after{
+  content:'K';font-size:30px;font-weight:900;color:#fff;
+  font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-1px;
+}
+.lgn-brand-txt h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
+.lgn-brand-txt p{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px;letter-spacing:1.5px;text-transform:uppercase}
 
-/* RIGHT PANEL — Form */
+/* Headline */
+.lgn-headline{
+  font-size:40px;font-weight:900;color:#fff;line-height:1.18;
+  letter-spacing:-1.5px;margin-bottom:16px;position:relative;z-index:1;
+  max-width:440px;
+}
+.lgn-desc{font-size:14.5px;color:rgba(255,255,255,.58);line-height:1.68;margin-bottom:40px;max-width:420px;position:relative;z-index:1}
+
+/* Features list */
+.lgn-features{display:flex;flex-direction:column;gap:18px;margin-bottom:36px;position:relative;z-index:1}
+.lgn-feat{display:flex;align-items:flex-start;gap:16px}
+.lgn-feat-icon{
+  width:40px;height:40px;flex-shrink:0;
+  background:rgba(120,70,255,.22);border:1px solid rgba(140,90,255,.30);
+  border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.lgn-feat-txt strong{display:block;font-size:13.5px;font-weight:700;color:#fff;margin-bottom:2px}
+.lgn-feat-txt span{font-size:12px;color:rgba(255,255,255,.50)}
+
+/* Security badge */
+.lgn-security{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;padding:11px 16px;position:relative;z-index:1;width:fit-content;
+}
+.lgn-security-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 6px #4ade80;flex-shrink:0}
+.lgn-security span{font-size:12px;color:rgba(255,255,255,.65)}
+
+/* RIGHT PANEL */
 .lgn-right{
-  width:480px;flex-shrink:0;
+  width:500px;flex-shrink:0;
   background:#fff;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:52px 52px;overflow-y:auto;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:0;overflow-y:auto;
 }
-.lgn-right-logo{display:flex;align-items:center;gap:12px;margin-bottom:40px}
-.lgn-right-icon{width:46px;height:46px;background:linear-gradient(135deg,var(--p1),var(--ac));border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px}
-.lgn-right-txt h2{font-size:18px;font-weight:800;color:var(--p1)}
+.lgn-right-inner{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:44px 52px;
+}
+
+/* Language selector */
+.lgn-lang{
+  display:flex;justify-content:flex-end;
+  padding:18px 28px 0 28px;
+}
+.lgn-lang-btn{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;color:#555;font-weight:500;
+  background:none;border:1.5px solid #e5e5e5;
+  border-radius:22px;padding:6px 14px;cursor:pointer;
+  transition:border-color .2s;
+}
+.lgn-lang-btn:hover{border-color:#7B3FF2;color:#7B3FF2}
+
+/* Form header */
+.lgn-form-title{font-size:28px;font-weight:900;color:#111;letter-spacing:-.8px;margin-bottom:6px}
+.lgn-form-title span{color:#7B3FF2}
+.lgn-form-sub{font-size:13.5px;color:#888;margin-bottom:28px}
+
+/* Input fields */
+.lgn-field{margin-bottom:16px}
+.lgn-label{font-size:13px;font-weight:600;color:#333;margin-bottom:7px;display:block}
+.lgn-inp-wrap{position:relative;display:flex;align-items:center}
+.lgn-inp{
+  width:100%;padding:13px 16px 13px 44px;
+  border:1.5px solid #E0E0E0;border-radius:12px;
+  font-size:14px;color:#111;background:#fff;
+  transition:border-color .2s,box-shadow .2s;outline:none;
+  font-family:inherit;
+}
+.lgn-inp:focus{border-color:#7B3FF2;box-shadow:0 0 0 3px rgba(123,63,242,.12)}
+.lgn-inp::placeholder{color:#bbb}
+.lgn-inp-ico{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:16px;color:#bbb;pointer-events:none;
+}
+.lgn-inp-eye{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:16px;
+  color:#bbb;padding:2px;
+}
+.lgn-inp-eye:hover{color:#7B3FF2}
+
+/* Remember + Forgot */
+.lgn-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.lgn-check{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;color:#555;user-select:none}
+.lgn-chk{
+  width:18px;height:18px;border-radius:5px;
+  border:2px solid #7B3FF2;background:#7B3FF2;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.lgn-chk::after{content:'✓';font-size:11px;color:#fff;font-weight:700}
+.lgn-forgot{font-size:13px;color:#7B3FF2;font-weight:600;cursor:pointer;text-decoration:none}
+.lgn-forgot:hover{text-decoration:underline}
+
+/* Buttons */
+.lgn-btn-primary{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,#7B3FF2,#5B2AC4);
+  color:#fff;font-size:15px;font-weight:700;
+  border:none;border-radius:13px;cursor:pointer;
+  transition:opacity .2s,transform .1s;letter-spacing:.2px;
+  box-shadow:0 4px 18px rgba(100,40,220,.35);
+}
+.lgn-btn-primary:hover{opacity:.92;transform:translateY(-1px)}
+.lgn-btn-primary:active{transform:translateY(0)}
+
+/* Divider */
+.lgn-divider{
+  display:flex;align-items:center;gap:12px;
+  margin:18px 0;color:#bbb;font-size:12.5px;
+}
+.lgn-divider::before,.lgn-divider::after{content:'';flex:1;height:1px;background:#E8E8E8}
+
+/* Social buttons */
+.lgn-social{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.lgn-social-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:13px;border:1.5px solid #E5E5E5;border-radius:12px;
+  background:#fff;cursor:pointer;font-size:13.5px;font-weight:600;color:#333;
+  transition:border-color .2s,background .2s;
+}
+.lgn-social-btn:hover{border-color:#7B3FF2;background:#faf5ff}
+
+/* Register link */
+.lgn-register{text-align:center;font-size:13.5px;color:#888;margin-bottom:20px}
+.lgn-register a{color:#7B3FF2;font-weight:700;cursor:pointer;text-decoration:none}
+.lgn-register a:hover{text-decoration:underline}
+
+/* Trust badges */
+.lgn-trust{display:flex;justify-content:center;gap:24px}
+.lgn-trust-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#999}
+.lgn-trust-ico{font-size:14px;color:#7B3FF2}
+
+/* Error */
+.lgn-err{display:none;padding:11px 14px;background:#fef2f2;border-radius:10px;font-size:13px;color:#dc2626;margin-bottom:14px;border:1px solid #fecaca}
+.lgn-err.show{display:block}
+
+/* Demo hint */
+.lgn-hint{padding:10px 14px;background:#f5f0ff;border-radius:9px;font-size:12px;color:#7B3FF2;text-align:center;border:1px solid #e0d5ff;margin-bottom:16px}
+
+/* Footer bar */
+.lgn-footer-bar{
+  background:#0B071E;padding:12px 52px;
+  display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
+}
+.lgn-footer-bar span{font-size:11.5px;color:rgba(255,255,255,.35)}
+.lgn-footer-links{display:flex;gap:20px}
+.lgn-footer-links a{font-size:11.5px;color:rgba(255,255,255,.40);cursor:pointer;text-decoration:none}
+.lgn-footer-links a:hover{color:rgba(255,255,255,.70)}
+
+/* LEFT footer */
+.lgn-left-footer{font-size:11.5px;color:rgba(255,255,255,.25);position:relative;z-index:1}
 .lgn-right-txt p{font-size:11.5px;color:var(--muted);margin-top:1px}
 .lgn-title{font-size:28px;font-weight:900;color:var(--txt);letter-spacing:-1px;margin-bottom:6px}
 .lgn-subtitle{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.5}
@@ -587,117 +742,164 @@ input,select,textarea{font-family:inherit;outline:none}
   </div>
 </div>
 
-<!-- LOGIN — FULL SCREEN -->
+<!-- LOGIN — KAINOW DESIGN FULL SCREEN -->
 <div id="page-login">
 
-  <!-- ═══ LEFT: BRANDING PANEL ═══ -->
-  <div class="lgn-left">
-    <div class="lgn-left-content">
-      <div class="lgn-brand">
-        <div class="lgn-brand-icon">🏦</div>
-        <div class="lgn-brand-txt">
-          <h1>MeuBanco Digital</h1>
-          <p>Plataforma Bancária Completa · v2.0</p>
+  <div class="lgn-wrap">
+    <!-- ═══ LEFT: BRANDING PANEL ═══ -->
+    <div class="lgn-left">
+      <div class="lgn-dots"></div>
+      <div class="lgn-waves">
+        <svg width="320" height="220" viewBox="0 0 320 220" fill="none">
+          <path d="M320 220 Q240 160 160 190 Q80 220 0 180 L0 220Z" fill="rgba(120,60,255,.18)"/>
+          <path d="M320 220 Q260 140 180 170 Q100 200 0 155 L0 220Z" fill="rgba(100,40,220,.12)"/>
+          <path d="M320 190 Q250 120 170 150 Q90 180 0 130 L0 220 L320 220Z" fill="rgba(80,20,180,.08)"/>
+        </svg>
+      </div>
+
+      <!-- Logo -->
+      <div style="position:relative;z-index:1">
+        <div class="lgn-brand">
+          <div class="lgn-brand-icon"></div>
+          <div class="lgn-brand-txt">
+            <h1>KAINOW</h1>
+            <p>BANK</p>
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <div class="lgn-headline">Sua vida financeira<br>mais simples, segura<br>e completa.</div>
+        <div class="lgn-desc">Conta digital, transferências, pagamentos, seguros, capitalização e muito mais em um só lugar.</div>
+
+        <!-- Features -->
+        <div class="lgn-features">
+          <div class="lgn-feat">
+            <div class="lgn-feat-icon">💳</div>
+            <div class="lgn-feat-txt">
+              <strong>Conta digital gratuita</strong>
+              <span>Sem tarifas, sem complicações.</span>
+            </div>
+          </div>
+          <div class="lgn-feat">
+            <div class="lgn-feat-icon">🛡️</div>
+            <div class="lgn-feat-txt">
+              <strong>Seguros e Assistências</strong>
+              <span>Proteção para você e sua família.</span>
+            </div>
+          </div>
+          <div class="lgn-feat">
+            <div class="lgn-feat-icon">🎁</div>
+            <div class="lgn-feat-txt">
+              <strong>Sorteios e Benefícios</strong>
+              <span>Concorra a prêmios todos os meses.</span>
+            </div>
+          </div>
+          <div class="lgn-feat">
+            <div class="lgn-feat-icon">📊</div>
+            <div class="lgn-feat-txt">
+              <strong>Correspondente Bancário</strong>
+              <span>Crédito, consórcios e mais soluções.</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="lgn-headline">Banco digital<br><span>moderno e</span><br>inteligente.</div>
-      <div class="lgn-desc">Uma plataforma completa com PIX, cartões, crédito, investimentos, marketplace, CRM e assinatura digital — tudo em um só lugar.</div>
-      <div class="lgn-stats">
-        <div class="lgn-stat">
-          <div class="lgn-stat-val">R$40B</div>
-          <div class="lgn-stat-lbl">processados/mês · Celcoin</div>
+
+      <!-- Security badge + footer -->
+      <div style="position:relative;z-index:1">
+        <div class="lgn-security">
+          <div class="lgn-security-dot"></div>
+          <span>Seu dinheiro protegido · Sistema 100% seguro e criptografado</span>
         </div>
-        <div class="lgn-stat">
-          <div class="lgn-stat-val">600+</div>
-          <div class="lgn-stat-lbl">bancos digitais conectados</div>
-        </div>
-        <div class="lgn-stat">
-          <div class="lgn-stat-val">0,3s</div>
-          <div class="lgn-stat-lbl">tempo médio de PIX · Fitbank</div>
-        </div>
-        <div class="lgn-stat">
-          <div class="lgn-stat-val">24/7</div>
-          <div class="lgn-stat-lbl">disponibilidade das APIs</div>
-        </div>
-      </div>
-      <div class="lgn-badges">
-        <span class="lgn-badge">🏗️ Apache Fineract</span>
-        <span class="lgn-badge">🔗 Celcoin BaaS</span>
-        <span class="lgn-badge">💸 Fitbank API</span>
-        <span class="lgn-badge">🛍️ Medusa</span>
-        <span class="lgn-badge">📝 Documenso</span>
-        <span class="lgn-badge">👥 Twenty CRM</span>
+        <div class="lgn-left-footer" style="margin-top:18px">© 2026 KaiNow Financial Platform. Todos os direitos reservados.</div>
       </div>
     </div>
 
-    <!-- Floating metric cards -->
-    <div class="lgn-float-cards">
-      <div class="lgn-fc">
-        <div class="lgn-fc-label">💰 Saldo disponível</div>
-        <div class="lgn-fc-val">R$ 8.420,50</div>
-        <div class="lgn-fc-sub">Conta Corrente · Ag.0001</div>
+    <!-- ═══ RIGHT: FORM PANEL ═══ -->
+    <div class="lgn-right">
+      <!-- Language selector -->
+      <div class="lgn-lang">
+        <button class="lgn-lang-btn" onclick="showToast('🌐 Idioma: Português BR','info')">
+          🌐 Português <span style="font-size:10px">▾</span>
+        </button>
       </div>
-      <div class="lgn-fc">
-        <div class="lgn-fc-label">⚡ Último PIX recebido</div>
-        <div class="lgn-fc-val">+ R$ 350,00</div>
-        <div class="lgn-fc-sub">Hoje · 10:32 · Fitbank</div>
-      </div>
-      <div class="lgn-fc">
-        <div class="lgn-fc-label">📈 Investimentos</div>
-        <div class="lgn-fc-val">R$ 24.850,00</div>
-        <div class="lgn-fc-sub">+12,4% a.a. · Poupança</div>
+
+      <!-- Form content -->
+      <div class="lgn-right-inner">
+        <div class="lgn-form-title">Bem-vindo à <span>KaiNow</span></div>
+        <div class="lgn-form-sub">Acesse sua conta para continuar</div>
+
+        <div class="lgn-err" id="lgnErr">❌ Usuário ou senha incorretos</div>
+        <div class="lgn-hint">Demo: <b>mifos</b> / <b>password</b> &nbsp;ou&nbsp; <b>admin</b> / <b>admin</b></div>
+
+        <!-- CPF ou E-mail -->
+        <div class="lgn-field">
+          <label class="lgn-label">CPF ou E-mail</label>
+          <div class="lgn-inp-wrap">
+            <span class="lgn-inp-ico">👤</span>
+            <input class="lgn-inp" id="inpUser" value="mifos" placeholder="Digite seu CPF ou e-mail" autocomplete="username">
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="lgn-field">
+          <label class="lgn-label">Senha</label>
+          <div class="lgn-inp-wrap">
+            <span class="lgn-inp-ico">🔒</span>
+            <input class="lgn-inp" id="inpPass" type="password" value="password" placeholder="Digite sua senha" autocomplete="current-password" style="padding-right:44px">
+            <button class="lgn-inp-eye" onclick="togglePass()" title="Mostrar/ocultar senha">👁️</button>
+          </div>
+        </div>
+
+        <!-- Remember + Forgot -->
+        <div class="lgn-row">
+          <label class="lgn-check">
+            <div class="lgn-chk"></div>
+            Lembrar meu acesso
+          </label>
+          <span class="lgn-forgot" onclick="showToast('📧 E-mail de recuperação enviado!','info')">Esqueceu sua senha?</span>
+        </div>
+
+        <!-- Login button -->
+        <button class="lgn-btn-primary" onclick="doLogin()">Entrar</button>
+
+        <!-- Divider -->
+        <div class="lgn-divider">ou continue com</div>
+
+        <!-- Social login -->
+        <div class="lgn-social">
+          <button class="lgn-social-btn" onclick="doLogin()">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            Google
+          </button>
+          <button class="lgn-social-btn" onclick="doLogin()">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#25D366"/></svg>
+            WhatsApp
+          </button>
+        </div>
+
+        <!-- Register -->
+        <div class="lgn-register">
+          Ainda não possui conta? <a onclick="showToast('📋 Cadastro disponível em breve!','info')">Abrir conta digital</a>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="lgn-trust">
+          <div class="lgn-trust-item"><span class="lgn-trust-ico">🛡️</span>Segurança avançada</div>
+          <div class="lgn-trust-item"><span class="lgn-trust-ico">🔒</span>Seus dados protegidos</div>
+          <div class="lgn-trust-item"><span class="lgn-trust-ico">✅</span>Em conformidade com a LGPD</div>
+        </div>
       </div>
     </div>
-
-    <div class="lgn-left-footer">© 2026 MeuBanco Digital · Todos os direitos reservados</div>
   </div>
 
-  <!-- ═══ RIGHT: FORM PANEL ═══ -->
-  <div class="lgn-right">
-    <div class="lgn-right-logo">
-      <div class="lgn-right-icon">🏦</div>
-      <div class="lgn-right-txt">
-        <h2>MeuBanco Digital</h2>
-        <p>Plataforma Bancária</p>
-      </div>
+  <!-- Footer bar -->
+  <div class="lgn-footer-bar">
+    <span>© 2026 KaiNow Financial Platform. Todos os direitos reservados.</span>
+    <div class="lgn-footer-links">
+      <a onclick="showToast('📄 Termos de Uso','info')">Termos de Uso</a>
+      <a onclick="showToast('🔒 Política de Privacidade','info')">Política de Privacidade</a>
+      <a onclick="showToast('⚖️ LGPD','info')">LGPD</a>
     </div>
-
-    <div class="lgn-title">Bem-vindo de volta 👋</div>
-    <div class="lgn-subtitle">Faça login para acessar sua conta digital completa com PIX, crédito, investimentos e muito mais.</div>
-
-    <div class="lgn-err" id="lgnErr">❌ Usuário ou senha incorretos</div>
-
-    <div class="f-grp">
-      <label class="f-label">👤 Usuário</label>
-      <input class="f-inp" id="inpUser" value="mifos" placeholder="Digite seu usuário">
-    </div>
-    <div class="f-grp">
-      <label class="f-label">🔒 Senha</label>
-      <div class="inp-wrap">
-        <input class="f-inp" id="inpPass" type="password" value="password" placeholder="Digite sua senha">
-        <button class="eye-btn" onclick="togglePass()">👁️</button>
-      </div>
-    </div>
-
-    <div style="display:flex;justify-content:flex-end;margin-bottom:22px">
-      <span style="font-size:12.5px;color:var(--p3);cursor:pointer;font-weight:600" onclick="showToast('📧 E-mail de recuperação enviado!','info')">Esqueci minha senha →</span>
-    </div>
-
-    <button class="btn btn-primary" onclick="doLogin()">Entrar na plataforma →</button>
-    <div class="lgn-divider">ou acesse com</div>
-    <button class="btn btn-ghost" onclick="doLogin()">🔑 Biometria / Face ID</button>
-
-    <div class="lgn-hint">Demo: <b>mifos</b> / <b>password</b></div>
-
-    <div class="lgn-powered">
-      <span class="pow-chip">🏗️ Fineract</span>
-      <span class="pow-chip">🔗 Celcoin</span>
-      <span class="pow-chip">💸 Fitbank</span>
-      <span class="pow-chip">🛍️ Medusa</span>
-      <span class="pow-chip">📝 Documenso</span>
-    </div>
-
-    <div class="lgn-right-footer">Plataforma protegida · mTLS + OAuth 2.0 · LGPD compliant</div>
   </div>
 
 </div>
