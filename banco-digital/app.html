@@ -287,6 +287,12 @@ input,select,textarea{font-family:inherit;outline:none}
 .pow-chip{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
 .lgn-right-footer{font-size:11px;color:var(--muted);text-align:center;margin-top:24px}
 
+/* ── CRM Correspondente ── */
+.crm-tab{transition:all .2s}
+.crm-tab:hover{opacity:.85}
+.crm-panel{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
 /* ══════════════════════════════════════════════
    APP SHELL
 ══════════════════════════════════════════════ */
@@ -1935,43 +1941,394 @@ input,select,textarea{font-family:inherit;outline:none}
 
       <!-- ██ CORRESPONDENTE BANCÁRIO ██ -->
       <div class="page" id="page-correspondente">
-        <div style="background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
-          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏪</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏪 Correspondente Bancário · Resolução BCB nº 4.935</div>
-          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Rede de Correspondentes</h2>
-          <p style="font-size:13.5px;opacity:.7">Gerencie operações bancárias através de estabelecimentos parceiros em todo o Brasil</p>
+        <!-- HERO CRM HEADER -->
+        <div style="background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🏦</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">🏦 KaiNow CRM · Correspondente Bancário · Res. BCB nº 4.935</div>
+          <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Central de Relacionamento Consignado</h2>
+          <p style="font-size:13.5px;opacity:.7">Gerencie leads, funil de vendas, pipeline consignado, nichos e equipes comerciais em um só lugar</p>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openNovoLead()">＋ Novo Lead</button>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openNovaProposta()">📄 Nova Proposta</button>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openMapa()">📍 Mapa Correspondentes</button>
+          </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
-          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">🏪</div><div style="font-size:24px;font-weight:900;color:var(--ok)">1.284</div><div style="font-size:12px;color:var(--muted)">Pontos ativos</div></div>
-          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">🗺️</div><div style="font-size:24px;font-weight:900;color:var(--p1)">312</div><div style="font-size:12px;color:var(--muted)">Municípios</div></div>
-          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">💸</div><div style="font-size:24px;font-weight:900;color:var(--teal)">R$ 2,4M</div><div style="font-size:12px;color:var(--muted)">Processado/dia</div></div>
-          <div class="card" style="text-align:center"><div style="font-size:28px;margin-bottom:6px">⭐</div><div style="font-size:24px;font-weight:900;color:var(--amber)">4,8/5</div><div style="font-size:12px;color:var(--muted)">Avaliação</div></div>
+        <!-- KPIs LINHA -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
+          <div class="card" style="text-align:center;border-top:3px solid var(--ok);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--ok)">147</div><div style="font-size:11px;color:var(--muted)">Leads ativos</div><div style="font-size:10px;color:var(--ok)">▲ +12 hoje</div></div>
+          <div class="card" style="text-align:center;border-top:3px solid var(--p1);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--p1)">38</div><div style="font-size:11px;color:var(--muted)">Em aprovação</div><div style="font-size:10px;color:var(--p1)">▲ +5 esta semana</div></div>
+          <div class="card" style="text-align:center;border-top:3px solid var(--teal);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--teal)">R$ 4,2M</div><div style="font-size:11px;color:var(--muted)">Propostas/mês</div><div style="font-size:10px;color:var(--ok)">▲ +28%</div></div>
+          <div class="card" style="text-align:center;border-top:3px solid var(--amber);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--amber)">1.284</div><div style="font-size:11px;color:var(--muted)">Correspondentes</div><div style="font-size:10px;color:var(--muted)">312 municípios</div></div>
+          <div class="card" style="text-align:center;border-top:3px solid var(--err);padding:14px 10px"><div style="font-size:22px;font-weight:900;color:var(--err)">R$ 84.200</div><div style="font-size:11px;color:var(--muted)">Comissões/mês</div><div style="font-size:10px;color:var(--ok)">▲ +22%</div></div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div class="card">
-            <div class="sec-title">Serviços disponíveis nos correspondentes</div>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💵</span><div><div style="font-size:13.5px;font-weight:600">Saque em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Limite: R$ 3.000/dia · Sem taxa</div></div></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💰</span><div><div style="font-size:13.5px;font-weight:600">Depósito em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Crédito imediato na conta · 24h/7</div></div></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📄</span><div><div style="font-size:13.5px;font-weight:600">Pagamento de boletos</div><div style="font-size:11.5px;color:var(--muted)">Até vencimento D+1 · Fitbank</div></div></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">⚡</span><div><div style="font-size:13.5px;font-weight:600">PIX no balcão</div><div style="font-size:11.5px;color:var(--muted)">QR Code físico · Instantâneo</div></div></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📝</span><div><div style="font-size:13.5px;font-weight:600">Abertura de conta</div><div style="font-size:11.5px;color:var(--muted)">KYC presencial · Fineract onboard</div></div></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">🎫</span><div><div style="font-size:13.5px;font-weight:600">Venda de capitalização</div><div style="font-size:11.5px;color:var(--muted)">Comissão 8% para o agente</div></div></div>
+        <!-- TABS CRM -->
+        <div style="display:flex;gap:4px;margin-bottom:20px;background:var(--bg);padding:5px;border-radius:12px;overflow-x:auto">
+          <button id="crm-tab-dash" class="crm-tab active" onclick="setCrmTab('dash')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:var(--p1);color:#fff;white-space:nowrap">📊 Dashboard</button>
+          <button id="crm-tab-leads" class="crm-tab" onclick="setCrmTab('leads')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">👥 Leads</button>
+          <button id="crm-tab-funil" class="crm-tab" onclick="setCrmTab('funil')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">🔀 Funil Consignado</button>
+          <button id="crm-tab-nichos" class="crm-tab" onclick="setCrmTab('nichos')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">🎯 Nichos</button>
+          <button id="crm-tab-equipes" class="crm-tab" onclick="setCrmTab('equipes')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">👔 Equipes</button>
+          <button id="crm-tab-rede" class="crm-tab" onclick="setCrmTab('rede')" style="flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);white-space:nowrap">🏪 Rede</button>
+        </div>
+
+        <!-- TAB: DASHBOARD -->
+        <div id="crm-dash" class="crm-panel">
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px">
+            <!-- Pipeline resumo -->
+            <div class="card">
+              <div class="sec-title">🔀 Pipeline Consignado — Visão Geral</div>
+              <div style="display:flex;flex-direction:column;gap:6px" id="crm-pipeline-summary">
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
+                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#4f46e5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">1</div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Simulador</div><div style="font-size:11px;color:var(--muted)">Simulações iniciadas</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--p1)">54</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
+                  <div style="width:80px;height:6px;background:#e0e7ff;border-radius:3px"><div style="width:82%;height:6px;background:var(--p1);border-radius:3px"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
+                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">2</div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Proposta</div><div style="font-size:11px;color:var(--muted)">Formalizando contrato</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:#0284c7">31</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
+                  <div style="width:80px;height:6px;background:#e0f2fe;border-radius:3px"><div style="width:57%;height:6px;background:#0284c7;border-radius:3px"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
+                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">3</div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Upload de Documentos</div><div style="font-size:11px;color:var(--muted)">Aguardando envio</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--amber)">19</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
+                  <div style="width:80px;height:6px;background:#fef3c7;border-radius:3px"><div style="width:35%;height:6px;background:var(--amber);border-radius:3px"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
+                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">4</div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Assinatura</div><div style="font-size:11px;color:var(--muted)">Assinatura digital pendente</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:#7c3aed">14</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
+                  <div style="width:80px;height:6px;background:#ede9fe;border-radius:3px"><div style="width:26%;height:6px;background:#7c3aed;border-radius:3px"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:9px">
+                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#ef4444,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">5</div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Aprovação</div><div style="font-size:11px;color:var(--muted)">Em análise bancária</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--err)">11</div><div style="font-size:10px;color:var(--muted)">leads</div></div>
+                  <div style="width:80px;height:6px;background:#fee2e2;border-radius:3px"><div style="width:20%;height:6px;background:var(--err);border-radius:3px"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#f0fdf4;border-radius:9px;border:1px solid #bbf7d0">
+                  <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">✓</div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:700">Contratos Aprovados</div><div style="font-size:11px;color:var(--muted)">Comissão processada</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">18</div><div style="font-size:10px;color:var(--ok)">este mês</div></div>
+                  <div style="width:80px;height:6px;background:#dcfce7;border-radius:3px"><div style="width:100%;height:6px;background:var(--ok);border-radius:3px"></div></div>
+                </div>
+              </div>
+            </div>
+            <!-- Atividade recente + metas -->
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="card" style="flex:1">
+                <div class="sec-title">🎯 Meta Mensal</div>
+                <div style="text-align:center;padding:8px 0 12px">
+                  <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Propostas aprovadas</div>
+                  <div style="font-size:32px;font-weight:900;color:var(--ok)">18 <span style="font-size:16px;color:var(--muted)">/ 30</span></div>
+                  <div style="background:#e5e7eb;border-radius:99px;height:10px;margin:10px 0 6px;overflow:hidden"><div style="width:60%;height:10px;background:linear-gradient(90deg,var(--ok),#86efac);border-radius:99px"></div></div>
+                  <div style="font-size:12px;color:var(--muted)">60% atingido · 12 dias restantes</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center"><div style="font-size:17px;font-weight:900;color:var(--p1)">R$ 4,2M</div><div style="font-size:10.5px;color:var(--muted)">Volume proposto</div></div>
+                  <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center"><div style="font-size:17px;font-weight:900;color:var(--teal)">R$ 84,2k</div><div style="font-size:10.5px;color:var(--muted)">Comissão gerada</div></div>
+                </div>
+              </div>
+              <div class="card" style="flex:1">
+                <div class="sec-title">⚡ Atividade recente</div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--ok);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">Maria Santos aprovada ✅</div><div style="font-size:11px;color:var(--muted)">INSS · R$ 18.400 · há 15min</div></div></div>
+                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--p1);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">João Pedro — Upload docs</div><div style="font-size:11px;color:var(--muted)">Servidor · R$ 32.000 · há 42min</div></div></div>
+                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--amber);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">Ana Lima — Aguardando assinatura</div><div style="font-size:11px;color:var(--muted)">Aposentado · R$ 9.800 · há 1h</div></div></div>
+                  <div style="display:flex;gap:10px;align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0"></div><div><div style="font-size:12.5px;font-weight:600">Carlos Neto — Nova simulação</div><div style="font-size:11px;color:var(--muted)">CLT Convênio · R$ 15.000 · há 2h</div></div></div>
+                </div>
+              </div>
             </div>
           </div>
+          <!-- Top correspondentes -->
           <div class="card">
-            <div class="sec-title">Encontrar correspondente próximo</div>
-            <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;padding:16px;text-align:center;margin-bottom:14px">
-              <div style="font-size:30px;margin-bottom:8px">📍</div>
-              <div style="font-size:14px;font-weight:700;margin-bottom:6px">São Paulo - SP</div>
-              <div style="font-size:12px;color:var(--muted);margin-bottom:12px">287 pontos em um raio de 5km</div>
-              <button class="btn btn-primary" onclick="openMapa()" style="padding:10px">Ver no mapa →</button>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <div class="sec-title" style="margin:0">🏆 Top Correspondentes — Junho/2026</div>
+              <button class="btn-sm btn-p" onclick="setCrmTab('rede')">Ver todos →</button>
             </div>
-            <div style="font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--muted)">MAIS PRÓXIMOS</div>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Mercado Silva &amp; Cia</div><div style="font-size:11.5px;color:var(--muted)">Rua das Flores, 123 · 350m</div></div><span class="badge bg-ok">Aberto</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Lotérica Boa Sorte</div><div style="font-size:11.5px;color:var(--muted)">Av. Brasil, 456 · 720m</div></div><span class="badge bg-ok">Aberto</span></div>
-              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Farmácia Popular</div><div style="font-size:11.5px;color:var(--muted)">Rua São João, 89 · 1,2km</div></div><span class="badge bg-warn">Fecha 22h</span></div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--bg)">
+                <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted)">#</th>
+                <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted)">CORRESPONDENTE</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">NICHO</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11px;color:var(--muted)">PROPOSTAS</th>
+                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">VOLUME</th>
+                <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted)">COMISSÃO</th>
+              </tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 12px;font-weight:900;color:var(--amber)">🥇</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Lotérica Boa Sorte</div><div style="font-size:11px;color:var(--muted)">Av. Brasil, 456 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#ede9fe;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">47</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 620.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 12.400</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 12px;font-weight:900;color:#9ca3af">🥈</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Mercado Silva &amp; Cia</div><div style="font-size:11px;color:var(--muted)">Rua das Flores, 123 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">38</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 540.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 10.800</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 12px;font-weight:900;color:#b45309">🥉</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Farmácia Popular</div><div style="font-size:11px;color:var(--muted)">Rua São João, 89 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">29</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 390.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 7.800</td></div></tr>
+                <tr><td style="padding:9px 12px;font-weight:700;color:var(--muted)">4</td><td style="padding:9px 12px"><div style="font-size:13px;font-weight:700">Papelaria Central</div><div style="font-size:11px;color:var(--muted)">Praça da Sé, 10 · SP</div></td><td style="padding:9px 12px;text-align:center"><span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Forças Arm.</span></td><td style="padding:9px 12px;text-align:center;font-weight:700">22</td><td style="padding:9px 12px;text-align:right;font-weight:700">R$ 280.000</td><td style="padding:9px 12px;text-align:right;font-weight:900;color:var(--ok)">R$ 5.600</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: LEADS -->
+        <div id="crm-leads" class="crm-panel" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div style="display:flex;gap:8px;align-items:center">
+              <input id="leads-search" placeholder="🔍  Buscar lead..." style="padding:9px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;width:220px;background:var(--card)" oninput="filtrarLeads()">
+              <select id="leads-filter-nicho" style="padding:9px;border:1.5px solid var(--border);border-radius:9px;font-size:12.5px;background:var(--card)" onchange="filtrarLeads()">
+                <option value="">Todos nichos</option>
+                <option>INSS</option><option>Servidor Público</option><option>Forças Armadas</option>
+                <option>Aposentado</option><option>Pensionista</option><option>CLT Convênio</option>
+              </select>
+              <select id="leads-filter-etapa" style="padding:9px;border:1.5px solid var(--border);border-radius:9px;font-size:12.5px;background:var(--card)" onchange="filtrarLeads()">
+                <option value="">Todas etapas</option>
+                <option>Simulador</option><option>Proposta</option><option>Upload Docs</option>
+                <option>Assinatura</option><option>Aprovação</option><option>Aprovado</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" style="padding:9px 18px" onclick="openNovoLead()">＋ Novo Lead</button>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <table style="width:100%;border-collapse:collapse" id="leads-table">
+              <thead><tr style="background:var(--bg)">
+                <th style="padding:11px 14px;text-align:left;font-size:11.5px;color:var(--muted)">CLIENTE</th>
+                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">NICHO</th>
+                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">ETAPA</th>
+                <th style="padding:11px 14px;text-align:right;font-size:11.5px;color:var(--muted)">VALOR PROPOSTA</th>
+                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">CORRESPONDENTE</th>
+                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">DATA</th>
+                <th style="padding:11px 14px;text-align:center;font-size:11.5px;color:var(--muted)">AÇÃO</th>
+              </tr></thead>
+              <tbody id="leads-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: FUNIL CONSIGNADO (KANBAN) -->
+        <div id="crm-funil" class="crm-panel" style="display:none">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Pipeline KaiNow Consignado · 9 etapas · Arraste os cards entre colunas</div>
+          <div style="display:grid;grid-template-columns:repeat(9,minmax(155px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px" id="kanban-board">
+            <!-- Kanban columns geradas por JS -->
+          </div>
+        </div>
+
+        <!-- TAB: NICHOS -->
+        <div id="crm-nichos" class="crm-panel" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px">
+            <!-- INSS -->
+            <div class="card" style="border-top:4px solid #6d28d9;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">👴</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#5b21b6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">👴</div>
+                <div><div style="font-size:15px;font-weight:900">INSS</div><div style="font-size:11px;color:var(--muted)">Instituto Nacional do Seguro Social</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#6d28d9">1,39% a.m.</div></div>
+                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#6d28d9">35%</div></div>
+                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#6d28d9">R$ 12.400</div></div>
+                <div style="background:#f5f3ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#6d28d9">84 meses</div></div>
+              </div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Beneficiários INSS · Cartão consignado disponível · Desconto folha automático</div>
+              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('INSS')">Simular para este nicho →</button>
+            </div>
+            <!-- Servidores Públicos -->
+            <div class="card" style="border-top:4px solid #1d4ed8;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🏛️</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🏛️</div>
+                <div><div style="font-size:15px;font-weight:900">Servidores Públicos</div><div style="font-size:11px;color:var(--muted)">Federal, Estadual e Municipal</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">0,99% a.m.</div></div>
+                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">35%</div></div>
+                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">R$ 28.000</div></div>
+                <div style="background:#eff6ff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#1d4ed8">96 meses</div></div>
+              </div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Convênio com órgãos públicos · Siape/SIGEPE · Estabilidade no emprego</div>
+              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Servidor')">Simular para este nicho →</button>
+            </div>
+            <!-- Forças Armadas -->
+            <div class="card" style="border-top:4px solid #92400e;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🎖️</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#b45309,#92400e);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🎖️</div>
+                <div><div style="font-size:15px;font-weight:900">Forças Armadas</div><div style="font-size:11px;color:var(--muted)">Exército, Marinha e Aeronáutica</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#92400e">1,15% a.m.</div></div>
+                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#92400e">35%</div></div>
+                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#92400e">R$ 35.000</div></div>
+                <div style="background:#fef3c7;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#92400e">96 meses</div></div>
+              </div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ SIGPES / Contracheque militar · Maior ticket médio · Cartão 6% a.a.</div>
+              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Forças Armadas')">Simular para este nicho →</button>
+            </div>
+            <!-- Aposentados -->
+            <div class="card" style="border-top:4px solid #047857;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🌿</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🌿</div>
+                <div><div style="font-size:15px;font-weight:900">Aposentados</div><div style="font-size:11px;color:var(--muted)">Beneficiários de aposentadoria</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#047857">1,39% a.m.</div></div>
+                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#047857">35%</div></div>
+                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#047857">R$ 9.800</div></div>
+                <div style="background:#ecfdf5;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#047857">84 meses</div></div>
+              </div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Cartão benefício INSS · Refinanciamento disponível · Alto volume de leads</div>
+              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Aposentado')">Simular para este nicho →</button>
+            </div>
+            <!-- Pensionistas -->
+            <div class="card" style="border-top:4px solid #0e7490;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">💙</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#0891b2,#0e7490);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">💙</div>
+                <div><div style="font-size:15px;font-weight:900">Pensionistas</div><div style="font-size:11px;color:var(--muted)">Pensionistas do INSS e militares</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#0e7490">1,39% a.m.</div></div>
+                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#0e7490">35%</div></div>
+                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#0e7490">R$ 8.200</div></div>
+                <div style="background:#ecfeff;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#0e7490">84 meses</div></div>
+              </div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Desconto automático no benefício · Sem análise de crédito restritiva</div>
+              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('Pensionista')">Simular para este nicho →</button>
+            </div>
+            <!-- CLT Convênio -->
+            <div class="card" style="border-top:4px solid #dc2626;position:relative;overflow:hidden">
+              <div style="position:absolute;right:-8px;top:-8px;font-size:60px;opacity:.06">🏢</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px">🏢</div>
+                <div><div style="font-size:15px;font-weight:900">CLT com Convênio</div><div style="font-size:11px;color:var(--muted)">Empregados de empresas conveniadas</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Taxa mínima</div><div style="font-size:16px;font-weight:900;color:#dc2626">1,49% a.m.</div></div>
+                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Margem consign.</div><div style="font-size:16px;font-weight:900;color:#dc2626">30%</div></div>
+                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Ticket médio</div><div style="font-size:16px;font-weight:900;color:#dc2626">R$ 7.500</div></div>
+                <div style="background:#fef2f2;border-radius:8px;padding:9px"><div style="font-size:11px;color:var(--muted)">Prazo máx.</div><div style="font-size:16px;font-weight:900;color:#dc2626">48 meses</div></div>
+              </div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">✅ Empresas conveniadas · Desconto em folha · Aprovação mais ágil</div>
+              <button class="btn btn-primary" style="width:100%;padding:9px;font-size:12.5px" onclick="openSimuladorNicho('CLT Convênio')">Simular para este nicho →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: EQUIPES COMERCIAIS -->
+        <div id="crm-equipes" class="crm-panel" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+            <div class="card" style="text-align:center;border-top:3px solid var(--p1)"><div style="font-size:22px;font-weight:900;color:var(--p1)">3</div><div style="font-size:11px;color:var(--muted)">Supervisores</div></div>
+            <div class="card" style="text-align:center;border-top:3px solid var(--ok)"><div style="font-size:22px;font-weight:900;color:var(--ok)">18</div><div style="font-size:11px;color:var(--muted)">Agentes ativos</div></div>
+            <div class="card" style="text-align:center;border-top:3px solid var(--amber)"><div style="font-size:22px;font-weight:900;color:var(--amber)">R$ 84,2k</div><div style="font-size:11px;color:var(--muted)">Comissão equipe</div></div>
+            <div class="card" style="text-align:center;border-top:3px solid var(--teal)"><div style="font-size:22px;font-weight:900;color:var(--teal)">127</div><div style="font-size:11px;color:var(--muted)">Propostas enviadas</div></div>
+          </div>
+          <!-- Ranking agentes -->
+          <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px">
+            <div class="card">
+              <div class="sec-title">🏆 Ranking de Agentes — Junho/2026</div>
+              <div style="display:flex;flex-direction:column;gap:8px" id="ranking-agentes">
+                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:linear-gradient(135deg,#fef9c3,#fef3c7);border-radius:10px;border:1px solid #fde68a">
+                  <div style="font-size:22px">🥇</div>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:800">Carlos Mota</div><div style="font-size:11px;color:var(--muted)">Supervisor · INSS + Servidor</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 18.400</div><div style="font-size:10.5px;color:var(--muted)">28 propostas</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
+                  <div style="font-size:22px">🥈</div>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Fernanda Lima</div><div style="font-size:11px;color:var(--muted)">Agente · Forças Armadas</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 12.800</div><div style="font-size:10.5px;color:var(--muted)">19 propostas</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
+                  <div style="font-size:22px">🥉</div>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Roberto Souza</div><div style="font-size:11px;color:var(--muted)">Agente · INSS + Aposentado</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 9.200</div><div style="font-size:10.5px;color:var(--muted)">14 propostas</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
+                  <div style="font-size:20px;color:var(--muted)">4</div>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Juliana Pereira</div><div style="font-size:11px;color:var(--muted)">Agente · Servidor + CLT</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 7.600</div><div style="font-size:10.5px;color:var(--muted)">11 propostas</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:11px;background:var(--bg);border-radius:10px">
+                  <div style="font-size:20px;color:var(--muted)">5</div>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Anderson Cruz</div><div style="font-size:11px;color:var(--muted)">Agente · Pensionista</div></div>
+                  <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--ok)">R$ 5.400</div><div style="font-size:10.5px;color:var(--muted)">8 propostas</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="card">
+                <div class="sec-title">📋 Times por Supervisor</div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="padding:12px;background:var(--bg);border-radius:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                      <div style="font-size:13px;font-weight:800">Carlos Mota</div>
+                      <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">Supervisor</span>
+                    </div>
+                    <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">7 agentes · Nichos: INSS, Servidor, Forças Arm.</div>
+                    <div style="background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="width:78%;height:6px;background:var(--ok);border-radius:99px"></div></div>
+                    <div style="font-size:10.5px;color:var(--muted);margin-top:4px">Meta 78% · R$ 52.000 / R$ 67.000</div>
+                  </div>
+                  <div style="padding:12px;background:var(--bg);border-radius:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                      <div style="font-size:13px;font-weight:800">Patrícia Rocha</div>
+                      <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">Supervisora</span>
+                    </div>
+                    <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">6 agentes · Nichos: Aposentado, Pensionista</div>
+                    <div style="background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="width:55%;height:6px;background:var(--amber);border-radius:99px"></div></div>
+                    <div style="font-size:10.5px;color:var(--muted);margin-top:4px">Meta 55% · R$ 21.000 / R$ 38.000</div>
+                  </div>
+                  <div style="padding:12px;background:var(--bg);border-radius:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                      <div style="font-size:13px;font-weight:800">Diego Santos</div>
+                      <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">Supervisor</span>
+                    </div>
+                    <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">5 agentes · Nichos: CLT Convênio, Servidor</div>
+                    <div style="background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="width:42%;height:6px;background:var(--err);border-radius:99px"></div></div>
+                    <div style="font-size:10.5px;color:var(--muted);margin-top:4px">Meta 42% · R$ 11.200 / R$ 26.000</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec-title">➕ Adicionar Agente</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <input placeholder="Nome completo" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--card)">
+                  <input placeholder="CPF / E-mail" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--card)">
+                  <select style="padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--card)">
+                    <option>Supervisor: Carlos Mota</option>
+                    <option>Supervisora: Patrícia Rocha</option>
+                    <option>Supervisor: Diego Santos</option>
+                  </select>
+                  <button class="btn btn-primary" style="padding:10px" onclick="showToast('✅ Agente cadastrado com sucesso!','success')">Cadastrar Agente</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: REDE DE CORRESPONDENTES -->
+        <div id="crm-rede" class="crm-panel" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="card">
+              <div class="sec-title">📍 Encontrar correspondente</div>
+              <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;padding:16px;text-align:center;margin-bottom:14px">
+                <div style="font-size:30px;margin-bottom:8px">📍</div>
+                <div style="font-size:14px;font-weight:700;margin-bottom:6px">São Paulo - SP</div>
+                <div style="font-size:12px;color:var(--muted);margin-bottom:12px">287 pontos em um raio de 5km</div>
+                <button class="btn btn-primary" onclick="openMapa()" style="padding:10px">Ver no mapa →</button>
+              </div>
+              <div style="font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--muted)">MAIS PRÓXIMOS</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Mercado Silva &amp; Cia</div><div style="font-size:11.5px;color:var(--muted)">Rua das Flores, 123 · 350m</div></div><span class="badge bg-ok">Aberto</span></div>
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Lotérica Boa Sorte</div><div style="font-size:11.5px;color:var(--muted)">Av. Brasil, 456 · 720m</div></div><span class="badge bg-ok">Aberto</span></div>
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:9px"><div><div style="font-size:13px;font-weight:600">Farmácia Popular</div><div style="font-size:11.5px;color:var(--muted)">Rua São João, 89 · 1,2km</div></div><span class="badge bg-warn">Fecha 22h</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="sec-title">🏪 Serviços disponíveis</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💵</span><div><div style="font-size:13.5px;font-weight:600">Saque em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Limite: R$ 3.000/dia · Sem taxa</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">💰</span><div><div style="font-size:13.5px;font-weight:600">Depósito em dinheiro</div><div style="font-size:11.5px;color:var(--muted)">Crédito imediato · 24h/7</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📄</span><div><div style="font-size:13.5px;font-weight:600">Pagamento de boletos</div><div style="font-size:11.5px;color:var(--muted)">Até vencimento D+1 · Fitbank</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">⚡</span><div><div style="font-size:13.5px;font-weight:600">PIX no balcão</div><div style="font-size:11.5px;color:var(--muted)">QR Code físico · Instantâneo</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">📝</span><div><div style="font-size:13.5px;font-weight:600">Abertura de conta</div><div style="font-size:11.5px;color:var(--muted)">KYC presencial · Fineract</div></div></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:9px"><span style="font-size:20px">🤝</span><div><div style="font-size:13.5px;font-weight:600">Proposta Consignado</div><div style="font-size:11.5px;color:var(--muted)">Contratação no balcão · Comissão 2%</div></div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -2068,37 +2425,117 @@ input,select,textarea{font-family:inherit;outline:none}
       <div class="page" id="page-comissoes">
         <div style="background:linear-gradient(135deg,#14532d,#15803d,#16a34a);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
           <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💎</div>
-          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Agentes e Parceiros</div>
+          <div style="font-size:12px;opacity:.6;margin-bottom:4px">💎 Painel de Comissões · Correspondente Bancário · KaiNow Consignado</div>
           <h2 style="font-size:26px;font-weight:900;margin-bottom:4px">Suas comissões e repasses</h2>
-          <p style="font-size:13.5px;opacity:.7">Acompanhe em tempo real os ganhos de todos os produtos vendidos e indicados</p>
+          <p style="font-size:13.5px;opacity:.7">Acompanhe em tempo real os ganhos de todos os produtos vendidos · Repasse automático via PIX</p>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="openRepassePix()">⚡ Solicitar Repasse PIX</button>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="showToast('📄 Nota fiscal gerada!','success')">📄 Gerar NF</button>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:9px;font-size:12.5px" onclick="exportarComissoes()">⬇️ Exportar CSV</button>
+          </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
-          <div class="card" style="text-align:center;border-top:4px solid var(--ok)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Comissões Junho</div><div style="font-size:28px;font-weight:900;color:var(--ok)">R$ 3.840</div><div style="font-size:11px;color:var(--ok)">▲ +22% vs. maio</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--inf)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Aguardando pagamento</div><div style="font-size:28px;font-weight:900;color:var(--inf)">R$ 1.240</div><div style="font-size:11.5px;color:var(--muted)">Pagamento: 10/07</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--pur)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Equipe sob gestão</div><div style="font-size:28px;font-weight:900;color:var(--pur)">18 agentes</div><div style="font-size:11.5px;color:var(--muted)">3 corretores, 15 motoboys</div></div>
-          <div class="card" style="text-align:center;border-top:4px solid var(--amber)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total acumulado 2026</div><div style="font-size:28px;font-weight:900;color:var(--amber)">R$ 19.420</div><div style="font-size:11.5px;color:var(--muted)">Jan–Jun 2026</div></div>
+        <!-- KPIs -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px">
+          <div class="card" style="text-align:center;border-top:4px solid var(--ok)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Comissões Junho</div><div style="font-size:26px;font-weight:900;color:var(--ok)">R$ 84.200</div><div style="font-size:11px;color:var(--ok)">▲ +22% vs. maio</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--inf)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Aguardando repasse</div><div style="font-size:26px;font-weight:900;color:var(--inf)">R$ 18.400</div><div style="font-size:11.5px;color:var(--muted)">Pagamento: 10/07</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--pur)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Propostas aprovadas</div><div style="font-size:26px;font-weight:900;color:var(--pur)">18</div><div style="font-size:11.5px;color:var(--muted)">esse mês</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--teal)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ticket médio</div><div style="font-size:26px;font-weight:900;color:var(--teal)">R$ 4.678</div><div style="font-size:11.5px;color:var(--muted)">por proposta</div></div>
+          <div class="card" style="text-align:center;border-top:4px solid var(--amber)"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total acumulado 2026</div><div style="font-size:26px;font-weight:900;color:var(--amber)">R$ 312.800</div><div style="font-size:11.5px;color:var(--muted)">Jan–Jun 2026</div></div>
         </div>
-        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px">
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:18px">
+          <!-- Comissões por produto/nicho -->
           <div class="card">
-            <div class="sec-title">Comissões por produto — Junho/2026</div>
+            <div class="sec-title">📊 Comissões por Nicho — Junho/2026</div>
             <table style="width:100%;border-collapse:collapse">
-              <thead><tr style="background:var(--bg)"><th style="padding:9px 12px;text-align:left;font-size:11.5px;color:var(--muted)">PRODUTO</th><th style="padding:9px 12px;text-align:center;font-size:11.5px;color:var(--muted)">VENDAS</th><th style="padding:9px 12px;text-align:right;font-size:11.5px;color:var(--muted)">COMISSÃO</th></tr></thead>
+              <thead><tr style="background:var(--bg)">
+                <th style="padding:9px 12px;text-align:left;font-size:11.5px;color:var(--muted)">NICHO / PRODUTO</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11.5px;color:var(--muted)">PROPOSTAS</th>
+                <th style="padding:9px 12px;text-align:right;font-size:11.5px;color:var(--muted)">VOLUME</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11.5px;color:var(--muted)">TAXA COM.</th>
+                <th style="padding:9px 12px;text-align:right;font-size:11.5px;color:var(--muted)">COMISSÃO</th>
+                <th style="padding:9px 12px;text-align:center;font-size:11.5px;color:var(--muted)">STATUS</th>
+              </tr></thead>
               <tbody>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">8% sobre prêmio</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">42</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 1.890</td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">12% sobre prêmio</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">18</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 940</td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">💰 Crédito</div><div style="font-size:11px;color:var(--muted)">1,5% sobre valor</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">8</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 720</td></tr>
-                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎁 Indicações</div><div style="font-size:11px;color:var(--muted)">R$ 25/cliente ativo</div></td><td style="padding:10px 12px;text-align:center;font-size:13.5px;font-weight:700">12</td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 300</td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">👴 INSS Consignado</div><div style="font-size:11px;color:var(--muted)">Beneficiários + Aposentados</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">24</td><td style="padding:10px 12px;text-align:right">R$ 1.240.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:3px 8px;border-radius:6px;font-size:11.5px;font-weight:700">2,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 24.800</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏛️ Servidor Público</div><div style="font-size:11px;color:var(--muted)">Fed. + Estadual + Municipal</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 1.080.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:6px;font-size:11.5px;font-weight:700">2,20%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 23.760</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎖️ Forças Armadas</div><div style="font-size:11px;color:var(--muted)">Exército / Marinha / Aeronáutica</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">9</td><td style="padding:10px 12px;text-align:right">R$ 720.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:11.5px;font-weight:700">2,50%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 18.000</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏢 CLT Convênio</div><div style="font-size:11px;color:var(--muted)">Empresas conveniadas</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">7</td><td style="padding:10px 12px;text-align:right">R$ 280.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef2f2;color:#dc2626;padding:3px 8px;border-radius:6px;font-size:11.5px;font-weight:700">1,80%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 5.040</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">Venda direta</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">42</td><td style="padding:10px 12px;text-align:right">R$ 236.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#ecfdf5;color:#047857;padding:3px 8px;border-radius:6px;font-size:11.5px;font-weight:700">8,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 7.600</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">Auto + Vida + Residencial</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 41.600</td><td style="padding:10px 12px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;padding:3px 8px;border-radius:6px;font-size:11.5px;font-weight:700">12,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 4.992</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
               </tbody>
             </table>
-          </div>
-          <div class="card">
-            <div class="sec-title">Próximos pagamentos</div>
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="padding:12px;background:#f0fdf4;border-radius:10px;border-left:3px solid var(--ok)"><div style="font-size:13.5px;font-weight:700;margin-bottom:4px">💸 Pagamento automático</div><div style="font-size:12px;color:var(--muted)">10/07/2026 · Via PIX</div><div style="font-size:20px;font-weight:900;color:var(--ok);margin-top:4px">R$ 1.240,00</div></div>
-              <div style="padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:13px;font-weight:600">Chave PIX cadastrada</div><div style="font-size:12px;color:var(--muted);margin-top:3px">CPF: •••.456.789-00</div><div style="font-size:12px;color:var(--p3);margin-top:3px;cursor:pointer" onclick="showToast('✅ Chave PIX atualizada!','success')">Alterar chave de recebimento →</div></div>
-              <div style="padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:13px;font-weight:600">Nota fiscal automática</div><div style="font-size:12px;color:var(--muted);margin-top:3px">MEI / PJ obrigatório acima de R$ 500</div><div style="font-size:12px;color:var(--p3);margin-top:3px;cursor:pointer" onclick="showToast('📄 NF gerada!','success')">Gerar NF →</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:12px;border:1px solid #bbf7d0">
+              <div style="font-size:14px;font-weight:800">TOTAL JUNHO</div>
+              <div style="font-size:20px;font-weight:900;color:var(--ok)">R$ 84.192</div>
             </div>
           </div>
+          <!-- Repasse PIX + Extrato -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card">
+              <div class="sec-title">⚡ Repasse PIX Automático</div>
+              <div style="padding:14px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:11px;margin-bottom:12px;border:1px solid #bbf7d0">
+                <div style="font-size:13px;font-weight:800;margin-bottom:4px">💸 Próximo pagamento automático</div>
+                <div style="font-size:28px;font-weight:900;color:var(--ok);margin-bottom:2px">R$ 18.400,00</div>
+                <div style="font-size:12px;color:var(--muted)">10/07/2026 · Via PIX · CPF: •••.456.789-00</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="padding:11px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">Chave PIX cadastrada</div>
+                  <div style="font-size:12px;color:var(--muted)">CPF: •••.456.789-00 · Carlos Mota</div>
+                  <div style="font-size:12px;color:var(--p3);margin-top:4px;cursor:pointer" onclick="showToast('✅ Chave PIX atualizada!','success')">Alterar chave de recebimento →</div>
+                </div>
+                <div style="padding:11px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">Nota fiscal automática</div>
+                  <div style="font-size:12px;color:var(--muted)">MEI/PJ obrigatório acima de R$ 500</div>
+                  <div style="font-size:12px;color:var(--p3);margin-top:4px;cursor:pointer" onclick="showToast('📄 NF gerada com sucesso!','success')">Gerar NF →</div>
+                </div>
+                <div style="padding:11px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;font-weight:600;margin-bottom:3px">🔄 Repasse antecipado</div>
+                  <div style="font-size:12px;color:var(--muted)">Disponível para comissões aprovadas</div>
+                  <button class="btn btn-primary" style="width:100%;margin-top:8px;padding:9px;font-size:12.5px" onclick="openRepassePix()">Solicitar antecipação →</button>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="flex:1">
+              <div class="sec-title">📈 Evolução de Comissões 2026</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11.5px;width:28px;color:var(--muted)">Jan</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:42%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11.5px;color:var(--muted);width:52px;text-align:right">R$ 38k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11.5px;width:28px;color:var(--muted)">Fev</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:48%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11.5px;color:var(--muted);width:52px;text-align:right">R$ 44k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11.5px;width:28px;color:var(--muted)">Mar</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:52%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11.5px;color:var(--muted);width:52px;text-align:right">R$ 47k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11.5px;width:28px;color:var(--muted)">Abr</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:60%;height:7px;background:var(--p1);border-radius:99px"></div></div><div style="font-size:11.5px;color:var(--muted);width:52px;text-align:right">R$ 55k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11.5px;width:28px;color:var(--muted)">Mai</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:76%;height:7px;background:var(--ok);border-radius:99px"></div></div><div style="font-size:11.5px;color:var(--muted);width:52px;text-align:right">R$ 69k</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="font-size:11.5px;width:28px;color:var(--muted)">Jun</div><div style="flex:1;background:#e5e7eb;border-radius:99px;height:7px;overflow:hidden"><div style="width:92%;height:7px;background:var(--ok);border-radius:99px"></div></div><div style="font-size:11.5px;font-weight:800;color:var(--ok);width:52px;text-align:right">R$ 84k</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Extrato de comissões -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div class="sec-title" style="margin:0">📋 Extrato de Comissões — Junho/2026</div>
+            <div style="display:flex;gap:8px">
+              <input placeholder="🔍 Buscar..." style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12.5px;width:160px;background:var(--card)">
+              <button class="btn-sm btn-p" onclick="exportarComissoes()">⬇️ CSV</button>
+            </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--bg)">
+              <th style="padding:9px 14px;text-align:left;font-size:11.5px;color:var(--muted)">DATA</th>
+              <th style="padding:9px 14px;text-align:left;font-size:11.5px;color:var(--muted)">CLIENTE</th>
+              <th style="padding:9px 14px;text-align:center;font-size:11.5px;color:var(--muted)">NICHO</th>
+              <th style="padding:9px 14px;text-align:right;font-size:11.5px;color:var(--muted)">VALOR EMPRÉSTIMO</th>
+              <th style="padding:9px 14px;text-align:center;font-size:11.5px;color:var(--muted)">TAXA</th>
+              <th style="padding:9px 14px;text-align:right;font-size:11.5px;color:var(--muted)">COMISSÃO</th>
+              <th style="padding:9px 14px;text-align:center;font-size:11.5px;color:var(--muted)">STATUS</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12.5px;color:var(--muted)">02/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Maria Clara Santos</div><div style="font-size:11px;color:var(--muted)">Correspondente: Lotérica Boa Sorte</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 18.400,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 368,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12.5px;color:var(--muted)">05/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">João Paulo Ferreira</div><div style="font-size:11px;color:var(--muted)">Correspondente: Mercado Silva</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 32.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,20%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 704,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12.5px;color:var(--muted)">08/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Tenente Ricardo Moura</div><div style="font-size:11px;color:var(--muted)">Correspondente: Papelaria Central</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Forças Arm.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 45.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,50%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 1.125,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12.5px;color:var(--muted)">12/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Ana Beatriz Lima</div><div style="font-size:11px;color:var(--muted)">Correspondente: Farmácia Popular</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#ecfdf5;color:#047857;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Aposentado</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 9.800,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 196,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr><td style="padding:10px 14px;font-size:12.5px;color:var(--muted)">18/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Pedro Henrique Neto</div><div style="font-size:11px;color:var(--muted)">Correspondente: Auto Center Rei</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef2f2;color:#dc2626;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">CLT Conv.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 7.500,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">1,80%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 135,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -3619,6 +4056,245 @@ function agendarKYC(){
 /* UTILS */
 function fmt(n){return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('page-login').classList.contains('active'))doLogin()});
+
+/* ══════════════════════════════════════════════
+   CRM CORRESPONDENTE — Twenty-inspired
+══════════════════════════════════════════════ */
+// ---------- CRM Tabs ----------
+function setCrmTab(tab){
+  ['dash','leads','funil','nichos','equipes','rede'].forEach(t=>{
+    const btn=document.getElementById('crm-tab-'+t);
+    const panel=document.getElementById('crm-'+t);
+    if(!btn||!panel) return;
+    const isActive=(t===tab);
+    btn.style.background=isActive?'var(--p1)':'transparent';
+    btn.style.color=isActive?'#fff':'var(--muted)';
+    panel.style.display=isActive?'block':'none';
+  });
+  if(tab==='funil') buildKanban();
+  if(tab==='leads') buildLeadsTable();
+}
+
+// ---------- LEADS DATA ----------
+const CRM_LEADS=[
+  {nome:'Maria Clara Santos',nicho:'INSS',etapa:'Aprovado',valor:18400,corresp:'Lotérica Boa Sorte',data:'02/06/2026',agente:'Carlos Mota'},
+  {nome:'João Paulo Ferreira',nicho:'Servidor Público',etapa:'Upload Docs',valor:32000,corresp:'Mercado Silva',data:'05/06/2026',agente:'Fernanda Lima'},
+  {nome:'Tenente Ricardo Moura',nicho:'Forças Armadas',etapa:'Aprovação',valor:45000,corresp:'Papelaria Central',data:'08/06/2026',agente:'Carlos Mota'},
+  {nome:'Ana Beatriz Lima',nicho:'Aposentado',etapa:'Assinatura',valor:9800,corresp:'Farmácia Popular',data:'12/06/2026',agente:'Roberto Souza'},
+  {nome:'Pedro Henrique Neto',nicho:'CLT Convênio',etapa:'Proposta',valor:7500,corresp:'Auto Center Rei',data:'18/06/2026',agente:'Juliana Pereira'},
+  {nome:'Cláudia Regina Melo',nicho:'INSS',etapa:'Simulador',valor:14200,corresp:'Lotérica Boa Sorte',data:'20/06/2026',agente:'Anderson Cruz'},
+  {nome:'Sgt. Paulo Andrade',nicho:'Forças Armadas',etapa:'Proposta',valor:38000,corresp:'Papelaria Central',data:'22/06/2026',agente:'Carlos Mota'},
+  {nome:'Beatriz Oliveira',nicho:'Pensionista',etapa:'Upload Docs',valor:8600,corresp:'Farmácia Popular',data:'24/06/2026',agente:'Juliana Pereira'},
+  {nome:'Marcos Vinícius',nicho:'Servidor Público',etapa:'Simulador',valor:22000,corresp:'Mercado Silva',data:'25/06/2026',agente:'Fernanda Lima'},
+  {nome:'Luiza Fernanda Costa',nicho:'CLT Convênio',etapa:'Aprovado',valor:6800,corresp:'Auto Center Rei',data:'28/06/2026',agente:'Anderson Cruz'},
+  {nome:'Coronel Sérgio Lima',nicho:'Forças Armadas',etapa:'Aprovado',valor:52000,corresp:'Papelaria Central',data:'29/06/2026',agente:'Carlos Mota'},
+  {nome:'Rosa Maria Pereira',nicho:'Aposentado',etapa:'Proposta',valor:11200,corresp:'Lotérica Boa Sorte',data:'30/06/2026',agente:'Roberto Souza'},
+];
+
+const ETAPA_COLORS={
+  'Simulador':'background:#ede9fe;color:#6d28d9',
+  'Proposta':'background:#dbeafe;color:#1d4ed8',
+  'Upload Docs':'background:#fef3c7;color:#92400e',
+  'Assinatura':'background:#f3e8ff;color:#7c3aed',
+  'Aprovação':'background:#fee2e2;color:#dc2626',
+  'Aprovado':'background:#dcfce7;color:#15803d'
+};
+const NICHO_COLORS={
+  'INSS':'background:#f5f3ff;color:#6d28d9',
+  'Servidor Público':'background:#dbeafe;color:#1d4ed8',
+  'Forças Armadas':'background:#fef3c7;color:#92400e',
+  'Aposentado':'background:#dcfce7;color:#15803d',
+  'Pensionista':'background:#ecfeff;color:#0e7490',
+  'CLT Convênio':'background:#fef2f2;color:#dc2626'
+};
+
+function buildLeadsTable(filter='',nichoFilter='',etapaFilter=''){
+  const tbody=document.getElementById('leads-tbody');
+  if(!tbody) return;
+  const q=(document.getElementById('leads-search')||{value:''}).value.toLowerCase();
+  const nicho=(document.getElementById('leads-filter-nicho')||{value:''}).value;
+  const etapa=(document.getElementById('leads-filter-etapa')||{value:''}).value;
+  const data=CRM_LEADS.filter(l=>{
+    if(q && !l.nome.toLowerCase().includes(q) && !l.corresp.toLowerCase().includes(q)) return false;
+    if(nicho && l.nicho!==nicho) return false;
+    if(etapa && l.etapa!==etapa) return false;
+    return true;
+  });
+  tbody.innerHTML=data.map(l=>{
+    const ec=ETAPA_COLORS[l.etapa]||'';
+    const nc=NICHO_COLORS[l.nicho]||'';
+    return `<tr style="border-bottom:1px solid var(--border)">
+      <td style="padding:11px 14px"><div style="font-size:13px;font-weight:700">${l.nome}</div><div style="font-size:11px;color:var(--muted)">${l.agente}</div></td>
+      <td style="padding:11px 14px;text-align:center"><span style="${nc};font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">${l.nicho}</span></td>
+      <td style="padding:11px 14px;text-align:center"><span style="${ec};font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700">${l.etapa}</span></td>
+      <td style="padding:11px 14px;text-align:right;font-weight:700">R$ ${fmt(l.valor)}</td>
+      <td style="padding:11px 14px;text-align:center;font-size:12px">${l.corresp}</td>
+      <td style="padding:11px 14px;text-align:center;font-size:12px;color:var(--muted)">${l.data}</td>
+      <td style="padding:11px 14px;text-align:center">
+        <button class="btn-sm btn-p" onclick="avancarLead('${l.nome}')">Avançar →</button>
+      </td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">Nenhum lead encontrado</td></tr>';
+}
+
+function filtrarLeads(){ buildLeadsTable(); }
+
+function avancarLead(nome){
+  const etapas=['Simulador','Proposta','Upload Docs','Assinatura','Aprovação','Aprovado'];
+  const lead=CRM_LEADS.find(l=>l.nome===nome);
+  if(!lead) return;
+  const idx=etapas.indexOf(lead.etapa);
+  if(idx<etapas.length-1){ lead.etapa=etapas[idx+1]; buildLeadsTable(); showToast('✅ '+nome+' avançado para: '+lead.etapa,'success'); }
+  else showToast('✅ Contrato já finalizado!','success');
+}
+
+// ---------- KANBAN ----------
+const KANBAN_STEPS=[
+  {id:'simulador',label:'1. Simulador',color:'#6366f1',bg:'#ede9fe',leads:['Cláudia Melo','Marcos Vinícius']},
+  {id:'proposta',label:'2. Proposta',color:'#0284c7',bg:'#dbeafe',leads:['Pedro Neto','Sgt. Paulo Andrade','Rosa Pereira']},
+  {id:'upload',label:'3. Upload Docs',color:'#d97706',bg:'#fef3c7',leads:['João Paulo','Beatriz Oliveira']},
+  {id:'assinatura',label:'4. Assinatura',color:'#7c3aed',bg:'#f3e8ff',leads:['Ana Lima']},
+  {id:'aprovacao',label:'5. Aprovação',color:'#dc2626',bg:'#fee2e2',leads:['Tenente Moura']},
+  {id:'comissao',label:'6. Comissão',color:'#0891b2',bg:'#ecfeff',leads:[]},
+  {id:'correspondente',label:'7. Correspondente',color:'#047857',bg:'#ecfdf5',leads:[]},
+  {id:'carteira',label:'8. Carteira Digital',color:'#7c3aed',bg:'#f5f3ff',leads:[]},
+  {id:'portal',label:'9. Portal Cliente',color:'#15803d',bg:'#dcfce7',leads:['Maria Santos','Luiza Costa','Coronel Lima']},
+];
+
+function buildKanban(){
+  const board=document.getElementById('kanban-board');
+  if(!board) return;
+  board.innerHTML=KANBAN_STEPS.map(step=>`
+    <div style="min-width:155px;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border)">
+      <div style="background:${step.bg};padding:10px 12px;border-bottom:2px solid ${step.color}">
+        <div style="font-size:11.5px;font-weight:800;color:${step.color}">${step.label}</div>
+        <div style="font-size:11px;color:${step.color};opacity:.7">${step.leads.length} lead${step.leads.length!==1?'s':''}</div>
+      </div>
+      <div style="padding:8px;display:flex;flex-direction:column;gap:6px;min-height:120px">
+        ${step.leads.map(l=>`
+          <div style="background:var(--bg);border-radius:8px;padding:9px;cursor:pointer;border:1px solid var(--border)" onclick="showToast('📋 Detalhes: ${l}','info')">
+            <div style="font-size:11.5px;font-weight:700;margin-bottom:2px">${l}</div>
+            <div style="font-size:10.5px;color:var(--muted)">Consignado · INSS</div>
+            <button style="margin-top:6px;width:100%;padding:4px;background:${step.color};color:#fff;border:none;border-radius:5px;font-size:10.5px;cursor:pointer" onclick="event.stopPropagation();showToast('✅ Lead avançado!','success')">Avançar →</button>
+          </div>`).join('')}
+        <button style="border:1.5px dashed var(--border);background:transparent;border-radius:8px;padding:8px;width:100%;font-size:11.5px;color:var(--muted);cursor:pointer" onclick="openNovoLead()">＋ Adicionar</button>
+      </div>
+    </div>`).join('');
+}
+
+// ---------- MODAIS CRM ----------
+function openNovoLead(){
+  const html=`<div style="position:fixed;inset:0;z-index:700;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)" id="modal-novo-lead">
+    <div style="background:var(--card);border-radius:18px;padding:28px;width:min(520px,95vw);max-height:90vh;overflow-y:auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:18px;font-weight:900">👥 Novo Lead Consignado</div>
+        <button onclick="document.getElementById('modal-novo-lead').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">×</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">NOME COMPLETO</label><input placeholder="Ex: João da Silva" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CPF</label><input placeholder="000.000.000-00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">NICHO</label><select style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"><option>INSS</option><option>Servidor Público</option><option>Forças Armadas</option><option>Aposentado</option><option>Pensionista</option><option>CLT Convênio</option></select></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR PRETENDIDO</label><input placeholder="R$ 0,00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">RENDA MENSAL</label><input placeholder="R$ 0,00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">TELEFONE</label><input placeholder="(11) 99999-9999" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+        </div>
+        <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CORRESPONDENTE</label><select style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"><option>Lotérica Boa Sorte</option><option>Mercado Silva &amp; Cia</option><option>Farmácia Popular</option><option>Papelaria Central</option></select></div>
+        <div><label style="font-size:12px;font-weight:700;color:var(--muted)">OBSERVAÇÕES</label><textarea placeholder="Informações adicionais..." style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box;resize:vertical;min-height:70px"></textarea></div>
+        <button class="btn btn-primary" style="padding:13px;font-size:14px" onclick="salvarNovoLead()">💾 Cadastrar Lead</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+function salvarNovoLead(){
+  document.getElementById('modal-novo-lead')?.remove();
+  showToast('✅ Lead cadastrado e inserido no funil!','success');
+}
+
+function openNovaProposta(){
+  const html=`<div style="position:fixed;inset:0;z-index:700;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)" id="modal-nova-proposta">
+    <div style="background:var(--card);border-radius:18px;padding:28px;width:min(540px,95vw);max-height:90vh;overflow-y:auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:18px;font-weight:900">📄 Nova Proposta Consignado</div>
+        <button onclick="document.getElementById('modal-nova-proposta').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">×</button>
+      </div>
+      <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:12px;padding:16px;margin-bottom:18px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">PIPELINE: Simulador → <strong>Proposta</strong> → Upload Docs → Assinatura → Aprovação</div>
+        <div style="display:flex;gap:6px">
+          ${['Simulador','Proposta','Upload','Assinatura','Aprovação'].map((s,i)=>`<div style="flex:1;height:4px;border-radius:2px;background:${i<=1?'var(--ok)':'#e5e7eb'}"></div>`).join('')}
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">CPF DO CLIENTE</label><input placeholder="000.000.000-00" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">MATRÍCULA / NB</label><input placeholder="Número do benefício" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR SOLICITADO</label><input placeholder="R$ 0,00" id="prop-valor" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">PRAZO (MESES)</label><select id="prop-prazo" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"><option>24</option><option>36</option><option>48</option><option>60</option><option>72</option><option selected>84</option></select></div>
+          <div><label style="font-size:12px;font-weight:700;color:var(--muted)">TAXA (% a.m.)</label><input value="1.39" id="prop-taxa" style="width:100%;margin-top:4px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);box-sizing:border-box"></div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px" id="prop-preview">
+          <div style="font-size:12.5px;font-weight:700;margin-bottom:8px;color:var(--muted)">PRÉVIA DA PROPOSTA</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <div><div style="font-size:11px;color:var(--muted)">Parcela mensal</div><div style="font-size:18px;font-weight:900;color:var(--p1)">R$ 0,00</div></div>
+            <div><div style="font-size:11px;color:var(--muted)">Total a pagar</div><div style="font-size:18px;font-weight:900;color:var(--err)">R$ 0,00</div></div>
+            <div><div style="font-size:11px;color:var(--muted)">Sua comissão (2%)</div><div style="font-size:18px;font-weight:900;color:var(--ok)">R$ 0,00</div></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="padding:13px;font-size:14px" onclick="document.getElementById('modal-nova-proposta').remove();showToast('✅ Proposta enviada! Lead avançado para Upload de Documentos.','success')">📤 Enviar Proposta</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+function openSimuladorNicho(nicho){
+  showPage('page-simulador');
+  showToast('🎯 Simulador aberto para nicho: '+nicho,'info');
+}
+
+function openRepassePix(){
+  const html=`<div style="position:fixed;inset:0;z-index:700;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)" id="modal-repasse-pix">
+    <div style="background:var(--card);border-radius:18px;padding:28px;width:min(440px,95vw)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:18px;font-weight:900">⚡ Solicitar Repasse PIX</div>
+        <button onclick="document.getElementById('modal-repasse-pix').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">×</button>
+      </div>
+      <div style="background:#f0fdf4;border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid #bbf7d0">
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:4px">Saldo disponível para repasse</div>
+        <div style="font-size:32px;font-weight:900;color:var(--ok)">R$ 18.400,00</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Comissões aprovadas — Junho/2026</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><label style="font-size:12px;font-weight:700;color:var(--muted)">VALOR DO REPASSE</label><input placeholder="R$ 0,00" value="18400.00" style="width:100%;margin-top:4px;padding:12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;background:var(--bg);box-sizing:border-box"></div>
+        <div style="background:var(--bg);border-radius:9px;padding:12px"><div style="font-size:12.5px;font-weight:700;margin-bottom:4px">Chave PIX de recebimento</div><div style="font-size:13px;color:var(--p1)">CPF: •••.456.789-00 · Carlos Mota</div></div>
+        <div style="background:#fef3c7;border-radius:9px;padding:10px;font-size:12px;color:#92400e">⚠️ Repasse antecipado sujeito a taxa de 0,5% sobre o valor</div>
+        <button class="btn btn-primary" style="padding:13px;font-size:14px" onclick="document.getElementById('modal-repasse-pix').remove();showToast('✅ Repasse PIX solicitado! Será processado em até 30min.','success')">⚡ Confirmar Repasse PIX</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+function exportarComissoes(){
+  showToast('⬇️ Planilha de comissões exportada com sucesso!','success');
+}
+
+// Inicializar CRM quando página correspondente for exibida
+const _origShowPage=showPage;
+function showPage(id){
+  _origShowPage(id);
+  if(id==='page-correspondente'){
+    setTimeout(()=>{ setCrmTab('dash'); },50);
+  }
+}
 </script>
 </body>
 </html>
