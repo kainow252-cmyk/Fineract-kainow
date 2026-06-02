@@ -1194,6 +1194,7 @@ input,select,textarea{font-family:inherit;outline:none}
       </div>
       <div class="sb-section">
         <div class="sb-sec-label">Serviços</div>
+        <div class="nav-item" onclick="goPage('saude',this)"><span class="ni">🩺</span>KaiNow Saúde<span class="nb" style="background:#0f4c81;color:#fff">HOT</span></div>
         <div class="nav-item" onclick="goPage('wallet',this)"><span class="ni">👛</span>Wallet<span class="nb green">NEW</span></div>
         <div class="nav-item" onclick="goPage('seguros',this)"><span class="ni">🛡️</span>Seguros<span class="nb green">NEW</span></div>
         <div class="nav-item" onclick="goPage('capitalizacao',this)"><span class="ni">🎰</span>Capitalização<span class="nb green">NEW</span></div>
@@ -1254,6 +1255,8 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="nav-item" onclick="mobGo('credito')"><span class="ni">💰</span>Crédito</div>
         <div class="nav-item" onclick="mobGo('investimentos')"><span class="ni">📈</span>Investimentos</div>
         <div class="nav-item" onclick="mobGo('simulador')"><span class="ni">🧮</span>Simulador</div>
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">SAÚDE</div>
+        <div class="nav-item" onclick="mobGo('saude')"><span class="ni">🩺</span>KaiNow Saúde</div>
         <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;padding:12px 10px 6px">PRODUTOS</div>
         <div class="nav-item" onclick="mobGo('wallet')"><span class="ni">👛</span>Wallet</div>
         <div class="nav-item" onclick="mobGo('seguros')"><span class="ni">🛡️</span>Seguros</div>
@@ -1530,7 +1533,432 @@ input,select,textarea{font-family:inherit;outline:none}
         <div class="card" style="padding:0;overflow:hidden"><table class="loan-tbl" id="loanTbl"></table></div>
       </div>
 
-      <!-- ██ MARKETPLACE (Medusa-inspired) ██ -->
+      <!-- ██ KAINOW SAÚDE ██ -->
+      <div class="page" id="page-saude">
+
+        <!-- HERO BANNER -->
+        <div style="background:linear-gradient(135deg,#0f4c81 0%,#1a7a5e 60%,#0ea5e9 100%);border-radius:20px;padding:32px 28px;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05)"></div>
+          <div style="position:absolute;bottom:-60px;left:60%;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+          <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px">
+            <div>
+              <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">🩺 KaiNow Saúde · Telemedicina Digital</div>
+              <h2 style="font-size:26px;font-weight:900;color:#fff;margin:0 0 8px">Sua saúde completa no app</h2>
+              <p style="color:rgba(255,255,255,.75);font-size:13px;max-width:500px;margin:0 0 18px">Consulte médicos, nutricionistas e psicólogos online. Acesse prontuário, exames, receitas digitais e IA de saúde — tudo integrado à sua conta KaiNowPay.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button onclick="saudeAba('saude-aba-consulta')" style="background:#fff;color:#0f4c81;border:none;padding:10px 22px;border-radius:30px;font-size:13px;font-weight:800;cursor:pointer">🩺 Agendar Consulta</button>
+                <button onclick="saudeAba('saude-aba-plano')" style="background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.35);padding:10px 22px;border-radius:30px;font-size:13px;font-weight:700;cursor:pointer">💳 Meu Plano</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:220px">
+              <div style="background:rgba(255,255,255,.12);border-radius:14px;padding:14px;text-align:center">
+                <div style="font-size:24px;font-weight:900;color:#fff" id="saude-kpi-consultas">12</div>
+                <div style="font-size:11px;color:rgba(255,255,255,.65);margin-top:2px">Consultas</div>
+              </div>
+              <div style="background:rgba(255,255,255,.12);border-radius:14px;padding:14px;text-align:center">
+                <div style="font-size:24px;font-weight:900;color:#4ade80" id="saude-kpi-proxima">Hoje</div>
+                <div style="font-size:11px;color:rgba(255,255,255,.65);margin-top:2px">Próxima</div>
+              </div>
+              <div style="background:rgba(255,255,255,.12);border-radius:14px;padding:14px;text-align:center">
+                <div style="font-size:24px;font-weight:900;color:#fbbf24" id="saude-kpi-exames">3</div>
+                <div style="font-size:11px;color:rgba(255,255,255,.65);margin-top:2px">Exames</div>
+              </div>
+              <div style="background:rgba(255,255,255,.12);border-radius:14px;padding:14px;text-align:center">
+                <div style="font-size:24px;font-weight:900;color:#a78bfa" id="saude-kpi-receitas">5</div>
+                <div style="font-size:11px;color:rgba(255,255,255,.65);margin-top:2px">Receitas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="crm-tabs" style="background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:0 8px;margin-bottom:22px;display:flex">
+          <div class="saude-tab active" id="saude-tab-dashboard" onclick="saudeAba('saude-aba-dashboard')" style="padding:13px 18px;font-size:13px;font-weight:700;color:var(--p1);border-bottom:2.5px solid var(--p1);cursor:pointer;white-space:nowrap">🏠 Início</div>
+          <div class="saude-tab" id="saude-tab-consulta" onclick="saudeAba('saude-aba-consulta')" style="padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">🩺 Teleconsulta</div>
+          <div class="saude-tab" id="saude-tab-especialistas" onclick="saudeAba('saude-aba-especialistas')" style="padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">👨‍⚕️ Especialistas</div>
+          <div class="saude-tab" id="saude-tab-prontuario" onclick="saudeAba('saude-aba-prontuario')" style="padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">📋 Prontuário</div>
+          <div class="saude-tab" id="saude-tab-exames" onclick="saudeAba('saude-aba-exames')" style="padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">🔬 Exames</div>
+          <div class="saude-tab" id="saude-tab-ia" onclick="saudeAba('saude-aba-ia')" style="padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">🤖 IA Saúde</div>
+          <div class="saude-tab" id="saude-tab-plano" onclick="saudeAba('saude-aba-plano')" style="padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap">💳 Plano</div>
+        </div>
+
+        <!-- ABA: DASHBOARD (Início) -->
+        <div class="saude-tab-content" id="saude-aba-dashboard">
+          <!-- Quick actions -->
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px">
+            <div onclick="saudeAba('saude-aba-consulta')" style="background:linear-gradient(135deg,#0f4c81,#0ea5e9);border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+              <div style="font-size:26px;margin-bottom:8px">🩺</div>
+              <div style="font-size:12px;font-weight:700;color:#fff">Teleconsulta</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:3px">Agendar agora</div>
+            </div>
+            <div onclick="saudeAbaEspec('nutri')" style="background:linear-gradient(135deg,#166534,#22c55e);border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+              <div style="font-size:26px;margin-bottom:8px">🥗</div>
+              <div style="font-size:12px;font-weight:700;color:#fff">Nutricionista</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:3px">Plano alimentar</div>
+            </div>
+            <div onclick="saudeAbaEspec('psico')" style="background:linear-gradient(135deg,#581c87,#a855f7);border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+              <div style="font-size:26px;margin-bottom:8px">🧠</div>
+              <div style="font-size:12px;font-weight:700;color:#fff">Psicólogo</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:3px">Saúde mental</div>
+            </div>
+            <div onclick="saudeAba('saude-aba-exames')" style="background:linear-gradient(135deg,#92400e,#f59e0b);border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+              <div style="font-size:26px;margin-bottom:8px">🔬</div>
+              <div style="font-size:12px;font-weight:700;color:#fff">Exames</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:3px">Resultados</div>
+            </div>
+            <div onclick="saudeAba('saude-aba-ia')" style="background:linear-gradient(135deg,#be123c,#f43f5e);border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+              <div style="font-size:26px;margin-bottom:8px">🤖</div>
+              <div style="font-size:12px;font-weight:700;color:#fff">IA Saúde</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:3px">Sintomas & dicas</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+            <!-- Próxima consulta -->
+            <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0">📅 Próximas Consultas</h3>
+                <button onclick="saudeAba('saude-aba-consulta')" style="font-size:11px;color:var(--p1);background:var(--p1)22;border:none;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:700">+ Agendar</button>
+              </div>
+              <div id="saude-proximas-list"></div>
+            </div>
+
+            <!-- Status do plano -->
+            <div style="background:linear-gradient(135deg,#0f4c81 0%,#1a7a5e 100%);border-radius:16px;padding:20px">
+              <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:8px">💳 SEU PLANO ATIVO</div>
+              <div style="font-size:20px;font-weight:900;color:#fff;margin-bottom:4px" id="saude-plano-nome">KaiNow Saúde Plus</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.75);margin-bottom:16px">Mensalidade debitada via cashback</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+                <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:10px">
+                  <div style="font-size:11px;color:rgba(255,255,255,.6)">Consultas/mês</div>
+                  <div style="font-size:18px;font-weight:800;color:#4ade80">Ilimitadas</div>
+                </div>
+                <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:10px">
+                  <div style="font-size:11px;color:rgba(255,255,255,.6)">Mensalidade</div>
+                  <div style="font-size:18px;font-weight:800;color:#fbbf24">R$ 49,90</div>
+                </div>
+              </div>
+              <button onclick="saudeAba('saude-aba-plano')" style="width:100%;background:rgba(255,255,255,.18);color:#fff;border:1.5px solid rgba(255,255,255,.3);padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer">Ver detalhes do plano →</button>
+            </div>
+          </div>
+
+          <!-- Histórico recente -->
+          <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px;margin-top:20px">
+            <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0 0 16px">📋 Histórico Recente</h3>
+            <div id="saude-historico-list"></div>
+          </div>
+        </div>
+
+        <!-- ABA: TELECONSULTA -->
+        <div class="saude-tab-content" id="saude-aba-consulta" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+              <h3 style="font-size:15px;font-weight:700;color:var(--txt);margin:0 0 16px">🩺 Agendar Nova Consulta</h3>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div>
+                  <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">ESPECIALIDADE</label>
+                  <select id="saude-ag-espec" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none" onchange="saudeLoadDoctors()">
+                    <option value="">Selecione a especialidade</option>
+                    <option value="clinico">🩺 Clínico Geral</option>
+                    <option value="endocrino">🧬 Endocrinologia</option>
+                    <option value="nutri">🥗 Nutricionista</option>
+                    <option value="psico">🧠 Psicólogo</option>
+                    <option value="cardio">❤️ Cardiologia</option>
+                    <option value="pediatra">👶 Pediatria</option>
+                    <option value="dermato">✨ Dermatologia</option>
+                    <option value="oftalmo">👁️ Oftalmologia</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">MÉDICO</label>
+                  <select id="saude-ag-medico" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+                    <option value="">Selecione primeiro a especialidade</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">DATA</label>
+                  <input type="date" id="saude-ag-data" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;box-sizing:border-box">
+                </div>
+                <div>
+                  <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">HORÁRIO</label>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px" id="saude-horarios-grid"></div>
+                </div>
+                <div>
+                  <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">MOTIVO DA CONSULTA</label>
+                  <textarea id="saude-ag-motivo" rows="3" placeholder="Descreva brevemente o motivo da consulta..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;resize:vertical;box-sizing:border-box"></textarea>
+                </div>
+                <button onclick="saudeAgendarConsulta()" style="background:var(--p1);color:#fff;border:none;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%">✅ Confirmar Agendamento</button>
+              </div>
+            </div>
+
+            <div>
+              <!-- Consulta ativa/online -->
+              <div style="background:linear-gradient(135deg,#0f4c81,#1a7a5e);border-radius:16px;padding:20px;margin-bottom:16px">
+                <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:6px">🟢 CONSULTA EM ANDAMENTO</div>
+                <div id="saude-consulta-ativa-box">
+                  <div style="font-size:14px;color:rgba(255,255,255,.7);padding:20px 0;text-align:center">Nenhuma consulta ativa no momento</div>
+                </div>
+              </div>
+              <!-- Próximos agendamentos -->
+              <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+                <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0 0 14px">⏰ Agendamentos Confirmados</h3>
+                <div id="saude-agenda-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: ESPECIALISTAS -->
+        <div class="saude-tab-content" id="saude-aba-especialistas" style="display:none">
+          <!-- Filter bar -->
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center">
+            <input id="saude-busca-dr" type="text" placeholder="🔍 Buscar médico por nome ou especialidade..." oninput="saudeFiltrarDoctors()" style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+            <select id="saude-filtro-espec" onchange="saudeFiltrarDoctors()" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+              <option value="">Todas especialidades</option>
+              <option value="Clínico Geral">Clínico Geral</option>
+              <option value="Endocrinologia">Endocrinologia</option>
+              <option value="Nutricionista">Nutricionista</option>
+              <option value="Psicólogo">Psicólogo</option>
+              <option value="Cardiologia">Cardiologia</option>
+              <option value="Pediatria">Pediatria</option>
+            </select>
+          </div>
+          <div id="saude-doctors-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px"></div>
+        </div>
+
+        <!-- ABA: PRONTUÁRIO -->
+        <div class="saude-tab-content" id="saude-aba-prontuario" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <!-- Dados pessoais -->
+            <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+              <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0 0 16px">👤 Dados de Saúde do Paciente</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" id="saude-prontuario-dados"></div>
+            </div>
+            <!-- Prescrições -->
+            <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0">💊 Medicamentos Ativos</h3>
+                <button onclick="saudeOpenModal('saude-modal-receita')" style="font-size:11px;color:var(--p1);background:var(--p1)22;border:none;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:700">Ver receitas</button>
+              </div>
+              <div id="saude-medicamentos-list"></div>
+            </div>
+          </div>
+          <!-- Histórico de consultas completo -->
+          <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+            <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0 0 16px">🗓️ Histórico Clínico Completo</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse">
+                <thead>
+                  <tr style="border-bottom:1.5px solid var(--border)">
+                    <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Data</th>
+                    <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Especialidade</th>
+                    <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Médico</th>
+                    <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Diagnóstico / CID</th>
+                    <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Documentos</th>
+                  </tr>
+                </thead>
+                <tbody id="saude-historico-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: EXAMES -->
+        <div class="saude-tab-content" id="saude-aba-exames" style="display:none">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center">
+            <input id="saude-busca-exame" type="text" placeholder="🔍 Buscar exame..." oninput="saudeFiltrarExames()" style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+            <select id="saude-filtro-exame-status" onchange="saudeFiltrarExames()" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+              <option value="">Todos status</option>
+              <option value="Disponível">Disponível</option>
+              <option value="Aguardando">Aguardando</option>
+              <option value="Solicitado">Solicitado</option>
+            </select>
+            <button onclick="saudeOpenModal('saude-modal-solicit-exame')" style="background:var(--p1);color:#fff;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer">+ Solicitar Exame</button>
+          </div>
+          <div id="saude-exames-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px"></div>
+        </div>
+
+        <!-- ABA: IA SAÚDE -->
+        <div class="saude-tab-content" id="saude-aba-ia" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+            <!-- Chat IA -->
+            <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:520px">
+              <div style="background:linear-gradient(90deg,#0f4c81,#0ea5e9);padding:16px 20px;display:flex;align-items:center;gap:12px">
+                <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px">🤖</div>
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:#fff">KaiDoc IA</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,.7)">Assistente de saúde inteligente · Online</div>
+                </div>
+              </div>
+              <div id="saude-ia-chat" style="flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;min-height:300px">
+                <div style="background:linear-gradient(135deg,#0f4c8122,#0ea5e911);border:1px solid var(--p1)33;border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:85%">
+                  <p style="font-size:13px;color:var(--txt);margin:0;line-height:1.6">Olá! Sou o <strong>KaiDoc IA</strong>, seu assistente de saúde pessoal. 😊<br><br>Posso ajudar com:<br>• Análise de sintomas<br>• Orientações sobre medicamentos<br>• Dicas de saúde e bem-estar<br>• Informações sobre exames<br><br>Como posso ajudar você hoje?</p>
+                </div>
+              </div>
+              <div style="padding:16px;border-top:1px solid var(--border);display:flex;gap:8px">
+                <input id="saude-ia-input" type="text" placeholder="Descreva seus sintomas ou faça uma pergunta..." onkeydown="if(event.key==='Enter')saudeIaEnviar()" style="flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:30px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+                <button onclick="saudeIaEnviar()" style="background:var(--p1);color:#fff;border:none;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">➤</button>
+              </div>
+            </div>
+
+            <!-- Sugestões & alertas -->
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+                <h3 style="font-size:13px;font-weight:700;color:var(--txt);margin:0 0 14px">💡 Perguntas Frequentes</h3>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <button onclick="saudeIaSugestao('Tenho dor de cabeça há 2 dias, o que pode ser?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">🤕 Dor de cabeça frequente</button>
+                  <button onclick="saudeIaSugestao('Quais exames devo fazer anualmente?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">🔬 Exames anuais preventivos</button>
+                  <button onclick="saudeIaSugestao('Estou com insônia, quais as causas mais comuns?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">😴 Problemas de sono</button>
+                  <button onclick="saudeIaSugestao('Tenho pressão alta, quais cuidados devo ter?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">❤️ Pressão alta e hipertensão</button>
+                  <button onclick="saudeIaSugestao('Como melhorar minha alimentação para perder peso?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">🥗 Alimentação saudável</button>
+                  <button onclick="saudeIaSugestao('Quais sintomas indicam diabetes?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">🩸 Sintomas de diabetes</button>
+                </div>
+              </div>
+              <div style="background:linear-gradient(135deg,#be123c22,#f43f5e11);border:1.5px solid #f43f5e44;border-radius:16px;padding:18px">
+                <div style="font-size:12px;font-weight:700;color:#f43f5e;margin-bottom:8px">⚠️ AVISO IMPORTANTE</div>
+                <p style="font-size:12px;color:var(--muted);margin:0;line-height:1.6">O KaiDoc IA oferece <strong>orientações gerais</strong> e não substitui consulta médica presencial. Em caso de emergência, ligue <strong>192 (SAMU)</strong> ou dirija-se ao pronto-socorro.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: PLANO / MENSALIDADE -->
+        <div class="saude-tab-content" id="saude-aba-plano" style="display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+            <!-- Plano atual -->
+            <div style="background:linear-gradient(135deg,#0f4c81,#1a7a5e);border-radius:20px;padding:24px;color:#fff">
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:1.5px;margin-bottom:8px">PLANO ATIVO</div>
+              <div style="font-size:22px;font-weight:900;margin-bottom:4px">KaiNow Saúde Plus</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:20px">Renovação automática • Próximo débito: 01/07/2026</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+                <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:12px;text-align:center">
+                  <div style="font-size:18px;font-weight:800;color:#4ade80">∞</div>
+                  <div style="font-size:10px;color:rgba(255,255,255,.6)">Consultas</div>
+                </div>
+                <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:12px;text-align:center">
+                  <div style="font-size:18px;font-weight:800;color:#fbbf24">6</div>
+                  <div style="font-size:10px;color:rgba(255,255,255,.6)">Especialistas</div>
+                </div>
+                <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:12px;text-align:center">
+                  <div style="font-size:18px;font-weight:800;color:#a78bfa">✓</div>
+                  <div style="font-size:10px;color:rgba(255,255,255,.6)">IA Saúde</div>
+                </div>
+              </div>
+              <div style="font-size:28px;font-weight:900;margin-bottom:4px">R$ 49,90 <span style="font-size:14px;font-weight:400;opacity:.7">/ mês</span></div>
+              <div style="font-size:12px;color:rgba(255,255,255,.6);margin-bottom:16px">Debitado automaticamente via saldo KaiNowPay</div>
+              <div style="display:flex;gap:10px">
+                <button onclick="showToast('Gerenciamento do plano em breve!','info')" style="flex:1;background:rgba(255,255,255,.18);color:#fff;border:1.5px solid rgba(255,255,255,.3);padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Gerenciar Plano</button>
+                <button onclick="saudeOpenModal('saude-modal-cancelar')" style="background:rgba(239,68,68,.25);color:#fca5a5;border:1.5px solid rgba(239,68,68,.3);padding:10px 16px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Cancelar</button>
+              </div>
+            </div>
+
+            <!-- Histórico de pagamentos -->
+            <div style="background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:24px">
+              <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0 0 16px">💳 Histórico de Pagamentos</h3>
+              <div id="saude-pgtos-list"></div>
+            </div>
+          </div>
+
+          <!-- Comparativo de planos -->
+          <div style="background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:24px">
+            <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0 0 20px">📊 Comparativo de Planos</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+              <div style="border:1.5px solid var(--border);border-radius:16px;padding:20px;text-align:center">
+                <div style="font-size:14px;font-weight:700;color:var(--txt);margin-bottom:8px">Básico</div>
+                <div style="font-size:26px;font-weight:900;color:var(--p1);margin-bottom:4px">R$ 29,90</div>
+                <div style="font-size:11px;color:var(--muted);margin-bottom:16px">por mês</div>
+                <div style="text-align:left;font-size:12px;color:var(--txt);line-height:2">✅ 3 consultas/mês<br>✅ Clínico Geral<br>✅ Chat IA básico<br>❌ Nutricionista<br>❌ Psicólogo</div>
+              </div>
+              <div style="border:2.5px solid var(--p1);border-radius:16px;padding:20px;text-align:center;position:relative">
+                <span style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--p1);color:#fff;padding:3px 14px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap">✨ Seu plano atual</span>
+                <div style="font-size:14px;font-weight:700;color:var(--p1);margin-bottom:8px">Plus</div>
+                <div style="font-size:26px;font-weight:900;color:var(--p1);margin-bottom:4px">R$ 49,90</div>
+                <div style="font-size:11px;color:var(--muted);margin-bottom:16px">por mês</div>
+                <div style="text-align:left;font-size:12px;color:var(--txt);line-height:2">✅ Ilimitado consultas<br>✅ 6 especialidades<br>✅ IA Saúde completa<br>✅ Nutricionista<br>✅ Psicólogo</div>
+              </div>
+              <div style="border:1.5px solid var(--border);border-radius:16px;padding:20px;text-align:center">
+                <div style="font-size:14px;font-weight:700;color:var(--txt);margin-bottom:8px">Premium</div>
+                <div style="font-size:26px;font-weight:900;color:var(--txt);margin-bottom:4px">R$ 89,90</div>
+                <div style="font-size:11px;color:var(--muted);margin-bottom:16px">por mês</div>
+                <div style="text-align:left;font-size:12px;color:var(--txt);line-height:2">✅ Consultas ilimitadas<br>✅ 10+ especialidades<br>✅ IA Premium + relatórios<br>✅ Cashback 5% em exames<br>✅ Seguro saúde incluso</div>
+                <button onclick="showToast('Upgrade para Premium em breve!','info')" style="width:100%;margin-top:12px;background:var(--bg);color:var(--txt);border:1.5px solid var(--border);padding:9px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Fazer Upgrade</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAIS SAÚDE -->
+
+        <!-- Modal: Receitas -->
+        <div id="saude-modal-receita" style="display:none;position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+          <div style="background:var(--card);border-radius:20px;padding:28px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <h3 style="font-size:16px;font-weight:800;color:var(--txt);margin:0">💊 Receituário Digital</h3>
+              <button onclick="saudeCloseModal('saude-modal-receita')" style="background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer">✕</button>
+            </div>
+            <div id="saude-receitas-list"></div>
+          </div>
+        </div>
+
+        <!-- Modal: Solicitar Exame -->
+        <div id="saude-modal-solicit-exame" style="display:none;position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+          <div style="background:var(--card);border-radius:20px;padding:28px;max-width:480px;width:100%">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <h3 style="font-size:16px;font-weight:800;color:var(--txt);margin:0">🔬 Solicitar Exame</h3>
+              <button onclick="saudeCloseModal('saude-modal-solicit-exame')" style="background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer">✕</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">TIPO DE EXAME</label>
+                <select id="saude-exame-tipo" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none">
+                  <option>Hemograma Completo</option>
+                  <option>Glicemia em Jejum</option>
+                  <option>Perfil Lipídico</option>
+                  <option>TSH / T4 Livre</option>
+                  <option>Urina tipo 1</option>
+                  <option>ECG (Eletrocardiograma)</option>
+                  <option>Raio-X de Tórax</option>
+                  <option>Outro (especificar)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">OBSERVAÇÕES</label>
+                <textarea id="saude-exame-obs" rows="3" placeholder="Informações adicionais..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;resize:vertical;box-sizing:border-box"></textarea>
+              </div>
+              <button onclick="saudeSolicitarExame()" style="background:var(--p1);color:#fff;border:none;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Solicitar ao Médico</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal: Cancelar plano -->
+        <div id="saude-modal-cancelar" style="display:none;position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+          <div style="background:var(--card);border-radius:20px;padding:28px;max-width:400px;width:100%;text-align:center">
+            <div style="font-size:48px;margin-bottom:16px">⚠️</div>
+            <h3 style="font-size:18px;font-weight:800;color:var(--txt);margin:0 0 10px">Cancelar Plano?</h3>
+            <p style="font-size:13px;color:var(--muted);margin:0 0 24px">Você perderá acesso às consultas ilimitadas, IA Saúde e histórico clínico ao final do período pago.</p>
+            <div style="display:flex;gap:12px">
+              <button onclick="saudeCloseModal('saude-modal-cancelar')" style="flex:1;background:var(--p1);color:#fff;border:none;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Manter Plano</button>
+              <button onclick="saudeCloseModal('saude-modal-cancelar');showToast('Cancelamento solicitado. Ativo até 30/06/2026.','warning')" style="flex:1;background:none;color:#ef4444;border:1.5px solid #ef4444;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Confirmar Cancelamento</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal: Agendar especialista -->
+        <div id="saude-modal-espec" style="display:none;position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+          <div style="background:var(--card);border-radius:20px;padding:28px;max-width:480px;width:100%">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <h3 style="font-size:16px;font-weight:800;color:var(--txt);margin:0" id="saude-modal-espec-title">Agendar Consulta</h3>
+              <button onclick="saudeCloseModal('saude-modal-espec')" style="background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer">✕</button>
+            </div>
+            <div id="saude-modal-espec-body"></div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ██ FIM KAINOW SAÚDE ██ -->
+
+
+            <!-- ██ MARKETPLACE (Medusa-inspired) ██ -->
       <div class="page" id="page-marketplace">
         <div class="mkt-hero">
           <div style="position:relative;z-index:1">
@@ -5776,6 +6204,498 @@ function crmInit(){
 
 
 
+
+// ══════════════════════════════════════════════════════════════════
+// ██  KAINOW SAÚDE — MOTOR COMPLETO  ██
+// ══════════════════════════════════════════════════════════════════
+
+// ── MOCK DATA ──────────────────────────────────────────────────────
+const saudeMedicos = [
+  {id:'M01',nome:'Dr. Renato Mendes',    espec:'Endocrinologia', crm:'CRM-SP 82341', avaliacao:4.9, consultas:1240, foto:'👨‍⚕️', valor:0,  disponivel:true,  bio:'Endocrinologista com 18 anos de experiência em diabetes, obesidade e distúrbios da tireoide.'},
+  {id:'M02',nome:'Dra. Aline Rocha',     espec:'Nutricionista',  crm:'CRN 12345',    avaliacao:4.8, consultas:870,  foto:'👩‍⚕️', valor:0,  disponivel:true,  bio:'Especialista em nutrição clínica e esportiva, com foco em emagrecimento saudável e reeducação alimentar.'},
+  {id:'M03',nome:'Dr. Bruno Carvalho',   espec:'Clínico Geral',  crm:'CRM-RJ 55123', avaliacao:4.7, consultas:2100, foto:'👨‍⚕️', valor:0,  disponivel:true,  bio:'Médico generalista com atendimento humanizado para todas as idades. Atenção primária e prevenção de doenças.'},
+  {id:'M04',nome:'Dra. Patrícia Lima',   espec:'Psicólogo',      crm:'CRP 06/98765', avaliacao:4.9, consultas:560,  foto:'👩‍⚕️', valor:0,  disponivel:true,  bio:'Psicóloga clínica com especialização em TCC, ansiedade, depressão e saúde mental corporativa.'},
+  {id:'M05',nome:'Dr. Marcelo Santos',   espec:'Cardiologia',    crm:'CRM-MG 34221', avaliacao:4.8, consultas:980,  foto:'👨‍⚕️', valor:0,  disponivel:true,  bio:'Cardiologista com expertise em prevenção cardiovascular, hipertensão e insuficiência cardíaca.'},
+  {id:'M06',nome:'Dra. Fernanda Cruz',   espec:'Pediatria',      crm:'CRM-BA 21089', avaliacao:5.0, consultas:1450, foto:'👩‍⚕️', valor:0,  disponivel:true,  bio:'Pediatra dedicada ao cuidado integral de crianças e adolescentes, com foco em desenvolvimento saudável.'},
+  {id:'M07',nome:'Dr. Eduardo Pires',    espec:'Dermatologia',   crm:'CRM-PR 67432', avaliacao:4.7, consultas:730,  foto:'👨‍⚕️', valor:0,  disponivel:false, bio:'Dermatologista especializado em dermatologia clínica, cosmética e cirúrgica.'},
+  {id:'M08',nome:'Dra. Camila Nogueira', espec:'Oftalmologia',   crm:'CRM-CE 44301', avaliacao:4.6, consultas:490,  foto:'👩‍⚕️', valor:0,  disponivel:true,  bio:'Oftalmologista com foco em refrações, cirurgias a laser e doenças da retina.'},
+  {id:'M09',nome:'Dr. Thiago Ferreira',  espec:'Clínico Geral',  crm:'CRM-RS 72156', avaliacao:4.8, consultas:1680, foto:'👨‍⚕️', valor:0,  disponivel:true,  bio:'Clínico geral com ampla experiência em medicina de família e atenção preventiva.'}
+];
+
+const saudeConsultas = [
+  {id:'C001', medicoId:'M03', medico:'Dr. Bruno Carvalho',   espec:'Clínico Geral',  data:'2026-06-03', hora:'09:00', status:'agendada',   motivo:'Check-up anual',              diagnostico:'Saudável. Exames de rotina solicitados.', cid:'Z00.0'},
+  {id:'C002', medicoId:'M01', medico:'Dr. Renato Mendes',    espec:'Endocrinologia', data:'2026-05-28', hora:'14:30', status:'realizada',   motivo:'Acompanhamento tireoide',     diagnostico:'Hipotireoidismo compensado.', cid:'E03.9'},
+  {id:'C003', medicoId:'M02', medico:'Dra. Aline Rocha',     espec:'Nutricionista',  data:'2026-05-20', hora:'10:00', status:'realizada',   motivo:'Plano alimentar',             diagnostico:'Obesidade grau I - plano nutricional iniciado.', cid:'E66'},
+  {id:'C004', medicoId:'M04', medico:'Dra. Patrícia Lima',   espec:'Psicólogo',      data:'2026-05-10', hora:'16:00', status:'realizada',   motivo:'Ansiedade e estresse',        diagnostico:'Transtorno ansioso - TCC iniciada.', cid:'F41.1'},
+  {id:'C005', medicoId:'M05', medico:'Dr. Marcelo Santos',   espec:'Cardiologia',    data:'2026-04-15', hora:'11:00', status:'realizada',   motivo:'Dor no peito ocasional',      diagnostico:'Hipertensão arterial leve. Medicação iniciada.', cid:'I10'},
+  {id:'C006', medicoId:'M01', medico:'Dr. Renato Mendes',    espec:'Endocrinologia', data:'2026-06-10', hora:'15:00', status:'agendada',   motivo:'Retorno Mounjaro',            diagnostico:'', cid:''}
+];
+
+const saudeExames = [
+  {id:'E001', nome:'Hemograma Completo',     data:'2026-05-28', solicitante:'Dr. Bruno Carvalho', status:'Disponível',  resultado:'Normal. Sem alterações.'},
+  {id:'E002', nome:'TSH / T4 Livre',         data:'2026-05-28', solicitante:'Dr. Renato Mendes',  status:'Disponível',  resultado:'TSH: 2.8 mIU/L (normal). T4L: 1.1 ng/dL.'},
+  {id:'E003', nome:'Glicemia em Jejum',      data:'2026-05-28', solicitante:'Dr. Bruno Carvalho', status:'Disponível',  resultado:'98 mg/dL — Normal.'},
+  {id:'E004', nome:'Perfil Lipídico Completo',data:'2026-04-15', solicitante:'Dr. Marcelo Santos', status:'Disponível', resultado:'CT: 195 | HDL: 55 | LDL: 120 | TG: 100 — Limítrofe.'},
+  {id:'E005', nome:'ECG de Repouso',         data:'2026-04-15', solicitante:'Dr. Marcelo Santos', status:'Disponível',  resultado:'Ritmo sinusal normal. Sem alterações.'},
+  {id:'E006', nome:'Urina tipo 1',           data:'2026-06-01', solicitante:'Dr. Bruno Carvalho', status:'Aguardando', resultado:''},
+  {id:'E007', nome:'HbA1c (Hemoglobina Glicada)', data:'2026-06-03', solicitante:'Dr. Renato Mendes', status:'Solicitado', resultado:''}
+];
+
+const saudeMedicamentos = [
+  {nome:'Levotiroxina 50mcg',   dose:'1 comp. em jejum',   prescrito:'Dr. Renato Mendes',   validade:'2026-12-28', ativo:true},
+  {nome:'Losartana 50mg',       dose:'1 comp. após jantar', prescrito:'Dr. Marcelo Santos', validade:'2026-10-15', ativo:true},
+  {nome:'Ômega-3 1g',           dose:'2 cápsulas/dia',      prescrito:'Dra. Aline Rocha',   validade:'2026-08-20', ativo:true}
+];
+
+const saudeReceitas = [
+  {id:'R001', medicamento:'Levotiroxina 50mcg',  medico:'Dr. Renato Mendes',  data:'2026-05-28', validade:'2026-11-28', arquivo:'Receita_Levotiroxina.pdf'},
+  {id:'R002', medicamento:'Losartana 50mg',       medico:'Dr. Marcelo Santos', data:'2026-04-15', validade:'2026-10-15', arquivo:'Receita_Losartana.pdf'},
+  {id:'R003', medicamento:'Mounjaro 2.5mg',       medico:'Dr. Renato Mendes',  data:'2026-06-02', validade:'2026-09-02', arquivo:'Receita_Mounjaro_ICP.pdf'}
+];
+
+const saudePgtos = [
+  {data:'2026-06-01', valor:'R$ 49,90', metodo:'Débito Saldo KaiNowPay', status:'Pago'},
+  {data:'2026-05-01', valor:'R$ 49,90', metodo:'Débito Saldo KaiNowPay', status:'Pago'},
+  {data:'2026-04-01', valor:'R$ 49,90', metodo:'Débito Saldo KaiNowPay', status:'Pago'},
+  {data:'2026-03-01', valor:'R$ 49,90', metodo:'Débito Saldo KaiNowPay', status:'Pago'}
+];
+
+const saudeProntuarioDados = [
+  {label:'Nome',         val:'João KaiNowPay'},
+  {label:'Data Nasc.',   val:'15/03/1990'},
+  {label:'Tipo Sanguíneo', val:'O+'},
+  {label:'Peso Atual',   val:'84.2 kg'},
+  {label:'Altura',       val:'1,75 m'},
+  {label:'IMC',          val:'27.5 (Sobrepeso)'},
+  {label:'Pressão',      val:'130/85 mmHg'},
+  {label:'Glicemia',     val:'98 mg/dL'},
+  {label:'Alergias',     val:'Penicilina'},
+  {label:'Comorbidades', val:'HAS, Hipotireoidismo'}
+];
+
+const saudeIaRespostas = {
+  'dor de cabeça': 'A dor de cabeça pode ter várias causas. As mais comuns incluem:\n\n• **Tensional** — estresse, má postura ou cansaço\n• **Enxaqueca** — dor pulsátil, frequentemente unilateral\n• **Desidratação** — beba mais água\n• **Pressão alta** — verifique sua PA\n\n⚠️ Se persistir por mais de 3 dias, houver rigidez na nuca ou febre, consulte um médico imediatamente. Quer agendar uma **consulta com Clínico Geral**?',
+  'insônia': 'A insônia pode estar relacionada a:\n\n• **Ansiedade ou estresse** — principal causa\n• **Uso de telas antes de dormir** — luz azul afeta o sono\n• **Cafeína após 14h** — evite café e energéticos\n• **Ambiente inadequado** — temperatura ou luminosidade\n\n💡 Dicas: mantenha horário fixo de sono, evite telas 1h antes de dormir e pratique relaxamento. Para casos persistentes, nossa **psicóloga Dra. Patrícia Lima** pode ajudar.',
+  'pressão alta': 'Hipertensão arterial requer atenção especial:\n\n• **Reduza sal** — máximo 5g/dia\n• **Exercícios regulares** — 30 min/dia\n• **Controle o peso** — IMC saudável\n• **Reduza álcool e tabaco**\n• **Monitore regularmente** — PA ideal: abaixo de 120/80 mmHg\n\n⚠️ Pressão ≥140/90 precisa de avaliação médica. Nosso cardiologista **Dr. Marcelo Santos** está disponível para consulta.',
+  'diabetes': 'Sintomas que podem indicar diabetes:\n\n• Sede excessiva e urina frequente\n• Visão turva\n• Fadiga constante\n• Cicatrização lenta\n• Formigamento nas mãos/pés\n\n🔬 **Exames diagnósticos:** Glicemia em jejum >126 mg/dL ou HbA1c >6.5%\n\n⚠️ Se apresentar estes sintomas, realize exames imediatamente. Posso solicitar **Glicemia e HbA1c** para você ou agendar com o **Dr. Renato Mendes** (Endocrinologista).',
+  'alimentação': 'Para uma alimentação saudável e perda de peso:\n\n• **Pratos coloridos** — 50% vegetais, 25% proteína, 25% carboidrato\n• **Proteínas em todas as refeições** — preservam massa muscular\n• **Evite ultraprocessados** — açúcar, corantes, conservantes\n• **Beba 2L de água/dia**\n• **Coma de 3 em 3 horas** — evita compulsão\n\n🥗 Nossa nutricionista **Dra. Aline Rocha** monta um plano personalizado para você. Quer agendar?',
+  'exames anuais': 'Exames preventivos anuais recomendados:\n\n**Geral:**\n• Hemograma completo\n• Glicemia em jejum + HbA1c\n• Perfil lipídico (colesterol)\n• Urina tipo 1\n• TSH (tireoide)\n\n**Por faixa etária:**\n• >35 anos: ECG, pressão arterial\n• >40 anos: PSA (homens), mamografia/preventivo (mulheres)\n\n📋 Posso solicitar todos estes exames via telemedicina. Quer que eu crie a solicitação agora?',
+  'default': 'Entendo sua preocupação. Para fornecer uma orientação mais precisa, poderia me descrever:\n\n1. Há quanto tempo você sente isso?\n2. A intensidade é leve, moderada ou forte?\n3. Tem outros sintomas associados?\n\n💡 Lembre-se: sou uma IA de apoio informativo. Para diagnóstico e tratamento, nossa equipe médica está disponível 24h. Quer **agendar uma consulta agora**?'
+};
+
+let _saudeHorarioSel = '';
+
+// ── HELPERS ────────────────────────────────────────────────────────
+function saudeFmtDate(d){if(!d)return'–';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
+function saudeStatusBadge(s){
+  const map={agendada:{bg:'#3b82f622',c:'#3b82f6',t:'Agendada'},realizada:{bg:'#22c55e22',c:'#22c55e',t:'Realizada'},cancelada:{bg:'#ef444422',c:'#ef4444',t:'Cancelada'}};
+  const v=map[s]||{bg:'#94a3b822',c:'#94a3b8',t:s};
+  return`<span style="background:${v.bg};color:${v.c};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${v.t}</span>`;
+}
+function saudeExameStatusBadge(s){
+  const map={'Disponível':{bg:'#22c55e22',c:'#22c55e'},'Aguardando':{bg:'#f59e0b22',c:'#f59e0b'},'Solicitado':{bg:'#3b82f622',c:'#3b82f6'}};
+  const v=map[s]||{bg:'#94a3b822',c:'#94a3b8'};
+  return`<span style="background:${v.bg};color:${v.c};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${s}</span>`;
+}
+function saudeStars(r){return '⭐'.repeat(Math.round(r));}
+
+// ── MODAL MANAGEMENT ──────────────────────────────────────────────
+function saudeOpenModal(id){const m=document.getElementById(id);if(m){m.style.display='flex';document.body.style.overflow='hidden';}}
+function saudeCloseModal(id){const m=document.getElementById(id);if(m){m.style.display='none';document.body.style.overflow='';}}
+
+// ── TAB SWITCHING ──────────────────────────────────────────────────
+function saudeAba(abaId){
+  document.querySelectorAll('.saude-tab-content').forEach(el=>{el.style.display='none';});
+  document.querySelectorAll('.saude-tab').forEach(el=>{
+    el.style.color='var(--muted)';el.style.borderBottom='2.5px solid transparent';el.style.fontWeight='600';
+  });
+  const content=document.getElementById(abaId);
+  if(content)content.style.display='block';
+  const tabId='saude-tab-'+abaId.replace('saude-aba-','');
+  const tab=document.getElementById(tabId);
+  if(tab){tab.style.color='var(--p1)';tab.style.borderBottom='2.5px solid var(--p1)';tab.style.fontWeight='700';}
+  if(abaId==='saude-aba-dashboard')    saudeBuildDashboard();
+  if(abaId==='saude-aba-consulta')     saudeBuildConsulta();
+  if(abaId==='saude-aba-especialistas')saudeFiltrarDoctors();
+  if(abaId==='saude-aba-prontuario')   saudeBuildProntuario();
+  if(abaId==='saude-aba-exames')       saudeBuildExames();
+  if(abaId==='saude-aba-plano')        saudeBuildPlano();
+}
+
+function saudeAbaEspec(tipo){
+  saudeAba('saude-aba-consulta');
+  const sel=document.getElementById('saude-ag-espec');
+  if(sel){sel.value=tipo;saudeLoadDoctors();}
+}
+
+// ── DASHBOARD ──────────────────────────────────────────────────────
+function saudeBuildDashboard(){
+  // KPIs
+  const total=saudeConsultas.length;
+  const proximas=saudeConsultas.filter(c=>c.status==='agendada');
+  document.getElementById('saude-kpi-consultas').textContent=total;
+  document.getElementById('saude-kpi-proxima').textContent=proximas.length?saudeFmtDate(proximas[0].data):'–';
+  document.getElementById('saude-kpi-exames').textContent=saudeExames.filter(e=>e.status==='Disponível').length;
+  document.getElementById('saude-kpi-receitas').textContent=saudeReceitas.length;
+
+  // Próximas consultas
+  const el=document.getElementById('saude-proximas-list');
+  if(el){
+    const prox=saudeConsultas.filter(c=>c.status==='agendada').slice(0,3);
+    el.innerHTML=prox.length?prox.map(c=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+        <div style="width:42px;height:42px;background:var(--p1)22;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🩺</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">${c.medico}</div>
+          <div style="font-size:11px;color:var(--muted)">${c.espec}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;font-weight:700;color:var(--p1)">${saudeFmtDate(c.data)}</div>
+          <div style="font-size:11px;color:var(--muted)">${c.hora}</div>
+        </div>
+      </div>`).join(''):`<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Nenhuma consulta agendada<br><button onclick="saudeAba('saude-aba-consulta')" style="margin-top:8px;background:var(--p1);color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer">Agendar agora</button></div>`;
+  }
+
+  // Histórico recente
+  const histEl=document.getElementById('saude-historico-list');
+  if(histEl){
+    const recentes=saudeConsultas.filter(c=>c.status==='realizada').slice(0,4);
+    histEl.innerHTML=recentes.map(c=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:20px">${saudeMedicos.find(m=>m.id===c.medicoId)?.foto||'👨‍⚕️'}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">${c.medico} <span style="font-size:11px;color:var(--muted)">· ${c.espec}</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${c.motivo}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:11px;color:var(--muted)">${saudeFmtDate(c.data)}</span>
+          ${saudeStatusBadge(c.status)}
+        </div>
+      </div>`).join('');
+  }
+}
+
+// ── TELECONSULTA ──────────────────────────────────────────────────
+function saudeBuildConsulta(){
+  // Set default date to tomorrow
+  const inp=document.getElementById('saude-ag-data');
+  if(inp&&!inp.value){
+    const tom=new Date();tom.setDate(tom.getDate()+1);
+    inp.value=tom.toISOString().split('T')[0];
+  }
+  saudeGerarHorarios();
+  saudeBuildAgendaList();
+}
+
+function saudeLoadDoctors(){
+  const espec=document.getElementById('saude-ag-espec')?.value||'';
+  const sel=document.getElementById('saude-ag-medico');
+  if(!sel)return;
+  const mapEspec={clinico:'Clínico Geral',endocrino:'Endocrinologia',nutri:'Nutricionista',psico:'Psicólogo',cardio:'Cardiologia',pediatra:'Pediatria',dermato:'Dermatologia',oftalmo:'Oftalmologia'};
+  const especialidade=mapEspec[espec]||espec;
+  const drs=saudeMedicos.filter(m=>m.espec===especialidade&&m.disponivel);
+  sel.innerHTML=drs.length
+    ?drs.map(d=>`<option value="${d.id}">${d.foto} ${d.nome} — ${d.avaliacao}⭐</option>`).join('')
+    :`<option value="">Nenhum médico disponível para esta especialidade</option>`;
+  saudeGerarHorarios();
+}
+
+function saudeGerarHorarios(){
+  const grid=document.getElementById('saude-horarios-grid');
+  if(!grid)return;
+  const slots=['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
+  const taken=['09:00','14:00'];
+  grid.innerHTML=slots.map(h=>{
+    const busy=taken.includes(h);
+    const sel=h===_saudeHorarioSel;
+    return`<button onclick="${busy?'':`_saudeHorarioSel='${h}';saudeGerarHorarios()`}" style="padding:8px 4px;border-radius:8px;font-size:12px;font-weight:700;cursor:${busy?'not-allowed':'pointer'};background:${busy?'var(--border)':sel?'var(--p1)':'var(--bg)'};color:${busy?'var(--muted)':sel?'#fff':'var(--txt)'};border:1.5px solid ${sel?'var(--p1)':'var(--border)'};opacity:${busy?.5:1}">${h}</button>`;
+  }).join('');
+}
+
+function saudeAgendarConsulta(){
+  const espec=(document.getElementById('saude-ag-espec')||{}).value||'';
+  const medId=(document.getElementById('saude-ag-medico')||{}).value||'';
+  const data=(document.getElementById('saude-ag-data')||{}).value||'';
+  const motivo=(document.getElementById('saude-ag-motivo')||{}).value||'';
+  if(!espec||!medId||!data||!_saudeHorarioSel){
+    showToast('Preencha todos os campos e selecione um horário','warning');return;
+  }
+  const medico=saudeMedicos.find(m=>m.id===medId);
+  const newId='C'+String(saudeConsultas.length+1).padStart(3,'0');
+  saudeConsultas.unshift({
+    id:newId,medicoId:medId,medico:medico.nome,espec:medico.espec,
+    data,hora:_saudeHorarioSel,status:'agendada',motivo:motivo||'Consulta agendada',
+    diagnostico:'',cid:''
+  });
+  _saudeHorarioSel='';
+  if(document.getElementById('saude-ag-motivo'))document.getElementById('saude-ag-motivo').value='';
+  showToast(`✅ Consulta agendada com ${medico.nome} para ${saudeFmtDate(data)} às ${saudeConsultas[0].hora}!`,'success');
+  saudeBuildAgendaList();
+  saudeBuildDashboard();
+}
+
+function saudeBuildAgendaList(){
+  const el=document.getElementById('saude-agenda-list');
+  if(!el)return;
+  const ag=saudeConsultas.filter(c=>c.status==='agendada');
+  el.innerHTML=ag.length?ag.map(c=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+      <div style="width:38px;height:38px;background:var(--p1)22;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px">🩺</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">${c.medico}</div>
+        <div style="font-size:11px;color:var(--muted)">${c.espec} · ${c.motivo}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;font-weight:700;color:var(--p1)">${saudeFmtDate(c.data)} ${c.hora}</div>
+        <button onclick="saudeCancelarConsulta('${c.id}')" style="font-size:10px;color:#ef4444;background:none;border:none;cursor:pointer;margin-top:2px">Cancelar</button>
+      </div>
+    </div>`).join(''):`<div style="text-align:center;padding:16px;color:var(--muted);font-size:13px">Nenhum agendamento confirmado</div>`;
+}
+
+function saudeCancelarConsulta(id){
+  const idx=saudeConsultas.findIndex(c=>c.id===id);
+  if(idx!==-1){saudeConsultas[idx].status='cancelada';showToast('Consulta cancelada','info');saudeBuildAgendaList();saudeBuildDashboard();}
+}
+
+// ── ESPECIALISTAS ──────────────────────────────────────────────────
+function saudeFiltrarDoctors(){
+  const busca=(document.getElementById('saude-busca-dr')||{}).value?.toLowerCase()||'';
+  const filtEspec=(document.getElementById('saude-filtro-espec')||{}).value||'';
+  let list=saudeMedicos;
+  if(busca)list=list.filter(m=>m.nome.toLowerCase().includes(busca)||m.espec.toLowerCase().includes(busca));
+  if(filtEspec)list=list.filter(m=>m.espec===filtEspec);
+  saudeRenderDoctors(list);
+}
+
+function saudeRenderDoctors(list){
+  const grid=document.getElementById('saude-doctors-grid');
+  if(!grid)return;
+  grid.innerHTML=list.map(m=>`
+    <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.12)'" onmouseout="this.style.boxShadow='none'">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0f4c81,#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">${m.foto}</div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--txt)">${m.nome}</div>
+          <div style="font-size:12px;color:var(--muted)">${m.espec}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${m.crm}</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 14px">${m.bio}</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:12px;color:var(--txt);font-weight:700">${m.avaliacao} ⭐</span>
+          <span style="font-size:11px;color:var(--muted)">(${m.consultas.toLocaleString()} consultas)</span>
+        </div>
+        <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:${m.disponivel?'#22c55e22':'#ef444422'};color:${m.disponivel?'#22c55e':'#ef4444'};font-weight:700">${m.disponivel?'🟢 Disponível':'🔴 Indisponível'}</span>
+      </div>
+      <button onclick="saudeAgendarComEspec('${m.id}')" ${!m.disponivel?'disabled':''} style="width:100%;background:${m.disponivel?'var(--p1)':'var(--border)'};color:${m.disponivel?'#fff':'var(--muted)'};border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:${m.disponivel?'pointer':'not-allowed'}">
+        ${m.disponivel?'🩺 Agendar Consulta':'Indisponível no momento'}
+      </button>
+    </div>`).join('');
+}
+
+function saudeAgendarComEspec(medicoId){
+  const m=saudeMedicos.find(x=>x.id===medicoId);
+  if(!m)return;
+  const el=document.getElementById('saude-modal-espec-body');
+  const titleEl=document.getElementById('saude-modal-espec-title');
+  if(titleEl)titleEl.textContent=`Agendar com ${m.nome}`;
+  if(el){
+    el.innerHTML=`
+      <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg);border-radius:12px;margin-bottom:18px">
+        <span style="font-size:36px">${m.foto}</span>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt)">${m.nome}</div>
+          <div style="font-size:12px;color:var(--muted)">${m.espec} · ${m.crm}</div>
+          <div style="font-size:12px;color:var(--p1);font-weight:700;margin-top:2px">${m.avaliacao} ⭐ · ${m.consultas.toLocaleString()} consultas</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">DATA</label>
+          <input type="date" id="espec-modal-data" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;box-sizing:border-box">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px">MOTIVO</label>
+          <textarea id="espec-modal-motivo" rows="2" placeholder="Motivo da consulta..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;background:var(--bg);color:var(--txt);outline:none;resize:vertical;box-sizing:border-box"></textarea>
+        </div>
+        <button onclick="saudeConfirmarEspec('${m.id}')" style="background:var(--p1);color:#fff;border:none;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">✅ Confirmar Agendamento</button>
+      </div>`;
+    const dateInp=document.getElementById('espec-modal-data');
+    if(dateInp){const d=new Date();d.setDate(d.getDate()+1);dateInp.value=d.toISOString().split('T')[0];}
+  }
+  saudeOpenModal('saude-modal-espec');
+}
+
+function saudeConfirmarEspec(medicoId){
+  const m=saudeMedicos.find(x=>x.id===medicoId);
+  const data=(document.getElementById('espec-modal-data')||{}).value||'';
+  const motivo=(document.getElementById('espec-modal-motivo')||{}).value||'Consulta agendada';
+  if(!data){showToast('Selecione uma data','warning');return;}
+  const newId='C'+String(saudeConsultas.length+1).padStart(3,'0');
+  saudeConsultas.unshift({id:newId,medicoId,medico:m.nome,espec:m.espec,data,hora:'10:00',status:'agendada',motivo,diagnostico:'',cid:''});
+  saudeCloseModal('saude-modal-espec');
+  showToast(`✅ Consulta agendada com ${m.nome} para ${saudeFmtDate(data)}!`,'success');
+  saudeBuildDashboard();
+}
+
+// ── PRONTUÁRIO ─────────────────────────────────────────────────────
+function saudeBuildProntuario(){
+  const dadosEl=document.getElementById('saude-prontuario-dados');
+  if(dadosEl){
+    dadosEl.innerHTML=saudeProntuarioDados.map(d=>`
+      <div style="background:var(--bg);border-radius:10px;padding:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px">${d.label}</div>
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">${d.val}</div>
+      </div>`).join('');
+  }
+  const medEl=document.getElementById('saude-medicamentos-list');
+  if(medEl){
+    medEl.innerHTML=saudeMedicamentos.map(m=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:20px">💊</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">${m.nome}</div>
+          <div style="font-size:11px;color:var(--muted)">${m.dose} · Prescrito por ${m.prescrito}</div>
+          <div style="font-size:10px;color:var(--muted)">Válido até: ${m.validade.split('-').reverse().join('/')}</div>
+        </div>
+        <span style="background:#22c55e22;color:#22c55e;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">Ativo</span>
+      </div>`).join('');
+  }
+  const tbodyEl=document.getElementById('saude-historico-tbody');
+  if(tbodyEl){
+    tbodyEl.innerHTML=saudeConsultas.map(c=>`
+      <tr style="border-bottom:1px solid var(--border)" onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background=''">
+        <td style="padding:10px 12px;font-size:12px;color:var(--muted)">${saudeFmtDate(c.data)}</td>
+        <td style="padding:10px 12px;font-size:13px;color:var(--txt)">${c.espec}</td>
+        <td style="padding:10px 12px;font-size:13px;font-weight:600;color:var(--txt)">${c.medico}</td>
+        <td style="padding:10px 12px;font-size:12px;color:var(--muted)">${c.diagnostico||'–'} ${c.cid?`<span style="color:var(--p1);font-size:11px">(${c.cid})</span>`:''}</td>
+        <td style="padding:10px 12px">${saudeStatusBadge(c.status)}</td>
+      </tr>`).join('');
+  }
+  // Receitas
+  const receitasEl=document.getElementById('saude-receitas-list');
+  if(receitasEl){
+    receitasEl.innerHTML=saudeReceitas.map(r=>`
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)">
+        <div style="width:42px;height:42px;background:var(--p1)22;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px">💊</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">${r.medicamento}</div>
+          <div style="font-size:11px;color:var(--muted)">Por: ${r.medico} · ${saudeFmtDate(r.data)}</div>
+          <div style="font-size:10px;color:var(--muted)">Válida até: ${saudeFmtDate(r.validade)}</div>
+        </div>
+        <button onclick="showToast('Baixando: ${r.arquivo}','success')" style="background:var(--p1);color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">📄 Baixar</button>
+      </div>`).join('');
+  }
+}
+
+// ── EXAMES ─────────────────────────────────────────────────────────
+function saudeBuildExames(){
+  saudeFiltrarExames();
+}
+
+function saudeFiltrarExames(){
+  const busca=(document.getElementById('saude-busca-exame')||{}).value?.toLowerCase()||'';
+  const status=(document.getElementById('saude-filtro-exame-status')||{}).value||'';
+  let list=saudeExames;
+  if(busca)list=list.filter(e=>e.nome.toLowerCase().includes(busca));
+  if(status)list=list.filter(e=>e.status===status);
+  const grid=document.getElementById('saude-exames-grid');
+  if(!grid)return;
+  grid.innerHTML=list.map(e=>`
+    <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--txt)">${e.nome}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">Solicitado por: ${e.solicitante}</div>
+          <div style="font-size:11px;color:var(--muted)">Data: ${saudeFmtDate(e.data)}</div>
+        </div>
+        ${saudeExameStatusBadge(e.status)}
+      </div>
+      ${e.resultado?`<div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px">RESULTADO</div>
+        <div style="font-size:13px;color:var(--txt)">${e.resultado}</div>
+      </div>`:'<div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12px;color:var(--muted);text-align:center">Resultado pendente</div>'}
+      ${e.status==='Disponível'?`<button onclick="showToast('Baixando laudo: ${e.nome}','success')" style="width:100%;background:var(--p1);color:#fff;border:none;padding:9px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">📄 Baixar Laudo</button>`:''}
+    </div>`).join('');
+}
+
+function saudeSolicitarExame(){
+  const tipo=(document.getElementById('saude-exame-tipo')||{}).value||'';
+  const obs=(document.getElementById('saude-exame-obs')||{}).value||'';
+  const today=new Date().toISOString().split('T')[0];
+  saudeExames.unshift({id:'E'+String(saudeExames.length+1).padStart(3,'0'),nome:tipo,data:today,solicitante:'Dr. Bruno Carvalho',status:'Solicitado',resultado:''});
+  saudeCloseModal('saude-modal-solicit-exame');
+  showToast(`🔬 Exame "${tipo}" solicitado com sucesso!`,'success');
+  saudeBuildExames();
+}
+
+// ── IA SAÚDE ──────────────────────────────────────────────────────
+function saudeIaSugestao(texto){
+  const inp=document.getElementById('saude-ia-input');
+  if(inp){inp.value=texto;saudeIaEnviar();}
+}
+
+function saudeIaEnviar(){
+  const inp=document.getElementById('saude-ia-input');
+  const chat=document.getElementById('saude-ia-chat');
+  if(!inp||!chat||!inp.value.trim())return;
+  const msg=inp.value.trim();
+  inp.value='';
+  // User message
+  chat.innerHTML+=`<div style="align-self:flex-end;background:var(--p1);color:#fff;border-radius:14px 14px 4px 14px;padding:12px 16px;max-width:80%"><p style="font-size:13px;margin:0">${msg}</p></div>`;
+  chat.scrollTop=chat.scrollHeight;
+  // IA typing indicator
+  const typingId='typing-'+Date.now();
+  chat.innerHTML+=`<div id="${typingId}" style="background:var(--bg);border:1px solid var(--border);border-radius:14px 14px 14px 4px;padding:12px 16px;max-width:60%"><p style="font-size:13px;color:var(--muted);margin:0">⏳ KaiDoc está digitando...</p></div>`;
+  chat.scrollTop=chat.scrollHeight;
+  setTimeout(()=>{
+    const typingEl=document.getElementById(typingId);
+    if(typingEl)typingEl.remove();
+    // Match response
+    const lc=msg.toLowerCase();
+    let resp=saudeIaRespostas.default;
+    if(lc.includes('cabeça')||lc.includes('enxaqueca'))resp=saudeIaRespostas['dor de cabeça'];
+    else if(lc.includes('insônia')||lc.includes('sono')||lc.includes('dormir'))resp=saudeIaRespostas['insônia'];
+    else if(lc.includes('pressão')||lc.includes('hipertensão'))resp=saudeIaRespostas['pressão alta'];
+    else if(lc.includes('diabetes')||lc.includes('glicemia')||lc.includes('açúcar'))resp=saudeIaRespostas['diabetes'];
+    else if(lc.includes('alimentação')||lc.includes('dieta')||lc.includes('emagrecer')||lc.includes('peso'))resp=saudeIaRespostas['alimentação'];
+    else if(lc.includes('exame')||lc.includes('checkup'))resp=saudeIaRespostas['exames anuais'];
+    // Format bold
+    const formatted=resp.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+    chat.innerHTML+=`<div style="background:linear-gradient(135deg,#0f4c8122,#0ea5e911);border:1px solid var(--p1)33;border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:88%"><p style="font-size:13px;color:var(--txt);margin:0;line-height:1.7">${formatted}</p></div>`;
+    chat.scrollTop=chat.scrollHeight;
+  },1200);
+}
+
+// ── PLANO ─────────────────────────────────────────────────────────
+function saudeBuildPlano(){
+  const pgEl=document.getElementById('saude-pgtos-list');
+  if(pgEl){
+    pgEl.innerHTML=saudePgtos.map(p=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">${p.metodo}</div>
+          <div style="font-size:11px;color:var(--muted)">${p.data}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:14px;font-weight:800;color:var(--txt)">${p.valor}</div>
+          <span style="background:#22c55e22;color:#22c55e;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">${p.status}</span>
+        </div>
+      </div>`).join('');
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+function saudeInit(){
+  document.querySelectorAll('.saude-tab-content').forEach((el,i)=>{el.style.display=i===0?'block':'none';});
+  saudeBuildDashboard();
+  saudeFiltrarDoctors();
+  saudeBuildProntuario();
+}
+
+
+
 // ── MOBILE NAVIGATION ──
 function openMobDrawer(){
   const d=document.getElementById('mob-drawer');
@@ -6041,12 +6961,15 @@ function exportarComissoes(){
   showToast('⬇️ Planilha de comissões exportada com sucesso!','success');
 }
 
-// Inicializar CRM quando página correspondente for exibida
+// Inicializar módulos quando página for exibida
 const _origShowPage=showPage;
 function showPage(id){
   _origShowPage(id);
   if(id==='page-correspondente'){
     setTimeout(()=>{ crmInit(); },80);
+  }
+  if(id==='page-saude'){
+    setTimeout(()=>{ saudeInit(); },80);
   }
 }
 </script>
