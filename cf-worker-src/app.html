@@ -879,7 +879,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
         <!-- Register -->
         <div class="lgn-register">
-          Ainda não possui conta? <a onclick="showToast('📋 Cadastro disponível em breve!','info')">Abrir conta digital</a>
+          Ainda não possui conta? <a onclick="openAbertura()">Abrir conta digital</a>
         </div>
 
         <!-- Trust badges -->
@@ -1151,7 +1151,7 @@ input,select,textarea{font-family:inherit;outline:none}
               <div style="font-size:12px;color:var(--muted);margin-top:5px">75,2% disponível · Emitido via Celcoin</div>
             </div>
             <div class="card-acts">
-              <div class="ca" onclick="showToast('📄 Fatura aberta','info')"><div class="cai">📄</div><div class="cal">Fatura</div></div>
+              <div class="ca" onclick="openFatura('cc')"><div class="cai">📄</div><div class="cal">Fatura</div></div>
               <div class="ca" onclick="showToast('🔒 Cartão bloqueado!','warn')"><div class="cai">🔒</div><div class="cal">Bloquear</div></div>
               <div class="ca" onclick="showToast('💰 Limite solicitado!','success')"><div class="cai">💰</div><div class="cal">Limite</div></div>
               <div class="ca" onclick="showToast('📱 Novo virtual criado!','success')"><div class="cai">📱</div><div class="cal">Virtual</div></div>
@@ -1172,7 +1172,7 @@ input,select,textarea{font-family:inherit;outline:none}
               <div class="limit-bar"><div class="lim-fill lf-warn" style="width:38.5%"></div></div>
               <div style="font-size:12px;color:var(--muted);margin-top:4px">Limite R$10.000 · 38,5% utilizado · Emitido via Celcoin</div>
             </div>
-            <button class="btn-sm btn-p" style="width:100%;justify-content:center;padding:12px" onclick="showToast('💰 Pagamento agendado!','success')">Pagar fatura →</button>
+            <button class="btn-sm btn-p" style="width:100%;justify-content:center;padding:12px" onclick="openFatura('bk')">Ver fatura →</button>
           </div>
         </div>
       </div>
@@ -1188,9 +1188,9 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
         <div class="sec-title mb20">Produtos de crédito · Apache Fineract</div>
         <div class="credit-products">
-          <div class="cp" onclick="showToast('💰 Simulação iniciada!','info')"><div class="cpi">💰</div><div class="cpn">Empréstimo Pessoal</div><div class="cpr">A partir de 1,49% a.m.</div><span class="badge bg-ok">✅ Aprovado</span></div>
-          <div class="cp" onclick="showToast('🏠 Simulação habitacional!','info')"><div class="cpi">🏠</div><div class="cpn">Crédito Habitacional</div><div class="cpr">A partir de 0,79% a.m. + IPCA</div><span class="badge bg-inf">🔵 Consultar</span></div>
-          <div class="cp" onclick="showToast('🔄 Crédito rotativo','info')"><div class="cpi">🔄</div><div class="cpn">Crédito Rotativo</div><div class="cpr">A partir de 1,99% a.m.</div><span class="badge bg-warn">⚡ Rápido</span></div>
+          <div class="cp" onclick="openCred('pessoal')"><div class="cpi">💰</div><div class="cpn">Empréstimo Pessoal</div><div class="cpr">A partir de 1,49% a.m.</div><span class="badge bg-ok">✅ Aprovado</span></div>
+          <div class="cp" onclick="openCred('habitacional')"><div class="cpi">🏠</div><div class="cpn">Crédito Habitacional</div><div class="cpr">A partir de 0,79% a.m. + IPCA</div><span class="badge bg-inf">🔵 Consultar</span></div>
+          <div class="cp" onclick="openCred('rotativo')"><div class="cpi">🔄</div><div class="cpn">Crédito Rotativo</div><div class="cpr">A partir de 1,99% a.m.</div><span class="badge bg-warn">⚡ Rápido</span></div>
         </div>
         <div class="sec-title mb16" style="margin-top:6px">Empréstimos ativos · Fineract API</div>
         <div class="card" style="padding:0;overflow:hidden"><table class="loan-tbl" id="loanTbl"></table></div>
@@ -1688,13 +1688,13 @@ input,select,textarea{font-family:inherit;outline:none}
           <div>
             <div class="prof-sec">
               <h3>🧑‍💼 Minha conta</h3>
-              <div class="prof-item" onclick="showToast('📝 Dados pessoais','info')"><div class="pi-ico ib-blue">📝</div><div class="pi-txt"><div class="pi-title">Dados pessoais</div><div class="pi-sub">CPF, endereço, contato</div></div><div class="pi-arr">›</div></div>
+              <div class="prof-item" onclick="openDados()"><div class="pi-ico ib-blue">📝</div><div class="pi-txt"><div class="pi-title">Dados pessoais</div><div class="pi-sub">CPF, endereço, contato</div></div><div class="pi-arr">›</div></div>
               <div class="prof-item" onclick="goPage('pix',null);pixTab('keys')"><div class="pi-ico ib-green">⚡</div><div class="pi-txt"><div class="pi-title">Chaves PIX</div><div class="pi-sub">3 chaves · Fitbank/Celcoin</div></div><div class="pi-arr">›</div></div>
               <div class="prof-item" onclick="goPage('documentos',null)"><div class="pi-ico ib-teal">📝</div><div class="pi-txt"><div class="pi-title">Meus documentos</div><div class="pi-sub">Contratos · Documenso</div></div><div class="pi-arr">›</div></div>
             </div>
             <div class="prof-sec">
               <h3>🔐 Segurança</h3>
-              <div class="prof-item"><div class="pi-ico ib-green">🔑</div><div class="pi-txt"><div class="pi-title">Alterar senha</div><div class="pi-sub">Última troca há 30 dias</div></div><div class="pi-arr">›</div></div>
+              <div class="prof-item" onclick="openSenha()"><div class="pi-ico ib-green">🔑</div><div class="pi-txt"><div class="pi-title">Alterar senha</div><div class="pi-sub">Última troca há 30 dias</div></div><div class="pi-arr">›</div></div>
               <div class="prof-item"><div class="pi-ico ib-blue">👆</div><div class="pi-txt"><div class="pi-title">Biometria</div><div class="pi-sub">Face ID e impressão digital</div></div><div class="toggle on" id="bioToggle" onclick="toggleSetting('bioToggle')"></div></div>
               <div class="prof-item"><div class="pi-ico ib-orange">📱</div><div class="pi-txt"><div class="pi-title">Autenticação 2 fatores</div><div class="pi-sub">SMS / Authenticator App</div></div><div class="toggle off" id="tfaToggle" onclick="toggleSetting('tfaToggle')"></div></div>
               <div class="prof-item" onclick="doLogout()"><div class="pi-ico ib-red">🚪</div><div class="pi-txt"><div class="pi-title" style="color:var(--err)">Sair da conta</div><div class="pi-sub">Encerrar sessão</div></div><div class="pi-arr" style="color:var(--err)">›</div></div>
@@ -1714,7 +1714,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <h3 style="font-size:17px;font-weight:700;margin-bottom:5px">Central de Ajuda</h3>
             <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px">Como podemos ajudar você hoje?</p>
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-              <div class="ca" onclick="showToast('🤖 Chat IA iniciado!','info')"><div class="cai">🤖</div><div class="cal">Chat IA</div></div>
+              <div class="ca" onclick="openChat()"><div class="cai">🤖</div><div class="cal">Chat IA</div></div>
               <div class="ca" onclick="showToast('📞 Ligando...','info')"><div class="cai">📞</div><div class="cal">Ligar</div></div>
               <div class="ca" onclick="showToast('📧 E-mail enviado!','success')"><div class="cai">📧</div><div class="cal">E-mail</div></div>
               <div class="ca" onclick="showToast('📚 Abrindo FAQ...','info')"><div class="cai">📚</div><div class="cal">FAQ</div></div>
@@ -1757,11 +1757,11 @@ input,select,textarea{font-family:inherit;outline:none}
             <div class="sec-title">Ações rápidas</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
               <button class="btn btn-primary" style="padding:12px;font-size:13px" onclick="goPage('pix',null)">⚡ PIX</button>
-              <button class="btn" style="padding:12px;font-size:13px;background:var(--ok);color:#fff" onclick="showToast('💸 TED iniciado!','info')">🏦 TED/DOC</button>
+              <button class="btn" style="padding:12px;font-size:13px;background:var(--ok);color:#fff" onclick="openTed()">🏦 TED/DOC</button>
               <button class="btn" style="padding:12px;font-size:13px;background:var(--teal);color:#fff" onclick="showToast('📱 Recarga realizada!','success')">📱 Recarga</button>
               <button class="btn" style="padding:12px;font-size:13px;background:var(--pur);color:#fff" onclick="showToast('💡 Conta paga!','success')">💡 Pagar Conta</button>
               <button class="btn" style="padding:12px;font-size:13px;background:var(--amber);color:#fff" onclick="showToast('🛒 Voucher gerado!','success')">🎫 Voucher</button>
-              <button class="btn btn-ghost" style="padding:12px;font-size:13px" onclick="showToast('🔄 Câmbio: USD 1 = R$ 5,72','info')">💱 Câmbio</button>
+              <button class="btn btn-ghost" style="padding:12px;font-size:13px" onclick="openCambio()">💱 Câmbio</button>
             </div>
           </div>
           <div class="card">
@@ -1799,7 +1799,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Plano individual com telemedicina ilimitada. Consultas, exames e internação.</div>
             <div style="font-size:20px;font-weight:900;color:var(--p1);margin-bottom:4px">A partir de R$ 149/mês</div>
             <span class="badge bg-inf">🔵 Consultar</span>
-            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="showToast('🏥 Simulação de saúde!','info')">Simular →</button>
+            <button class="btn btn-primary" style="margin-top:12px;padding:10px" onclick="openSaude()">Simular →</button>
           </div>
           <div class="card" style="border-left:4px solid var(--warn)">
             <div style="font-size:30px;margin-bottom:10px">🏠</div>
@@ -1965,7 +1965,7 @@ input,select,textarea{font-family:inherit;outline:none}
               <div style="font-size:30px;margin-bottom:8px">📍</div>
               <div style="font-size:14px;font-weight:700;margin-bottom:6px">São Paulo - SP</div>
               <div style="font-size:12px;color:var(--muted);margin-bottom:12px">287 pontos em um raio de 5km</div>
-              <button class="btn btn-primary" onclick="showToast('🗺️ Mapa aberto!','info')" style="padding:10px">Ver no mapa →</button>
+              <button class="btn btn-primary" onclick="openMapa()" style="padding:10px">Ver no mapa →</button>
             </div>
             <div style="font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--muted)">MAIS PRÓXIMOS</div>
             <div style="display:flex;flex-direction:column;gap:8px">
@@ -1997,9 +1997,9 @@ input,select,textarea{font-family:inherit;outline:none}
           <div class="card">
             <div class="sec-title">🏦 Melhores taxas de crédito</div>
             <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Emp. Pessoal · 1,29% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Celcoin Flow Finance · Até R$ 50k</div></div><button class="btn-sm btn-p" onclick="showToast('💰 Proposta enviada!','info')">Simular</button></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Consignado · 0,99% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Servidores públicos · Fineract</div></div><button class="btn-sm btn-p" onclick="showToast('💰 Consignado simulado!','info')">Simular</button></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Crédito Auto · 0,79% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Financiamento veicular · FIDC</div></div><button class="btn-sm btn-p" onclick="showToast('🚗 Simulação enviada!','info')">Simular</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Emp. Pessoal · 1,29% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Celcoin Flow Finance · Até R$ 50k</div></div><button class="btn-sm btn-p" onclick="openCred('pessoal')">Simular</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Consignado · 0,99% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Servidores públicos · Fineract</div></div><button class="btn-sm btn-p" onclick="openCred('habitacional')">Simular</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px"><div><div style="font-size:13.5px;font-weight:700">Crédito Auto · 0,79% a.m.</div><div style="font-size:11.5px;color:var(--muted)">Financiamento veicular · FIDC</div></div><button class="btn-sm btn-p" onclick="openCred('rotativo')">Simular</button></div>
             </div>
           </div>
         </div>
@@ -2123,7 +2123,7 @@ input,select,textarea{font-family:inherit;outline:none}
               <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#e0e7ff'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('📦 Entrega de cartão agendada!','success')"><div style="font-size:13.5px;font-weight:700">💳 Entrega de Cartão</div><div style="font-size:12px;color:var(--muted)">Cartão novo ou 2ª via · Prazo: 2h · Taxa: grátis</div></div>
               <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('💵 Coleta de dinheiro agendada!','success')"><div style="font-size:13.5px;font-weight:700">💵 Cash-in (coleta)</div><div style="font-size:12px;color:var(--muted)">Depósito na conta em até 1h · Taxa: R$ 5</div></div>
               <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('💸 Saque em casa agendado!','success')"><div style="font-size:13.5px;font-weight:700">💸 Cash-out (entrega)</div><div style="font-size:12px;color:var(--muted)">Dinheiro na porta · Limite R$ 2.000 · Taxa: R$ 8</div></div>
-              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('📄 Coleta de docs agendada!','info')"><div style="font-size:13.5px;font-weight:700">📄 Coleta de documentos</div><div style="font-size:12px;color:var(--muted)">KYC presencial · Prazo: 4h</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='var(--bg)'" onclick="agendarKYC()"><div style="font-size:13.5px;font-weight:700">📄 Coleta de documentos</div><div style="font-size:12px;color:var(--muted)">KYC presencial · Prazo: 4h</div></div>
             </div>
           </div>
           <div class="card">
@@ -2219,6 +2219,332 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
       </div>
 
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAIS FUNCIONAIS — TODOS OS MÓDULOS
+═══════════════════════════════════════════════════════════ -->
+
+<!-- MODAL FATURA CARTÃO -->
+<div id="modal-fatura" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:520px;max-width:95vw;max-height:88vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#1a237e,#3949ab);border-radius:20px 20px 0 0;padding:24px 28px;color:#fff">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-size:13px;opacity:.7">💳 Fatura do Cartão</div><div style="font-size:22px;font-weight:900;margin-top:4px" id="fat-titulo">Cartão Virtual</div></div>
+        <button onclick="closeFatura()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+        <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:12px"><div style="font-size:11px;opacity:.65">Total da fatura</div><div style="font-size:22px;font-weight:900" id="fat-total">R$ 1.240,00</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:12px"><div style="font-size:11px;opacity:.65">Vencimento</div><div style="font-size:22px;font-weight:900" id="fat-venc">20/06/2026</div></div>
+      </div>
+    </div>
+    <div style="padding:24px 28px">
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:14px">LANÇAMENTOS</div>
+      <div id="fat-lancamentos" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button onclick="closeFatura()" style="padding:13px;border:1.5px solid var(--border);background:#fff;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Fechar</button>
+        <button onclick="pagarFatura()" style="padding:13px;background:linear-gradient(135deg,#1a237e,#3949ab);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">💳 Pagar fatura</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SIMULAÇÃO CRÉDITO -->
+<div id="modal-credito" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:500px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#047857,#059669);padding:24px 28px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:13px;opacity:.7">💰 Apache Fineract</div><div style="font-size:20px;font-weight:900;margin-top:3px" id="cred-titulo">Empréstimo Pessoal</div></div>
+      <button onclick="closeCred()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 28px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:7px">Valor desejado (R$)</label>
+          <input id="cred-valor" type="number" value="5000" min="500" max="50000" step="100" oninput="calcCred()"
+            style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:16px;font-weight:700;outline:none"></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:7px">Prazo (meses)</label>
+          <select id="cred-prazo" oninput="calcCred()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;font-weight:600;outline:none">
+            <option value="12">12 meses</option><option value="24" selected>24 meses</option><option value="36">36 meses</option><option value="48">48 meses</option></select></div>
+      </div>
+      <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:14px;padding:18px;margin-bottom:18px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+          <div><div style="font-size:11px;color:#047857;font-weight:600">PARCELA MENSAL</div><div style="font-size:22px;font-weight:900;color:#047857" id="cred-parcela">R$ 243,00</div></div>
+          <div><div style="font-size:11px;color:#047857;font-weight:600">TAXA A.M.</div><div style="font-size:22px;font-weight:900;color:#047857" id="cred-taxa">1,49%</div></div>
+          <div><div style="font-size:11px;color:#047857;font-weight:600">TOTAL A PAGAR</div><div style="font-size:22px;font-weight:900;color:#047857" id="cred-total">R$ 5.832,00</div></div>
+        </div>
+      </div>
+      <div id="cred-tabela" style="max-height:200px;overflow-y:auto;margin-bottom:16px"></div>
+      <button onclick="contratarCred()" style="width:100%;padding:14px;background:linear-gradient(135deg,#047857,#059669);color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">✅ Contratar agora</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TED/DOC -->
+<div id="modal-ted" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:460px;max-width:95vw;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#0369a1,#0ea5e9);padding:22px 26px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:19px;font-weight:900">🏦 TED / DOC</div>
+      <button onclick="closeTed()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 26px;display:flex;flex-direction:column;gap:13px">
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Banco destino</label>
+        <select id="ted-banco" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:13.5px;outline:none">
+          <option>001 — Banco do Brasil</option><option>237 — Bradesco</option><option>341 — Itaú</option><option>033 — Santander</option><option>104 — Caixa Econômica</option><option>260 — Nu Pagamentos (Nubank)</option><option>077 — Banco Inter</option><option>274 — Money Plus (BaaS)</option></select></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Agência</label>
+          <input id="ted-ag" placeholder="0001" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Conta</label>
+          <input id="ted-conta" placeholder="00000-0" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      </div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Nome do favorecido</label>
+        <input id="ted-nome" placeholder="Nome completo" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Valor (R$)</label>
+        <input id="ted-valor" type="number" placeholder="0,00" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:18px;font-weight:700;outline:none"></div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Data de agendamento</label>
+        <input id="ted-data" type="date" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+        <button onclick="closeTed()" style="padding:13px;border:1.5px solid #e0e0e0;background:#fff;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Cancelar</button>
+        <button onclick="confirmarTed()" style="padding:13px;background:linear-gradient(135deg,#0369a1,#0ea5e9);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Enviar TED →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DADOS PESSOAIS -->
+<div id="modal-dados" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#1a237e,#3949ab);padding:22px 28px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:19px;font-weight:900">📝 Dados Pessoais</div>
+      <button onclick="closeDados()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 28px;display:flex;flex-direction:column;gap:13px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Nome completo</label>
+          <input value="João da Silva" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">CPF</label>
+          <input value="•••.456.789-••" readonly style="width:100%;padding:12px 14px;border:1.5px solid #f0f0f0;background:#f9f9f9;border-radius:11px;font-size:14px;outline:none;color:#888"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Data de nascimento</label>
+          <input type="date" value="1990-05-15" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Telefone</label>
+          <input value="(11) 9 9999-8888" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      </div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">E-mail</label>
+        <input value="joao.silva@meubanco.com.br" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Endereço</label>
+        <input value="Rua das Flores, 123 — São Paulo, SP" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">CEP</label>
+          <input value="01310-100" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Estado</label>
+          <select style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none">
+            <option selected>SP — São Paulo</option><option>RJ — Rio de Janeiro</option><option>MG — Minas Gerais</option></select></div>
+      </div>
+      <div style="background:#eff6ff;border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:22px">✅</span>
+        <div><div style="font-size:13px;font-weight:700;color:#1d4ed8">KYC Verificado</div><div style="font-size:12px;color:#3b82f6">Identidade confirmada · Atualizado em 01/06/2026</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button onclick="closeDados()" style="padding:13px;border:1.5px solid #e0e0e0;background:#fff;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Cancelar</button>
+        <button onclick="salvarDados()" style="padding:13px;background:linear-gradient(135deg,#1a237e,#3949ab);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">💾 Salvar alterações</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ALTERAR SENHA -->
+<div id="modal-senha" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:420px;max-width:95vw;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#047857,#059669);padding:22px 26px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:19px;font-weight:900">🔑 Alterar Senha</div>
+      <button onclick="closeSenha()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 26px;display:flex;flex-direction:column;gap:13px">
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Senha atual</label>
+        <input id="senha-atual" type="password" placeholder="Digite a senha atual" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Nova senha</label>
+        <input id="senha-nova" type="password" placeholder="Mínimo 8 caracteres" oninput="checkSenhaForte()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div id="senha-forca" style="display:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600"></div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Confirmar nova senha</label>
+        <input id="senha-conf" type="password" placeholder="Repita a nova senha" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+      <div style="background:#f0fdf4;border-radius:10px;padding:12px;font-size:12px;color:#047857">
+        ✅ Dica: Use letras maiúsculas, números e símbolos para uma senha forte.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button onclick="closeSenha()" style="padding:13px;border:1.5px solid #e0e0e0;background:#fff;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Cancelar</button>
+        <button onclick="confirmarSenha()" style="padding:13px;background:linear-gradient(135deg,#047857,#059669);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">🔒 Alterar senha</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CHAT IA -->
+<div id="modal-chat" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:flex-end;justify-content:flex-end;padding:24px">
+  <div style="background:#fff;border-radius:20px;width:400px;max-width:95vw;height:560px;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);padding:18px 22px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px">🤖</div>
+        <div><div style="font-size:15px;font-weight:800">KaiNow IA</div><div style="font-size:11px;opacity:.7">● Online · Resposta imediata</div></div>
+      </div>
+      <button onclick="closeChat()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer">×</button>
+    </div>
+    <div id="chat-msgs" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:8px;align-items:flex-start">
+        <div style="width:30px;height:30px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🤖</div>
+        <div style="background:#f3f4f6;border-radius:0 14px 14px 14px;padding:11px 14px;max-width:80%;font-size:13.5px;line-height:1.5">Olá! Sou a KaiNow IA 👋<br>Como posso ajudar você hoje?</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-left:38px">
+        <button onclick="chatRapido('Como fazer um PIX?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">⚡ Como fazer PIX?</button>
+        <button onclick="chatRapido('Qual meu saldo?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">💰 Ver saldo</button>
+        <button onclick="chatRapido('Quero contratar seguro')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">🛡️ Seguros</button>
+        <button onclick="chatRapido('Como aumentar meu limite?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">💳 Limite</button>
+      </div>
+    </div>
+    <div style="padding:12px 16px;border-top:1px solid #f0f0f0;display:flex;gap:8px;flex-shrink:0">
+      <input id="chat-inp" placeholder="Digite sua mensagem..." onkeydown="if(event.key==='Enter')enviarChat()"
+        style="flex:1;padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:22px;font-size:13.5px;outline:none">
+      <button onclick="enviarChat()" style="width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:50%;font-size:18px;cursor:pointer">↑</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CÂMBIO -->
+<div id="modal-cambio" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:440px;max-width:95vw;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#b45309,#d97706);padding:22px 26px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:19px;font-weight:900">💱 Câmbio & Moedas</div>
+      <button onclick="closeCambio()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 26px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px">
+        <div style="background:#fef3c7;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:#92400e;font-weight:600">USD</div><div style="font-size:20px;font-weight:900;color:#b45309">R$ 5,72</div></div>
+        <div style="background:#eff6ff;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:#1e40af;font-weight:600">EUR</div><div style="font-size:20px;font-weight:900;color:#1d4ed8">R$ 6,18</div></div>
+        <div style="background:#f0fdf4;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:#047857;font-weight:600">BTC</div><div style="font-size:20px;font-weight:900;color:#047857">R$320k</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">De</label>
+          <select id="cambio-de" oninput="calcCambio()" style="width:100%;padding:11px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:13.5px;outline:none">
+            <option value="BRL">🇧🇷 BRL — Real</option><option value="USD">🇺🇸 USD — Dólar</option><option value="EUR">🇪🇺 EUR — Euro</option></select></div>
+        <div style="font-size:22px;padding-bottom:8px">⇌</div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Para</label>
+          <select id="cambio-para" oninput="calcCambio()" style="width:100%;padding:11px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:13.5px;outline:none">
+            <option value="USD">🇺🇸 USD — Dólar</option><option value="EUR">🇪🇺 EUR — Euro</option><option value="BRL">🇧🇷 BRL — Real</option></select></div>
+      </div>
+      <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Valor</label>
+        <input id="cambio-valor" type="number" value="100" oninput="calcCambio()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:18px;font-weight:700;outline:none;margin-bottom:12px"></div>
+      <div id="cambio-resultado" style="background:#fef3c7;border-radius:12px;padding:14px;text-align:center;font-size:22px;font-weight:900;color:#b45309;margin-bottom:16px">USD 17,48</div>
+      <button onclick="closeCambio()" style="width:100%;padding:13px;background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">✅ Fechar cotação</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ABERTURA DE CONTA -->
+<div id="modal-abertura" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:500px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#7c3aed,#4f46e5);padding:22px 28px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:13px;opacity:.7">KaiNow Bank</div><div style="font-size:19px;font-weight:900">🏦 Abrir Conta Digital</div></div>
+      <button onclick="closeAbertura()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 28px">
+      <div id="ab-step1">
+        <div style="font-size:15px;font-weight:700;margin-bottom:16px">1️⃣ Seus dados básicos</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Nome completo</label>
+            <input id="ab-nome" placeholder="João da Silva" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">CPF</label>
+            <input id="ab-cpf" placeholder="000.000.000-00" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">E-mail</label>
+            <input id="ab-email" placeholder="seu@email.com" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+          <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Celular</label>
+            <input id="ab-tel" placeholder="(11) 9 9999-9999" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        </div>
+        <button onclick="abStep2()" style="width:100%;margin-top:18px;padding:14px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer">Próximo →</button>
+      </div>
+      <div id="ab-step2" style="display:none">
+        <div style="font-size:15px;font-weight:700;margin-bottom:16px">2️⃣ Tipo de conta</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+          <label style="display:flex;align-items:center;gap:14px;border:2px solid #e0e0e0;border-radius:14px;padding:16px;cursor:pointer" id="ab-opt-cc" onclick="selAbTipo('cc')">
+            <span style="font-size:28px">🏦</span><div><div style="font-size:14px;font-weight:700">Conta Corrente</div><div style="font-size:12.5px;color:#666">PIX, cartão, crédito · Sem tarifas</div></div></label>
+          <label style="display:flex;align-items:center;gap:14px;border:2px solid #e0e0e0;border-radius:14px;padding:16px;cursor:pointer" id="ab-opt-cp" onclick="selAbTipo('cp')">
+            <span style="font-size:28px">🌱</span><div><div style="font-size:14px;font-weight:700">Conta Poupança</div><div style="font-size:12.5px;color:#666">Rendimento 0,5% a.m. + TR · Sem taxas</div></div></label>
+          <label style="display:flex;align-items:center;gap:14px;border:2px solid #e0e0e0;border-radius:14px;padding:16px;cursor:pointer" id="ab-opt-pj" onclick="selAbTipo('pj')">
+            <span style="font-size:28px">🏢</span><div><div style="font-size:14px;font-weight:700">Conta PJ</div><div style="font-size:12.5px;color:#666">CNPJ, notas fiscais, split payment</div></div></label>
+        </div>
+        <button onclick="finalizarAbertura()" style="width:100%;padding:14px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer">✅ Criar minha conta</button>
+      </div>
+      <div id="ab-success" style="display:none;text-align:center;padding:20px">
+        <div style="font-size:64px;margin-bottom:16px">🎉</div>
+        <div style="font-size:22px;font-weight:900;color:#047857;margin-bottom:8px">Conta criada!</div>
+        <div style="font-size:14px;color:#666;margin-bottom:20px">Seu acesso chegará no e-mail em instantes. Bem-vindo ao KaiNow!</div>
+        <button onclick="closeAbertura()" style="padding:13px 32px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">🚀 Acessar minha conta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SIMULAÇÃO SEGURO SAÚDE -->
+<div id="modal-saude" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#dc2626,#ef4444);padding:22px 28px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:19px;font-weight:900">🏥 Seguro Saúde</div>
+      <button onclick="closeSaude()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:24px 28px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Idade</label>
+          <input id="saude-idade" type="number" value="32" min="18" max="65" oninput="calcSaude()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:16px;font-weight:700;outline:none"></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Cobertura</label>
+          <select id="saude-tipo" oninput="calcSaude()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:13.5px;outline:none">
+            <option value="basic">Básico (R$ 99/mês)</option><option value="plus" selected>Plus (R$ 189/mês)</option><option value="premium">Premium (R$ 349/mês)</option></select></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Dependentes</label>
+          <select id="saude-dep" oninput="calcSaude()" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:13.5px;outline:none">
+            <option value="0">Sem dependentes</option><option value="1">1 dependente</option><option value="2" selected>2 dependentes</option><option value="3">3 ou mais</option></select></div>
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">Região</label>
+          <select style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:13.5px;outline:none">
+            <option>Sudeste</option><option>Sul</option><option>Nordeste</option><option>Centro-Oeste</option></select></div>
+      </div>
+      <div style="background:#fef2f2;border-radius:14px;padding:18px;text-align:center">
+        <div style="font-size:12px;color:#dc2626;font-weight:600;margin-bottom:4px">MENSALIDADE ESTIMADA</div>
+        <div style="font-size:30px;font-weight:900;color:#dc2626" id="saude-valor">R$ 427,00/mês</div>
+        <div style="font-size:12px;color:#ef4444;margin-top:4px">Cobertura nacional · Rede credenciada 2.400 hospitais</div>
+      </div>
+      <div style="display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:10px"><span style="font-size:16px">✅</span><span style="font-size:13px">Consultas médicas ilimitadas</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:10px"><span style="font-size:16px">✅</span><span style="font-size:13px">Exames laboratoriais e de imagem</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:10px"><span style="font-size:16px">✅</span><span style="font-size:13px">Pronto-socorro e internações</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:10px"><span style="font-size:16px">✅</span><span style="font-size:13px">Telemedicina 24h disponível</span></div>
+      </div>
+      <button onclick="contratarSaude()" style="width:100%;padding:14px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer">🏥 Contratar Seguro Saúde</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MAPA CORRESPONDENTE -->
+<div id="modal-mapa" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;width:560px;max-width:95vw;box-shadow:0 24px 70px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#065f46,#047857);padding:22px 28px;border-radius:20px 20px 0 0;color:#fff;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:19px;font-weight:900">🗺️ Rede de Correspondentes</div>
+      <button onclick="closeMapa()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:20px 24px">
+      <div style="background:#e8f5e9;border-radius:14px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden;min-height:220px">
+        <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(6,1fr);gap:0;opacity:.15">
+        </div>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:13px;color:#047857;font-weight:700;margin-bottom:12px">📍 Correspondentes próximos a você</div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="mapa-lista"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label style="font-size:12.5px;font-weight:600;color:#555;display:block;margin-bottom:6px">CEP ou cidade</label>
+          <input id="mapa-cep" placeholder="Ex: 01310-100" style="width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none"></div>
+        <div style="display:flex;align-items:flex-end">
+          <button onclick="buscarCorrespondentes()" style="width:100%;padding:12px;background:linear-gradient(135deg,#065f46,#047857);color:#fff;border:none;border-radius:11px;font-size:13.5px;font-weight:700;cursor:pointer">🔍 Buscar</button></div>
+      </div>
     </div>
   </div>
 </div>
@@ -2999,6 +3325,295 @@ function executarSimOp(){
 function addTermLine(html,term){
   const d=document.createElement('div');d.innerHTML=html;d.style.marginBottom='3px';
   term.appendChild(d);term.scrollTop=term.scrollHeight;
+}
+
+/* ══════════════════════════════════════════════
+   MODAL FATURA CARTÃO
+══════════════════════════════════════════════ */
+const FATURA_CC = [
+  {desc:'Supermercado Pão de Açúcar',data:'01/06',val:287.50,cat:'🛒'},
+  {desc:'Netflix',data:'03/06',val:55.90,cat:'🎬'},
+  {desc:'Uber',data:'05/06',val:32.00,cat:'🚗'},
+  {desc:'iFood',data:'07/06',val:89.00,cat:'🍔'},
+  {desc:'Amazon',data:'08/06',val:199.00,cat:'📦'},
+  {desc:'Farmácia',data:'10/06',val:76.60,cat:'💊'},
+  {desc:'Posto de gasolina',data:'12/06',val:300.00,cat:'⛽'},
+  {desc:'Academia',data:'01/06',val:120.00,cat:'💪'},
+  {desc:'Streaming Disney+',data:'02/06',val:35.90,cat:'📺'},
+  {desc:'Mercado Livre',data:'09/06',val:44.10,cat:'🛍️'},
+];
+const FATURA_BK = [
+  {desc:'Restaurante Outback',data:'02/06',val:480.00,cat:'🍖'},
+  {desc:'Apple Store',data:'04/06',val:899.00,cat:'🍎'},
+  {desc:'Viagem internacional',data:'06/06',val:1200.00,cat:'✈️'},
+  {desc:'Hotel Marriott',data:'07/06',val:650.00,cat:'🏨'},
+  {desc:'Aluguel de carro',data:'09/06',val:380.00,cat:'🚗'},
+  {desc:'Duty Free',data:'11/06',val:241.00,cat:'🛒'},
+];
+function openFatura(tipo){
+  const m=document.getElementById('modal-fatura');
+  const itens=tipo==='cc'?FATURA_CC:FATURA_BK;
+  const total=itens.reduce((a,b)=>a+b.val,0);
+  document.getElementById('fat-titulo').textContent=tipo==='cc'?'Cartão Virtual — 4521':'Cartão Black — 5421';
+  document.getElementById('fat-total').textContent='R$ '+fmt(total);
+  document.getElementById('fat-venc').textContent=tipo==='cc'?'20/06/2026':'20/06/2026';
+  document.getElementById('fat-lancamentos').innerHTML=itens.map(i=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:var(--bg);border-radius:11px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;background:#e8eaf6;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px">${i.cat}</div>
+        <div><div style="font-size:13.5px;font-weight:600">${i.desc}</div><div style="font-size:11.5px;color:var(--muted)">${i.data}</div></div>
+      </div>
+      <div style="font-size:14px;font-weight:800;color:var(--err)">- R$ ${fmt(i.val)}</div>
+    </div>`).join('');
+  m.style.display='flex';
+}
+function closeFatura(){document.getElementById('modal-fatura').style.display='none';}
+function pagarFatura(){closeFatura();showToast('💳 Fatura paga com sucesso!','success');}
+
+/* ══════════════════════════════════════════════
+   MODAL SIMULAÇÃO CRÉDITO
+══════════════════════════════════════════════ */
+const TAXAS_CRED={pessoal:1.49,habitacional:0.79,rotativo:1.99};
+let credTipoAtual='pessoal';
+function openCred(tipo){
+  credTipoAtual=tipo;
+  const labels={pessoal:'💰 Empréstimo Pessoal',habitacional:'🏠 Crédito Habitacional',rotativo:'🔄 Crédito Rotativo'};
+  document.getElementById('cred-titulo').textContent=labels[tipo];
+  document.getElementById('cred-taxa').textContent=TAXAS_CRED[tipo]+'%';
+  calcCred();
+  document.getElementById('modal-credito').style.display='flex';
+}
+function calcCred(){
+  const val=parseFloat(document.getElementById('cred-valor').value)||5000;
+  const n=parseInt(document.getElementById('cred-prazo').value)||24;
+  const i=TAXAS_CRED[credTipoAtual]/100;
+  const pmt=val*(i*Math.pow(1+i,n))/(Math.pow(1+i,n)-1);
+  const total=pmt*n;
+  document.getElementById('cred-parcela').textContent='R$ '+fmt(pmt);
+  document.getElementById('cred-total').textContent='R$ '+fmt(total);
+  // Tabela price
+  let saldo=val,rows='';
+  for(let k=1;k<=Math.min(n,6);k++){
+    const juros=saldo*i;
+    const amort=pmt-juros;
+    saldo-=amort;
+    rows+=`<div style="display:flex;justify-content:space-between;padding:8px 12px;background:${k%2?'#fff':'#f9fafb'};border-radius:8px;font-size:12px">
+      <span style="color:var(--muted)">Parcela ${k}/${n}</span>
+      <span>R$ ${fmt(pmt)}</span>
+      <span style="color:var(--ok)">Juros: R$ ${fmt(juros)}</span>
+      <span style="color:var(--p1)">Saldo: R$ ${fmt(Math.max(0,saldo))}</span>
+    </div>`;
+  }
+  if(n>6) rows+=`<div style="text-align:center;padding:8px;font-size:12px;color:var(--muted)">... e mais ${n-6} parcelas</div>`;
+  document.getElementById('cred-tabela').innerHTML=rows;
+}
+function closeCred(){document.getElementById('modal-credito').style.display='none';}
+function contratarCred(){
+  closeCred();
+  showToast('✅ Crédito contratado! Dinheiro em conta em até 1h.','success');
+}
+
+/* ══════════════════════════════════════════════
+   MODAL TED/DOC
+══════════════════════════════════════════════ */
+function openTed(){
+  const d=new Date();d.setDate(d.getDate()+1);
+  document.getElementById('ted-data').value=d.toISOString().split('T')[0];
+  document.getElementById('modal-ted').style.display='flex';
+}
+function closeTed(){document.getElementById('modal-ted').style.display='none';}
+function confirmarTed(){
+  const val=parseFloat(document.getElementById('ted-valor').value);
+  const nome=document.getElementById('ted-nome').value.trim();
+  if(!nome){showToast('❌ Informe o nome do favorecido!','err');return;}
+  if(!val||val<=0){showToast('❌ Informe um valor válido!','err');return;}
+  if(val>ccSaldo){showToast('❌ Saldo insuficiente!','err');return;}
+  ccSaldo-=val;
+  ccHistorico.push({op:'debit',desc:'TED → '+nome,val,date:new Date().toLocaleDateString('pt-BR')});
+  document.getElementById('cc-saldo').textContent='R$ '+fmt(ccSaldo);
+  document.getElementById('sim-cc-bal').textContent='R$ '+fmt(ccSaldo);
+  buildContaExtratos();buildClientesTbl();
+  closeTed();
+  showToast('✅ TED de R$ '+fmt(val)+' enviado para '+nome+'!','success');
+}
+
+/* ══════════════════════════════════════════════
+   MODAL DADOS PESSOAIS
+══════════════════════════════════════════════ */
+function openDados(){document.getElementById('modal-dados').style.display='flex';}
+function closeDados(){document.getElementById('modal-dados').style.display='none';}
+function salvarDados(){closeDados();showToast('✅ Dados pessoais atualizados!','success');}
+
+/* ══════════════════════════════════════════════
+   MODAL ALTERAR SENHA
+══════════════════════════════════════════════ */
+function openSenha(){document.getElementById('modal-senha').style.display='flex';}
+function closeSenha(){document.getElementById('modal-senha').style.display='none';}
+function checkSenhaForte(){
+  const s=document.getElementById('senha-nova').value;
+  const el=document.getElementById('senha-forca');
+  el.style.display='block';
+  if(s.length<6){el.style.background='#fef2f2';el.style.color='#dc2626';el.textContent='❌ Muito fraca — mínimo 8 caracteres';}
+  else if(s.length<10||!/[A-Z]/.test(s)||!/[0-9]/.test(s)){el.style.background='#fef3c7';el.style.color='#b45309';el.textContent='⚠️ Média — adicione números e maiúsculas';}
+  else{el.style.background='#f0fdf4';el.style.color='#047857';el.textContent='✅ Senha forte!';}
+}
+function confirmarSenha(){
+  const atual=document.getElementById('senha-atual').value;
+  const nova=document.getElementById('senha-nova').value;
+  const conf=document.getElementById('senha-conf').value;
+  if(!atual){showToast('❌ Digite a senha atual!','err');return;}
+  if(nova.length<8){showToast('❌ A nova senha deve ter pelo menos 8 caracteres!','err');return;}
+  if(nova!==conf){showToast('❌ As senhas não coincidem!','err');return;}
+  closeSenha();
+  showToast('✅ Senha alterada com sucesso!','success');
+}
+
+/* ══════════════════════════════════════════════
+   CHAT IA
+══════════════════════════════════════════════ */
+const CHAT_RESPOSTAS={
+  'pix':['Para fazer um PIX, acesse o menu **PIX** na barra lateral. Você pode enviar via CPF, e-mail, telefone ou chave aleatória. 💡 Confirmação instantânea 24h!','Para receber PIX, compartilhe sua chave: joao@meubanco.com.br. O dinheiro cai na hora!'],
+  'saldo':['Seu saldo atual: 💰 **Conta Corrente: R$ 8.420,50** | 🌱 **Poupança: R$ 24.850,00**. Para detalhes acesse "Minhas Contas".'],
+  'seguro':['Oferecemos seguros de: 🚗 Auto, 🏥 Saúde, 🏠 Residencial, 📱 Celular e ✈️ Viagem. Quer ver as cotações? Acesse o menu "Seguros" na barra lateral!'],
+  'limite':['Seu limite atual é R$ 5.000 no cartão virtual e R$ 10.000 no cartão Black. Para solicitar aumento, acesse Cartões → Limite. O processo é automático!'],
+  'default':['Entendi! Posso te ajudar com PIX, saldo, cartões, crédito, seguros, investimentos e muito mais. O que você precisa?','Claro! Estou aqui para ajudar. Você pode me perguntar sobre qualquer produto ou serviço do KaiNow Bank! 😊','Ótima pergunta! Para mais detalhes, você pode acessar o menu correspondente na barra lateral ou me fazer outra pergunta. 🎯']
+};
+let chatCount=0;
+function openChat(){document.getElementById('modal-chat').style.display='flex';}
+function closeChat(){document.getElementById('modal-chat').style.display='none';}
+function chatRapido(msg){
+  document.getElementById('chat-inp').value=msg;
+  enviarChat();
+}
+function enviarChat(){
+  const inp=document.getElementById('chat-inp');
+  const msg=inp.value.trim();
+  if(!msg)return;
+  const msgs=document.getElementById('chat-msgs');
+  // Mensagem do usuário
+  msgs.innerHTML+=`<div style="display:flex;justify-content:flex-end">
+    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:14px 0 14px 14px;padding:10px 14px;max-width:78%;font-size:13.5px;line-height:1.5">${msg}</div>
+  </div>`;
+  inp.value='';
+  msgs.scrollTop=msgs.scrollHeight;
+  // Resposta IA com delay
+  setTimeout(()=>{
+    const msgLow=msg.toLowerCase();
+    let resps=CHAT_RESPOSTAS.default;
+    if(msgLow.includes('pix'))resps=CHAT_RESPOSTAS.pix;
+    else if(msgLow.includes('saldo'))resps=CHAT_RESPOSTAS.saldo;
+    else if(msgLow.includes('seguro'))resps=CHAT_RESPOSTAS.seguro;
+    else if(msgLow.includes('limite'))resps=CHAT_RESPOSTAS.limite;
+    const resp=resps[chatCount%resps.length];
+    chatCount++;
+    msgs.innerHTML+=`<div style="display:flex;gap:8px;align-items:flex-start">
+      <div style="width:30px;height:30px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🤖</div>
+      <div style="background:#f3f4f6;border-radius:0 14px 14px 14px;padding:11px 14px;max-width:80%;font-size:13.5px;line-height:1.5">${resp.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>
+    </div>`;
+    msgs.scrollTop=msgs.scrollHeight;
+  },600);
+}
+
+/* ══════════════════════════════════════════════
+   MODAL CÂMBIO
+══════════════════════════════════════════════ */
+const RATES={BRL:1,USD:5.72,EUR:6.18,BTC:320000};
+function openCambio(){calcCambio();document.getElementById('modal-cambio').style.display='flex';}
+function closeCambio(){document.getElementById('modal-cambio').style.display='none';}
+function calcCambio(){
+  const de=document.getElementById('cambio-de')?.value||'BRL';
+  const para=document.getElementById('cambio-para')?.value||'USD';
+  const val=parseFloat(document.getElementById('cambio-valor')?.value)||100;
+  const brl=val*RATES[de];
+  const resultado=brl/RATES[para];
+  const symbols={BRL:'R$',USD:'US$',EUR:'€',BTC:'₿'};
+  document.getElementById('cambio-resultado').textContent=`${symbols[para]} ${resultado<0.001?resultado.toFixed(6):fmt(resultado)}`;
+}
+
+/* ══════════════════════════════════════════════
+   MODAL ABERTURA DE CONTA
+══════════════════════════════════════════════ */
+let abTipoSel='cc';
+function openAbertura(){
+  document.getElementById('ab-step1').style.display='block';
+  document.getElementById('ab-step2').style.display='none';
+  document.getElementById('ab-success').style.display='none';
+  document.getElementById('modal-abertura').style.display='flex';
+}
+function closeAbertura(){document.getElementById('modal-abertura').style.display='none';}
+function abStep2(){
+  const nome=document.getElementById('ab-nome').value.trim();
+  const cpf=document.getElementById('ab-cpf').value.trim();
+  if(!nome||!cpf){showToast('❌ Preencha nome e CPF!','err');return;}
+  document.getElementById('ab-step1').style.display='none';
+  document.getElementById('ab-step2').style.display='block';
+  selAbTipo('cc');
+}
+function selAbTipo(t){
+  abTipoSel=t;
+  ['cc','cp','pj'].forEach(k=>{
+    const el=document.getElementById('ab-opt-'+k);
+    if(el)el.style.border=k===t?'2px solid #7c3aed':'2px solid #e0e0e0';
+  });
+}
+function finalizarAbertura(){
+  document.getElementById('ab-step2').style.display='none';
+  document.getElementById('ab-success').style.display='block';
+}
+
+/* ══════════════════════════════════════════════
+   MODAL SEGURO SAÚDE
+══════════════════════════════════════════════ */
+function openSaude(){calcSaude();document.getElementById('modal-saude').style.display='flex';}
+function closeSaude(){document.getElementById('modal-saude').style.display='none';}
+function calcSaude(){
+  const base={basic:99,plus:189,premium:349};
+  const tipo=document.getElementById('saude-tipo')?.value||'plus';
+  const dep=parseInt(document.getElementById('saude-dep')?.value||2);
+  const idade=parseInt(document.getElementById('saude-idade')?.value||32);
+  const fatorIdade=idade<30?1:idade<45?1.3:1.6;
+  const val=(base[tipo]*(1+dep*0.45))*fatorIdade;
+  document.getElementById('saude-valor').textContent='R$ '+fmt(val)+'/mês';
+}
+function contratarSaude(){closeSaude();showToast('✅ Seguro Saúde contratado! Apólice enviada ao e-mail.','success');}
+
+/* ══════════════════════════════════════════════
+   MODAL MAPA CORRESPONDENTE
+══════════════════════════════════════════════ */
+const CORRESPONDENTES=[
+  {nome:'Lotérica Central',end:'Rua Augusta, 580',dist:'0,3 km',hrs:'07h-22h',svcs:'Saque · Depósito · Boleto'},
+  {nome:'Farmácia São João',end:'Av. Paulista, 1200',dist:'0,7 km',hrs:'24h',svcs:'Saque · Boleto · PIX'},
+  {nome:'Padaria Bella',end:'Rua Oscar Freire, 45',dist:'1,2 km',hrs:'06h-20h',svcs:'Depósito · Boleto'},
+  {nome:'Supermercado Extra',end:'Av. Rebouças, 3970',dist:'1,8 km',hrs:'07h-23h',svcs:'Saque · Depósito · Abertura de conta'},
+  {nome:'Casa Lotérica Metrô',end:'R. da Consolação, 890',dist:'2,1 km',hrs:'08h-21h',svcs:'Todos os serviços'},
+];
+function openMapa(){
+  buildMapaLista(CORRESPONDENTES);
+  document.getElementById('modal-mapa').style.display='flex';
+}
+function closeMapa(){document.getElementById('modal-mapa').style.display='none';}
+function buildMapaLista(lista){
+  document.getElementById('mapa-lista').innerHTML=lista.map(c=>`
+    <div style="background:#fff;border-radius:11px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:13.5px;font-weight:700">📍 ${c.nome}</div>
+        <div style="font-size:11.5px;color:var(--muted)">${c.end} · ⏱ ${c.hrs}</div>
+        <div style="font-size:11px;color:#047857;margin-top:2px">${c.svcs}</div></div>
+      <div style="text-align:right"><div style="font-size:14px;font-weight:800;color:#047857">${c.dist}</div>
+        <button onclick="closeMapa();showToast('🗺️ Rota para ${c.nome} iniciada!','info')" style="font-size:11px;padding:4px 9px;background:#047857;color:#fff;border:none;border-radius:8px;cursor:pointer;margin-top:4px">Ir →</button></div>
+    </div>`).join('');
+}
+function buscarCorrespondentes(){
+  const cep=document.getElementById('mapa-cep').value.trim();
+  if(!cep){showToast('❌ Digite um CEP ou cidade!','err');return;}
+  showToast('🔍 Buscando correspondentes...','info');
+  setTimeout(()=>{buildMapaLista(CORRESPONDENTES);showToast('✅ 5 correspondentes encontrados!','success');},800);
+}
+
+/* ══════════════════════════════════════════════
+   FUNÇÕES AUXILIARES ADICIONAIS
+══════════════════════════════════════════════ */
+function agendarKYC(){
+  showToast('📅 KYC agendado! Um motoboy chegará em até 4h.','success');
 }
 
 /* UTILS */
