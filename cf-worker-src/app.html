@@ -104,9 +104,9 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* Headline — fluid, fills entire panel width */
 .lgn-headline{
-  font-size:clamp(44px,5.5vw,72px);
+  font-size:clamp(36px,4.2vw,58px);
   font-weight:900;color:#fff;line-height:1.08;
-  letter-spacing:-3px;margin-bottom:20px;
+  letter-spacing:-2px;margin-bottom:16px;
   position:relative;z-index:1;
   width:100%;max-width:100%;
 }
@@ -2035,63 +2035,106 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="font-size:13px;opacity:.65;margin-bottom:4px">🛍️ Marketplace KaiNowPay</div>
             <h2 style="font-size:24px;font-weight:900;margin-bottom:5px">Compre e pague com seu saldo</h2>
             <p style="font-size:14px;opacity:.75">Powered by Medusa Commerce · Frete grátis acima de R$ 150</p>
-            <div style="display:flex;gap:10px;margin-top:16px">
+            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
               <span class="chip" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff">🏷️ Sem juros no débito</span>
               <span class="chip" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff">⚡ Cashback PIX</span>
+              <span class="chip" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff" id="mktCartBadge">🛒 Carrinho: 0 itens</span>
             </div>
           </div>
+        </div>
+
+        <!-- Filtros por categoria -->
+        <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+          <button class="btn-sm btn-p" onclick="mktFiltrar('todos')" id="mktf-todos" style="padding:7px 16px;font-size:12.5px">Todos</button>
+          <button class="btn-sm" onclick="mktFiltrar('Eletrônicos')" id="mktf-elet" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">📱 Eletrônicos</button>
+          <button class="btn-sm" onclick="mktFiltrar('Computadores')" id="mktf-comp" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">💻 Computadores</button>
+          <button class="btn-sm" onclick="mktFiltrar('Games')" id="mktf-games" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">🎮 Games</button>
+          <button class="btn-sm" onclick="mktFiltrar('Wearables')" id="mktf-wear" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">⌚ Wearables</button>
+          <button class="btn-sm" onclick="mktFiltrar('Áudio')" id="mktf-audio" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">🎧 Áudio</button>
         </div>
 
         <div class="sec-title mb16">Em destaque</div>
         <div class="prod-grid" id="prodGrid"></div>
 
-        <div class="sec-title mb16">Meus pedidos</div>
+        <div class="sec-title mb16" style="margin-top:24px">Meus pedidos</div>
         <div id="ordersList"></div>
       </div>
 
       <!-- ██ CRM (Twenty-inspired) ██ -->
       <div class="page" id="page-crm">
         <div class="crm-hero">
-          <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
             <div>
               <div style="font-size:13px;opacity:.65;margin-bottom:4px">👥 CRM · Powered by Twenty</div>
               <h2 style="font-size:22px;font-weight:900;margin-bottom:5px">Gestão de clientes e oportunidades</h2>
               <p style="font-size:13.5px;opacity:.75">Open-source CRM integrado à plataforma bancária</p>
             </div>
-            <div style="text-align:right">
-              <div style="font-size:12px;opacity:.55;margin-bottom:3px">Pipeline total</div>
-              <div style="font-size:32px;font-weight:900">R$ 284.500</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div style="text-align:right">
+                <div style="font-size:12px;opacity:.55;margin-bottom:3px">Pipeline total</div>
+                <div style="font-size:28px;font-weight:900">R$ 284.500</div>
+              </div>
+              <button class="btn" onclick="crmNovoContato()" style="background:rgba(255,255,255,.18);color:#fff;border:1.5px solid rgba(255,255,255,.3);font-size:13px;padding:9px 18px;border-radius:10px;white-space:nowrap">＋ Novo Contato</button>
             </div>
           </div>
+        </div>
+
+        <!-- Busca + filtros -->
+        <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px;position:relative">
+            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px">🔍</span>
+            <input id="crmSearch" oninput="crmFiltrarContatos()" placeholder="Buscar contatos..." style="width:100%;padding:10px 12px 10px 36px;border:1.5px solid var(--border);border-radius:11px;font-size:13.5px;background:var(--bg);color:var(--txt);font-family:inherit;box-sizing:border-box">
+          </div>
+          <select id="crmFiltroTipo" onchange="crmFiltrarContatos()" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:11px;font-size:13px;background:var(--bg);color:var(--txt);cursor:pointer">
+            <option value="">Todos os tipos</option>
+            <option value="PF">PF</option>
+            <option value="PJ">PJ</option>
+          </select>
+          <select id="crmFiltroStatus" onchange="crmFiltrarContatos()" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:11px;font-size:13px;background:var(--bg);color:var(--txt);cursor:pointer">
+            <option value="">Todos os status</option>
+            <option value="Ativo">Ativo</option>
+            <option value="VIP">VIP</option>
+          </select>
         </div>
 
         <div class="sec-title mb16">Pipeline de oportunidades</div>
         <div class="crm-cols" id="crmCols"></div>
 
-        <div class="sec-title mb16">Contatos recentes</div>
+        <div class="sec-title mb16" style="margin-top:24px">Contatos <span id="crmContatosCount" style="font-size:12px;color:var(--muted);font-weight:400"></span></div>
         <div class="card" style="padding:0;overflow:hidden"><table class="contact-tbl" id="crmTbl"></table></div>
       </div>
 
       <!-- ██ DOCUMENTOS (Documenso-inspired) ██ -->
       <div class="page" id="page-documentos">
         <div class="doc-hero">
-          <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
             <div>
               <div style="font-size:13px;opacity:.65;margin-bottom:4px">📝 Assinatura Digital · Powered by Documenso</div>
               <h2 style="font-size:22px;font-weight:900;margin-bottom:5px">Documentos e contratos</h2>
               <p style="font-size:13.5px;opacity:.75">Assine, envie e gerencie contratos com validade jurídica</p>
             </div>
-            <div style="text-align:right">
-              <div style="font-size:12px;opacity:.55;margin-bottom:3px">Assinados este mês</div>
-              <div style="font-size:32px;font-weight:900">24 docs</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div style="text-align:center">
+                <div style="font-size:12px;opacity:.55;margin-bottom:3px">Assinados este mês</div>
+                <div style="font-size:28px;font-weight:900">24 docs</div>
+              </div>
+              <button class="btn" onclick="docNovoUpload()" style="background:rgba(255,255,255,.18);color:#fff;border:1.5px solid rgba(255,255,255,.3);font-size:13px;padding:9px 18px;border-radius:10px;white-space:nowrap">📤 Upload</button>
             </div>
           </div>
+        </div>
+
+        <!-- Filtro de status -->
+        <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+          <button onclick="docFiltrar('todos')" class="btn-sm btn-p" id="docf-todos" style="padding:7px 16px;font-size:12.5px">Todos</button>
+          <button onclick="docFiltrar('Assinado')" class="btn-sm" id="docf-assinado" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">✅ Assinados</button>
+          <button onclick="docFiltrar('Pendente')" class="btn-sm" id="docf-pendente" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">⏳ Pendentes</button>
+          <button onclick="docFiltrar('Recusado')" class="btn-sm" id="docf-recusado" style="padding:7px 16px;font-size:12.5px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--txt)">❌ Recusados</button>
         </div>
 
         <div class="sec-title mb16">Templates de documentos bancários</div>
         <div class="doc-grid" id="docGrid"></div>
 
-        <div class="sec-title mb16">Documentos recentes</div>
+        <div class="sec-title mb16" style="margin-top:24px">Documentos recentes</div>
         <div id="docList"></div>
       </div>
 
@@ -4424,6 +4467,7 @@ function goPage(name,el){
   else document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"))n.classList.add('active')});
   document.getElementById('pgTitle').textContent=TITLES[name]||name;
   document.getElementById('contentArea').scrollTop=0;
+  onPageOpen('page-'+name);
 }
 
 /* BALANCE */
@@ -7052,15 +7096,233 @@ function exportarComissoes(){
   showToast('⬇️ Planilha de comissões exportada com sucesso!','success');
 }
 
-// Inicializar módulos quando página for exibida
-const _origShowPage=showPage;
-function showPage(id){
-  _origShowPage(id);
+// ══════════════════════════════════════════════════════
+// ██  MARKETPLACE — FUNÇÕES INTERATIVAS  ██
+// ══════════════════════════════════════════════════════
+let mktCart = [];
+let mktFiltroAtual = 'todos';
+
+function mktFiltrar(cat){
+  mktFiltroAtual = cat;
+  // Update button styles
+  ['todos','elet','comp','games','wear','audio'].forEach(k=>{
+    const btn = document.getElementById('mktf-'+k);
+    if(btn) btn.style.background='var(--bg2)', btn.style.color='var(--txt)', btn.style.border='1px solid var(--border)';
+  });
+  const map = {todos:'todos',Eletrônicos:'elet',Computadores:'comp',Games:'games',Wearables:'wear','Áudio':'audio'};
+  const activeKey = map[cat]||'todos';
+  const activeBtn = document.getElementById('mktf-'+activeKey);
+  if(activeBtn) activeBtn.style.background='var(--p1)', activeBtn.style.color='#fff', activeBtn.style.border='1px solid var(--p1)';
+  buildProducts(cat==='todos'?null:cat);
+}
+
+function buildProducts(filtro){
+  const list = filtro ? PRODUCTS.filter(p=>p.cat===filtro) : PRODUCTS;
+  const el = document.getElementById('prodGrid');
+  if(!el) return;
+  el.innerHTML = list.map(p=>`
+    <div class="prod-card">
+      <div class="prod-img" style="background:${p.bg}20">${p.icon}</div>
+      <div class="prod-info">
+        <div class="pn">${p.name}</div>
+        <div class="pd">${p.desc}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div class="pp">${p.price}</div>
+          <span class="badge bg-teal" style="font-size:10px">${p.cat}</span>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn-sm btn-p" style="flex:1;justify-content:center;padding:8px;font-size:12px" onclick="mktAddCart('${p.name}','${p.price}')">🛒 Carrinho</button>
+          <button class="btn-sm" style="padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;cursor:pointer;font-size:12px" onclick="mktComprar('${p.name}','${p.price}')">⚡ Comprar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function mktAddCart(nome, preco){
+  mktCart.push({nome,preco});
+  const badge = document.getElementById('mktCartBadge');
+  if(badge) badge.textContent = `🛒 Carrinho: ${mktCart.length} ${mktCart.length===1?'item':'itens'}`;
+  showToast(`🛒 ${nome} adicionado ao carrinho!`,'info');
+}
+
+function mktComprar(nome, preco){
+  showToast(`⚡ Processando compra de ${nome} por ${preco} via KaiNowPay...`,'success');
+  setTimeout(()=>{ showToast(`✅ Compra de ${nome} aprovada! Cashback PIX em 24h.`,'success'); },2000);
+}
+
+// ══════════════════════════════════════════════════════
+// ██  CRM TWENTY — FUNÇÕES INTERATIVAS  ██
+// ══════════════════════════════════════════════════════
+function crmFiltrarContatos(){
+  const busca = (document.getElementById('crmSearch')?.value||'').toLowerCase();
+  const tipo  = document.getElementById('crmFiltroTipo')?.value||'';
+  const stat  = document.getElementById('crmFiltroStatus')?.value||'';
+  const lista = CRM_CONTACTS.filter(c=>{
+    const matchBusca = !busca || c.name.toLowerCase().includes(busca) || c.email.toLowerCase().includes(busca);
+    const matchTipo  = !tipo  || c.type===tipo;
+    const matchStat  = !stat  || c.status===stat;
+    return matchBusca && matchTipo && matchStat;
+  });
+  const count = document.getElementById('crmContatosCount');
+  if(count) count.textContent = `(${lista.length})`;
+  const tbl = document.getElementById('crmTbl');
+  if(!tbl) return;
+  tbl.innerHTML=`
+    <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Tipo</th><th>Status</th><th>Ações</th></tr></thead>
+    <tbody>${lista.map(c=>`
+      <tr>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <div class="ctav" style="background:${c.color}">${c.name.charAt(0)}</div>
+          <strong>${c.name}</strong>
+        </div></td>
+        <td>${c.email}</td><td>${c.phone}</td>
+        <td><span class="badge bg-inf">${c.type}</span></td>
+        <td><span class="badge ${c.status==='VIP'?'bg-pur':'bg-ok'}">${c.status}</span></td>
+        <td>
+          <button style="font-size:11px;padding:4px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;cursor:pointer;color:var(--txt)" onclick="crmVerContato('${c.name}','${c.email}','${c.phone}')">👁 Ver</button>
+          <button style="font-size:11px;padding:4px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;cursor:pointer;color:var(--txt);margin-left:4px" onclick="showToast('✉️ E-mail enviado para ${c.name}!','info')">✉️ Email</button>
+        </td>
+      </tr>`).join('')}</tbody>`;
+}
+
+function buildCRM(){
+  document.getElementById('crmCols').innerHTML=Object.entries(CRM_PIPELINE).map(([col,cards])=>`
+    <div class="crm-col">
+      <div class="crm-col-header">
+        <span>${col}</span>
+        <span class="badge bg-inf">${cards.length}</span>
+      </div>
+      ${cards.map(c=>`
+        <div class="crm-card" onclick="showToast('📋 ${c.t} — ${c.v}','info')" style="cursor:pointer">
+          <div class="cct">${c.t}</div>
+          <div class="ccv">${c.v}</div>
+          <div class="ccs">${c.s}</div>
+          <div style="display:flex;gap:5px;margin-top:8px">
+            <button style="font-size:10px;padding:3px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;cursor:pointer;color:var(--txt)" onclick="event.stopPropagation();showToast('📝 Editando: ${c.t}','info')">Editar</button>
+            <button style="font-size:10px;padding:3px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;cursor:pointer;color:var(--txt)" onclick="event.stopPropagation();showToast('📞 Ligando para ${c.s}...','info')">Ligar</button>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+  crmFiltrarContatos();
+}
+
+function crmVerContato(nome,email,tel){
+  showToast(`👤 ${nome} · ${email} · ${tel}`,'info');
+}
+
+function crmNovoContato(){
+  const nome = prompt('Nome do contato:');
+  if(!nome) return;
+  const email = prompt('E-mail:') || '';
+  CRM_CONTACTS.unshift({name:nome, email:email||nome.toLowerCase().replace(' ','.')+'@email.com',
+    phone:'+55 11 9'+Math.floor(Math.random()*9000+1000)+'-'+Math.floor(Math.random()*9000+1000),
+    type:'PF', status:'Ativo', color:'#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0')});
+  crmFiltrarContatos();
+  showToast(`✅ Contato ${nome} adicionado com sucesso!`,'success');
+}
+
+// ══════════════════════════════════════════════════════
+// ██  DOCUMENTOS — FUNÇÕES INTERATIVAS  ██
+// ══════════════════════════════════════════════════════
+let docFiltroAtual = 'todos';
+
+function docFiltrar(status){
+  docFiltroAtual = status;
+  ['todos','assinado','pendente','recusado'].forEach(k=>{
+    const btn = document.getElementById('docf-'+k);
+    if(btn) btn.style.background='var(--bg2)', btn.style.color='var(--txt)', btn.style.border='1px solid var(--border)';
+  });
+  const map = {todos:'todos',Assinado:'assinado',Pendente:'pendente',Recusado:'recusado'};
+  const activeBtn = document.getElementById('docf-'+(map[status]||'todos'));
+  if(activeBtn) activeBtn.style.background='var(--p1)', activeBtn.style.color='#fff', activeBtn.style.border='1px solid var(--p1)';
+  buildDocs(status==='todos'?null:status);
+}
+
+function buildDocs(filtro){
+  const lista = filtro ? DOCS.filter(d=>d.status===filtro) : DOCS;
+  const el = document.getElementById('docList');
+  if(!el) return;
+  el.innerHTML = lista.length ? lista.map(d=>`
+    <div class="doc-row">
+      <div class="di">${d.icon}</div>
+      <div class="dinfo"><div class="dn">${d.name}</div><div class="dd">${d.desc}</div></div>
+      <div class="dright">
+        <div class="dstat ${d.sc==='ok'?'text-ok':'text-warn'}">${d.status==='Assinado'?'✅':d.status==='Pendente'?'⏳':'❌'} ${d.status}</div>
+        <div class="ddate">${d.date}</div>
+      </div>
+      <div style="display:flex;gap:5px;margin-top:8px;padding:0 16px 12px">
+        ${d.status==='Pendente'?`<button style="font-size:11px;padding:5px 12px;background:var(--p1);color:#fff;border:none;border-radius:8px;cursor:pointer" onclick="docAssinar('${d.name}')">✍️ Assinar</button>`:''}
+        <button style="font-size:11px;padding:5px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--txt)" onclick="showToast('📄 Baixando ${d.name}...','info')">⬇️ Baixar</button>
+        <button style="font-size:11px;padding:5px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--txt)" onclick="showToast('📤 Enviando ${d.name} por e-mail...','info')">📤 Enviar</button>
+      </div>
+    </div>`).join('') : '<div style="text-align:center;padding:32px;color:var(--muted);font-size:14px">Nenhum documento encontrado</div>';
+}
+
+function docAssinar(nome){
+  const doc = DOCS.find(d=>d.name===nome);
+  if(doc){ doc.status='Assinado'; doc.sc='ok'; }
+  showToast(`✍️ Assinando ${nome} com certificado ICP-Brasil...`,'info');
+  setTimeout(()=>{
+    showToast(`✅ ${nome} assinado com sucesso!`,'success');
+    buildDocs(docFiltroAtual==='todos'?null:docFiltroAtual);
+  },2000);
+}
+
+function buildDocTemplates(){
+  const el = document.getElementById('docGrid');
+  if(!el) return;
+  el.innerHTML=DOC_TEMPLATES.map(d=>`
+    <div class="doc-card" onclick="docUsarTemplate('${d.name}')">
+      <div class="dci">${d.icon}</div>
+      <div class="dcn">${d.name}</div>
+      <div class="dcd">${d.desc}</div>
+      <div class="dcs">
+        <div style="display:flex;gap:5px;flex-wrap:wrap">${d.tags.map(t=>`<span class="badge bg-teal" style="font-size:10px">${t}</span>`).join('')}</div>
+        <button class="btn-sm btn-p" style="padding:5px 11px;font-size:11px" onclick="event.stopPropagation();docUsarTemplate('${d.name}')">Usar</button>
+      </div>
+    </div>`).join('');
+}
+
+function docUsarTemplate(nome){
+  showToast(`📝 Abrindo template: ${nome}...`,'info');
+  setTimeout(()=>{
+    const novo = {icon:'📋', name:`${nome} — Novo`, desc:'João da Silva · Pendente assinatura',
+      date:new Date().toLocaleDateString('pt-BR'), status:'Pendente', sc:'warn'};
+    DOCS.unshift(novo);
+    buildDocs(null);
+    showToast(`✅ Documento criado a partir do template "${nome}"!`,'success');
+  },1500);
+}
+
+function docNovoUpload(){
+  showToast('📤 Abrindo seletor de arquivo...','info');
+  setTimeout(()=>{
+    const novo = {icon:'📎', name:`Documento Upload ${DOCS.length+1}`,
+      desc:'Upload manual · Aguardando assinatura',
+      date:new Date().toLocaleDateString('pt-BR'), status:'Pendente', sc:'warn'};
+    DOCS.unshift(novo);
+    buildDocs(null);
+    showToast('✅ Arquivo carregado! Pronto para assinar.','success');
+  },1500);
+}
+
+
+// Hook de página — disparado pelo goPage()
+function onPageOpen(id){
   if(id==='page-correspondente'){
     setTimeout(()=>{ crmInit(); },80);
   }
   if(id==='page-saude'){
     setTimeout(()=>{ saudeInit(); },80);
+  }
+  if(id==='page-marketplace'){
+    buildProducts(); buildOrders();
+  }
+  if(id==='page-crm'){
+    buildCRM();
+  }
+  if(id==='page-documentos'){
+    buildDocTemplates(); buildDocs();
   }
 }
 </script>
