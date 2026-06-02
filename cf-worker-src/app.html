@@ -1232,6 +1232,31 @@ input,select,textarea{font-family:inherit;outline:none}
           </div>
         </div>
 
+        <!-- imprimirExtrato() Terminal Java -->
+        <div class="sec-title mb16">📄 imprimirExtrato() — Saída Java em tempo real</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px">
+          <div style="background:#0d0d1a;border-radius:13px;padding:18px;font-family:monospace;font-size:11.5px;color:#a5f3fc">
+            <div style="color:#4ade80;margin-bottom:6px">// ContaCorrente.java — imprimirExtrato()</div>
+            <div style="color:#fbbf24">===== Extrato da Conta Corrente =====</div>
+            <div style="color:#a5f3fc;margin-top:6px">Titular: João da Silva</div>
+            <div style="color:#a5f3fc">Agência: 0001 | Número: 12345-6</div>
+            <div style="color:#a5f3fc;margin-top:6px" id="cc-terminal-lines"></div>
+            <div style="color:#4ade80;margin-top:8px" id="cc-terminal-saldo">Saldo: R$ 8.420,50</div>
+            <div style="color:#6ee7b7;margin-top:4px">=====================================</div>
+            <div style="color:#e879f9;margin-top:4px">// ContaCorrente usa cheque especial: R$ 500,00</div>
+          </div>
+          <div style="background:#0d0d1a;border-radius:13px;padding:18px;font-family:monospace;font-size:11.5px;color:#a5f3fc">
+            <div style="color:#4ade80;margin-bottom:6px">// ContaPoupanca.java — imprimirExtrato()</div>
+            <div style="color:#fbbf24">===== Extrato da Conta Poupança =====</div>
+            <div style="color:#a5f3fc;margin-top:6px">Titular: João da Silva</div>
+            <div style="color:#a5f3fc">Agência: 0001 | Número: 54321-0</div>
+            <div style="color:#a5f3fc;margin-top:6px" id="cp-terminal-lines"></div>
+            <div style="color:#4ade80;margin-top:8px" id="cp-terminal-saldo">Saldo: R$ 24.850,00</div>
+            <div style="color:#6ee7b7;margin-top:4px">=====================================</div>
+            <div style="color:#e879f9;margin-top:4px">// ContaPoupanca rendimento: 0,5% a.m. + TR</div>
+          </div>
+        </div>
+
         <!-- Lista de Clientes -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
           <div class="sec-title" style="margin:0">👥 Lista de Clientes do Banco (método mostrarListaClientes)</div>
@@ -1250,6 +1275,35 @@ input,select,textarea{font-family:inherit;outline:none}
             </tr></thead>
             <tbody id="clientesTbl"></tbody>
           </table>
+        </div>
+
+        <!-- Modal Operação Conta -->
+        <div id="modal-conta-op" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center">
+          <div style="background:#fff;border-radius:20px;padding:32px;width:420px;max-width:94vw;box-shadow:0 20px 60px rgba(0,0,0,.25)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+              <div style="font-size:18px;font-weight:800" id="mco-title">💳 Operação Bancária</div>
+              <button onclick="closeContaModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">×</button>
+            </div>
+            <div class="f-grp" style="margin-bottom:14px">
+              <label class="f-label">Conta</label>
+              <div id="mco-conta-info" style="background:var(--bg);border-radius:9px;padding:11px 14px;font-size:14px;font-weight:700;border:1.5px solid var(--border)">🏦 Conta Corrente — 12345-6</div>
+            </div>
+            <div class="f-grp" style="margin-bottom:14px">
+              <label class="f-label">Valor (R$)</label>
+              <input class="f-inp w-full" id="mco-valor" type="number" placeholder="0,00" min="0.01" step="0.01" style="font-size:18px;font-weight:700;border-radius:9px;padding:12px 14px">
+            </div>
+            <div class="f-grp" id="mco-dest-grp" style="margin-bottom:14px;display:none">
+              <label class="f-label">Conta destino</label>
+              <select class="f-inp w-full" id="mco-dest" style="border-radius:9px;padding:11px 14px">
+                <option value="cp">🌱 Conta Poupança — 54321-0</option>
+              </select>
+            </div>
+            <div class="f-grp" style="margin-bottom:18px">
+              <label class="f-label">Descrição</label>
+              <input class="f-inp w-full" id="mco-desc" placeholder="Ex: Depósito em dinheiro" style="border-radius:9px;padding:11px 14px">
+            </div>
+            <button class="btn btn-primary" onclick="confirmarContaModal()" style="width:100%;padding:13px;font-size:15px;font-weight:700" id="mco-btn">✅ Confirmar</button>
+          </div>
         </div>
       </div>
 
@@ -1320,7 +1374,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
           <div>
             <div class="sec-title mb16">📋 Terminal — imprimirExtrato()</div>
-            <div style="background:#0d0d1a;border-radius:13px;padding:20px;font-family:monospace;font-size:12.5px;color:#a5f3fc;min-height:400px;max-height:520px;overflow-y:auto" id="sim-terminal">
+            <div style="background:#0d0d1a;border-radius:13px;padding:20px;font-family:monospace;font-size:12.5px;color:#a5f3fc;min-height:300px;max-height:380px;overflow-y:auto" id="sim-terminal">
               <div style="color:#4ade80;margin-bottom:8px">╔══════════════════════════════════════╗</div>
               <div style="color:#4ade80;margin-bottom:8px">║   🏦  MeuBanco Digital — Terminal    ║</div>
               <div style="color:#4ade80;margin-bottom:16px">╚══════════════════════════════════════╝</div>
@@ -1331,6 +1385,67 @@ input,select,textarea{font-family:inherit;outline:none}
               <div style="color:#a5f3fc">  Agência: 0001 | Número: 2 | Saldo: R$ 24.850,00</div>
               <div style="color:#6ee7b7;margin-top:10px">— Aguardando operação... —</div>
             </div>
+
+            <!-- Histórico de transações do simulador -->
+            <div class="sec-title mb12" style="margin-top:18px">📊 Histórico de Operações POO</div>
+            <div class="card" style="padding:0;overflow:hidden;max-height:240px;overflow-y:auto">
+              <table style="width:100%;border-collapse:collapse" id="sim-historico-tbl">
+                <thead><tr style="background:var(--bg);position:sticky;top:0">
+                  <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted);font-weight:600">HORA</th>
+                  <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted);font-weight:600">CONTA</th>
+                  <th style="padding:9px 12px;text-align:left;font-size:11px;color:var(--muted);font-weight:600">OPERAÇÃO</th>
+                  <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted);font-weight:600">VALOR</th>
+                  <th style="padding:9px 12px;text-align:right;font-size:11px;color:var(--muted);font-weight:600">SALDO APÓS</th>
+                </tr></thead>
+                <tbody id="sim-historico-body">
+                  <tr><td colspan="5" style="padding:16px;text-align:center;color:var(--muted);font-size:12.5px">Nenhuma operação executada ainda. Use o painel ao lado! 👈</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Código Java POO fonte -->
+        <div class="sec-title mb16" style="margin-top:24px">☕ Código Java POO — Fonte (rosacarla/Banco-digital-com-Java-POO)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div style="background:#0d0d1a;border-radius:13px;padding:18px;font-family:monospace;font-size:11px;color:#a5f3fc;overflow-x:auto">
+            <div style="color:#6ee7b7;margin-bottom:8px">// abstract class Conta.java</div>
+            <div style="color:#e879f9">abstract class <span style="color:#fbbf24">Conta</span> {</div>
+            <div style="color:#a5f3fc;padding-left:16px">private static final int AGENCIA_PADRAO = 1;</div>
+            <div style="color:#a5f3fc;padding-left:16px">private static int SEQUENCIAL = 1;</div>
+            <div style="color:#a5f3fc;padding-left:16px;margin-top:4px">protected int agencia;</div>
+            <div style="color:#a5f3fc;padding-left:16px">protected int numero;</div>
+            <div style="color:#a5f3fc;padding-left:16px">protected double saldo;</div>
+            <div style="color:#a5f3fc;padding-left:16px">protected Cliente cliente;</div>
+            <div style="color:#6ee7b7;padding-left:16px;margin-top:6px">// depositar() e sacar() implementados aqui</div>
+            <div style="color:#e879f9;margin-top:4px">}</div>
+            <div style="color:#6ee7b7;margin-top:10px">// interface IConta.java</div>
+            <div style="color:#e879f9">interface <span style="color:#fbbf24">IConta</span> {</div>
+            <div style="color:#a5f3fc;padding-left:16px">void sacar(double valor);</div>
+            <div style="color:#a5f3fc;padding-left:16px">void depositar(double valor);</div>
+            <div style="color:#a5f3fc;padding-left:16px">void transferir(double valor, IConta contaDestino);</div>
+            <div style="color:#a5f3fc;padding-left:16px">void imprimirExtrato();</div>
+            <div style="color:#e879f9">}</div>
+          </div>
+          <div style="background:#0d0d1a;border-radius:13px;padding:18px;font-family:monospace;font-size:11px;color:#a5f3fc;overflow-x:auto">
+            <div style="color:#6ee7b7;margin-bottom:8px">// ContaCorrente.java extends Conta</div>
+            <div style="color:#e879f9">public class <span style="color:#fbbf24">ContaCorrente</span> extends Conta implements IConta {</div>
+            <div style="color:#a5f3fc;padding-left:16px;margin-top:4px">@Override</div>
+            <div style="color:#a5f3fc;padding-left:16px">public void imprimirExtrato() {</div>
+            <div style="color:#a5f3fc;padding-left:32px">System.out.println("=== Conta Corrente ===");</div>
+            <div style="color:#a5f3fc;padding-left:32px">super.imprimirInfosComuns();</div>
+            <div style="color:#a5f3fc;padding-left:16px">}</div>
+            <div style="color:#6ee7b7;padding-left:16px;margin-top:6px">// cheque especial exclusivo CC</div>
+            <div style="color:#a5f3fc;padding-left:16px">private static final double LIMITE = 500.00;</div>
+            <div style="color:#e879f9">}</div>
+            <div style="color:#6ee7b7;margin-top:10px">// ContaPoupanca.java extends Conta</div>
+            <div style="color:#e879f9">public class <span style="color:#fbbf24">ContaPoupanca</span> extends Conta implements IConta {</div>
+            <div style="color:#a5f3fc;padding-left:16px;margin-top:4px">@Override</div>
+            <div style="color:#a5f3fc;padding-left:16px">public void imprimirExtrato() {</div>
+            <div style="color:#a5f3fc;padding-left:32px">System.out.println("=== Conta Poupança ===");</div>
+            <div style="color:#a5f3fc;padding-left:32px">super.imprimirInfosComuns();</div>
+            <div style="color:#a5f3fc;padding-left:16px">}</div>
+            <div style="color:#e879f9">}</div>
           </div>
         </div>
       </div>
@@ -2082,7 +2197,7 @@ function buildAll(){
   buildExtratoSum(); buildLoanTbl(); buildProducts(); buildOrders();
   buildCRM(); buildDocs(); buildDocTemplates(); buildIntegStatus();
   buildInvCards(); buildNotifs(); buildFAQ();
-  buildContaExtratos(); buildClientesTbl();
+  buildContaExtratos(); buildClientesTbl(); buildSimHistorico();
 }
 
 /* AUTH */
@@ -2478,7 +2593,9 @@ const CLIENTES_BANCO = [
 
 function buildContaExtratos(){
   function renderHist(hist,elId){
-    document.getElementById(elId).innerHTML = hist.slice().reverse().map(h=>`
+    const el = document.getElementById(elId);
+    if(!el) return;
+    el.innerHTML = hist.slice().reverse().map(h=>`
       <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:${h.op==='credit'?'#f0fdf4':'#fef2f2'};border-radius:8px;border-left:3px solid ${h.op==='credit'?'var(--ok)':'var(--err)'}">
         <div><div style="font-size:12px;font-weight:600;color:var(--txt)">${h.desc}</div><div style="font-size:10.5px;color:var(--muted)">${h.date}</div></div>
         <div style="font-size:13px;font-weight:800;color:${h.op==='credit'?'var(--ok)':'var(--err)'}">${h.op==='credit'?'+':'−'} R$ ${fmt(h.val)}</div>
@@ -2486,6 +2603,15 @@ function buildContaExtratos(){
   }
   renderHist(ccHistorico,'cc-extrato');
   renderHist(cpHistorico,'cp-extrato');
+  // Atualiza terminais Java na page-contas
+  const ccTermEl = document.getElementById('cc-terminal-lines');
+  const cpTermEl = document.getElementById('cp-terminal-lines');
+  const ccSaldoEl = document.getElementById('cc-terminal-saldo');
+  const cpSaldoEl = document.getElementById('cp-terminal-saldo');
+  if(ccTermEl) ccTermEl.innerHTML = ccHistorico.slice().reverse().slice(0,4).map(h=>`<div style="color:${h.op==='credit'?'#4ade80':'#f87171'}">${h.op==='credit'?'+ R$ ':'- R$ '}${fmt(h.val)} &nbsp;·&nbsp; ${h.desc} &nbsp;(${h.date})</div>`).join('');
+  if(cpTermEl) cpTermEl.innerHTML = cpHistorico.slice().reverse().slice(0,4).map(h=>`<div style="color:${h.op==='credit'?'#4ade80':'#f87171'}">${h.op==='credit'?'+ R$ ':'- R$ '}${fmt(h.val)} &nbsp;·&nbsp; ${h.desc} &nbsp;(${h.date})</div>`).join('');
+  if(ccSaldoEl) ccSaldoEl.textContent = 'Saldo: R$ '+fmt(ccSaldo);
+  if(cpSaldoEl) cpSaldoEl.textContent = 'Saldo: R$ '+fmt(cpSaldo);
 }
 
 function buildClientesTbl(){
@@ -2507,16 +2633,89 @@ function buildClientesTbl(){
   }).join('');
 }
 
+/* ══════════════════════════════════════════════
+   MODAL OPERAÇÕES CONTA (page-contas)
+══════════════════════════════════════════════ */
+let mcoContaAtual='cc', mcoOpAtual='deposito';
 function openContaOp(conta,op){
-  goPage('simulador',null);
-  selSimConta(conta);
-  selSimOp(op);
+  mcoContaAtual=conta; mcoOpAtual=op;
+  const titles={deposito:'⬇️ Depositar',saque:'⬆️ Sacar',transferir:'🔄 Transferir'};
+  document.getElementById('mco-title').textContent = titles[op];
+  const contaInfo = conta==='cc'?'🏦 Conta Corrente — 12345-6':'🌱 Conta Poupança — 54321-0';
+  document.getElementById('mco-conta-info').textContent = contaInfo;
+  const destGrp = document.getElementById('mco-dest-grp');
+  if(op==='transferir'){
+    destGrp.style.display='block';
+    document.getElementById('mco-dest').innerHTML = conta==='cc'
+      ? '<option value="cp">🌱 Conta Poupança — 54321-0</option>'
+      : '<option value="cc">🏦 Conta Corrente — 12345-6</option>';
+  } else { destGrp.style.display='none'; }
+  document.getElementById('mco-valor').value='';
+  document.getElementById('mco-desc').value='';
+  const btnLabels={deposito:'⬇️ Confirmar Depósito',saque:'⬆️ Confirmar Saque',transferir:'🔄 Confirmar Transferência'};
+  document.getElementById('mco-btn').textContent = btnLabels[op];
+  const modal = document.getElementById('modal-conta-op');
+  modal.style.display='flex';
+}
+function closeContaModal(){
+  document.getElementById('modal-conta-op').style.display='none';
+}
+function confirmarContaModal(){
+  const val = parseFloat(document.getElementById('mco-valor').value);
+  const desc = document.getElementById('mco-desc').value.trim() || (mcoOpAtual==='deposito'?'Depósito':mcoOpAtual==='saque'?'Saque':'Transferência');
+  if(isNaN(val)||val<=0){showToast('❌ Informe um valor válido!','err');return;}
+  const now = new Date().toLocaleDateString('pt-BR');
+  if(mcoOpAtual==='deposito'){
+    if(mcoContaAtual==='cc'){ccSaldo+=val;ccHistorico.push({op:'credit',desc,val,date:now});}
+    else{cpSaldo+=val;cpHistorico.push({op:'credit',desc,val,date:now});}
+    showToast(`✅ Depósito de R$ ${fmt(val)} realizado!`,'success');
+  } else if(mcoOpAtual==='saque'){
+    const s=mcoContaAtual==='cc'?ccSaldo:cpSaldo;
+    if(val>s){showToast('❌ Saldo insuficiente!','err');return;}
+    if(mcoContaAtual==='cc'){ccSaldo-=val;ccHistorico.push({op:'debit',desc,val,date:now});}
+    else{cpSaldo-=val;cpHistorico.push({op:'debit',desc,val,date:now});}
+    showToast(`✅ Saque de R$ ${fmt(val)} realizado!`,'success');
+  } else if(mcoOpAtual==='transferir'){
+    const dest=document.getElementById('mco-dest').value;
+    const s=mcoContaAtual==='cc'?ccSaldo:cpSaldo;
+    if(val>s){showToast('❌ Saldo insuficiente!','err');return;}
+    if(mcoContaAtual==='cc'){ccSaldo-=val;ccHistorico.push({op:'debit',desc:'Transf. → Poupança',val,date:now});}
+    else{cpSaldo-=val;cpHistorico.push({op:'debit',desc:'Transf. → Corrente',val,date:now});}
+    if(dest==='cc'){ccSaldo+=val;ccHistorico.push({op:'credit',desc:'Transf. recebida ← Poupança',val,date:now});}
+    else{cpSaldo+=val;cpHistorico.push({op:'credit',desc:'Transf. recebida ← Corrente',val,date:now});}
+    showToast(`✅ Transferência de R$ ${fmt(val)} realizada!`,'success');
+  }
+  // Atualiza saldos na tela
+  document.getElementById('cc-saldo').textContent='R$ '+fmt(ccSaldo);
+  document.getElementById('cp-saldo').textContent='R$ '+fmt(cpSaldo);
+  document.getElementById('sim-cc-bal').textContent='R$ '+fmt(ccSaldo);
+  document.getElementById('sim-cp-bal').textContent='R$ '+fmt(cpSaldo);
+  buildContaExtratos(); buildClientesTbl(); buildSimHistorico();
+  closeContaModal();
 }
 
 /* ══════════════════════════════════════════════
    SIMULADOR POO
 ══════════════════════════════════════════════ */
 let simConta = 'cc', simOp = 'deposito';
+const simHistorico = []; // histórico das operações do simulador
+
+function buildSimHistorico(){
+  const tbody = document.getElementById('sim-historico-body');
+  if(!tbody) return;
+  if(simHistorico.length===0){
+    tbody.innerHTML='<tr><td colspan="5" style="padding:16px;text-align:center;color:var(--muted);font-size:12.5px">Nenhuma operação executada ainda. Use o painel ao lado! 👈</td></tr>';
+    return;
+  }
+  tbody.innerHTML = simHistorico.slice().reverse().map(h=>`
+    <tr style="border-bottom:1px solid var(--border)">
+      <td style="padding:9px 12px;font-size:11.5px;color:var(--muted);font-family:monospace">${h.hora}</td>
+      <td style="padding:9px 12px;font-size:11.5px;font-weight:700">${h.conta==='cc'?'🏦 CC':'🌱 CP'}</td>
+      <td style="padding:9px 12px"><span style="background:${h.tipo==='deposito'?'#d1fae5':h.tipo==='saque'?'#fee2e2':'#e0e7ff'};color:${h.tipo==='deposito'?'#047857':h.tipo==='saque'?'#dc2626':'#3730a3'};padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">${h.tipo==='deposito'?'⬇️ Depósito':h.tipo==='saque'?'⬆️ Saque':'🔄 Transferência'}</span></td>
+      <td style="padding:9px 12px;text-align:right;font-size:13px;font-weight:800;color:${h.tipo==='deposito'?'var(--ok)':h.tipo==='saque'?'var(--err)':'var(--p1)'}">R$ ${fmt(h.val)}</td>
+      <td style="padding:9px 12px;text-align:right;font-size:12.5px;font-weight:700;color:var(--p1)">R$ ${fmt(h.saldoApos)}</td>
+    </tr>`).join('');
+}
 
 function selSimConta(c){
   simConta = c;
@@ -2584,8 +2783,12 @@ function executarSimOp(){
   addTermLine(`<span style="color:#4ade80">  Saldo: R$ ${fmt(simConta==='cc'?ccSaldo:cpSaldo)}</span>`,term);
   addTermLine(`<span style="color:#6ee7b7">————————————————————————</span>`,term);
 
+  // Registra no histórico do simulador
+  simHistorico.push({hora:now,conta:simConta,tipo:simOp,val,saldoApos:simConta==='cc'?ccSaldo:cpSaldo,desc});
+
   buildContaExtratos();
   buildClientesTbl();
+  buildSimHistorico();
   document.getElementById('sim-valor').value='';
   document.getElementById('sim-desc').value='';
   showToast('✅ '+msg,'success');
