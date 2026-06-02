@@ -1766,7 +1766,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
                 <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0">📅 Próximas Consultas</h3>
-                <button onclick="saudeAba('saude-aba-consulta')" style="font-size:11px;color:var(--p1);background:var(--p1)22;border:none;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:700">+ Agendar</button>
+                <button onclick="saudeAba('saude-aba-consulta')" style="font-size:11px;color:var(--p1);background:rgba(26,71,49,0.13);border:none;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:700">+ Agendar</button>
               </div>
               <div id="saude-proximas-list"></div>
             </div>
@@ -1886,7 +1886,7 @@ input,select,textarea{font-family:inherit;outline:none}
             <div style="background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
                 <h3 style="font-size:14px;font-weight:700;color:var(--txt);margin:0">💊 Medicamentos Ativos</h3>
-                <button onclick="saudeOpenModal('saude-modal-receita')" style="font-size:11px;color:var(--p1);background:var(--p1)22;border:none;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:700">Ver receitas</button>
+                <button onclick="saudeOpenModal('saude-modal-receita')" style="font-size:11px;color:var(--p1);background:rgba(26,71,49,0.13);border:none;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:700">Ver receitas</button>
               </div>
               <div id="saude-medicamentos-list"></div>
             </div>
@@ -1939,7 +1939,7 @@ input,select,textarea{font-family:inherit;outline:none}
                 </div>
               </div>
               <div id="saude-ia-chat" style="flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;min-height:300px">
-                <div style="background:linear-gradient(135deg,#1a473122,#16a34a11);border:1px solid var(--p1)33;border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:85%">
+                <div style="background:linear-gradient(135deg,#1a473122,#16a34a11);border:1px solid rgba(26,71,49,0.2);border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:85%">
                   <p style="font-size:13px;color:var(--txt);margin:0;line-height:1.6">Olá! Sou o <strong>KaiDoc IA</strong>, seu assistente de saúde pessoal. 😊<br><br>Posso ajudar com:<br>• Análise de sintomas<br>• Orientações sobre medicamentos<br>• Dicas de saúde e bem-estar<br>• Informações sobre exames<br><br>Como posso ajudar você hoje?</p>
                 </div>
               </div>
@@ -1962,7 +1962,7 @@ input,select,textarea{font-family:inherit;outline:none}
                   <button onclick="saudeIaSugestao('Quais sintomas indicam diabetes?')" style="text-align:left;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--txt);cursor:pointer">🩸 Sintomas de diabetes</button>
                 </div>
               </div>
-              <div style="background:linear-gradient(135deg,#1a473122,#16a34a11);border:1.5px solid var(--p3)44;border-radius:16px;padding:18px">
+              <div style="background:linear-gradient(135deg,#1a473122,#16a34a11);border:1.5px solid rgba(22,163,74,0.27);border-radius:16px;padding:18px">
                 <div style="font-size:12px;font-weight:700;color:var(--p2);margin-bottom:8px">⚠️ AVISO IMPORTANTE</div>
                 <p style="font-size:12px;color:var(--muted);margin:0;line-height:1.6">O KaiDoc IA oferece <strong>orientações gerais</strong> e não substitui consulta médica presencial. Em caso de emergência, ligue <strong>192 (SAMU)</strong> ou dirija-se ao pronto-socorro.</p>
               </div>
@@ -5841,12 +5841,19 @@ function crmFmt(v){return new Intl.NumberFormat('pt-BR',{style:'currency',curren
 function crmFmtDate(d){if(!d)return'–';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
 function crmStatusColor(s){
   const map={
-    'PAGA':'#22c55e','INTEGRADO':'#16a34a','FORMALIZAÇÃO CONCLUÍDA':'var(--p3)',
-    'AVERBADA':'#16a34a','AGUARDANDO AVERBAÇÃO':'#15803d','DIGITADO':'var(--p3)',
-    'EM DIGITAÇÃO':'var(--p3)','AGUARD DIGITAÇÃO':'#f59e0b','PENDENTE':'#f97316',
+    'PAGA':'#22c55e','INTEGRADO':'#16a34a','FORMALIZAÇÃO CONCLUÍDA':'#16a34a',
+    'AVERBADA':'#16a34a','AGUARDANDO AVERBAÇÃO':'#15803d','DIGITADO':'#16a34a',
+    'EM DIGITAÇÃO':'#16a34a','AGUARD DIGITAÇÃO':'#f59e0b','PENDENTE':'#f97316',
     'CANCELADO':'#ef4444','SALDO RETORNADO':'#ec4899','PENDENCIA RESOLVIDA':'#10b981'
   };
   return map[s]||'#94a3b8';
+}
+function crmStatusBg(s){
+  const c=crmStatusColor(s);
+  const m=c.match(/^#([0-9a-fA-F]{6})$/);
+  if(!m)return c;
+  const r=parseInt(m[1].slice(0,2),16),g=parseInt(m[1].slice(2,4),16),b=parseInt(m[1].slice(4,6),16);
+  return 'rgba('+r+','+g+','+b+',0.13)';
 }
 function crmConvenioIcon(c){
   const map={'INSS':'🏛️','SIAPE':'🏢','Forças Armadas':'🎖️','CLT Privado':'💼','CLT Público':'🏛️','Prefeitura':'🏙️','Governo Estadual':'🏛️'};
@@ -5967,7 +5974,7 @@ function crmUpdateDashboard(){
         <td style="padding:8px 10px;font-size:12px;color:var(--muted)">${crmConvenioIcon(p.convenio)} ${p.convenio}</td>
         <td style="padding:8px 10px;font-size:13px;font-weight:700;color:var(--p1)">${crmFmt(p.valorBruto)}</td>
         <td style="padding:8px 10px">
-          <span style="background:${crmStatusColor(p.status)}22;color:${crmStatusColor(p.status)};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${p.status}</span>
+          <span style="background:${crmStatusBg(crmStatusColor(p.status).replace("crmStatusColor(","").replace(")",""))};color:${crmStatusColor(p.status)};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${p.status}</span>
         </td>
         <td style="padding:8px 10px;font-size:12px;color:var(--muted)">${crmFmtDate(p.createdAt)}</td>
       </tr>`).join('');
@@ -5995,7 +6002,7 @@ function crmRenderPropostas(list){
       <td style="padding:10px 12px;font-size:12px;font-weight:700;color:var(--p1)">${p.prazo}x ${crmFmt(p.valorParcela)}</td>
       <td style="padding:10px 12px;font-size:13px;font-weight:700;color:var(--txt)">${crmFmt(p.valorBruto)}</td>
       <td style="padding:10px 12px">
-        <span style="background:${crmStatusColor(p.status)}22;color:${crmStatusColor(p.status)};padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap">${p.status}</span>
+        <span style="background:${crmStatusBg(crmStatusColor(p.status).replace("crmStatusColor(","").replace(")",""))};color:${crmStatusColor(p.status)};padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap">${p.status}</span>
       </td>
       <td style="padding:10px 12px">
         <div style="display:flex;gap:6px">
@@ -6048,7 +6055,7 @@ function crmRenderClientes(list){
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between">
         <span style="font-size:12px;color:var(--muted)">${props.length} proposta${props.length!==1?'s':''}</span>
-        <span style="background:var(--p1)22;color:var(--p1);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${c.id}</span>
+        <span style="background:rgba(26,71,49,0.13);color:var(--p1);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${c.id}</span>
       </div>
       ${c.obs?`<div style="margin-top:10px;font-size:11px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:8px">${c.obs}</div>`:''}
     </div>`;
@@ -6078,7 +6085,7 @@ function crmBuildKanban(){
           <span style="width:10px;height:10px;border-radius:50%;background:${crmStatusColor(st)};flex-shrink:0"></span>
           <span style="font-size:12px;font-weight:700;color:var(--txt)">${st}</span>
         </div>
-        <span style="background:${crmStatusColor(st)}22;color:${crmStatusColor(st)};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">${props.length}</span>
+        <span style="background:${crmStatusBg(crmStatusColor(st).replace("crmStatusColor(","").replace(")",""))};color:${crmStatusColor(st)};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">${props.length}</span>
       </div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:600">${crmFmt(total)}</div>
       <div style="display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto">
@@ -6228,7 +6235,7 @@ function crmRenderAdmin(){
       <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
         <span style="width:10px;height:10px;border-radius:50%;background:${crmStatusColor(s)};flex-shrink:0"></span>
         <span style="flex:1;font-size:13px;color:var(--txt)">${s}</span>
-        <span style="font-size:11px;color:${crmStatusColor(s)};background:${crmStatusColor(s)}22;padding:2px 8px;border-radius:20px">Ativo</span>
+        <span style="font-size:11px;color:${crmStatusColor(s)};background:${crmStatusBg(crmStatusColor(s).replace("crmStatusColor(","").replace(")",""))};padding:2px 8px;border-radius:20px">Ativo</span>
       </div>`).join('');
   }
   // Promotoras
@@ -6251,7 +6258,7 @@ function crmRenderAdmin(){
           <div style="font-size:12px;color:var(--muted)">${n.mensagem}</div>
           <div style="font-size:11px;color:var(--muted);margin-top:4px">${crmFmtDate(n.data)}</div>
         </div>
-        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:${n.lida?'var(--border)':'var(--p3)22'};color:${n.lida?'var(--muted)':'var(--p3)'}">${n.lida?'Lida':'Nova'}</span>
+        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:${n.lida?'var(--border)':'rgba(22,163,74,0.13)'};color:${n.lida?'var(--muted)':'var(--p3)'}">${n.lida?'Lida':'Nova'}</span>
       </div>`).join('');
   }
 }
@@ -6349,7 +6356,7 @@ function crmVerProposta(id){
       <div style="margin-top:20px;padding-top:20px;border-top:1.5px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         <div>
           <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 10px;text-transform:uppercase">Status Atual</h4>
-          <span style="background:${crmStatusColor(p.status)}22;color:${crmStatusColor(p.status)};padding:8px 18px;border-radius:20px;font-size:14px;font-weight:700">${p.status}</span>
+          <span style="background:${crmStatusBg(crmStatusColor(p.status).replace("crmStatusColor(","").replace(")",""))};color:${crmStatusColor(p.status)};padding:8px 18px;border-radius:20px;font-size:14px;font-weight:700">${p.status}</span>
         </div>
         <div>
           <h4 style="font-size:13px;font-weight:700;color:var(--p1);margin:0 0 10px;text-transform:uppercase">Dados Bancários</h4>
@@ -6584,12 +6591,12 @@ let _saudeHorarioSel = '';
 // ── HELPERS ────────────────────────────────────────────────────────
 function saudeFmtDate(d){if(!d)return'–';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
 function saudeStatusBadge(s){
-  const map={agendada:{bg:'var(--p3)22',c:'var(--p3)',t:'Agendada'},realizada:{bg:'#22c55e22',c:'#22c55e',t:'Realizada'},cancelada:{bg:'#ef444422',c:'#ef4444',t:'Cancelada'}};
+  const map={agendada:{bg:'rgba(22,163,74,0.13)',c:'var(--p3)',t:'Agendada'},realizada:{bg:'#22c55e22',c:'#22c55e',t:'Realizada'},cancelada:{bg:'#ef444422',c:'#ef4444',t:'Cancelada'}};
   const v=map[s]||{bg:'#94a3b822',c:'#94a3b8',t:s};
   return`<span style="background:${v.bg};color:${v.c};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${v.t}</span>`;
 }
 function saudeExameStatusBadge(s){
-  const map={'Disponível':{bg:'#22c55e22',c:'#22c55e'},'Aguardando':{bg:'#f59e0b22',c:'#f59e0b'},'Solicitado':{bg:'var(--p3)22',c:'var(--p3)'}};
+  const map={'Disponível':{bg:'#22c55e22',c:'#22c55e'},'Aguardando':{bg:'#f59e0b22',c:'#f59e0b'},'Solicitado':{bg:'rgba(22,163,74,0.13)',c:'var(--p3)'}};
   const v=map[s]||{bg:'#94a3b822',c:'#94a3b8'};
   return`<span style="background:${v.bg};color:${v.c};padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">${s}</span>`;
 }
@@ -6640,7 +6647,7 @@ function saudeBuildDashboard(){
     const prox=saudeConsultas.filter(c=>c.status==='agendada').slice(0,3);
     el.innerHTML=prox.length?prox.map(c=>`
       <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
-        <div style="width:42px;height:42px;background:var(--p1)22;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🩺</div>
+        <div style="width:42px;height:42px;background:rgba(26,71,49,0.13);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🩺</div>
         <div style="flex:1">
           <div style="font-size:13px;font-weight:700;color:var(--txt)">${c.medico}</div>
           <div style="font-size:11px;color:var(--muted)">${c.espec}</div>
@@ -6736,7 +6743,7 @@ function saudeBuildAgendaList(){
   const ag=saudeConsultas.filter(c=>c.status==='agendada');
   el.innerHTML=ag.length?ag.map(c=>`
     <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
-      <div style="width:38px;height:38px;background:var(--p1)22;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px">🩺</div>
+      <div style="width:38px;height:38px;background:rgba(26,71,49,0.13);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px">🩺</div>
       <div style="flex:1">
         <div style="font-size:13px;font-weight:700;color:var(--txt)">${c.medico}</div>
         <div style="font-size:11px;color:var(--muted)">${c.espec} · ${c.motivo}</div>
@@ -6874,7 +6881,7 @@ function saudeBuildProntuario(){
   if(receitasEl){
     receitasEl.innerHTML=saudeReceitas.map(r=>`
       <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)">
-        <div style="width:42px;height:42px;background:var(--p1)22;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px">💊</div>
+        <div style="width:42px;height:42px;background:rgba(26,71,49,0.13);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px">💊</div>
         <div style="flex:1">
           <div style="font-size:13px;font-weight:700;color:var(--txt)">${r.medicamento}</div>
           <div style="font-size:11px;color:var(--muted)">Por: ${r.medico} · ${saudeFmtDate(r.data)}</div>
@@ -6959,7 +6966,7 @@ function saudeIaEnviar(){
     else if(lc.includes('exame')||lc.includes('checkup'))resp=saudeIaRespostas['exames anuais'];
     // Format bold
     const formatted=resp.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-    chat.innerHTML+=`<div style="background:linear-gradient(135deg,#1a473122,#16a34a11);border:1px solid var(--p1)33;border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:88%"><p style="font-size:13px;color:var(--txt);margin:0;line-height:1.7">${formatted}</p></div>`;
+    chat.innerHTML+=`<div style="background:linear-gradient(135deg,#1a473122,#16a34a11);border:1px solid rgba(26,71,49,0.2);border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:88%"><p style="font-size:13px;color:var(--txt);margin:0;line-height:1.7">${formatted}</p></div>`;
     chat.scrollTop=chat.scrollHeight;
   },1200);
 }
