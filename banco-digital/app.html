@@ -813,6 +813,8 @@ input,select,textarea{font-family:inherit;outline:none}
    PAGE: PERFIL
 ══════════════════════════════════════════════ */
 .prof-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.notif-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+.ajuda-layout{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
 .prof-hero{background:linear-gradient(135deg,#0a0a2a,#1a237e,#283593);border-radius:var(--rl);padding:30px;color:#fff;text-align:center;box-shadow:var(--shl)}
 .prof-big-av{width:86px;height:86px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(135deg,var(--ac),var(--p3));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;border:4px solid rgba(255,255,255,.22)}
 .prof-hero h2{font-size:20px;font-weight:800;margin-bottom:3px}
@@ -865,6 +867,7 @@ input,select,textarea{font-family:inherit;outline:none}
   .inv-cards{grid-template-columns:1fr 1fr}
   .prod-grid{grid-template-columns:1fr 1fr}
   .prof-layout{grid-template-columns:1fr}
+  .notif-layout,.ajuda-layout{grid-template-columns:1fr}
 }
 
 /* ── MOBILE (≤768px) ── */
@@ -895,6 +898,7 @@ input,select,textarea{font-family:inherit;outline:none}
   .inv-cards{grid-template-columns:1fr 1fr}
   .prod-grid{grid-template-columns:1fr 1fr}
   .prof-layout{grid-template-columns:1fr}
+  .notif-layout,.ajuda-layout{grid-template-columns:1fr}
 
   /* Cards inline grids */
   .card-acts{grid-template-columns:repeat(4,1fr)}
@@ -2631,23 +2635,123 @@ input,select,textarea{font-family:inherit;outline:none}
       </div>
 
       <!-- ██ NOTIFICAÇÕES ██ -->
-      <div class="page" id="page-notificacoes"><div style="max-width:700px"><div id="notifList"></div></div></div>
+      <div class="page" id="page-notificacoes">
+        <div style="background:linear-gradient(135deg,#0f172a,#1e3a5f,#0369a1);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">🔔</div>
+          <div style="position:relative;z-index:1">
+            <div style="font-size:12px;opacity:.65;margin-bottom:4px">🔔 Central de Notificações</div>
+            <h2 style="font-size:24px;font-weight:900;margin-bottom:5px">Notificações</h2>
+            <p style="font-size:14px;opacity:.75">Fique por dentro de tudo que acontece na sua conta</p>
+          </div>
+        </div>
+        <div class="notif-layout">
+          <div id="notifList"></div>
+          <div>
+            <div class="card mb16">
+              <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)">📊 Resumo</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;color:var(--txt)">🔵 Não lidas</div>
+                  <span style="font-size:13px;font-weight:700;color:var(--p3)">3</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;color:var(--txt)">✅ Lidas</div>
+                  <span style="font-size:13px;font-weight:700;color:var(--ok)">12</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg);border-radius:9px">
+                  <div style="font-size:13px;color:var(--txt)">📅 Esta semana</div>
+                  <span style="font-size:13px;font-weight:700;color:var(--txt)">5</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)">⚙️ Preferências</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-size:13px;color:var(--txt)">⚡ PIX recebido</div>
+                  <div class="toggle on" onclick="toggleSetting(this)"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-size:13px;color:var(--txt)">💳 Compras</div>
+                  <div class="toggle on" onclick="toggleSetting(this)"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-size:13px;color:var(--txt)">📄 Documentos</div>
+                  <div class="toggle off" onclick="toggleSetting(this)"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-size:13px;color:var(--txt)">🔐 Segurança</div>
+                  <div class="toggle on" onclick="toggleSetting(this)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- ██ AJUDA ██ -->
       <div class="page" id="page-ajuda">
-        <div style="max-width:700px">
-          <div class="card mb16">
-            <div style="font-size:30px;margin-bottom:10px">💬</div>
-            <h3 style="font-size:17px;font-weight:700;margin-bottom:5px">Central de Ajuda</h3>
-            <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px">Como podemos ajudar você hoje?</p>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-              <div class="ca" onclick="openChat()"><div class="cai">🤖</div><div class="cal">Chat IA</div></div>
-              <div class="ca" onclick="showToast('📞 Ligando...','info')"><div class="cai">📞</div><div class="cal">Ligar</div></div>
-              <div class="ca" onclick="showToast('📧 E-mail enviado!','success')"><div class="cai">📧</div><div class="cal">E-mail</div></div>
-              <div class="ca" onclick="showToast('📚 Abrindo FAQ...','info')"><div class="cai">📚</div><div class="cal">FAQ</div></div>
+        <div style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);border-radius:var(--rl);padding:28px 30px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:120px;opacity:.07">💬</div>
+          <div style="position:relative;z-index:1">
+            <div style="font-size:12px;opacity:.65;margin-bottom:4px">💬 Suporte KaiNowPay</div>
+            <h2 style="font-size:24px;font-weight:900;margin-bottom:5px">Central de Ajuda</h2>
+            <p style="font-size:14px;opacity:.75">Estamos aqui para ajudar · Suporte 24/7 via chat, telefone e e-mail</p>
+            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+              <span class="chip" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff">🤖 IA 24h</span>
+              <span class="chip" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff">⚡ Resposta em minutos</span>
             </div>
           </div>
-          <div id="faqList"></div>
+        </div>
+        <div class="ajuda-layout">
+          <div>
+            <div class="card mb16">
+              <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)">⚡ Contato rápido</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:0">
+                <div class="ca" onclick="openChat()"><div class="cai">🤖</div><div class="cal">Chat IA</div></div>
+                <div class="ca" onclick="showToast('📞 Ligando...','info')"><div class="cai">📞</div><div class="cal">Ligar</div></div>
+                <div class="ca" onclick="showToast('📧 E-mail enviado!','success')"><div class="cai">📧</div><div class="cal">E-mail</div></div>
+                <div class="ca" onclick="showToast('📚 Abrindo FAQ...','info')"><div class="cai">📚</div><div class="cal">FAQ</div></div>
+              </div>
+            </div>
+            <div class="card">
+              <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)">❓ Perguntas frequentes</div>
+              <div id="faqList"></div>
+            </div>
+          </div>
+          <div>
+            <div class="card mb16">
+              <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)">📞 Canais de atendimento</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:9px">
+                  <div style="width:40px;height:40px;border-radius:10px;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🤖</div>
+                  <div><div style="font-size:13px;font-weight:600">Chat com IA</div><div style="font-size:11.5px;color:var(--muted)">Disponível 24 horas por dia</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:9px">
+                  <div style="width:40px;height:40px;border-radius:10px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📞</div>
+                  <div><div style="font-size:13px;font-weight:600">0800 123 4567</div><div style="font-size:11.5px;color:var(--muted)">Seg–Sex · 8h às 20h</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:9px">
+                  <div style="width:40px;height:40px;border-radius:10px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📧</div>
+                  <div><div style="font-size:13px;font-weight:600">suporte@kainowpay.com</div><div style="font-size:11.5px;color:var(--muted)">Resposta em até 2h</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)">📋 Meus chamados</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="padding:11px 12px;background:var(--bg);border-radius:9px;border-left:3px solid var(--ok)">
+                  <div style="font-size:12.5px;font-weight:600">#2847 · PIX não creditado</div>
+                  <div style="font-size:11.5px;color:var(--muted);margin-top:2px">Resolvido · 30/05/2026</div>
+                </div>
+                <div style="padding:11px 12px;background:var(--bg);border-radius:9px;border-left:3px solid var(--warn)">
+                  <div style="font-size:12.5px;font-weight:600">#2901 · Limite do cartão</div>
+                  <div style="font-size:11.5px;color:var(--muted);margin-top:2px">Em andamento · 01/06/2026</div>
+                </div>
+              </div>
+              <button class="btn btn-ghost" style="width:100%;margin-top:12px;font-size:13px" onclick="showToast('📋 Abrindo chamados...','info')">Ver todos os chamados</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -4780,7 +4884,8 @@ document.querySelectorAll('.overlay').forEach(m=>m.addEventListener('click',e=>{
 
 /* PROFILE */
 function toggleSetting(id){
-  const el=document.getElementById(id);
+  const el=(typeof id==='string')?document.getElementById(id):id;
+  if(!el) return;
   el.classList.toggle('on');el.classList.toggle('off');
   showToast(el.classList.contains('on')?'✅ Ativado!':'🔕 Desativado!',el.classList.contains('on')?'success':'warn');
 }
