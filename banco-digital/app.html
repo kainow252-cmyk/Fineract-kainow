@@ -125,11 +125,14 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* Headline — fluid, fills entire panel width */
 .lgn-headline{
-  font-size:clamp(24px,2.6vw,38px);
-  font-weight:900;color:#fff;line-height:1.2;
+  font-size:clamp(28px,3vw,44px);
+  font-weight:900;color:#fff;line-height:1.25;
   letter-spacing:-1.5px;margin-bottom:14px;
   position:relative;z-index:1;
   width:100%;max-width:100%;
+}
+.lgn-headline span.ln{
+  display:block;
 }
 .lgn-headline em{
   font-style:normal;
@@ -1067,12 +1070,12 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* ── LOGIN RESPONSIVE ── */
 @media(max-width:1100px){
-  .lgn-headline{font-size:clamp(22px,2.4vw,34px);letter-spacing:-1.5px}
+  .lgn-headline{font-size:clamp(26px,2.8vw,38px);letter-spacing:-1.5px}
   .lgn-features{grid-template-columns:1fr 1fr}
 }
 @media(max-width:900px){
   .lgn-left{flex:0.9;padding:32px 32px 28px 32px}
-  .lgn-headline{font-size:22px;letter-spacing:-1px}
+  .lgn-headline{font-size:24px;letter-spacing:-1px}
   .lgn-desc{font-size:14px}
   .lgn-features{grid-template-columns:1fr}
   .lgn-right{width:400px}
@@ -1147,14 +1150,14 @@ input,select,textarea{font-family:inherit;outline:none}
 
         <!-- Headline -->
         <div class="lgn-headline">
-          Sua vida financeira<br>
-          <em>mais simples</em>, segura<br>
-          e completa.
+          <span class="ln">Sua vida financeira</span>
+          <span class="ln"><em>mais simples</em>, segura</span>
+          <span class="ln">e completa.</span>
         </div>
         <div class="lgn-desc">
-          Conta digital, transferências, pagamentos,<br>
-          seguros, capitalização e muito mais<br>
-          em um só lugar.
+          <span style="display:block">Conta digital, transferências, pagamentos,</span>
+          <span style="display:block">seguros, capitalização e muito mais</span>
+          <span style="display:block">em um só lugar.</span>
         </div>
 
         <!-- Stats strip -->
