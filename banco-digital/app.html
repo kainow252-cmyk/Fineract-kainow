@@ -11,16 +11,16 @@
 ══════════════════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --p1:#4c1d95;--p2:#5b21b6;--p3:#7c3aed;--p4:#a78bfa;
-  --ac:#8b5cf6;--ac2:#6d28d9;
+  --p1:#1a4731;--p2:#2F6D4F;--p3:#16a34a;--p4:#4ade80;
+  --ac:#22c55e;--ac2:#15803d;
   --ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--inf:var(--p3);
   --pur:#7c3aed;--pink:#db2777;--teal:#0d9488;--amber:#d97706;
-  --bg:#f5f3ff;--bg2:#ede9fe;--card:#fff;
-  --txt:#1a0a2e;--txt2:#374151;--muted:#6b7280;--border:#e9e7f0;
+  --bg:#f0fdf4;--bg2:#dcfce7;--card:#fff;
+  --txt:#052e16;--txt2:#1f4b38;--muted:#4b7563;--border:#bbf7d0;
   --sw:260px;
-  --sh:0 2px 12px rgba(76,29,149,.07);
-  --shm:0 4px 24px rgba(76,29,149,.12);
-  --shl:0 12px 48px rgba(76,29,149,.18);
+  --sh:0 2px 12px rgba(22,101,52,.07);
+  --shm:0 4px 24px rgba(22,101,52,.12);
+  --shl:0 12px 48px rgba(22,101,52,.18);
   --r:14px;--rs:8px;--rl:20px;
   /* ── ESCALA TIPOGRÁFICA (type scale) ──────────────
      Todos os font-size do sistema devem usar estas vars.
@@ -46,7 +46,7 @@ input,select,textarea{font-family:inherit;outline:none}
 ══════════════════════════════════════════════ */
 #splash{
   position:fixed;inset:0;z-index:9999;
-  background:linear-gradient(160deg,#0B071E 0%,#4c1d95 55%,#8b5cf6 100%);
+  background:linear-gradient(160deg,#052e16 0%,#1a4731 50%,#22c55e 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   transition:opacity .4s;
   animation:splAutoHide 1.8s ease forwards;
@@ -83,21 +83,21 @@ input,select,textarea{font-family:inherit;outline:none}
 /* LEFT PANEL — full-width text fill */
 .lgn-left{
   flex:1.4;
-  background:linear-gradient(155deg,#0B071E 0%,#13103A 40%,#1E1650 75%,#2D1F6E 100%);
+  background:linear-gradient(155deg,#052e16 0%,#0f3d23 40%,#1a5c35 75%,#2F6D4F 100%);
   display:flex;flex-direction:column;justify-content:space-between;
   padding:32px 44px 28px 44px;position:relative;overflow:hidden;
 }
 .lgn-left::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 70% 60% at 100% 90%, rgba(120,60,220,.35) 0%,transparent 65%),
-    radial-gradient(ellipse 50% 40% at -10% 20%, rgba(80,40,180,.20) 0%,transparent 60%);
+    radial-gradient(ellipse 70% 60% at 100% 90%, rgba(34,197,94,.25) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at -10% 20%, rgba(21,128,61,.18) 0%,transparent 60%);
   pointer-events:none;
 }
 /* Dots decorativos */
 .lgn-dots{
   position:absolute;top:0;right:0;width:100%;height:100%;
-  background-image:radial-gradient(rgba(160,130,255,.14) 1.5px,transparent 1.5px);
+  background-image:radial-gradient(rgba(74,222,128,.14) 1.5px,transparent 1.5px);
   background-size:28px 28px;pointer-events:none;
 }
 /* Ondas decorativas */
@@ -111,9 +111,9 @@ input,select,textarea{font-family:inherit;outline:none}
 .lgn-brand{display:flex;align-items:center;gap:12px;margin-bottom:18px;position:relative;z-index:1}
 .lgn-brand-icon{
   width:62px;height:62px;
-  background:linear-gradient(135deg,#7B3FF2,#5B2AC4);
+  background:linear-gradient(135deg,#16a34a,#1a4731);
   border-radius:18px;display:flex;align-items:center;justify-content:center;
-  font-size:0;box-shadow:0 6px 28px rgba(100,40,220,.55);
+  font-size:0;box-shadow:0 6px 28px rgba(22,163,74,.55);
   position:relative;overflow:hidden;
 }
 .lgn-brand-icon::after{
@@ -133,7 +133,7 @@ input,select,textarea{font-family:inherit;outline:none}
 }
 .lgn-headline em{
   font-style:normal;
-  background:linear-gradient(90deg,#a78bfa,#7c3aed,#c4b5fd);
+  background:linear-gradient(90deg,#4ade80,#22c55e,#86efac);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -156,7 +156,7 @@ input,select,textarea{font-family:inherit;outline:none}
 }
 .lgn-stat:last-child{border-right:none}
 .lgn-stat-num{font-size:clamp(17px,1.6vw,22px);font-weight:900;color:#fff;line-height:1;margin-bottom:3px}
-.lgn-stat-num span{font-size:clamp(13px,1.2vw,16px);font-weight:700;color:#a78bfa}
+.lgn-stat-num span{font-size:clamp(13px,1.2vw,16px);font-weight:700;color:#4ade80}
 .lgn-stat-lbl{font-size:clamp(10px,.9vw,12px);color:rgba(255,255,255,.42);letter-spacing:.4px;text-transform:uppercase}
 /* Features list — 2 columns, fills width */
 .lgn-features{
@@ -170,11 +170,11 @@ input,select,textarea{font-family:inherit;outline:none}
   border:1px solid rgba(255,255,255,.09);
   border-radius:14px;transition:background .2s,border-color .2s;
 }
-.lgn-feat:hover{background:rgba(255,255,255,.10);border-color:rgba(160,120,255,.3)}
+.lgn-feat:hover{background:rgba(255,255,255,.10);border-color:rgba(74,222,128,.3)}
 .lgn-feat-icon{
   width:44px;height:44px;flex-shrink:0;
-  background:linear-gradient(135deg,rgba(120,70,255,.4),rgba(80,40,200,.3));
-  border:1px solid rgba(140,90,255,.4);
+  background:linear-gradient(135deg,rgba(34,197,94,.3),rgba(21,128,61,.2));
+  border:1px solid rgba(74,222,128,.35);
   border-radius:12px;display:flex;align-items:center;justify-content:center;
   font-size:22px;
 }
@@ -262,7 +262,7 @@ input,select,textarea{font-family:inherit;outline:none}
 /* Buttons */
 .lgn-btn-primary{
   width:100%;padding:15px;
-  background:linear-gradient(135deg,#7B3FF2,#5B2AC4);
+  background:linear-gradient(135deg,#16a34a,#1a4731);
   color:#fff;font-size:15px;font-weight:700;
   border:none;border-radius:13px;cursor:pointer;
   transition:opacity .2s,transform .1s;letter-spacing:.2px;
@@ -286,7 +286,7 @@ input,select,textarea{font-family:inherit;outline:none}
   background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:#333;
   transition:border-color .2s,background .2s;
 }
-.lgn-social-btn:hover{border-color:#7B3FF2;background:#faf5ff}
+.lgn-social-btn:hover{border-color:#7B3FF2;background:#f0fdf4}
 
 /* Register link */
 .lgn-register{text-align:center;font-size:13px;color:#888;margin-bottom:20px}
@@ -307,7 +307,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* Footer bar */
 .lgn-footer-bar{
-  background:#0B071E;padding:12px 52px;
+  background:#052e16;padding:12px 52px;
   display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
 }
 .lgn-footer-bar span{font-size:11px;color:rgba(255,255,255,.35)}
@@ -329,20 +329,20 @@ input,select,textarea{font-family:inherit;outline:none}
 .f-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .f-label{font-size:12px;font-weight:700;color:var(--txt2);letter-spacing:.2px}
 .f-inp{background:#f8fafc;border:1.5px solid var(--border);border-radius:11px;padding:13px 16px;font-size:14px;color:var(--txt);transition:all .2s;width:100%}
-.f-inp:focus{border-color:var(--p1);background:#fff;box-shadow:0 0 0 4px rgba(76,29,149,.07)}
+.f-inp:focus{border-color:var(--p1);background:#fff;box-shadow:0 0 0 4px rgba(22,101,52,.07)}
 .inp-wrap{position:relative}
 .inp-wrap .f-inp{padding-right:48px}
 .eye-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted);cursor:pointer;background:none;border:none;padding:4px}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all .2s;font-family:inherit}
-.btn-primary{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff;box-shadow:0 4px 18px rgba(76,29,149,.3)}
+.btn-primary{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff;box-shadow:0 4px 18px rgba(22,101,52,.3)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,35,126,.4)}
 .btn-ghost{background:#f8fafc;border:1.5px solid var(--border);color:var(--txt2)}
-.btn-ghost:hover{border-color:var(--p3);color:var(--p1);background:#f5f3ff}
+.btn-ghost:hover{border-color:var(--p3);color:var(--p1);background:#f0fdf4}
 .lgn-err{display:none;padding:12px 15px;background:#fef2f2;border-radius:10px;font-size:13px;color:var(--err);margin-bottom:14px;border:1px solid #fecaca}
 .lgn-err.show{display:block}
 .lgn-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--muted);font-size:12px}
 .lgn-divider::before,.lgn-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-.lgn-hint{margin-top:18px;padding:12px 15px;background:#f5f3ff;border-radius:10px;font-size:12px;color:var(--muted);text-align:center;border:1px solid #c7d2fe}
+.lgn-hint{margin-top:18px;padding:12px 15px;background:#f0fdf4;border-radius:10px;font-size:12px;color:var(--muted);text-align:center;border:1px solid #c7d2fe}
 .lgn-hint b{color:var(--p1)}
 .lgn-powered{display:flex;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
 .pow-chip{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
@@ -425,7 +425,7 @@ input,select,textarea{font-family:inherit;outline:none}
 /* ── SIDEBAR ── */
 .sidebar{
   width:var(--sw);flex-shrink:0;
-  background:linear-gradient(180deg,#0B071E 0%,var(--p1) 55%,var(--p2) 100%);
+  background:linear-gradient(180deg,#052e16 0%,var(--p1) 55%,var(--p2) 100%);
   display:flex;flex-direction:column;overflow:hidden;z-index:10;
   box-shadow:4px 0 24px rgba(0,0,0,.2);
 }
@@ -489,25 +489,25 @@ input,select,textarea{font-family:inherit;outline:none}
 .text-muted{color:var(--muted)}.text-ok{color:var(--ok)}.text-err{color:var(--err)}.text-inf{color:var(--inf)}
 .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
 .bg-ok{background:#f0fdf4;color:var(--ok)}.bg-err{background:#fef2f2;color:var(--err)}
-.bg-inf{background:#f5f3ff;color:var(--inf)}.bg-warn{background:#fffbeb;color:var(--warn)}
-.bg-pur{background:#faf5ff;color:var(--pur)}.bg-teal{background:#f0fdfa;color:var(--teal)}
+.bg-inf{background:#f0fdf4;color:var(--inf)}.bg-warn{background:#fffbeb;color:var(--warn)}
+.bg-pur{background:#f0fdf4;color:var(--pur)}.bg-teal{background:#f0fdfa;color:var(--teal)}
 .progress{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
 .prog-fill{height:100%;border-radius:3px;background:var(--p3)}
 .divider{height:1px;background:var(--border);margin:14px 0}
 .tag{padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700}
 .chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid}
-.chip-ac{background:rgba(139,92,246,.18);border-color:rgba(0,188,212,.3);color:var(--ac)}
+.chip-ac{background:rgba(74,222,128,.18);border-color:rgba(0,188,212,.3);color:var(--ac)}
 .chip-ok{background:#f0fdf4;border-color:#bbf7d0;color:var(--ok)}
 .chip-warn{background:#fffbeb;border-color:#fde68a;color:var(--warn)}
 .btn-sm{padding:8px 15px;border-radius:8px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:none;transition:all .2s;font-family:inherit}
 .btn-p{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff}
-.btn-p:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(76,29,149,.3)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(22,101,52,.3)}
 .btn-ok{background:linear-gradient(135deg,var(--ok),#16a34a);color:#fff}
 .btn-ok:hover{box-shadow:0 4px 14px rgba(34,197,94,.3)}
 .btn-out{background:var(--bg);border:1.5px solid var(--border)!important;color:var(--txt2)}
 .btn-out:hover{border-color:var(--p3)!important;color:var(--p1)}
 .icon-box{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.ib-blue{background:#f0ebff}.ib-green{background:#f0fdf4}.ib-purple{background:#faf5ff}
+.ib-blue{background:#f0fdf4}.ib-green{background:#f0fdf4}.ib-purple{background:#f0fdf4}
 .ib-orange{background:#fff7ed}.ib-pink{background:#fdf2f8}.ib-teal{background:#f0fdfa}
 .ib-red{background:#fef2f2}.ib-yellow{background:#fffbeb}
 .w-full{width:100%}
@@ -518,11 +518,11 @@ input,select,textarea{font-family:inherit;outline:none}
    PAGE: HOME
 ══════════════════════════════════════════════ */
 .bal-hero{
-  background:linear-gradient(135deg,#0B071E 0%,var(--p1) 55%,var(--p2) 100%);
+  background:linear-gradient(135deg,#052e16 0%,var(--p1) 55%,var(--p2) 100%);
   border-radius:var(--rl);padding:26px 28px 22px;color:#fff;
   position:relative;overflow:hidden;margin-bottom:20px;box-shadow:var(--shl);
 }
-.bal-hero::before{content:'';position:absolute;right:-50px;top:-50px;width:220px;height:220px;border-radius:50%;background:rgba(139,92,246,.18)}
+.bal-hero::before{content:'';position:absolute;right:-50px;top:-50px;width:220px;height:220px;border-radius:50%;background:rgba(74,222,128,.18)}
 .bal-hero::after{content:'';position:absolute;right:50px;bottom:-70px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04)}
 .bal-row{display:flex;align-items:flex-start;justify-content:space-between}
 .bal-label{font-size:12px;opacity:.6;margin-bottom:6px;display:flex;align-items:center;gap:5px}
@@ -536,7 +536,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .bal-mini{padding:10px;text-align:center}
 .bal-mini .ml{font-size:10px;opacity:.5;margin-bottom:3px}
 .bal-mini .mv{font-size:16px;font-weight:700}
-.bal-mini .mv.g{color:#4ade80}.bal-mini .mv.r{color:#f87171}.bal-mini .mv.b{color:#c4b5fd}
+.bal-mini .mv.g{color:#4ade80}.bal-mini .mv.r{color:#f87171}.bal-mini .mv.b{color:#4ade80}
 
 .qa-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
 .qa-item{background:var(--card);border-radius:var(--r);padding:14px 6px 11px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;box-shadow:var(--sh)}
@@ -583,7 +583,7 @@ input,select,textarea{font-family:inherit;outline:none}
 ══════════════════════════════════════════════ */
 .pix-tabs{display:flex;gap:0;background:var(--card);border-radius:var(--r);padding:4px;margin-bottom:18px;box-shadow:var(--sh)}
 .pix-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:600;border-radius:10px;cursor:pointer;transition:all .2s;color:var(--muted)}
-.pix-tab.active{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff;box-shadow:0 3px 12px rgba(76,29,149,.25)}
+.pix-tab.active{background:linear-gradient(135deg,var(--p1),var(--p3));color:#fff;box-shadow:0 3px 12px rgba(22,101,52,.25)}
 .pix-pane{display:none}.pix-pane.active{display:block}
 
 .cont-chips{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 10px;margin-bottom:16px}
@@ -599,11 +599,11 @@ input,select,textarea{font-family:inherit;outline:none}
   transform:translateY(-3px);
   border-color:transparent;
   box-shadow:0 8px 24px rgba(99,102,241,.18);
-  background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
 }
 .cont-chip.sel{
   border-color:var(--p3);
-  background:linear-gradient(135deg,#f5f3ff,#dbeafe);
+  background:linear-gradient(135deg,#f0fdf4,#dbeafe);
   box-shadow:0 6px 20px rgba(59,130,246,.2);
   transform:translateY(-2px);
 }
@@ -647,7 +647,7 @@ input,select,textarea{font-family:inherit;outline:none}
 ══════════════════════════════════════════════ */
 .filter-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
 .f-chip{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s}
-.f-chip.active,.f-chip:hover{border-color:var(--p3);color:var(--p1);background:#f5f3ff}
+.f-chip.active,.f-chip:hover{border-color:var(--p3);color:var(--p1);background:#f0fdf4}
 .f-search{flex:1;max-width:260px;padding:7px 13px;border-radius:20px;font-size:13px;border:1.5px solid var(--border);background:var(--card);color:var(--txt);font-family:inherit}
 .f-search:focus{border-color:var(--p3)}
 .tx-group{margin-bottom:18px}
@@ -694,7 +694,7 @@ input,select,textarea{font-family:inherit;outline:none}
 
 .card-acts{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
 .ca{background:var(--card);border-radius:var(--rs);padding:13px 7px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;border:1.5px solid var(--border);transition:all .2s}
-.ca:hover{border-color:var(--p3);background:#f5f3ff}
+.ca:hover{border-color:var(--p3);background:#f0fdf4}
 .ca .cai{font-size:22px}
 .ca .cal{font-size:11px;font-weight:600;color:var(--txt2);text-align:center}
 
@@ -752,7 +752,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .crm-col{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
 .crm-col-header{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .crm-card{background:var(--bg);border-radius:var(--rs);padding:11px;margin-bottom:8px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s}
-.crm-card:hover{border-color:var(--p3);background:#f5f3ff}
+.crm-card:hover{border-color:var(--p3);background:#f0fdf4}
 .crm-card .cct{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:3px}
 .crm-card .ccv{font-size:15px;font-weight:800;color:var(--p1)}
 .crm-card .ccs{font-size:11px;color:var(--muted);margin-top:2px}
@@ -1050,7 +1050,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .mob-drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px)}
 .mob-drawer-panel{
   position:absolute;left:0;top:0;bottom:0;width:280px;
-  background:linear-gradient(180deg,#0B071E 0%,var(--p1) 55%,var(--p2) 100%);
+  background:linear-gradient(180deg,#052e16 0%,var(--p1) 55%,var(--p2) 100%);
   overflow-y:auto;padding:20px 10px;
   transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);
 }
@@ -2358,12 +2358,12 @@ input,select,textarea{font-family:inherit;outline:none}
           <div style="background:linear-gradient(135deg,#e8eaf6,#fff);border:1.5px solid #c5cae9;border-radius:13px;padding:16px">
             <div style="font-size:24px;margin-bottom:8px">🔷</div>
             <div style="font-size:13px;font-weight:800;color:var(--p1);margin-bottom:5px">Abstração</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.5"><code style="background:#ede9fe;padding:2px 5px;border-radius:4px;font-size:10px">abstract class Conta</code><br>Concentra-se nos aspectos essenciais: saldo, agência, número, titular.</div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.5"><code style="background:#dcfce7;padding:2px 5px;border-radius:4px;font-size:10px">abstract class Conta</code><br>Concentra-se nos aspectos essenciais: saldo, agência, número, titular.</div>
           </div>
           <div style="background:linear-gradient(135deg,#e0f2fe,#fff);border:1.5px solid #bae6fd;border-radius:13px;padding:16px">
             <div style="font-size:24px;margin-bottom:8px">🔐</div>
             <div style="font-size:13px;font-weight:800;color:#0369a1;margin-bottom:5px">Encapsulamento</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.5"><code style="background:#f0ebff;padding:2px 5px;border-radius:4px;font-size:10px">private double saldo</code><br>Oculta a implementação, expõe apenas: sacar(), depositar(), getSaldo().</div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.5"><code style="background:#f0fdf4;padding:2px 5px;border-radius:4px;font-size:10px">private double saldo</code><br>Oculta a implementação, expõe apenas: sacar(), depositar(), getSaldo().</div>
           </div>
           <div style="background:linear-gradient(135deg,#f0fdf4,#fff);border:1.5px solid #bbf7d0;border-radius:13px;padding:16px">
             <div style="font-size:24px;margin-bottom:8px">🧬</div>
@@ -2740,7 +2740,7 @@ input,select,textarea{font-family:inherit;outline:none}
                   <div><div style="font-size:13px;font-weight:600">Chat com IA</div><div style="font-size:11px;color:var(--muted)">Disponível 24 horas por dia</div></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:9px">
-                  <div style="width:40px;height:40px;border-radius:10px;background:#ede9fe;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📞</div>
+                  <div style="width:40px;height:40px;border-radius:10px;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📞</div>
                   <div><div style="font-size:13px;font-weight:600">0800 123 4567</div><div style="font-size:11px;color:var(--muted)">Seg–Sex · 8h às 20h</div></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:9px">
@@ -2927,7 +2927,7 @@ input,select,textarea{font-family:inherit;outline:none}
         <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:18px">
           <div>
             <div class="sec-title">🎫 Meus bilhetes</div>
-            <div class="card" style="text-align:center;margin-bottom:14px;background:linear-gradient(135deg,#faf5ff,#ede9fe)">
+            <div class="card" style="text-align:center;margin-bottom:14px;background:linear-gradient(135deg,#faf5ff,#dcfce7)">
               <div style="font-size:48px;margin-bottom:8px">🎫</div>
               <div style="font-size:42px;font-weight:900;color:var(--pur)">75</div>
               <div style="font-size:13px;color:var(--muted)">bilhetes ativos</div>
@@ -2935,7 +2935,7 @@ input,select,textarea{font-family:inherit;outline:none}
             </div>
             <div class="card">
               <div class="sec-title">Próximo sorteio</div>
-              <div style="background:linear-gradient(135deg,#fdf4ff,#f5f3ff);border-radius:10px;padding:14px;text-align:center">
+              <div style="background:linear-gradient(135deg,#fdf4ff,#f0fdf4);border-radius:10px;padding:14px;text-align:center">
                 <div style="font-size:22px;margin-bottom:6px">📅</div>
                 <div style="font-size:15px;font-weight:800">30/06/2026 — 19h00</div>
                 <div style="font-size:12px;color:var(--muted);margin-top:4px">Sorteio Mensal · Prêmio: R$ 100.000</div>
@@ -3342,14 +3342,14 @@ input,select,textarea{font-family:inherit;outline:none}
               </tr></thead>
               <tbody>
                 <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">👴 INSS Consignado</div><div style="font-size:11px;color:var(--muted)">Beneficiários + Aposentados</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">24</td><td style="padding:10px 12px;text-align:right">R$ 1.240.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 24.800</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏛️ Servidor Público</div><div style="font-size:11px;color:var(--muted)">Fed. + Estadual + Municipal</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 1.080.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#ede9fe;color:var(--p2);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,20%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 23.760</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏛️ Servidor Público</div><div style="font-size:11px;color:var(--muted)">Fed. + Estadual + Municipal</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 1.080.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dcfce7;color:var(--p2);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,20%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 23.760</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
                 <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎖️ Forças Armadas</div><div style="font-size:11px;color:var(--muted)">Exército / Marinha / Aeronáutica</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">9</td><td style="padding:10px 12px;text-align:right">R$ 720.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">2,50%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 18.000</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
                 <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🏢 CLT Convênio</div><div style="font-size:11px;color:var(--muted)">Empresas conveniadas</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">7</td><td style="padding:10px 12px;text-align:right">R$ 280.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#fef2f2;color:#dc2626;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">1,80%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 5.040</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-warn">Pendente</span></td></tr>
-                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">Venda direta</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">42</td><td style="padding:10px 12px;text-align:right">R$ 236.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#ecfdf5;color:#047857;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">8,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 7.600</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
-                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">Auto + Vida + Residencial</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 41.600</td><td style="padding:10px 12px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">12,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 4.992</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🎰 Capitalização</div><div style="font-size:11px;color:var(--muted)">Venda direta</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">42</td><td style="padding:10px 12px;text-align:right">R$ 236.000</td><td style="padding:10px 12px;text-align:center"><span style="background:#dcfce7;color:var(--p2);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">8,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 7.600</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
+                <tr><td style="padding:10px 12px"><div style="font-size:13px;font-weight:700">🛡️ Seguros</div><div style="font-size:11px;color:var(--muted)">Auto + Vida + Residencial</div></td><td style="padding:10px 12px;text-align:center;font-weight:700">18</td><td style="padding:10px 12px;text-align:right">R$ 41.600</td><td style="padding:10px 12px;text-align:center"><span style="background:#f0fdf4;color:#6d28d9;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">12,00%</span></td><td style="padding:10px 12px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 4.992</td><td style="padding:10px 12px;text-align:center"><span class="badge bg-ok">Pago</span></td></tr>
               </tbody>
             </table>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:12px;border:1px solid #bbf7d0">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#dcfce7;border-radius:10px;margin-top:12px;border:1px solid #bbf7d0">
               <div style="font-size:14px;font-weight:800">TOTAL JUNHO</div>
               <div style="font-size:22px;font-weight:900;color:var(--ok)">R$ 84.192</div>
             </div>
@@ -3414,10 +3414,10 @@ input,select,textarea{font-family:inherit;outline:none}
               <th style="padding:9px 14px;text-align:center;font-size:11px;color:var(--muted)">STATUS</th>
             </tr></thead>
             <tbody>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">02/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Maria Clara Santos</div><div style="font-size:11px;color:var(--muted)">Correspondente: Lotérica Boa Sorte</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#f5f3ff;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 18.400,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 368,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">05/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">João Paulo Ferreira</div><div style="font-size:11px;color:var(--muted)">Correspondente: Mercado Silva</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#ede9fe;color:var(--p2);font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 32.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,20%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 704,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">02/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Maria Clara Santos</div><div style="font-size:11px;color:var(--muted)">Correspondente: Lotérica Boa Sorte</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#f0fdf4;color:#6d28d9;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">INSS</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 18.400,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 368,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">05/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">João Paulo Ferreira</div><div style="font-size:11px;color:var(--muted)">Correspondente: Mercado Silva</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#dcfce7;color:var(--p2);font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Servidor</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 32.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,20%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 704,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
               <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">08/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Tenente Ricardo Moura</div><div style="font-size:11px;color:var(--muted)">Correspondente: Papelaria Central</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Forças Arm.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 45.000,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,50%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 1.125,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
-              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">12/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Ana Beatriz Lima</div><div style="font-size:11px;color:var(--muted)">Correspondente: Farmácia Popular</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#ecfdf5;color:#047857;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Aposentado</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 9.800,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 196,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
+              <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;font-size:12px;color:var(--muted)">12/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Ana Beatriz Lima</div><div style="font-size:11px;color:var(--muted)">Correspondente: Farmácia Popular</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#dcfce7;color:var(--p2);font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">Aposentado</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 9.800,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">2,00%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--ok)">R$ 196,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-ok">Pago ✅</span></td></tr>
               <tr><td style="padding:10px 14px;font-size:12px;color:var(--muted)">18/06/2026</td><td style="padding:10px 14px"><div style="font-size:13px;font-weight:700">Pedro Henrique Neto</div><div style="font-size:11px;color:var(--muted)">Correspondente: Auto Center Rei</div></td><td style="padding:10px 14px;text-align:center"><span style="background:#fef2f2;color:#dc2626;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700">CLT Conv.</span></td><td style="padding:10px 14px;text-align:right;font-weight:700">R$ 7.500,00</td><td style="padding:10px 14px;text-align:center;font-size:12px;color:var(--muted)">1,80%</td><td style="padding:10px 14px;text-align:right;font-size:14px;font-weight:900;color:var(--amber)">R$ 135,00</td><td style="padding:10px 14px;text-align:center"><span class="badge bg-warn">Pendente ⏳</span></td></tr>
             </tbody>
           </table>
@@ -3692,7 +3692,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <p style="font-size:13px;opacity:.7">Você e seu amigo ganham R$ 50 quando ele fizer o 1º PIX · Sem limite de indicações</p>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px">
-          <div class="card" style="text-align:center;background:linear-gradient(135deg,#ede9fe,#ddd6fe)">
+          <div class="card" style="text-align:center;background:linear-gradient(135deg,#dcfce7,#bbf7d0)">
             <div style="font-size:42px;margin-bottom:8px">🎁</div>
             <div style="font-size:36px;font-weight:900;color:var(--pur)">R$ 350</div>
             <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Ganhos totais de indicações</div>
@@ -3708,7 +3708,7 @@ input,select,textarea{font-family:inherit;outline:none}
               <button class="btn btn-primary" style="padding:11px" onclick="showToast('📋 Link copiado!','success')">📋 Copiar link</button>
               <button class="btn" style="padding:11px;background:var(--ok);color:#fff" onclick="showToast('📤 Compartilhado!','success')">📤 Compartilhar</button>
             </div>
-            <div style="background:#f5f3ff;border-radius:9px;padding:12px;font-size:12px;color:var(--muted)">
+            <div style="background:#f0fdf4;border-radius:9px;padding:12px;font-size:12px;color:var(--muted)">
               <strong style="color:var(--p1)">Como funciona:</strong><br>
               1. Compartilhe seu link<br>
               2. Amigo abre conta com seu link<br>
@@ -3754,7 +3754,7 @@ input,select,textarea{font-family:inherit;outline:none}
               <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#e0e7ff'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('📦 Entrega de cartão agendada!','success')"><div style="font-size:13px;font-weight:700">💳 Entrega de Cartão</div><div style="font-size:12px;color:var(--muted)">Cartão novo ou 2ª via · Prazo: 2h · Taxa: grátis</div></div>
               <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('💵 Coleta de dinheiro agendada!','success')"><div style="font-size:13px;font-weight:700">💵 Cash-in (coleta)</div><div style="font-size:12px;color:var(--muted)">Depósito na conta em até 1h · Taxa: R$ 5</div></div>
               <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='var(--bg)'" onclick="showToast('💸 Saque em casa agendado!','success')"><div style="font-size:13px;font-weight:700">💸 Cash-out (entrega)</div><div style="font-size:12px;color:var(--muted)">Dinheiro na porta · Limite R$ 2.000 · Taxa: R$ 8</div></div>
-              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='var(--bg)'" onclick="agendarKYC()"><div style="font-size:13px;font-weight:700">📄 Coleta de documentos</div><div style="font-size:12px;color:var(--muted)">KYC presencial · Prazo: 4h</div></div>
+              <div style="padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='var(--bg)'" onclick="agendarKYC()"><div style="font-size:13px;font-weight:700">📄 Coleta de documentos</div><div style="font-size:12px;color:var(--muted)">KYC presencial · Prazo: 4h</div></div>
             </div>
           </div>
           <div class="card">
@@ -3885,7 +3885,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <div style="font-size:10px;color:var(--ok);margin-top:6px;font-weight:700">Resgate: R$ 550</div>
           <div style="font-size:10px;color:var(--muted)">2 bilhetes/mês</div>
         </div>
-        <div class="cap-plano selected" data-id="arvore" onclick="selectCapPlano(this,'arvore')" style="border:2px solid var(--p1);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s;background:#f5f3ff">
+        <div class="cap-plano selected" data-id="arvore" onclick="selectCapPlano(this,'arvore')" style="border:2px solid var(--p1);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s;background:#f0fdf4">
           <div style="font-size:10px;background:var(--p1);color:#fff;padding:2px 8px;border-radius:20px;margin-bottom:4px;display:inline-block">⭐ POPULAR</div>
           <div style="font-size:28px">🌳</div>
           <div style="font-size:13px;font-weight:800;margin:4px 0">Cap Árvore</div>
@@ -3904,7 +3904,7 @@ input,select,textarea{font-family:inherit;outline:none}
         </div>
       </div>
       <!-- Resumo plano selecionado -->
-      <div id="cap-resumo" style="background:linear-gradient(135deg,#f5f3ff,#dbeafe);border-radius:14px;padding:16px;margin-bottom:18px;border:1px solid #ddd6fe">
+      <div id="cap-resumo" style="background:linear-gradient(135deg,#f0fdf4,#dbeafe);border-radius:14px;padding:16px;margin-bottom:18px;border:1px solid #bbf7d0">
         <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px">RESUMO DO PLANO SELECIONADO</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
           <div style="background:#fff;border-radius:9px;padding:10px;text-align:center"><div style="font-size:10px;color:var(--muted)">Parcela mensal</div><div id="cap-r-parc" style="font-size:18px;font-weight:900;color:var(--p1)">R$ 150</div></div>
@@ -4217,7 +4217,7 @@ input,select,textarea{font-family:inherit;outline:none}
           <select style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:11px;font-size:14px;outline:none">
             <option selected>SP — São Paulo</option><option>RJ — Rio de Janeiro</option><option>MG — Minas Gerais</option></select></div>
       </div>
-      <div style="background:#f5f3ff;border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px">
+      <div style="background:#f0fdf4;border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px">
         <span style="font-size:22px">✅</span>
         <div><div style="font-size:13px;font-weight:700;color:var(--p2)">KYC Verificado</div><div style="font-size:12px;color:var(--p3)">Identidade confirmada · Atualizado em 01/06/2026</div></div>
       </div>
@@ -4271,10 +4271,10 @@ input,select,textarea{font-family:inherit;outline:none}
         <div style="background:#f3f4f6;border-radius:0 14px 14px 14px;padding:11px 14px;max-width:80%;font-size:13px;line-height:1.5">Olá! Sou a KaiNowPay IA 👋<br>Como posso ajudar você hoje?</div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin-left:38px">
-        <button onclick="chatRapido('Como fazer um PIX?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">⚡ Como fazer PIX?</button>
-        <button onclick="chatRapido('Qual meu saldo?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">💰 Ver saldo</button>
-        <button onclick="chatRapido('Quero contratar seguro')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">🛡️ Seguros</button>
-        <button onclick="chatRapido('Como aumentar meu limite?')" style="background:#ede9fe;color:#7c3aed;border:1px solid #ddd6fe;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">💳 Limite</button>
+        <button onclick="chatRapido('Como fazer um PIX?')" style="background:#dcfce7;color:#7c3aed;border:1px solid #bbf7d0;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">⚡ Como fazer PIX?</button>
+        <button onclick="chatRapido('Qual meu saldo?')" style="background:#dcfce7;color:#7c3aed;border:1px solid #bbf7d0;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">💰 Ver saldo</button>
+        <button onclick="chatRapido('Quero contratar seguro')" style="background:#dcfce7;color:#7c3aed;border:1px solid #bbf7d0;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">🛡️ Seguros</button>
+        <button onclick="chatRapido('Como aumentar meu limite?')" style="background:#dcfce7;color:#7c3aed;border:1px solid #bbf7d0;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:600">💳 Limite</button>
       </div>
     </div>
     <div style="padding:12px 16px;border-top:1px solid #f0f0f0;display:flex;gap:8px;flex-shrink:0">
@@ -4295,7 +4295,7 @@ input,select,textarea{font-family:inherit;outline:none}
     <div style="padding:24px 26px">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px">
         <div style="background:#fef3c7;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:#92400e;font-weight:600">USD</div><div style="font-size:22px;font-weight:900;color:#b45309">R$ 5,72</div></div>
-        <div style="background:#f5f3ff;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:var(--p1);font-weight:600">EUR</div><div style="font-size:22px;font-weight:900;color:var(--p2)">R$ 6,18</div></div>
+        <div style="background:#f0fdf4;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:var(--p1);font-weight:600">EUR</div><div style="font-size:22px;font-weight:900;color:var(--p2)">R$ 6,18</div></div>
         <div style="background:#f0fdf4;border-radius:12px;padding:12px;text-align:center"><div style="font-size:11px;color:#047857;font-weight:600">BTC</div><div style="font-size:22px;font-weight:900;color:#047857">R$320k</div></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px">
@@ -4877,7 +4877,7 @@ function buildInvCards(){
 /* BUILD: NOTIFICAÇÕES */
 function buildNotifs(){
   document.getElementById('notifList').innerHTML=NOTIFS.map(n=>`
-    <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:${n.unread?'#f5f3ff':'var(--card)'};border-radius:var(--r);margin-bottom:9px;box-shadow:var(--sh);border-left:3px solid ${n.unread?'var(--p3)':'var(--border)'}">
+    <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:${n.unread?'#f0fdf4':'var(--card)'};border-radius:var(--r);margin-bottom:9px;box-shadow:var(--sh);border-left:3px solid ${n.unread?'var(--p3)':'var(--border)'}">
       <div style="width:44px;height:44px;border-radius:12px;background:${n.unread?'#dbeafe':'var(--bg)'};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${n.icon}</div>
       <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--txt)">${n.title}</div><div style="font-size:12px;color:var(--muted);margin-top:2px">${n.desc}</div></div>
       <div style="font-size:11px;color:var(--muted);text-align:right;flex-shrink:0">${n.time}${n.unread?'<br><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--p3);margin-top:3px"></span>':''}</div>
@@ -5196,7 +5196,7 @@ function openFatura(tipo){
   document.getElementById('fat-lancamentos').innerHTML=itens.map(i=>`
     <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:var(--bg);border-radius:11px">
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:36px;height:36px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px">${i.cat}</div>
+        <div style="width:36px;height:36px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px">${i.cat}</div>
         <div><div style="font-size:13px;font-weight:600">${i.desc}</div><div style="font-size:11px;color:var(--muted)">${i.data}</div></div>
       </div>
       <div style="font-size:14px;font-weight:800;color:var(--err)">- R$ ${fmt(i.val)}</div>
@@ -5474,7 +5474,7 @@ function openCap(plano){
   document.querySelectorAll('.cap-plano').forEach(el=>{
     const isMe=el.dataset.id===_capSel;
     el.style.border=isMe?'2px solid var(--p1)':'2px solid var(--border)';
-    el.style.background=isMe?'#f5f3ff':'var(--card)';
+    el.style.background=isMe?'#f0fdf4':'var(--card)';
   });
   atualizarResumoCAP(_capSel);
 }
@@ -5483,7 +5483,7 @@ function selectCapPlano(el,id){
   document.querySelectorAll('.cap-plano').forEach(e=>{
     e.style.border='2px solid var(--border)';e.style.background='var(--card)';
   });
-  el.style.border='2px solid var(--p1)';el.style.background='#f5f3ff';
+  el.style.border='2px solid var(--p1)';el.style.background='#f0fdf4';
   atualizarResumoCAP(id);
 }
 function atualizarResumoCAP(id){
@@ -5561,7 +5561,7 @@ function openSeguroProd(tipo){
   // Planos
   const g=document.getElementById('seg-planos-grid');
   g.innerHTML=p.planos.map((pl,i)=>`
-    <div onclick="selectSegPlano(this,${i})" style="border:2px solid ${i===1?'var(--p1)':'var(--border)'};border-radius:12px;padding:14px;cursor:pointer;background:${i===1?'#f5f3ff':'var(--card)'};transition:all .2s">
+    <div onclick="selectSegPlano(this,${i})" style="border:2px solid ${i===1?'var(--p1)':'var(--border)'};border-radius:12px;padding:14px;cursor:pointer;background:${i===1?'#f0fdf4':'var(--card)'};transition:all .2s">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <div style="font-size:14px;font-weight:800">${pl.nome}</div>
         <div style="font-size:18px;font-weight:900;color:var(--p1)">R$ ${fmt(pl.valor)}<span style="font-size:11px;font-weight:400;color:var(--muted)">/mês</span></div>
@@ -5577,7 +5577,7 @@ function selectSegPlano(el,idx){
   _segPlanoIdx=idx;
   el.parentElement.querySelectorAll('div[onclick]').forEach((e,i)=>{
     e.style.border=i===idx?'2px solid var(--p1)':'2px solid var(--border)';
-    e.style.background=i===idx?'#f5f3ff':'var(--card)';
+    e.style.background=i===idx?'#f0fdf4':'var(--card)';
   });
 }
 function contratarSeguro(){
@@ -7048,16 +7048,16 @@ const CRM_LEADS=[
 ];
 
 const ETAPA_COLORS={
-  'Simulador':'background:#ede9fe;color:#6d28d9',
-  'Proposta':'background:#ede9fe;color:var(--p2)',
+  'Simulador':'background:#dcfce7;color:#6d28d9',
+  'Proposta':'background:#dcfce7;color:var(--p2)',
   'Upload Docs':'background:#fef3c7;color:#92400e',
   'Assinatura':'background:#f3e8ff;color:#7c3aed',
   'Aprovação':'background:#fee2e2;color:#dc2626',
   'Aprovado':'background:#dcfce7;color:#15803d'
 };
 const NICHO_COLORS={
-  'INSS':'background:#f5f3ff;color:#6d28d9',
-  'Servidor Público':'background:#ede9fe;color:var(--p2)',
+  'INSS':'background:#f0fdf4;color:#6d28d9',
+  'Servidor Público':'background:#dcfce7;color:var(--p2)',
   'Forças Armadas':'background:#fef3c7;color:#92400e',
   'Aposentado':'background:#dcfce7;color:#15803d',
   'Pensionista':'background:#ecfeff;color:#0e7490',
@@ -7106,14 +7106,14 @@ function avancarLead(nome){
 
 // ---------- KANBAN ----------
 const KANBAN_STEPS=[
-  {id:'simulador',label:'1. Simulador',color:'#6366f1',bg:'#ede9fe',leads:['Cláudia Melo','Marcos Vinícius']},
+  {id:'simulador',label:'1. Simulador',color:'#6366f1',bg:'#dcfce7',leads:['Cláudia Melo','Marcos Vinícius']},
   {id:'proposta',label:'2. Proposta',color:'#0284c7',bg:'#dbeafe',leads:['Pedro Neto','Sgt. Paulo Andrade','Rosa Pereira']},
   {id:'upload',label:'3. Upload Docs',color:'#d97706',bg:'#fef3c7',leads:['João Paulo','Beatriz Oliveira']},
   {id:'assinatura',label:'4. Assinatura',color:'#7c3aed',bg:'#f3e8ff',leads:['Ana Lima']},
   {id:'aprovacao',label:'5. Aprovação',color:'#dc2626',bg:'#fee2e2',leads:['Tenente Moura']},
   {id:'comissao',label:'6. Comissão',color:'#0891b2',bg:'#ecfeff',leads:[]},
   {id:'correspondente',label:'7. Correspondente',color:'#047857',bg:'#ecfdf5',leads:[]},
-  {id:'carteira',label:'8. Carteira Digital',color:'#7c3aed',bg:'#f5f3ff',leads:[]},
+  {id:'carteira',label:'8. Carteira Digital',color:'#7c3aed',bg:'#f0fdf4',leads:[]},
   {id:'portal',label:'9. Portal Cliente',color:'#15803d',bg:'#dcfce7',leads:['Maria Santos','Luiza Costa','Coronel Lima']},
 ];
 
