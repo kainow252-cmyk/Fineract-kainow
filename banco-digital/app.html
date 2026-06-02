@@ -64,7 +64,7 @@ input,select,textarea{font-family:inherit;outline:none}
   flex:1.4;
   background:linear-gradient(155deg,#0B071E 0%,#13103A 40%,#1E1650 75%,#2D1F6E 100%);
   display:flex;flex-direction:column;justify-content:space-between;
-  padding:44px 56px 36px 56px;position:relative;overflow:hidden;
+  padding:32px 44px 28px 44px;position:relative;overflow:hidden;
 }
 .lgn-left::before{
   content:'';position:absolute;inset:0;
@@ -87,7 +87,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .lgn-waves svg{position:absolute;bottom:0;left:0;width:100%;height:260px;opacity:.45}
 
 /* Logo */
-.lgn-brand{display:flex;align-items:center;gap:16px;margin-bottom:28px;position:relative;z-index:1}
+.lgn-brand{display:flex;align-items:center;gap:12px;margin-bottom:18px;position:relative;z-index:1}
 .lgn-brand-icon{
   width:62px;height:62px;
   background:linear-gradient(135deg,#7B3FF2,#5B2AC4);
@@ -104,9 +104,9 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* Headline — fluid, fills entire panel width */
 .lgn-headline{
-  font-size:clamp(36px,4.2vw,58px);
-  font-weight:900;color:#fff;line-height:1.08;
-  letter-spacing:-2px;margin-bottom:16px;
+  font-size:clamp(24px,2.6vw,38px);
+  font-weight:900;color:#fff;line-height:1.1;
+  letter-spacing:-1.5px;margin-bottom:14px;
   position:relative;z-index:1;
   width:100%;max-width:100%;
 }
@@ -117,15 +117,15 @@ input,select,textarea{font-family:inherit;outline:none}
   background-clip:text;
 }
 .lgn-desc{
-  font-size:clamp(15px,1.5vw,18px);
-  color:rgba(255,255,255,.65);line-height:1.75;
-  margin-bottom:28px;
+  font-size:clamp(13px,1.2vw,15px);
+  color:rgba(255,255,255,.65);line-height:1.65;
+  margin-bottom:20px;
   width:100%;max-width:100%;
   position:relative;z-index:1;
 }
 /* Stats strip — full width */
 .lgn-stats{
-  display:flex;gap:0;margin-bottom:28px;position:relative;z-index:1;
+  display:flex;gap:0;margin-bottom:18px;position:relative;z-index:1;
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
   border-radius:16px;overflow:hidden;width:100%;
 }
@@ -134,13 +134,13 @@ input,select,textarea{font-family:inherit;outline:none}
   border-right:1px solid rgba(255,255,255,.08);
 }
 .lgn-stat:last-child{border-right:none}
-.lgn-stat-num{font-size:clamp(20px,2vw,26px);font-weight:900;color:#fff;line-height:1;margin-bottom:4px}
+.lgn-stat-num{font-size:clamp(17px,1.6vw,22px);font-weight:900;color:#fff;line-height:1;margin-bottom:3px}
 .lgn-stat-num span{font-size:clamp(13px,1.2vw,16px);font-weight:700;color:#a78bfa}
 .lgn-stat-lbl{font-size:clamp(10px,.9vw,12px);color:rgba(255,255,255,.42);letter-spacing:.4px;text-transform:uppercase}
 /* Features list — 2 columns, fills width */
 .lgn-features{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:12px;margin-bottom:24px;position:relative;z-index:1;width:100%;
+  gap:8px;margin-bottom:16px;position:relative;z-index:1;width:100%;
 }
 .lgn-feat{
   display:flex;align-items:center;gap:14px;
@@ -993,12 +993,12 @@ input,select,textarea{font-family:inherit;outline:none}
 
 /* ── LOGIN RESPONSIVE ── */
 @media(max-width:1100px){
-  .lgn-headline{font-size:clamp(34px,4vw,52px);letter-spacing:-2px}
+  .lgn-headline{font-size:clamp(22px,2.4vw,34px);letter-spacing:-1.5px}
   .lgn-features{grid-template-columns:1fr 1fr}
 }
 @media(max-width:900px){
   .lgn-left{flex:0.9;padding:32px 32px 28px 32px}
-  .lgn-headline{font-size:30px;letter-spacing:-1.5px}
+  .lgn-headline{font-size:22px;letter-spacing:-1px}
   .lgn-desc{font-size:14px}
   .lgn-features{grid-template-columns:1fr}
   .lgn-right{width:400px}
@@ -4627,22 +4627,8 @@ function buildLoanTbl(){
       </tr>`).join('')}</tbody>`;
 }
 
-/* BUILD: MARKETPLACE (Medusa) */
-function buildProducts(){
-  document.getElementById('prodGrid').innerHTML=PRODUCTS.map(p=>`
-    <div class="prod-card" onclick="showToast('🛍️ ${p.name} adicionado ao carrinho!','info')">
-      <div class="prod-img" style="background:${p.bg}20">${p.icon}</div>
-      <div class="prod-info">
-        <div class="pn">${p.name}</div>
-        <div class="pd">${p.desc}</div>
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="pp">${p.price}</div>
-          <span class="badge bg-teal" style="font-size:10px">${p.cat}</span>
-        </div>
-        <button class="btn-sm btn-p" style="width:100%;justify-content:center;margin-top:8px;padding:8px">+ Carrinho</button>
-      </div>
-    </div>`).join('');
-}
+/* BUILD: MARKETPLACE (Medusa) — delegated to interactive version below */
+function buildProducts_legacy(){ /* replaced — see buildProducts(filtro) */ }
 function buildOrders(){
   document.getElementById('ordersList').innerHTML=ORDERS.map(o=>`
     <div class="order-row">
@@ -4655,60 +4641,12 @@ function buildOrders(){
     </div>`).join('');
 }
 
-/* BUILD: CRM (Twenty) */
-function buildCRM(){
-  document.getElementById('crmCols').innerHTML=Object.entries(CRM_PIPELINE).map(([col,cards])=>`
-    <div class="crm-col">
-      <div class="crm-col-header">
-        <span>${col}</span>
-        <span class="badge bg-inf">${cards.length}</span>
-      </div>
-      ${cards.map(c=>`
-        <div class="crm-card">
-          <div class="cct">${c.t}</div>
-          <div class="ccv">${c.v}</div>
-          <div class="ccs">${c.s}</div>
-        </div>`).join('')}
-    </div>`).join('');
+/* BUILD: CRM (Twenty) — delegated to interactive version below */
+function buildCRM_legacy(){ /* replaced — see buildCRM() with crmFiltrarContatos() */ }
 
-  document.getElementById('crmTbl').innerHTML=`
-    <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Tipo</th><th>Status</th></tr></thead>
-    <tbody>${CRM_CONTACTS.map(c=>`
-      <tr>
-        <td><div style="display:flex;align-items:center;gap:8px">
-          <div class="ctav" style="background:${c.color}">${c.name.charAt(0)}</div>
-          <strong>${c.name}</strong>
-        </div></td>
-        <td>${c.email}</td><td>${c.phone}</td>
-        <td><span class="badge bg-inf">${c.type}</span></td>
-        <td><span class="badge ${c.status==='VIP'?'bg-pur':'bg-ok'}">${c.status}</span></td>
-      </tr>`).join('')}</tbody>`;
-}
-
-/* BUILD: DOCUMENTOS (Documenso) */
-function buildDocTemplates(){
-  document.getElementById('docGrid').innerHTML=DOC_TEMPLATES.map(d=>`
-    <div class="doc-card" onclick="showToast('📝 Template aberto: ${d.name}','info')">
-      <div class="dci">${d.icon}</div>
-      <div class="dcn">${d.name}</div>
-      <div class="dcd">${d.desc}</div>
-      <div class="dcs">
-        <div style="display:flex;gap:5px">${d.tags.map(t=>`<span class="badge bg-teal" style="font-size:10px">${t}</span>`).join('')}</div>
-        <button class="btn-sm btn-p" style="padding:5px 11px;font-size:11px" onclick="event.stopPropagation();showToast('✍️ Assinando...','info')">Usar</button>
-      </div>
-    </div>`).join('');
-}
-function buildDocs(){
-  document.getElementById('docList').innerHTML=DOCS.map(d=>`
-    <div class="doc-row">
-      <div class="di">${d.icon}</div>
-      <div class="dinfo"><div class="dn">${d.name}</div><div class="dd">${d.desc}</div></div>
-      <div class="dright">
-        <div class="dstat ${d.sc==='ok'?'text-ok':'text-warn'}">${d.status==='Assinado'?'✅':d.status==='Pendente'?'⏳':'❌'} ${d.status}</div>
-        <div class="ddate">${d.date}</div>
-      </div>
-    </div>`).join('');
-}
+/* BUILD: DOCUMENTOS (Documenso) — delegated to interactive version below */
+function buildDocTemplates_legacy(){ /* replaced — see buildDocTemplates() with docUsarTemplate() */ }
+function buildDocs_legacy(){ /* replaced — see buildDocs(filtro) with docAssinar() */ }
 
 /* BUILD: INTEGRAÇÕES */
 function buildIntegStatus(){
