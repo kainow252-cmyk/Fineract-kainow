@@ -7876,10 +7876,329 @@ function onPageOpen(id){
 </script>
 
 <!-- ══════════════════════════════════════════════════════════════════
-     FIREBASE SDK — Auth + FCM Push Notifications
-     Configuração centralizada em window.KNP_FIREBASE_CONFIG
+     FIREBASE SDK — Auth (Google + Facebook) + FCM Push Notifications
+     Projeto: kainowpay | App: kainowapp (Meta: 658952460608800)
 ══════════════════════════════════════════════════════════════════ -->
 <script type="module">
+// ─── Firebase Config ─────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey:            "AIzaSyDl1sR0sgb6BH52fwQ_twgSiwbGvrJ9Ek8",
+  authDomain:        "kainowpay.firebaseapp.com",
+  projectId:         "kainowpay",
+  storageBucket:     "kainowpay.firebasestorage.app",
+  messagingSenderId: "625304649401",
+  appId:             "1:625304649401:web:0fb95cc8c350a528332568",
+  measurementId:     "G-CCT011KL64",
+};
+
+// VAPID Key FCM (Firebase Console → Project Settings → Cloud Messaging)
+const VAPID_KEY = "BKm8Qta2rvU50Hm8gOy3g_UJu6FtiHZaw__inefm6i8gwMeG9rEhquTcBPEYHu2cu2YOGAwTYfdOpz4eRiGityw";
+
+// Meta App ID — kainowapp
+const META_APP_ID = "658952460608800";
+
+// ─── Imports Firebase ESM (CDN) ──────────────────────────────────────
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider,
+         signInWithPopup, signInWithRedirect, getRedirectResult,
+         signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+import { getMessaging, getToken, onMessage }
+  from "https://www.gstatic.com/firebasejs/11.9.0/firebase-messaging.js";
+
+// ─── Mapa de erros Firebase → Português ─────────────────────────────
+const FB_ERRORS = {
+  "auth/popup-blocked":              "🚫 Popup bloqueado pelo navegador. Tente novamente ou habilite popups.",
+  "auth/popup-closed-by-user":       null, // silencioso
+  "auth/cancelled-popup-request":    null,
+  "auth/network-request-failed":     "📶 Sem conexão. Verifique sua internet e tente novamente.",
+  "auth/too-many-requests":          "⏳ Muitas tentativas. Aguarde alguns minutos.",
+  "auth/user-disabled":              "🚫 Esta conta foi desativada.",
+  "auth/account-exists-with-different-credential":
+    "📧 Este e-mail já está associado a outro provedor. Tente entrar com Google ou use e-mail/senha.",
+  "auth/unauthorized-domain":
+    "⚙️ Domínio não autorizado no Firebase. Adicione este domínio em Authentication → Settings → Authorized domains.",
+  "auth/operation-not-allowed":
+    "⚙️ Este provedor não está habilitado no Firebase Console.",
+  "auth/invalid-api-key":            "⚙️ Chave Firebase inválida. Contate o suporte.",
+};
+
+function fbErrMsg(e) {
+  if (FB_ERRORS[e.code] === null) return null; // silencioso
+  return FB_ERRORS[e.code] || `❌ Erro de autenticação: ${e.message}`;
+}
+
+// ─── Init Firebase ───────────────────────────────────────────────────
+let fbApp, fbAuth, fbMessaging;
+try {
+  fbApp       = initializeApp(firebaseConfig);
+  fbAuth      = getAuth(fbApp);
+  fbMessaging = getMessaging(fbApp);
+  console.log("✅ Firebase kainowpay inicializado");
+} catch(e) {
+  console.error("⚠️ Firebase init error:", e.message);
+}
+
+// ─── Verifica resultado de redirect (mobile login) ───────────────────
+if (fbAuth) {
+  getRedirectResult(fbAuth).then(result => {
+    if (result?.user) {
+      const cred = FacebookAuthProvider.credentialFromResult(result)
+                || GoogleAuthProvider.credentialFromResult(result);
+      if (cred?.accessToken) window.KNP_META_ACCESS_TOKEN = cred.accessToken;
+      showToast(`✅ Bem-vindo, ${result.user.displayName}!`, "ok");
+      window.knpFirebaseUserLoggedIn(result.user);
+    }
+  }).catch(e => {
+    const msg = fbErrMsg(e);
+    if (msg) showToast(msg, "err");
+  });
+}
+
+// ─── Auth State Observer ─────────────────────────────────────────────
+if (fbAuth) {
+  onAuthStateChanged(fbAuth, (user) => {
+    if (user) {
+      window.KNP_AUTH_USER = {
+        uid:      user.uid,
+        name:     user.displayName || "Usuário",
+        email:    user.email || "",
+        photo:    user.photoURL || "",
+        provider: user.providerData[0]?.providerId || "firebase",
+      };
+      window.knpFirebaseUserLoggedIn(user);
+    } else {
+      window.KNP_AUTH_USER = null;
+    }
+  });
+}
+
+// ─── Helper: estado do botão ─────────────────────────────────────────
+function btnLoading(id, loading, label) {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.style.opacity = loading ? "0.7" : "1";
+  if (label) btn.innerHTML = loading
+    ? `<span style="display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px"></span>${label}`
+    : label;
+}
+
+// ─── Google Login ────────────────────────────────────────────────────
+window.doGoogleLogin = async function() {
+  if (!fbAuth) { showToast("⚠️ Firebase não configurado", "warn"); return; }
+
+  btnLoading("btn-google-login", true,
+    `<svg width="16" height="16" viewBox="0 0 18 18" style="vertical-align:middle;margin-right:6px"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>Entrando...`);
+
+  try {
+    const provider = new GoogleAuthProvider();
+    provider.addScope("profile");
+    provider.addScope("email");
+    provider.setCustomParameters({ prompt: "select_account" });
+
+    let result;
+    try {
+      result = await signInWithPopup(fbAuth, provider);
+    } catch(popupErr) {
+      // Fallback para redirect em mobile ou popup bloqueado
+      if (popupErr.code === "auth/popup-blocked" || popupErr.code === "auth/popup-closed-by-user") {
+        await signInWithRedirect(fbAuth, provider);
+        return; // página vai recarregar
+      }
+      throw popupErr;
+    }
+
+    showToast(`✅ Bem-vindo, ${result.user.displayName}!`, "ok");
+    window.knpFirebaseUserLoggedIn(result.user);
+
+  } catch(e) {
+    const msg = fbErrMsg(e);
+    if (msg) showToast(msg, "err");
+    console.error("Google login:", e.code, e.message);
+  } finally {
+    btnLoading("btn-google-login", false,
+      `<svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>Entrar com Google`);
+  }
+};
+
+// ─── Facebook / Meta Login ───────────────────────────────────────────
+window.doFacebookLogin = async function() {
+  if (!fbAuth) { showToast("⚠️ Firebase não configurado", "warn"); return; }
+
+  btnLoading("btn-facebook-login", true,
+    `<svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#fff"/></svg>Entrando...`);
+
+  try {
+    const provider = new FacebookAuthProvider();
+    provider.addScope("public_profile");
+    provider.addScope("email");
+
+    let result;
+    try {
+      result = await signInWithPopup(fbAuth, provider);
+    } catch(popupErr) {
+      if (popupErr.code === "auth/popup-blocked" || popupErr.code === "auth/popup-closed-by-user") {
+        await signInWithRedirect(fbAuth, provider);
+        return;
+      }
+      throw popupErr;
+    }
+
+    // Captura o access token Meta para Graph API
+    const credential = FacebookAuthProvider.credentialFromResult(result);
+    if (credential?.accessToken) window.KNP_META_ACCESS_TOKEN = credential.accessToken;
+
+    showToast(`✅ Bem-vindo, ${result.user.displayName}!`, "ok");
+    window.knpFirebaseUserLoggedIn(result.user);
+
+  } catch(e) {
+    const msg = fbErrMsg(e);
+    if (msg) showToast(msg, "err");
+    console.error("Facebook login:", e.code, e.message);
+  } finally {
+    btnLoading("btn-facebook-login", false,
+      `<svg width="18" height="18" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#fff"/></svg>Entrar com Facebook`);
+  }
+};
+
+// ─── Firebase Logout ─────────────────────────────────────────────────
+window.doFirebaseLogout = async function() {
+  if (!fbAuth) return;
+  try {
+    await signOut(fbAuth);
+    window.KNP_AUTH_USER = null;
+    window.KNP_META_ACCESS_TOKEN = null;
+    window.KNP_FCM_TOKEN = null;
+    showToast("👋 Saiu com sucesso", "info");
+    const lgn = document.getElementById("page-login");
+    const appEl = document.getElementById("app");
+    if (lgn)  { lgn.style.display = "flex"; lgn.classList.add("active"); }
+    if (appEl) appEl.style.display = "none";
+  } catch(e) {
+    console.error("Logout error:", e);
+  }
+};
+
+// ─── FCM Push Notifications ──────────────────────────────────────────
+window.knpRequestPushPermission = async function() {
+  if (!fbMessaging) { console.warn("FCM não inicializado"); return null; }
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      showToast("🔕 Notificações bloqueadas — habilite nas configurações do navegador","warn");
+      return null;
+    }
+
+    // Registra Service Worker FCM
+    let swReg;
+    if ("serviceWorker" in navigator) {
+      try {
+        swReg = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+        console.log("✅ FCM Service Worker registrado:", swReg.scope);
+      } catch(swErr) {
+        console.warn("SW register fallback:", swErr.message);
+      }
+    }
+
+    const token = await getToken(fbMessaging, {
+      vapidKey: VAPID_KEY,
+      ...(swReg && { serviceWorkerRegistration: swReg }),
+    });
+
+    if (token) {
+      console.log("✅ FCM Token:", token.substring(0,20)+"...");
+      window.KNP_FCM_TOKEN = token;
+      localStorage.setItem("knp_fcm_token", token);
+      await knpSendFCMTokenToServer(token);
+      showToast("🔔 Notificações push ativadas!", "ok");
+      return token;
+    }
+    showToast("⚠️ Não foi possível ativar notificações", "warn");
+    return null;
+
+  } catch(e) {
+    console.error("FCM error:", e);
+    if (e.code === "messaging/permission-blocked") {
+      showToast("🔕 Notificações bloqueadas — habilite nas configurações do navegador", "warn");
+    } else {
+      showToast("❌ Erro ao ativar notificações: " + e.message, "err");
+    }
+    return null;
+  }
+};
+
+// ─── Envia token FCM ao backend ──────────────────────────────────────
+async function knpSendFCMTokenToServer(token) {
+  try {
+    await fetch("/api/fcm/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token,
+        userId:    window.KNP_AUTH_USER?.uid || "anonymous",
+        userAgent: navigator.userAgent,
+      }),
+    });
+  } catch(e) {
+    console.warn("FCM server register skipped:", e.message);
+  }
+}
+
+// ─── FCM mensagens em foreground ─────────────────────────────────────
+if (fbMessaging) {
+  onMessage(fbMessaging, (payload) => {
+    const title = payload.notification?.title || "KaiNowPay";
+    const body  = payload.notification?.body  || "";
+    showToast(`🔔 ${title}${body ? ": " + body : ""}`, "info");
+    if (Notification.permission === "granted") {
+      new Notification(title, {
+        body, icon: "/favicon.svg", badge: "/favicon.svg",
+        tag: payload.data?.type || "knp-notif",
+      });
+    }
+  });
+}
+
+// ─── Atualiza UI após login ───────────────────────────────────────────
+window.knpFirebaseUserLoggedIn = function(user) {
+  // Atualiza sidebar e topbar
+  const nameEl   = document.getElementById("sb-user-name");
+  const emailEl  = document.getElementById("sb-user-email");
+  const avatarEl = document.getElementById("sb-user-avatar");
+  const topbarAv = document.getElementById("topbar-avatar");
+
+  if (nameEl)   nameEl.textContent  = user.displayName || "Usuário";
+  if (emailEl)  emailEl.textContent = user.email || "";
+  if (avatarEl && user.photoURL) {
+    avatarEl.src = user.photoURL;
+    avatarEl.onerror = () => { avatarEl.src = ""; };
+  }
+  if (topbarAv && user.photoURL) {
+    topbarAv.innerHTML = `<img src="${user.photoURL}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #4ade80" alt="${user.displayName || 'user'}" onerror="this.parentElement.textContent='👤'">`;
+  }
+
+  // Fecha tela de login e abre app
+  const lgn   = document.getElementById("page-login");
+  const appEl = document.getElementById("app");
+  if (lgn)   { lgn.style.display  = "none"; lgn.classList.remove("active"); }
+  if (appEl)   appEl.style.display = "";
+
+  // Solicita push 3s após login (não bloqueia o fluxo)
+  setTimeout(() => {
+    if (typeof Notification !== "undefined" && Notification.permission === "default") {
+      knpRequestPushPermission();
+    }
+  }, 3000);
+};
+
+// ─── Exposição global para debug ─────────────────────────────────────
+window.KNP_FIREBASE = { auth: fbAuth, messaging: fbMessaging, vapidKey: VAPID_KEY, metaAppId: META_APP_ID };
+console.log("🔥 Firebase KaiNowPay pronto — Google ✅ | Facebook ✅ | FCM ✅ | Meta App:", META_APP_ID);
+</script>
+</body>
+</html>
 // ─── Firebase Config ────────────────────────────────────────────────
 // SUBSTITUA pelos valores do seu projeto Firebase:
 // Firebase Console → Project Settings → Your apps → Web SDK snippet
