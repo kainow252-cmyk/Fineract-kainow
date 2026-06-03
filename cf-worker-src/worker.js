@@ -176,6 +176,169 @@ export default {
       return new Response('User-agent: *\nAllow: /\n', { headers: { 'Content-Type': 'text/plain', 'Cache-Control': 'public, max-age=86400' } });
     }
 
+    /* ══════════════════════════════════════════════════════════════════
+       WOOVI PIX API — Rotas de Backend
+       AppID guardado como secret: WOOVI_APP_ID
+       Base URL prod : https://api.woovi.com/api/v1
+       Base URL sandbox: https://api.woovi-sandbox.com/api/v1
+    ══════════════════════════════════════════════════════════════════ */
+
+    // Helpers CORS para chamadas do frontend
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    };
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+
+    // ── POST /api/pix/charge ─────────────────────────────────────────
+    // Body esperado: { value: number (centavos), comment: string, correlationID?: string }
+    // Retorna: { correlationID, brCode, qrCodeImage, paymentLinkUrl, expiresIn }
+    if (path === '/api/pix/charge' && request.method === 'POST') {
+      try {
+        const appID = (typeof WOOVI_APP_ID !== 'undefined' && WOOVI_APP_ID)
+          || request.headers.get('X-Woovi-AppID') || '';
+        if (!appID) {
+          return new Response(JSON.stringify({ error: 'WOOVI_APP_ID não configurado. Adicione o secret no Cloudflare Dashboard.' }), {
+            status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const body = await request.json();
+        const value       = Math.round(Number(body.value) || 100);   // centavos, mínimo R$1
+        const comment     = String(body.comment || 'Cobrança KaiNowPay').slice(0, 140);
+        const correlationID = body.correlationID || crypto.randomUUID();
+        const customerName  = String(body.customerName || 'Cliente');
+        const customerEmail = body.customerEmail || undefined;
+        const customerPhone = body.customerPhone || undefined;
+        const customerTaxID = body.customerTaxID  || undefined;
+
+        // Monta customer apenas se tiver pelo menos nome
+        const customer = customerName ? {
+          name: customerName,
+          ...(customerEmail && { email: customerEmail }),
+          ...(customerPhone && { phone: customerPhone }),
+          ...(customerTaxID  && { taxID: customerTaxID  }),
+          correlationID: correlationID + '-customer',
+        } : undefined;
+
+        // Detecta sandbox pelo AppID (sandbox IDs contêm "test" ou "sandbox")
+        const isSandbox = appID.toLowerCase().includes('test') || appID.toLowerCase().includes('sandbox')
+          || (typeof WOOVI_SANDBOX !== 'undefined' && WOOVI_SANDBOX === 'true');
+        const baseURL = isSandbox
+          ? 'https://api.woovi-sandbox.com/api/v1'
+          : 'https://api.woovi.com/api/v1';
+
+        const payload = { correlationID, value, comment, ...(customer && { customer }) };
+
+        const wooviRes = await fetch(`${baseURL}/charge`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': appID },
+          body: JSON.stringify(payload),
+        });
+
+        const wooviData = await wooviRes.json();
+
+        if (!wooviRes.ok) {
+          return new Response(JSON.stringify({ error: 'Woovi API error', details: wooviData }), {
+            status: wooviRes.status, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const charge = wooviData.charge || wooviData;
+        return new Response(JSON.stringify({
+          correlationID:   charge.correlationID,
+          identifier:      charge.identifier || charge.transactionID,
+          brCode:          charge.brCode || charge.paymentMethods?.pix?.brCode,
+          qrCodeImage:     charge.qrCodeImage || charge.paymentMethods?.pix?.qrCodeImage,
+          paymentLinkUrl:  charge.paymentLinkUrl,
+          expiresIn:       charge.expiresIn,
+          value,
+          status:          charge.status || 'ACTIVE',
+        }), { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
+
+      } catch (err) {
+        return new Response(JSON.stringify({ error: 'Erro interno', message: err.message }), {
+          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+    }
+
+    // ── GET /api/pix/charge/:correlationID ──────────────────────────
+    // Consulta status de uma cobrança
+    if (path.startsWith('/api/pix/charge/') && request.method === 'GET') {
+      try {
+        const appID = (typeof WOOVI_APP_ID !== 'undefined' && WOOVI_APP_ID)
+          || request.headers.get('X-Woovi-AppID') || '';
+        if (!appID) {
+          return new Response(JSON.stringify({ error: 'WOOVI_APP_ID não configurado.' }), {
+            status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+        const correlationID = path.split('/api/pix/charge/')[1];
+        const isSandbox = appID.toLowerCase().includes('test') || appID.toLowerCase().includes('sandbox')
+          || (typeof WOOVI_SANDBOX !== 'undefined' && WOOVI_SANDBOX === 'true');
+        const baseURL = isSandbox
+          ? 'https://api.woovi-sandbox.com/api/v1'
+          : 'https://api.woovi.com/api/v1';
+
+        const wooviRes = await fetch(`${baseURL}/charge/${correlationID}`, {
+          headers: { 'Authorization': appID }
+        });
+        const wooviData = await wooviRes.json();
+        const charge = wooviData.charge || wooviData;
+        return new Response(JSON.stringify({
+          correlationID: charge.correlationID,
+          status:        charge.status,
+          value:         charge.value,
+          paidAt:        charge.paidAt || null,
+          payer:         charge.payer || null,
+        }), { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), {
+          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+    }
+
+    // ── POST /api/woovi/webhook ──────────────────────────────────────
+    // Recebe notificações da Woovi (OPENPIX:CHARGE_COMPLETED, etc.)
+    // Na plataforma Woovi, configure o webhook URL como:
+    //   https://kainowpay.com.br/api/woovi/webhook
+    // Com o campo "authorization" preenchido com um secret seu (WOOVI_WEBHOOK_SECRET)
+    if (path === '/api/woovi/webhook' && request.method === 'POST') {
+      try {
+        // Verifica token de autorização (opcional mas recomendado)
+        const webhookSecret = typeof WOOVI_WEBHOOK_SECRET !== 'undefined' ? WOOVI_WEBHOOK_SECRET : '';
+        if (webhookSecret) {
+          const authHeader = request.headers.get('Authorization') || '';
+          if (authHeader !== webhookSecret) {
+            return new Response('Unauthorized', { status: 401 });
+          }
+        }
+
+        const event = await request.json();
+        const eventType = event.event || '';
+
+        // Log do evento (em produção, salvar no D1 ou KV)
+        console.log('[Woovi Webhook]', eventType, event.charge?.correlationID || '');
+
+        // Aqui você pode:
+        // 1. Salvar no Cloudflare D1: await env.DB.prepare('INSERT INTO pix_events...').run()
+        // 2. Salvar no KV: await env.KV.put('pix_'+correlationID, JSON.stringify(event))
+        // 3. Notificar via WebSocket ou Server-Sent Events
+
+        // Por ora retornamos 200 para confirmar recebimento
+        return new Response(JSON.stringify({ ok: true, event: eventType }), {
+          status: 200, headers: { 'Content-Type': 'application/json' }
+        });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+      }
+    }
+
     return new Response(`<!DOCTYPE html><html><body style="font-family:sans-serif;text-align:center;padding:60px;background:#0D0D3B;color:#fff">
       <h1 style="font-size:4rem">404</h1>
       <p style="color:rgba(255,255,255,.6);margin:12px 0 24px">Página não encontrada</p>

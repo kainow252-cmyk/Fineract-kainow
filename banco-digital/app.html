@@ -427,6 +427,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .crm-tab:hover{opacity:.85}
 .crm-panel{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* ══════════════════════════════════════════════
    APP SHELL
@@ -1589,17 +1590,109 @@ input,select,textarea{font-family:inherit;outline:none}
           </div>
         </div>
         <div class="pix-pane" id="pp-receive">
-          <div style="max-width:600px;margin:0 auto">
-            <div class="qr-box">
-              <div style="font-size:28px;margin-bottom:6px">📲</div>
-              <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Meu QR Code PIX</h3>
-              <p style="font-size:12px;color:var(--muted);margin-bottom:18px">Via Fitbank API · Chave telefone</p>
-              <div class="qr-inner" id="qrCode"></div>
-              <div style="font-size:14px;font-weight:700;margin:8px 0 4px">+55 11 99988-7766</div>
-              <div style="font-size:12px;color:var(--muted)">Banco 274 · João da Silva · Ag.0001</div>
-              <div style="display:flex;gap:9px;margin-top:16px">
-                <button class="btn-sm btn-out" style="flex:1;justify-content:center" onclick="showToast('📋 Chave copiada!','info')">📋 Copiar</button>
-                <button class="btn-sm btn-p" style="flex:1;justify-content:center" onclick="showToast('✅ QR salvo!','success')">💾 Salvar QR</button>
+          <div style="max-width:640px;margin:0 auto;width:100%">
+            <!-- ── Woovi Charge Form ── -->
+            <div class="card" id="woovi-form-card" style="margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <span style="font-size:28px">📲</span>
+                <div>
+                  <div style="font-size:15px;font-weight:800;color:var(--txt)">Cobrar via PIX</div>
+                  <div style="font-size:11px;color:var(--muted)">Powered by <strong style="color:var(--p3)">Woovi</strong> · QR Code dinâmico real</div>
+                </div>
+                <span class="badge bg-ok" style="margin-left:auto;font-size:10px">🟢 Woovi API</span>
+              </div>
+              <div class="f-grp" style="margin-bottom:12px">
+                <label class="f-label">Valor a cobrar (R$)</label>
+                <div class="amt-display" style="margin-bottom:4px"><span class="cur">R$</span> <span class="val" id="wooviAmt">0,00</span></div>
+                <div class="keypad" id="wooviKeypad"></div>
+              </div>
+              <div class="f-grp" style="margin-bottom:12px">
+                <label class="f-label">Descrição / motivo</label>
+                <input class="f-inp w-full" id="wooviDesc" placeholder="Ex: Aluguel junho, Produto X..." maxlength="140" style="border-radius:9px;padding:11px 14px;font-size:13px;background:#f8fafc;border:1.5px solid var(--border)">
+              </div>
+              <div class="f-grp" style="margin-bottom:16px">
+                <label class="f-label" style="display:flex;align-items:center;gap:6px">
+                  Nome do pagador
+                  <span style="font-size:10px;color:var(--muted);font-weight:400">(opcional)</span>
+                </label>
+                <input class="f-inp w-full" id="wooviPayer" placeholder="Ex: João da Silva" style="border-radius:9px;padding:11px 14px;font-size:13px;background:#f8fafc;border:1.5px solid var(--border)">
+              </div>
+              <button class="btn btn-primary" id="wooviGenerateBtn" onclick="wooviGenerateCharge()" style="width:100%">
+                ⚡ Gerar QR Code PIX
+              </button>
+              <div id="woovi-error" style="display:none;margin-top:10px;padding:10px 14px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;color:#b91c1c;font-size:12px"></div>
+            </div>
+
+            <!-- ── QR Code Result ── -->
+            <div id="woovi-result-card" style="display:none">
+              <div class="qr-box" style="position:relative">
+                <!-- Status badge -->
+                <div id="woovi-status-badge" style="position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;background:#fef3c7;color:#b45309">⏳ Aguardando</div>
+
+                <div style="font-size:11px;color:var(--muted);margin-bottom:6px">QR Code Dinâmico · Woovi</div>
+                <h3 style="font-size:22px;font-weight:900;margin-bottom:2px" id="woovi-result-value">R$ 0,00</h3>
+                <p style="font-size:12px;color:var(--muted);margin-bottom:16px" id="woovi-result-desc">—</p>
+
+                <!-- QR Image from Woovi -->
+                <div style="width:200px;height:200px;margin:0 auto 16px;border-radius:12px;overflow:hidden;background:#f8fafc;display:flex;align-items:center;justify-content:center">
+                  <img id="woovi-qr-img" src="" alt="QR Code PIX" style="width:200px;height:200px;display:none;border-radius:12px" onerror="this.style.display='none';document.getElementById('woovi-qr-fallback').style.display='flex'">
+                  <div id="woovi-qr-fallback" style="display:none;flex-direction:column;align-items:center;gap:6px">
+                    <div class="qr-inner" id="qrCode"></div>
+                    <span style="font-size:10px;color:var(--muted)">QR gerado localmente</span>
+                  </div>
+                  <div id="woovi-qr-loading" style="font-size:32px;animation:spin 1s linear infinite">⏳</div>
+                </div>
+
+                <!-- BRCode (copia e cola) -->
+                <div style="margin-bottom:14px">
+                  <div style="font-size:11px;color:var(--muted);margin-bottom:5px;text-align:center">📋 Pix Copia e Cola</div>
+                  <div id="woovi-brcode-wrap" style="background:#f8fafc;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:10px;color:var(--txt2);word-break:break-all;max-height:60px;overflow-y:auto;cursor:pointer" onclick="wooviCopyBrCode()" title="Clique para copiar">
+                    —
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div style="display:flex;gap:9px;margin-bottom:16px">
+                  <button class="btn-sm btn-out" style="flex:1;justify-content:center" onclick="wooviCopyBrCode()">📋 Copiar código</button>
+                  <button class="btn-sm btn-p" style="flex:1;justify-content:center" id="woovi-link-btn" onclick="wooviOpenLink()">🔗 Link pagamento</button>
+                </div>
+
+                <!-- Poll status -->
+                <div id="woovi-poll-bar" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(26,71,49,.06);border-radius:8px;font-size:12px;color:var(--txt2)">
+                  <span style="font-size:16px;animation:spin 2s linear infinite" id="woovi-poll-ico">🔄</span>
+                  <span id="woovi-poll-txt">Verificando pagamento a cada 5s...</span>
+                  <button style="margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px" onclick="wooviStopPoll()">✕</button>
+                </div>
+
+                <!-- Paid confirmation -->
+                <div id="woovi-paid-card" style="display:none;margin-top:12px;padding:14px;background:linear-gradient(135deg,#052e16,#1a4731);border-radius:12px;color:#fff;text-align:center">
+                  <div style="font-size:36px;margin-bottom:8px">✅</div>
+                  <div style="font-size:18px;font-weight:900;margin-bottom:4px">PIX Recebido!</div>
+                  <div style="font-size:13px;opacity:.85" id="woovi-paid-info">—</div>
+                </div>
+
+                <!-- New charge button -->
+                <button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="wooviNewCharge()">
+                  ＋ Nova cobrança
+                </button>
+              </div>
+            </div>
+
+            <!-- QR fixo (estático) -->
+            <div class="card" style="margin-top:14px">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <span style="font-size:18px">🔑</span>
+                <div style="flex:1">
+                  <div style="font-size:13px;font-weight:700">Chave PIX estática</div>
+                  <div style="font-size:11px;color:var(--muted)">Use para valores sem quantia definida</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--bg);border-radius:8px">
+                  <span>📱</span>
+                  <div style="flex:1;font-size:12px;color:var(--txt2)">+55 11 99988-7766</div>
+                  <button style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--p3)" onclick="navigator.clipboard.writeText('+5511999887766');showToast('📋 Chave copiada!','info')">Copiar</button>
+                </div>
               </div>
             </div>
           </div>
@@ -4770,6 +4863,8 @@ function pixTab(tab){
   document.querySelectorAll('.pix-pane').forEach(p=>p.classList.remove('active'));
   document.getElementById('ptab-'+tab).classList.add('active');
   document.getElementById('pp-'+tab).classList.add('active');
+  // Inicializa keypad Woovi quando abre aba Cobrar
+  if(tab==='receive') setTimeout(wooviInitKeypad, 50);
 }
 function showPixConfirm(){
   const key=document.getElementById('pixKey').value.trim();
@@ -4800,8 +4895,250 @@ function buildQR(){
     const corner=(r<3&&c<3)||(r<3&&c>7)||(r>7&&c<3);
     return `<div class="qr-cell" style="background:${corner||Math.random()>.55?'var(--p1)':'transparent'};aspect-ratio:1;border-radius:2px"></div>`;
   });
-  document.getElementById('qrCode').innerHTML=`<div class="qr-pattern">${cells.join('')}</div>`;
+  const el=document.getElementById('qrCode');
+  if(el) el.innerHTML=`<div class="qr-pattern">${cells.join('')}</div>`;
 }
+
+/* ══════════════════════════════════════════════
+   WOOVI PIX — Integração de Cobranças
+══════════════════════════════════════════════ */
+let wooviAmtVal = '';       // valor em centavos (string de dígitos)
+let wooviPollTimer = null;  // setInterval handle
+let wooviCurrentID = '';    // correlationID da cobrança ativa
+let wooviCurrentBrCode = '';
+let wooviCurrentLink = '';
+
+function wooviInitKeypad(){
+  const kp = document.getElementById('wooviKeypad');
+  if(!kp || kp.dataset.built) return;
+  kp.dataset.built='1';
+  const keys=['1','2','3','4','5','6','7','8','9','⌫','0','OK'];
+  kp.innerHTML = keys.map(k=>`<button class="kp-btn" type="button" onclick="wooviKey('${k}')" aria-label="${k}">${k}</button>`).join('');
+}
+function wooviKey(k){
+  if(k==='⌫'){ wooviAmtVal=wooviAmtVal.slice(0,-1); }
+  else if(k==='OK'){ /* foco próximo campo */ document.getElementById('wooviDesc').focus(); return; }
+  else if(wooviAmtVal.length<10){ wooviAmtVal+=k; }
+  const cents=parseInt(wooviAmtVal||'0',10);
+  const reais=(cents/100).toFixed(2).replace('.',',');
+  document.getElementById('wooviAmt').textContent=reais;
+}
+function wooviGetCents(){
+  return parseInt(wooviAmtVal||'0',10);
+}
+
+async function wooviGenerateCharge(){
+  const cents = wooviGetCents();
+  if(cents < 100){
+    showToast('⚠️ Valor mínimo: R$ 1,00','warn'); return;
+  }
+  const desc   = document.getElementById('wooviDesc').value.trim() || 'Cobrança KaiNowPay';
+  const payer  = document.getElementById('wooviPayer').value.trim();
+  const errEl  = document.getElementById('woovi-error');
+  const btn    = document.getElementById('wooviGenerateBtn');
+
+  errEl.style.display='none';
+  btn.disabled=true;
+  btn.textContent='⏳ Gerando QR Code...';
+
+  try {
+    const body = {
+      value: cents,
+      comment: desc,
+      ...(payer && { customerName: payer }),
+    };
+
+    // Detecta ambiente: usa URL relativa (mesmo domínio = worker)
+    const res = await fetch('/api/pix/charge', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if(!res.ok){
+      const errData = await res.json().catch(()=>({}));
+      // Se WOOVI_APP_ID não configurado ainda, mostrar QR demo
+      if(errData.error && errData.error.includes('WOOVI_APP_ID')){
+        wooviShowDemo(cents, desc);
+        return;
+      }
+      throw new Error(errData.error || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    wooviCurrentID = data.correlationID;
+    wooviCurrentBrCode = data.brCode || '';
+    wooviCurrentLink = data.paymentLinkUrl || '';
+
+    // Mostra resultado
+    wooviShowResult(data, cents, desc);
+    wooviStartPoll(data.correlationID);
+    showToast('✅ QR Code PIX gerado via Woovi!','success');
+
+  } catch(err){
+    console.error('[Woovi]', err);
+    // Fallback: QR demo se API não disponível (dev local)
+    if(err.message.includes('Failed to fetch') || err.message.includes('NetworkError')){
+      wooviShowDemo(cents, desc);
+    } else {
+      errEl.textContent = '❌ ' + err.message;
+      errEl.style.display='block';
+    }
+  } finally {
+    btn.disabled=false;
+    btn.textContent='⚡ Gerar QR Code PIX';
+  }
+}
+
+function wooviShowResult(data, cents, desc){
+  document.getElementById('woovi-form-card').style.display='none';
+  const rc = document.getElementById('woovi-result-card');
+  rc.style.display='block';
+
+  const reais = (cents/100).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  document.getElementById('woovi-result-value').textContent = 'R$ '+(cents/100).toLocaleString('pt-BR',{minimumFractionDigits:2});
+  document.getElementById('woovi-result-desc').textContent = desc;
+
+  // Tenta carregar imagem QR da Woovi
+  const qrImg = document.getElementById('woovi-qr-img');
+  const qrLoad = document.getElementById('woovi-qr-loading');
+  const qrFall = document.getElementById('woovi-qr-fallback');
+
+  if(data.qrCodeImage){
+    qrLoad.style.display='block';
+    qrImg.style.display='none';
+    qrFall.style.display='none';
+    qrImg.onload = ()=>{ qrLoad.style.display='none'; qrImg.style.display='block'; };
+    qrImg.onerror = ()=>{ qrLoad.style.display='none'; qrFall.style.display='flex'; buildQR(); };
+    qrImg.src = data.qrCodeImage;
+  } else {
+    qrLoad.style.display='none';
+    qrFall.style.display='flex';
+    buildQR();
+  }
+
+  // BRCode
+  const brWrap = document.getElementById('woovi-brcode-wrap');
+  brWrap.textContent = data.brCode || '—';
+
+  // Status badge
+  const badge = document.getElementById('woovi-status-badge');
+  badge.style.background='#fef3c7'; badge.style.color='#b45309';
+  badge.textContent='⏳ Aguardando';
+
+  document.getElementById('woovi-poll-bar').style.display='flex';
+  document.getElementById('woovi-paid-card').style.display='none';
+}
+
+function wooviShowDemo(cents, desc){
+  // Modo demo — AppID não configurado, mostra QR gerado localmente + instrução
+  document.getElementById('woovi-form-card').style.display='none';
+  const rc = document.getElementById('woovi-result-card');
+  rc.style.display='block';
+
+  document.getElementById('woovi-result-value').textContent = 'R$ '+(cents/100).toLocaleString('pt-BR',{minimumFractionDigits:2});
+  document.getElementById('woovi-result-desc').textContent = desc + ' (demo)';
+
+  const qrLoad = document.getElementById('woovi-qr-loading');
+  const qrFall = document.getElementById('woovi-qr-fallback');
+  qrLoad.style.display='none';
+  qrFall.style.display='flex';
+  buildQR();
+
+  const brWrap = document.getElementById('woovi-brcode-wrap');
+  brWrap.textContent = '⚙️ Adicione WOOVI_APP_ID como secret no Cloudflare para QR real';
+  brWrap.style.color='#b45309';
+
+  const badge = document.getElementById('woovi-status-badge');
+  badge.style.background='#fef3c7'; badge.style.color='#b45309';
+  badge.textContent='⚙️ Modo demo';
+
+  document.getElementById('woovi-poll-bar').style.display='none';
+  document.getElementById('woovi-paid-card').style.display='none';
+
+  showToast('⚙️ Modo demo — configure WOOVI_APP_ID para QR real','warn');
+}
+
+function wooviStartPoll(correlationID){
+  wooviStopPoll();
+  let checks=0;
+  const maxChecks=60; // 5min
+  wooviPollTimer = setInterval(async()=>{
+    checks++;
+    if(checks>maxChecks){ wooviStopPoll(); return; }
+    try {
+      const res = await fetch(`/api/pix/charge/${encodeURIComponent(correlationID)}`);
+      if(!res.ok) return;
+      const data = await res.json();
+      if(data.status==='COMPLETED'){
+        wooviStopPoll();
+        wooviOnPaid(data);
+      }
+    } catch(e){ /* ignora erros de rede no poll */ }
+  }, 5000);
+}
+
+function wooviStopPoll(){
+  if(wooviPollTimer){ clearInterval(wooviPollTimer); wooviPollTimer=null; }
+  const bar = document.getElementById('woovi-poll-bar');
+  if(bar){ bar.style.display='none'; }
+}
+
+function wooviOnPaid(data){
+  // Atualiza badge
+  const badge = document.getElementById('woovi-status-badge');
+  badge.style.background='#dcfce7'; badge.style.color='#15803d';
+  badge.textContent='✅ Pago!';
+
+  // Mostra card de confirmação
+  const paidCard = document.getElementById('woovi-paid-card');
+  paidCard.style.display='block';
+  const paidInfo = document.getElementById('woovi-paid-info');
+  const val = data.value ? 'R$ '+(data.value/100).toLocaleString('pt-BR',{minimumFractionDigits:2}) : '';
+  const payer = data.payer?.name || '';
+  paidInfo.textContent = [val, payer, 'via Woovi PIX'].filter(Boolean).join(' · ');
+
+  // Adiciona ao extrato
+  const amt = (data.value||0)/100;
+  if(amt>0){
+    const desc = document.getElementById('woovi-result-desc').textContent.replace(' (demo)','');
+    TXS.unshift({type:'credit',cat:'pix',desc:'PIX recebido · '+desc,sub:'Via Woovi API',date:'Agora',amount:amt,icon:'⚡',bg:'#f0fdf4'});
+    balance+=amt;
+    const balEl=document.getElementById('balAmt');
+    if(balEl) balEl.textContent='R$ '+fmt(balance);
+    buildHomeTx();
+  }
+
+  showToast('💰 PIX recebido! '+val,'success');
+}
+
+function wooviCopyBrCode(){
+  const brCode = wooviCurrentBrCode || document.getElementById('woovi-brcode-wrap').textContent;
+  if(!brCode || brCode.startsWith('⚙️')) return;
+  navigator.clipboard.writeText(brCode)
+    .then(()=>showToast('📋 Código PIX copiado!','success'))
+    .catch(()=>{ /* fallback */ const ta=document.createElement('textarea');ta.value=brCode;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('📋 Copiado!','success'); });
+}
+
+function wooviOpenLink(){
+  if(wooviCurrentLink) window.open(wooviCurrentLink,'_blank');
+  else showToast('Link não disponível','warn');
+}
+
+function wooviNewCharge(){
+  wooviStopPoll();
+  wooviAmtVal='';
+  wooviCurrentID='';
+  wooviCurrentBrCode='';
+  wooviCurrentLink='';
+  document.getElementById('wooviAmt').textContent='0,00';
+  document.getElementById('wooviDesc').value='';
+  document.getElementById('wooviPayer').value='';
+  document.getElementById('woovi-error').style.display='none';
+  document.getElementById('woovi-result-card').style.display='none';
+  document.getElementById('woovi-form-card').style.display='block';
+}
+
 function buildPixKeys(){
   document.getElementById('pixKeysList').innerHTML=PIX_KEYS.map(k=>`
     <div class="tx-full mb8" style="margin-bottom:9px">
