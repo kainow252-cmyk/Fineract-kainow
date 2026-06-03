@@ -339,6 +339,49 @@ export default {
     if (path === '/privacidade') return new Response(PRIVACY_HTML,  { headers: html });
     if (path === '/termos')      return new Response(TERMS_HTML,    { headers: html });
 
+    // ── Meta / Facebook Webhook ───────────────────────────────────────
+    // GET  /api/meta/webhook  → verificação do hub (token challenge)
+    // POST /api/meta/webhook  → eventos de webhook (validação HMAC SHA256)
+    if (path === '/api/meta/webhook') {
+      const metaSecret = (env && env.META_APP_SECRET) || '';
+      const metaVerifyToken = (env && env.META_VERIFY_TOKEN) || 'kainowpay_verify_2026';
+
+      if (request.method === 'GET') {
+        // Verificação do webhook pelo Meta
+        const url = new URL(request.url);
+        const mode      = url.searchParams.get('hub.mode');
+        const token     = url.searchParams.get('hub.verify_token');
+        const challenge = url.searchParams.get('hub.challenge');
+        if (mode === 'subscribe' && token === metaVerifyToken) {
+          return new Response(challenge, { status: 200 });
+        }
+        return new Response('Forbidden', { status: 403 });
+      }
+
+      if (request.method === 'POST') {
+        // Validar assinatura HMAC SHA256
+        const body = await request.text();
+        const sigHeader = request.headers.get('x-hub-signature-256') || '';
+        if (metaSecret && sigHeader) {
+          const encoder = new TextEncoder();
+          const key = await crypto.subtle.importKey('raw', encoder.encode(metaSecret),
+            { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+          const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(body));
+          const expected = 'sha256=' + Array.from(new Uint8Array(sig))
+            .map(b => b.toString(16).padStart(2,'0')).join('');
+          if (sigHeader !== expected) {
+            return new Response('Invalid signature', { status: 401 });
+          }
+        }
+        // Processar evento (logar por ora)
+        try {
+          const payload = JSON.parse(body);
+          console.log('[Meta Webhook]', payload.object, payload.entry?.length, 'entries');
+        } catch(e) {}
+        return new Response('EVENT_RECEIVED', { status: 200 });
+      }
+    }
+
     // ── Firebase Messaging Service Worker ────────────────────────────
     // DEVE estar na raiz (/) para ter escopo completo do domínio
     if (path === '/firebase-messaging-sw.js') {
