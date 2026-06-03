@@ -5258,6 +5258,7 @@ function buildDocs_legacy(){ /* replaced — see buildDocs(filtro) with docAssin
 
 /* BUILD: INTEGRAÇÕES */
 function buildIntegStatus(){
+  const el=document.getElementById('integStatus'); if(!el) return;
   document.getElementById('integStatus').innerHTML=INTEG.map(i=>`
     <div class="int-row">
       <div class="int-icon">${i.icon}</div>
@@ -5275,6 +5276,7 @@ function buildIntegStatus(){
 
 /* BUILD: INVESTIMENTOS */
 function buildInvCards(){
+  const el=document.getElementById('invCards'); if(!el) return;
   document.getElementById('invCards').innerHTML=INVEST_PRODS.map(p=>`
     <div class="inv-card" onclick="showToast('📊 Simulando ${p.name}...','info')">
       <div style="font-size:30px;margin-bottom:7px">${p.icon}</div>
@@ -5290,6 +5292,7 @@ function buildInvCards(){
 
 /* BUILD: NOTIFICAÇÕES */
 function buildNotifs(){
+  const el=document.getElementById('notifList'); if(!el) return;
   document.getElementById('notifList').innerHTML=NOTIFS.map(n=>`
     <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:${n.unread?'#f0fdf4':'var(--card)'};border-radius:var(--r);margin-bottom:9px;box-shadow:var(--sh);border-left:3px solid ${n.unread?'var(--p3)':'var(--border)'}">
       <div style="width:44px;height:44px;border-radius:12px;background:${n.unread?'#dcfce7':'var(--bg)'};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${n.icon}</div>
@@ -5300,6 +5303,7 @@ function buildNotifs(){
 
 /* BUILD: FAQ */
 function buildFAQ(){
+  const el=document.getElementById('faqList'); if(!el) return;
   document.getElementById('faqList').innerHTML=FAQ.map((f,i)=>`
     <div class="card mb8" style="cursor:pointer;margin-bottom:9px" onclick="toggleFaq(${i})">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -5393,6 +5397,7 @@ function buildContaExtratos(){
 }
 
 function buildClientesTbl(){
+  const el=document.getElementById('clientesTbl'); if(!el) return;
   document.getElementById('clientesTbl').innerHTML = CLIENTES_BANCO.map(c=>{
     const tipoBg = c.tipo==='Corrente'?'#e8eaf6':'#f0fdf4';
     const tipoColor = c.tipo==='Corrente'?'var(--p1)':'#047857';
@@ -7754,6 +7759,7 @@ function crmFiltrarContatos(){
 }
 
 function buildCRM(){
+  const el=document.getElementById('crmCols'); if(!el) return;
   document.getElementById('crmCols').innerHTML=Object.entries(CRM_PIPELINE).map(([col,cards])=>`
     <div class="crm-col">
       <div class="crm-col-header">
