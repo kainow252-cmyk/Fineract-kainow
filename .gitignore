@@ -35,3 +35,9 @@ gradleExp/
 .java-version
 
 .windsurf/
+
+# Test scripts and screenshots (not part of Fineract project)
+screenshots/
+test_mobile*.py
+*.png
+*.jpg

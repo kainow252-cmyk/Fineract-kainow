@@ -371,7 +371,14 @@ allprojects  {
             "**/generated/**/*MapperImpl.java",
             '**/META-INF/fineract-test.config',
             // Apache-specific GitHub metadata settings file
-            '/.asf.yaml'
+            '/.asf.yaml',
+            // KaiNowPay SPA - banco digital app (HTML/JS/CSS, not Fineract Java code)
+            '**/banco-digital/**',
+            '**/cf-worker-src/**',
+            '**/screenshots/**',
+            '**/*.png',
+            '**/*.jpg',
+            '**/test_mobile*.py'
         ]
     }
 }
