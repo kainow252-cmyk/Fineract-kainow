@@ -8210,7 +8210,7 @@ window.knpFirebaseUserLoggedIn = function(user) {
   const lgn   = document.getElementById("page-login");
   const appEl = document.getElementById("app");
   if (lgn)   { lgn.style.display  = "none"; lgn.classList.remove("active"); }
-  if (appEl)   appEl.style.display = "";
+  if (appEl)   { appEl.classList.add("active"); goPage('home', document.querySelector(".nav-item[onclick*='home']") || null); }
 
   // Solicita push 3s após login (não bloqueia o fluxo)
   setTimeout(() => {
@@ -8448,11 +8448,11 @@ window.knpFirebaseUserLoggedIn = function(user) {
   const lgn = document.getElementById("page-login");
   const appEl = document.getElementById("app");
   if (lgn) { lgn.style.display = "none"; lgn.classList.remove("active"); }
-  if (appEl) appEl.style.display = "";
+  if (appEl) { appEl.classList.add("active"); goPage('home', document.querySelector(".nav-item[onclick*='home']") || null); }
 
   // Solicita permissão de push automaticamente após login
   setTimeout(() => {
-    if (Notification.permission === "default") {
+    if (typeof Notification !== "undefined" && Notification.permission === "default") {
       knpRequestPushPermission();
     }
   }, 3000);
