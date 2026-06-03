@@ -1,8 +1,10 @@
 // ── MeuBanco Digital + Fineract Portal — Cloudflare Worker ───────────
-import APP_HTML    from './app.html';
+import APP_HTML      from './app.html';
 import ANALYSIS_HTML from './analysis.html';
-import GUIDE_HTML  from './guide.html';
-import DECISAO_HTML from './decisao.html';
+import GUIDE_HTML    from './guide.html';
+import DECISAO_HTML  from './decisao.html';
+import PRIVACY_HTML  from './privacy.html';
+import TERMS_HTML    from './terms.html';
 
 // Firebase Messaging Service Worker — servido como JS estático em /firebase-messaging-sw.js
 const FCM_SW_CONTENT = `importScripts("https://www.gstatic.com/firebasejs/11.9.0/firebase-app-compat.js");
@@ -239,7 +241,9 @@ export default {
     if (path === '/' || path === '/app') return new Response(APP_HTML, { headers: html });
     if (path === '/analysis')  return new Response(ANALYSIS_HTML, { headers: html });
     if (path === '/guide')     return new Response(GUIDE_HTML,    { headers: html });
-    if (path === '/decisao')   return new Response(DECISAO_HTML,  { headers: html });
+    if (path === '/decisao')    return new Response(DECISAO_HTML,  { headers: html });
+    if (path === '/privacidade') return new Response(PRIVACY_HTML,  { headers: html });
+    if (path === '/termos')      return new Response(TERMS_HTML,    { headers: html });
 
     // ── Firebase Messaging Service Worker ────────────────────────────
     // DEVE estar na raiz (/) para ter escopo completo do domínio
