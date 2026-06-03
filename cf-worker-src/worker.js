@@ -130,7 +130,20 @@ export default {
     const url  = new URL(request.url);
     const path = url.pathname.replace(/\/$/, '') || '/';
 
-    const html = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600' };
+    // Force HTTPS redirect
+    if (url.protocol === 'http:') {
+      const httpsUrl = 'https://' + url.host + url.pathname + url.search;
+      return Response.redirect(httpsUrl, 301);
+    }
+
+    const html = { 
+      'Content-Type': 'text/html; charset=utf-8', 
+      'Cache-Control': 'public, max-age=3600',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'Referrer-Policy': 'strict-origin-when-cross-origin'
+    };
 
     if (path === '/' || path === '/app') return new Response(APP_HTML, { headers: html });
     if (path === '/analysis')  return new Response(ANALYSIS_HTML, { headers: html });
