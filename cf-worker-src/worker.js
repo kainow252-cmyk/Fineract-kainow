@@ -126,7 +126,7 @@ footer a{color:rgba(255,255,255,.6)}
 </html>`;
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url  = new URL(request.url);
     const path = url.pathname.replace(/\/$/, '') || '/';
 
@@ -198,7 +198,8 @@ export default {
     // Retorna: { correlationID, brCode, qrCodeImage, paymentLinkUrl, expiresIn }
     if (path === '/api/pix/charge' && request.method === 'POST') {
       try {
-        const appID = (typeof WOOVI_APP_ID !== 'undefined' && WOOVI_APP_ID)
+        const appID = (env && env.WOOVI_APP_ID)
+          || (typeof WOOVI_APP_ID !== 'undefined' && WOOVI_APP_ID)
           || request.headers.get('X-Woovi-AppID') || '';
         if (!appID) {
           return new Response(JSON.stringify({ error: 'WOOVI_APP_ID não configurado. Adicione o secret no Cloudflare Dashboard.' }), {
@@ -215,8 +216,11 @@ export default {
         const customerPhone = body.customerPhone || undefined;
         const customerTaxID = body.customerTaxID  || undefined;
 
-        // Monta customer apenas se tiver pelo menos nome
-        const customer = customerName ? {
+        // Woovi exige customer com ao menos email, phone ou taxID.
+        // Se nenhum identificador for fornecido, omite o objeto customer
+        // (cobrança anônima — aceita normalmente pela API).
+        const hasIdentifier = !!(customerEmail || customerPhone || customerTaxID);
+        const customer = (customerName && hasIdentifier) ? {
           name: customerName,
           ...(customerEmail && { email: customerEmail }),
           ...(customerPhone && { phone: customerPhone }),
@@ -224,9 +228,10 @@ export default {
           correlationID: correlationID + '-customer',
         } : undefined;
 
-        // Detecta sandbox pelo AppID (sandbox IDs contêm "test" ou "sandbox")
-        const isSandbox = appID.toLowerCase().includes('test') || appID.toLowerCase().includes('sandbox')
-          || (typeof WOOVI_SANDBOX !== 'undefined' && WOOVI_SANDBOX === 'true');
+        // Detecta sandbox: env var WOOVI_SANDBOX=true ou AppID contém sandbox/test
+        const isSandbox = (env && env.WOOVI_SANDBOX === 'true')
+          || (typeof WOOVI_SANDBOX !== 'undefined' && WOOVI_SANDBOX === 'true')
+          || appID.toLowerCase().includes('test') || appID.toLowerCase().includes('sandbox');
         const baseURL = isSandbox
           ? 'https://api.woovi-sandbox.com/api/v1'
           : 'https://api.woovi.com/api/v1';
@@ -270,7 +275,8 @@ export default {
     // Consulta status de uma cobrança
     if (path.startsWith('/api/pix/charge/') && request.method === 'GET') {
       try {
-        const appID = (typeof WOOVI_APP_ID !== 'undefined' && WOOVI_APP_ID)
+        const appID = (env && env.WOOVI_APP_ID)
+          || (typeof WOOVI_APP_ID !== 'undefined' && WOOVI_APP_ID)
           || request.headers.get('X-Woovi-AppID') || '';
         if (!appID) {
           return new Response(JSON.stringify({ error: 'WOOVI_APP_ID não configurado.' }), {
@@ -278,8 +284,9 @@ export default {
           });
         }
         const correlationID = path.split('/api/pix/charge/')[1];
-        const isSandbox = appID.toLowerCase().includes('test') || appID.toLowerCase().includes('sandbox')
-          || (typeof WOOVI_SANDBOX !== 'undefined' && WOOVI_SANDBOX === 'true');
+        const isSandbox = (env && env.WOOVI_SANDBOX === 'true')
+          || (typeof WOOVI_SANDBOX !== 'undefined' && WOOVI_SANDBOX === 'true')
+          || appID.toLowerCase().includes('test') || appID.toLowerCase().includes('sandbox');
         const baseURL = isSandbox
           ? 'https://api.woovi-sandbox.com/api/v1'
           : 'https://api.woovi.com/api/v1';
@@ -311,7 +318,7 @@ export default {
     if (path === '/api/woovi/webhook' && request.method === 'POST') {
       try {
         // Verifica token de autorização (opcional mas recomendado)
-        const webhookSecret = typeof WOOVI_WEBHOOK_SECRET !== 'undefined' ? WOOVI_WEBHOOK_SECRET : '';
+        const webhookSecret = (env && env.WOOVI_WEBHOOK_SECRET) || (typeof WOOVI_WEBHOOK_SECRET !== 'undefined' ? WOOVI_WEBHOOK_SECRET : '');
         if (webhookSecret) {
           const authHeader = request.headers.get('Authorization') || '';
           if (authHeader !== webhookSecret) {

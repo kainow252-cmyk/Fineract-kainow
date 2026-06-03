@@ -1610,12 +1610,19 @@ input,select,textarea{font-family:inherit;outline:none}
                 <label class="f-label">Descrição / motivo</label>
                 <input class="f-inp w-full" id="wooviDesc" placeholder="Ex: Aluguel junho, Produto X..." maxlength="140" style="border-radius:9px;padding:11px 14px;font-size:13px;background:#f8fafc;border:1.5px solid var(--border)">
               </div>
-              <div class="f-grp" style="margin-bottom:16px">
+              <div class="f-grp" style="margin-bottom:10px">
                 <label class="f-label" style="display:flex;align-items:center;gap:6px">
                   Nome do pagador
                   <span style="font-size:10px;color:var(--muted);font-weight:400">(opcional)</span>
                 </label>
                 <input class="f-inp w-full" id="wooviPayer" placeholder="Ex: João da Silva" style="border-radius:9px;padding:11px 14px;font-size:13px;background:#f8fafc;border:1.5px solid var(--border)">
+              </div>
+              <div class="f-grp" style="margin-bottom:16px">
+                <label class="f-label" style="display:flex;align-items:center;gap:6px">
+                  E-mail do pagador
+                  <span style="font-size:10px;color:var(--muted);font-weight:400">(necessário para identificar o pagador)</span>
+                </label>
+                <input class="f-inp w-full" id="wooviPayerEmail" type="email" placeholder="Ex: joao@email.com" style="border-radius:9px;padding:11px 14px;font-size:13px;background:#f8fafc;border:1.5px solid var(--border)">
               </div>
               <button class="btn btn-primary" id="wooviGenerateBtn" onclick="wooviGenerateCharge()" style="width:100%">
                 ⚡ Gerar QR Code PIX
@@ -4934,6 +4941,7 @@ async function wooviGenerateCharge(){
   }
   const desc   = document.getElementById('wooviDesc').value.trim() || 'Cobrança KaiNowPay';
   const payer  = document.getElementById('wooviPayer').value.trim();
+  const payerEmail = (document.getElementById('wooviPayerEmail')?.value || '').trim();
   const errEl  = document.getElementById('woovi-error');
   const btn    = document.getElementById('wooviGenerateBtn');
 
@@ -4946,6 +4954,7 @@ async function wooviGenerateCharge(){
       value: cents,
       comment: desc,
       ...(payer && { customerName: payer }),
+      ...(payerEmail && { customerEmail: payerEmail }),
     };
 
     // Detecta ambiente: usa URL relativa (mesmo domínio = worker)
