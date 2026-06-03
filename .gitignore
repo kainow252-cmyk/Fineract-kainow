@@ -40,4 +40,5 @@ gradleExp/
 screenshots/
 test_mobile*.py
 *.png
-*.jpg
+.dev.vars
+wrangler.toml
