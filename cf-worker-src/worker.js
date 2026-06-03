@@ -137,6 +137,32 @@ export default {
     if (path === '/guide')     return new Response(GUIDE_HTML,    { headers: html });
     if (path === '/decisao')   return new Response(DECISAO_HTML,  { headers: html });
 
+    // Favicon — SVG verde inline
+    if (path === '/favicon.ico' || path === '/favicon.svg') {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#1a4731"/><text x="16" y="22" text-anchor="middle" font-size="18" font-family="sans-serif">🏦</text></svg>`;
+      return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' } });
+    }
+
+    // Web App Manifest
+    if (path === '/manifest.json') {
+      const manifest = JSON.stringify({
+        name: 'KaiNowPay',
+        short_name: 'KaiNowPay',
+        description: 'Plataforma Financeira Completa',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#f0fdf4',
+        theme_color: '#1a4731',
+        icons: [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }]
+      });
+      return new Response(manifest, { headers: { 'Content-Type': 'application/manifest+json', 'Cache-Control': 'public, max-age=86400' } });
+    }
+
+    // robots.txt
+    if (path === '/robots.txt') {
+      return new Response('User-agent: *\nAllow: /\n', { headers: { 'Content-Type': 'text/plain', 'Cache-Control': 'public, max-age=86400' } });
+    }
+
     return new Response(`<!DOCTYPE html><html><body style="font-family:sans-serif;text-align:center;padding:60px;background:#0D0D3B;color:#fff">
       <h1 style="font-size:4rem">404</h1>
       <p style="color:rgba(255,255,255,.6);margin:12px 0 24px">Página não encontrada</p>
