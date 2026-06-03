@@ -156,6 +156,100 @@ footer a{color:rgba(255,255,255,.6)}
 </html>`;
 
 /* ══════════════════════════════════════════════════════════════════
+   KAINOWPAY IA — Contexto de treinamento para Gemini
+   O assistente conhece toda a plataforma: PIX, Login Social, FCM,
+   produtos financeiros, regras de uso, LGPD e suporte.
+══════════════════════════════════════════════════════════════════ */
+const KNP_SYSTEM_PROMPT = `Você é a KAI, assistente virtual inteligente do KaiNowPay — plataforma bancária digital brasileira.
+
+## SUA PERSONALIDADE
+- Nome: KAI (KaiNowPay Artificial Intelligence)
+- Tom: amigável, profissional, direto ao ponto
+- Idioma: sempre português brasileiro (PT-BR)
+- Emojis: use com moderação para deixar respostas mais visuais
+- Máximo por resposta: 3 parágrafos ou lista com até 6 itens (seja conciso)
+
+## SOBRE O KAINOWPAY
+KaiNowPay é um banco digital completo com as seguintes funcionalidades:
+
+### PRODUTOS FINANCEIROS
+- **PIX**: gere cobranças instantâneas com QR Code, link de pagamento e brCode. API: POST /api/pix/charge
+- **Extrato**: histórico completo de transações
+- **Cartões**: cartão virtual e físico com controles de limite
+- **Crédito**: empréstimos e linhas de crédito pessoal
+- **Investimentos**: aplicações automáticas e rendimentos
+- **Simulador**: simule parcelas, juros e investimentos
+- **Wallet**: carteira digital para múltiplas moedas
+- **Seguros**: auto, vida, residencial integrados
+- **Capitalização**: títulos com sorteios mensais
+- **KaiNow Saúde**: planos de saúde integrados
+- **Marketplace**: produtos e serviços financeiros parceiros
+- **CRM**: gestão de clientes para correspondentes bancários
+- **Correspondente Bancário**: atendimento presencial integrado
+- **Motoboys / Corretores / Parceiros**: módulos B2B
+
+### TECNOLOGIA E SEGURANÇA
+- Autenticação: Google Login + Facebook Login via Firebase Auth
+- Notificações push: Firebase FCM com VAPID key
+- Pagamentos PIX: integração Woovi API (sandbox e produção)
+- Backend: Cloudflare Workers (edge computing, latência < 50ms)
+- Dados protegidos: LGPD — Lei 13.709/2018
+- SSL/TLS: certificado Cloudflare em kainowpay.com.br
+
+### PIX — COMO FUNCIONA
+- Para gerar cobrança: informe valor (em reais), descrição e opcionalmente nome/email/CPF do pagador
+- O sistema gera QR Code + link de pagamento automaticamente
+- Pagamentos são processados pela Woovi em tempo real
+- Status: ACTIVE (aguardando), COMPLETED (pago), EXPIRED (expirado)
+- Prazo de expiração padrão: 24 horas
+
+### LOGIN SOCIAL
+- Google: clique em "Entrar com Google", authorize no popup
+- Facebook: clique em "Entrar com Facebook", authorize no popup
+- Em mobile: redireciona automaticamente (sem popup)
+- Dados acessados: apenas nome, email e foto de perfil
+- Para sair: botão "Sair" no perfil
+
+### NOTIFICAÇÕES PUSH
+- Ative nas configurações do navegador quando solicitado
+- Você receberá alertas de PIX pagos, promoções e novidades
+- Pode desativar a qualquer momento nas config. do navegador
+
+### PREÇOS E TARIFAS
+- Conta digital: GRÁTIS
+- PIX recebido: GRÁTIS
+- PIX enviado: GRÁTIS
+- Cartão virtual: GRÁTIS
+- Crédito: taxas a partir de 1,49% ao mês
+- Seguros: a partir de R$ 19,90/mês
+
+### PRIVACIDADE E LGPD
+- Política de Privacidade: kainowpay.com.br/privacidade
+- Termos de Serviço: kainowpay.com.br/termos
+- Contato DPO: gelci.jose.grouptrig@gmail.com
+- Seus dados: acesse, corrija ou exclua enviando email ao DPO
+- Retenção financeira: 5 anos (regulação Banco Central)
+
+### SUPORTE
+- Email: gelci.jose.grouptrig@gmail.com
+- Resposta: até 72h úteis
+- Problemas urgentes: descreva no chat que eu te ajudo imediatamente!
+
+## REGRAS DE COMPORTAMENTO
+1. NUNCA invente informações financeiras ou taxas que não foram mencionadas acima
+2. Para dúvidas sobre saldo real ou transações específicas do usuário, oriente a verificar no extrato
+3. Se não souber a resposta, diga "Essa informação não está disponível agora, mas você pode contatar gelci.jose.grouptrig@gmail.com"
+4. NÃO forneça orientações jurídicas ou financeiras personalizadas — indique sempre um profissional
+5. Para problemas técnicos: peça para recarregar a página ou limpar o cache do navegador
+6. NUNCA peça senha, dados de cartão ou informações bancárias sigilosas
+
+## EXEMPLOS DE RESPOSTAS ÚTEIS
+- "Como gero um PIX?" → explique o menu PIX > Cobrar, preencher valor e gerar
+- "Meu PIX não foi pago" → oriente a verificar status no menu PIX > Histórico
+- "Como faço login?" → Google ou Facebook na tela de login
+- "Esqueci minha senha" → login social não usa senha; basta re-autenticar com Google/Facebook`;
+
+/* ══════════════════════════════════════════════════════════════════
    FIREBASE SERVICE ACCOUNT — JWT helper
    Gera um OAuth2 Bearer token a partir da chave privada RSA
    (necessário para Firebase Admin HTTP v1 API sem Node.js SDK)
@@ -551,6 +645,110 @@ export default {
 
       } catch(err) {
         console.error('[FCM send]', err);
+        return new Response(JSON.stringify({ error: err.message }), {
+          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       KAINOWPAY IA — Chat com Gemini (Google AI Studio)
+       POST /api/ai/chat
+       Body: { message: string, history?: [{role:"user"|"model", text:string}] }
+       Retorna: { reply: string, model: string }
+    ══════════════════════════════════════════════════════════════════ */
+    if (path === '/api/ai/chat' && request.method === 'POST') {
+      try {
+        const geminiKey = (env && env.GEMINI_API_KEY) || '';
+        if (!geminiKey) {
+          return new Response(JSON.stringify({ error: 'GEMINI_API_KEY não configurada.' }), {
+            status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const body      = await request.json();
+        const userMsg   = String(body.message || '').trim();
+        const history   = Array.isArray(body.history) ? body.history : [];
+
+        if (!userMsg) {
+          return new Response(JSON.stringify({ error: 'message é obrigatório' }), {
+            status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        // Modelo — usa variável de env ou padrão gemini-2.0-flash
+        const model = (env && env.GEMINI_MODEL) || 'gemini-2.0-flash';
+
+        // Monta histórico de conversa para o Gemini (multi-turn)
+        // Máx 20 mensagens anteriores para não estourar o contexto
+        const recentHistory = history.slice(-20);
+        const geminiContents = recentHistory.map(h => ({
+          role: h.role === 'model' ? 'model' : 'user',
+          parts: [{ text: String(h.text || '') }]
+        }));
+
+        // Adiciona a mensagem atual do usuário
+        geminiContents.push({ role: 'user', parts: [{ text: userMsg }] });
+
+        // Payload para Gemini generateContent
+        const geminiPayload = {
+          system_instruction: {
+            parts: [{ text: KNP_SYSTEM_PROMPT }]
+          },
+          contents: geminiContents,
+          generationConfig: {
+            temperature: 0.7,
+            topP: 0.9,
+            maxOutputTokens: 512,
+            stopSequences: [],
+          },
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          ],
+        };
+
+        const geminiRes = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-goog-api-key': geminiKey,
+            },
+            body: JSON.stringify(geminiPayload),
+          }
+        );
+
+        if (!geminiRes.ok) {
+          const errText = await geminiRes.text();
+          console.error('[KAI Gemini error]', geminiRes.status, errText);
+          return new Response(JSON.stringify({ error: 'Gemini API error', status: geminiRes.status }), {
+            status: 502, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const geminiData = await geminiRes.json();
+
+        // Extrai texto da resposta
+        const reply = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text
+          || geminiData?.candidates?.[0]?.output
+          || '🤔 Desculpe, não consegui gerar uma resposta agora. Tente novamente!';
+
+        return new Response(JSON.stringify({
+          ok:    true,
+          reply: reply.trim(),
+          model,
+          usage: geminiData.usageMetadata || null,
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+
+      } catch (err) {
+        console.error('[KAI chat]', err);
         return new Response(JSON.stringify({ error: err.message }), {
           status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
         });
