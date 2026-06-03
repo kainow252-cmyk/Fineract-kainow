@@ -907,7 +907,9 @@ input,select,textarea{font-family:inherit;outline:none}
   /* Sidebar desktop hidden; bottom-nav visible */
   .sidebar{display:none!important}
   .bottom-nav{display:flex!important}
-  .mob-drawer{display:flex!important}
+  /* mob-drawer: hidden by default; only show when .open class is present */
+  .mob-drawer{display:none!important}
+  .mob-drawer.open{display:flex!important}
 
   /* Topbar mobile */
   .topbar{padding:0 14px;height:54px}
