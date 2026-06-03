@@ -4818,7 +4818,9 @@ function toggleBal(){
 
 /* BUILD: HOME TX */
 function buildHomeTx(){
-  document.getElementById('homeTxList').innerHTML=TXS.slice(0,5).map(t=>`
+  const el = document.getElementById('homeTxList');
+  if(!el) return;
+  el.innerHTML=TXS.slice(0,5).map(t=>`
     <div class="tx-row">
       <div class="icon" style="background:${t.bg}">${t.icon}</div>
       <div class="info"><div class="name">${t.desc}</div><div class="date">${t.date}</div></div>
@@ -4828,18 +4830,23 @@ function buildHomeTx(){
 
 /* BUILD: CHART */
 function buildChart(){
+  const ce=document.getElementById('homeChart');
+  const cl=document.getElementById('homeLabels');
+  if(!ce||!cl) return;
   const mv=Math.max(...CHART.map(d=>Math.max(d.i,d.e)));
-  document.getElementById('homeChart').innerHTML=CHART.map(d=>`
+  ce.innerHTML=CHART.map(d=>`
     <div style="flex:1;display:flex;gap:1px;align-items:flex-end">
       <div class="cbar inc" style="height:${(d.i/mv)*100}%"></div>
       <div class="cbar exp" style="height:${(d.e/mv)*100}%"></div>
     </div>`).join('');
-  document.getElementById('homeLabels').innerHTML=CHART.map(d=>`<span>${d.l}</span>`).join('');
+  cl.innerHTML=CHART.map(d=>`<span>${d.l}</span>`).join('');
 }
 
 /* BUILD: PIX */
 function buildContChips(){
-  document.getElementById('contChips').innerHTML=CONTACTS.map(c=>`
+  const el=document.getElementById('contChips');
+  if(!el) return;
+  el.innerHTML=CONTACTS.map(c=>`
     <div class="cont-chip" onclick="selContact('${c.key}',this)">
       <div class="cont-av-wrap">
         <div class="cont-av" style="background:linear-gradient(135deg,${c.g1},${c.g2})">${c.abbr}</div>
@@ -4854,8 +4861,10 @@ function selContact(key,el){
   document.getElementById('pixKey').value=key;
 }
 function buildPixKeypad(){
+  const el=document.getElementById('pixKeypad');
+  if(!el) return;
   const keys=['1','2','3','4','5','6','7','8','9','.','0','⌫'];
-  document.getElementById('pixKeypad').innerHTML=keys.map(k=>`
+  el.innerHTML=keys.map(k=>`
     <div class="kbtn ${k==='⌫'?'del':''}" onclick="pixKey('${k}')">${k}</div>`).join('');
 }
 function pixKey(k){
