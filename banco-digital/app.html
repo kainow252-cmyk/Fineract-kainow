@@ -915,8 +915,6 @@ input,select,textarea{font-family:inherit;outline:none}
   .topbar{padding:0 14px;height:54px}
   .tb-left .pg-title{font-size:16px}
   .tb-left .pg-sub{display:none}
-  .topbar .ham-btn{display:flex!important}
-
   /* Content padding reduzido */
   .content{padding:14px 12px;padding-bottom:76px}
 
@@ -1083,13 +1081,7 @@ input,select,textarea{font-family:inherit;outline:none}
 .mob-drawer.open .mob-drawer-panel{transform:translateX(0)}
 .mob-drawer-close{position:absolute;top:16px;right:16px;color:rgba(255,255,255,.5);font-size:24px;cursor:pointer;background:none;border:none;z-index:1}
 
-/* HAM BTN */
-.ham-btn{
-  display:none;width:37px;height:37px;border-radius:9px;background:var(--bg);
-  border:1px solid var(--border);align-items:center;justify-content:center;
-  cursor:pointer;font-size:22px;flex-shrink:0;transition:all .2s;margin-right:10px;
-}
-.ham-btn:hover{background:var(--bg2)}
+
 
 /* ── LOGIN RESPONSIVE ── */
 @media(max-width:1100px){
@@ -1471,7 +1463,6 @@ input,select,textarea{font-family:inherit;outline:none}
   <div class="main">
     <header class="topbar">
       <div style="display:flex;align-items:center;gap:2px">
-        <button class="ham-btn" onclick="openMobDrawer()" aria-label="Menu">☰</button>
         <div class="tb-left">
           <div class="pg-title" id="pgTitle">Início</div>
           <div class="pg-sub" id="pgDate"></div>
