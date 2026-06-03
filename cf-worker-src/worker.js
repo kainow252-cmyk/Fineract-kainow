@@ -4,6 +4,34 @@ import ANALYSIS_HTML from './analysis.html';
 import GUIDE_HTML  from './guide.html';
 import DECISAO_HTML from './decisao.html';
 
+// Firebase Messaging Service Worker — servido como JS estático em /firebase-messaging-sw.js
+const FCM_SW_CONTENT = `importScripts("https://www.gstatic.com/firebasejs/11.9.0/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/11.9.0/firebase-messaging-compat.js");
+firebase.initializeApp({
+  apiKey:"AIzaSyDl1sR0sgb6BH52fwQ_twgSiwbGvrJ9Ek8",
+  authDomain:"kainowpay.firebaseapp.com",
+  projectId:"kainowpay",
+  storageBucket:"kainowpay.firebasestorage.app",
+  messagingSenderId:"625304649401",
+  appId:"1:625304649401:web:0fb95cc8c350a528332568",
+});
+const messaging = firebase.messaging();
+messaging.onBackgroundMessage((payload) => {
+  const title = payload.notification?.title || "KaiNowPay";
+  const opts  = { body: payload.notification?.body || "", icon: "/favicon.svg", badge: "/favicon.svg", tag: payload.data?.type || "knp-push", data: payload.data || {} };
+  self.registration.showNotification(title, opts);
+});
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  if (e.action === "dismiss") return;
+  e.waitUntil(clients.matchAll({type:"window",includeUncontrolled:true}).then(ws=>{
+    for(const w of ws){ if(w.url.includes(self.location.origin)&&"focus" in w){ w.postMessage({type:"FCM_CLICK",data:e.notification.data}); return w.focus(); } }
+    if(clients.openWindow) return clients.openWindow("/");
+  }));
+});
+console.log("[KaiNowPay SW] FCM Service Worker ativo ✅");
+`;
+
 const INDEX_HTML = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -125,6 +153,69 @@ footer a{color:rgba(255,255,255,.6)}
 </body>
 </html>`;
 
+/* ══════════════════════════════════════════════════════════════════
+   FIREBASE SERVICE ACCOUNT — JWT helper
+   Gera um OAuth2 Bearer token a partir da chave privada RSA
+   (necessário para Firebase Admin HTTP v1 API sem Node.js SDK)
+══════════════════════════════════════════════════════════════════ */
+async function getFirebaseAccessToken(clientEmail, privateKeyPem) {
+  // Remove cabeçalhos PEM e decodifica base64
+  const pemBody = privateKeyPem
+    .replace(/-----BEGIN PRIVATE KEY-----/, '')
+    .replace(/-----END PRIVATE KEY-----/, '')
+    .replace(/\s+/g, '');
+
+  const keyData = Uint8Array.from(atob(pemBody), c => c.charCodeAt(0));
+
+  // Importa a chave RSA-256 para WebCrypto
+  const cryptoKey = await crypto.subtle.importKey(
+    'pkcs8', keyData.buffer,
+    { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
+    false, ['sign']
+  );
+
+  // Cria o JWT header + claims
+  const now = Math.floor(Date.now() / 1000);
+  const header  = { alg: 'RS256', typ: 'JWT' };
+  const payload = {
+    iss: clientEmail,
+    sub: clientEmail,
+    aud: 'https://oauth2.googleapis.com/token',
+    iat: now,
+    exp: now + 3600,
+    scope: 'https://www.googleapis.com/auth/firebase.messaging',
+  };
+
+  const b64url = (obj) => btoa(JSON.stringify(obj))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+
+  const signingInput = `${b64url(header)}.${b64url(payload)}`;
+  const sigBytes = await crypto.subtle.sign(
+    'RSASSA-PKCS1-v1_5',
+    cryptoKey,
+    new TextEncoder().encode(signingInput)
+  );
+  const sig = btoa(String.fromCharCode(...new Uint8Array(sigBytes)))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+
+  const jwt = `${signingInput}.${sig}`;
+
+  // Troca o JWT por um access_token OAuth2
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${jwt}`,
+  });
+
+  if (!tokenRes.ok) {
+    const err = await tokenRes.text();
+    throw new Error(`Firebase OAuth2 error: ${err}`);
+  }
+
+  const tokenData = await tokenRes.json();
+  return tokenData.access_token;
+}
+
 export default {
   async fetch(request, env) {
     const url  = new URL(request.url);
@@ -149,6 +240,18 @@ export default {
     if (path === '/analysis')  return new Response(ANALYSIS_HTML, { headers: html });
     if (path === '/guide')     return new Response(GUIDE_HTML,    { headers: html });
     if (path === '/decisao')   return new Response(DECISAO_HTML,  { headers: html });
+
+    // ── Firebase Messaging Service Worker ────────────────────────────
+    // DEVE estar na raiz (/) para ter escopo completo do domínio
+    if (path === '/firebase-messaging-sw.js') {
+      return new Response(FCM_SW_CONTENT, {
+        headers: {
+          'Content-Type': 'application/javascript; charset=utf-8',
+          'Service-Worker-Allowed': '/',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        }
+      });
+    }
 
     // Favicon — SVG verde inline
     if (path === '/favicon.ico' || path === '/favicon.svg') {
@@ -343,6 +446,110 @@ export default {
         });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       FIREBASE FCM — Push Notifications (HTTP v1 API)
+       Admin SDK: chaves em env.FIREBASE_PROJECT_ID / FIREBASE_CLIENT_EMAIL / FIREBASE_PRIVATE_KEY
+    ══════════════════════════════════════════════════════════════════ */
+
+    // ── POST /api/fcm/register — salva token FCM do dispositivo ──────
+    if (path === '/api/fcm/register' && request.method === 'POST') {
+      try {
+        const body = await request.json();
+        const { token, userId = 'anonymous', userAgent = '' } = body;
+        if (!token) {
+          return new Response(JSON.stringify({ error: 'token obrigatório' }), {
+            status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+        // Por ora loga e retorna ok (em produção: salvar no D1/KV)
+        console.log(`[FCM] Token registrado — userId:${userId} token:${token.substring(0,20)}...`);
+        return new Response(JSON.stringify({ ok: true, message: 'Token FCM registrado' }), {
+          status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      } catch(err) {
+        return new Response(JSON.stringify({ error: err.message }), {
+          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+    }
+
+    // ── POST /api/fcm/send — envia push via Firebase HTTP v1 API ─────
+    // Body: { token: string, title: string, body: string, data?: object }
+    // Usa JWT gerado com a Service Account key para autenticar
+    if (path === '/api/fcm/send' && request.method === 'POST') {
+      try {
+        const projectId   = (env && env.FIREBASE_PROJECT_ID)   || 'kainowpay';
+        const clientEmail = (env && env.FIREBASE_CLIENT_EMAIL) || '';
+        const privateKey  = (env && env.FIREBASE_PRIVATE_KEY)  || '';
+
+        if (!clientEmail || !privateKey) {
+          return new Response(JSON.stringify({ error: 'FIREBASE_CLIENT_EMAIL / FIREBASE_PRIVATE_KEY não configurados' }), {
+            status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const body = await request.json();
+        const { token, title = 'KaiNowPay', body: msgBody = '', data = {}, topic } = body;
+
+        if (!token && !topic) {
+          return new Response(JSON.stringify({ error: 'token ou topic obrigatório' }), {
+            status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        // Gera OAuth2 access token via JWT (Service Account → Google OAuth2)
+        const accessToken = await getFirebaseAccessToken(clientEmail, privateKey);
+
+        // Monta payload FCM HTTP v1
+        const fcmPayload = {
+          message: {
+            ...(token ? { token } : { topic }),
+            notification: { title, body: msgBody },
+            webpush: {
+              notification: {
+                title, body: msgBody,
+                icon: 'https://kainowpay.com.br/favicon.svg',
+                badge: 'https://kainowpay.com.br/favicon.svg',
+                requireInteraction: false,
+              },
+              fcm_options: { link: 'https://kainowpay.com.br/' },
+            },
+            data: Object.fromEntries(Object.entries(data).map(([k,v])=>[k, String(v)])),
+          }
+        };
+
+        const fcmRes = await fetch(
+          `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(fcmPayload),
+          }
+        );
+
+        const fcmData = await fcmRes.json();
+        if (!fcmRes.ok) {
+          console.error('[FCM send error]', fcmData);
+          return new Response(JSON.stringify({ error: 'FCM API error', details: fcmData }), {
+            status: fcmRes.status, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        return new Response(JSON.stringify({ ok: true, messageId: fcmData.name }), {
+          status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+
+      } catch(err) {
+        console.error('[FCM send]', err);
+        return new Response(JSON.stringify({ error: err.message }), {
+          status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
       }
     }
 
