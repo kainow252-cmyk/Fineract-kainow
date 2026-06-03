@@ -5158,7 +5158,9 @@ function wooviNewCharge(){
 }
 
 function buildPixKeys(){
-  document.getElementById('pixKeysList').innerHTML=PIX_KEYS.map(k=>`
+  const el=document.getElementById('pixKeysList');
+  if(!el) return;
+  el.innerHTML=PIX_KEYS.map(k=>`
     <div class="tx-full mb8" style="margin-bottom:9px">
       <div class="ti ib-blue" style="font-size:22px">${k.icon}</div>
       <div class="tinfo"><div class="td">${k.type}</div><div class="ts">${k.key} · ${k.prov}</div></div>
@@ -5166,7 +5168,9 @@ function buildPixKeys(){
     </div>`).join('');
 }
 function buildPixHistory(){
-  document.getElementById('pixHistoryList').innerHTML=TXS.filter(t=>t.cat==='pix').map(t=>`
+  const el=document.getElementById('pixHistoryList');
+  if(!el) return;
+  el.innerHTML=TXS.filter(t=>t.cat==='pix').map(t=>`
     <div class="tx-full" style="margin-bottom:9px">
       <div class="ti" style="background:${t.bg}">${t.icon}</div>
       <div class="tinfo"><div class="td">${t.desc}</div><div class="ts">${t.sub}</div></div>
@@ -5176,15 +5180,19 @@ function buildPixHistory(){
 
 /* BUILD: EXTRATO */
 function buildExtratoSum(){
+  const el=document.getElementById('extratoSum');
+  if(!el) return;
   const cr=TXS.filter(t=>t.type==='credit').reduce((s,t)=>s+t.amount,0);
   const db=TXS.filter(t=>t.type==='debit').reduce((s,t)=>s+t.amount,0);
-  document.getElementById('extratoSum').innerHTML=`
+  el.innerHTML=`
     <div class="sum-c"><div class="si">💰</div><div class="sl">Entradas mês</div><div class="sv text-ok">R$ ${fmt(cr)}</div></div>
     <div class="sum-c"><div class="si">📤</div><div class="sl">Saídas mês</div><div class="sv text-err">- R$ ${fmt(db)}</div></div>
     <div class="sum-c"><div class="si">📊</div><div class="sl">Saldo mês</div><div class="sv text-inf">R$ ${fmt(cr-db)}</div></div>
     <div class="sum-c"><div class="si">🔢</div><div class="sl">Transações</div><div class="sv">${TXS.length}</div></div>`;
 }
 function buildExtrato(filter='all'){
+  const elList=document.getElementById('extratoList');
+  if(!elList) return;
   let txs=[...TXS];
   if(filter==='credit')txs=txs.filter(t=>t.type==='credit');
   else if(filter==='debit')txs=txs.filter(t=>t.type==='debit');
@@ -5192,7 +5200,7 @@ function buildExtrato(filter='all'){
   else if(filter==='ted')txs=txs.filter(t=>t.cat==='ted');
   const groups={};
   txs.forEach(t=>{const d=t.date.includes('Hoje')?'Hoje':t.date.split(',')[0];if(!groups[d])groups[d]=[];groups[d].push(t)});
-  document.getElementById('extratoList').innerHTML=Object.entries(groups).map(([date,items])=>{
+  elList.innerHTML=Object.entries(groups).map(([date,items])=>{
     const tot=items.reduce((s,t)=>s+(t.type==='credit'?t.amount:-t.amount),0);
     return `<div class="tx-group">
       <div class="tx-g-head"><span>${date}</span><span style="color:${tot>=0?'var(--ok)':'var(--err)'}">${tot>=0?'+ ':''}R$ ${fmt(Math.abs(tot))}</span></div>
@@ -5212,7 +5220,9 @@ function filterTx(el,filter){
 
 /* BUILD: CRÉDITO */
 function buildLoanTbl(){
-  document.getElementById('loanTbl').innerHTML=`
+  const el=document.getElementById('loanTbl');
+  if(!el) return;
+  el.innerHTML=`
     <thead><tr><th>ID</th><th>Tipo</th><th>Valor</th><th>Parcelas</th><th>Saldo</th><th>Status</th></tr></thead>
     <tbody>${LOANS.map(l=>`
       <tr>
@@ -5226,7 +5236,9 @@ function buildLoanTbl(){
 /* BUILD: MARKETPLACE (Medusa) — delegated to interactive version below */
 function buildProducts_legacy(){ /* replaced — see buildProducts(filtro) */ }
 function buildOrders(){
-  document.getElementById('ordersList').innerHTML=ORDERS.map(o=>`
+  const el=document.getElementById('ordersList');
+  if(!el) return;
+  el.innerHTML=ORDERS.map(o=>`
     <div class="order-row">
       <div class="oi">${o.icon}</div>
       <div class="oinfo"><div class="oname">${o.name}</div><div class="odate">${o.date}</div></div>
